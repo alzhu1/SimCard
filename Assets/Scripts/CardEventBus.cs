@@ -2,7 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Dummy : MonoBehaviour {
+public class CardEventBus : MonoBehaviour {
+    public static CardEventBus instance = null;
+
+    
+
     void Start() {
         
     }
