@@ -5,7 +5,28 @@ using UnityEngine;
 public class PlayerController : DuelistController {
 
     void Update() {
-        if (currStep != DuelistSteps.INACTIVE && Input.GetKeyDown(KeyCode.Space)) {
+        if (currStep == DuelistSteps.INACTIVE) {
+            return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            // CardGameManager.instance.TriggerNextState();
+
+            switch (currStep) {
+                case DuelistSteps.DRAW:
+                    Debug.Log("Adding to hand");
+                    duelist.GetHand().AddCard(Random.Range(1, 20));
+                    break;
+
+                case DuelistSteps.MAIN:
+                    Debug.Log($"Playing first card {duelist.GetHand().cards[0]}");
+                    duelist.GetHand().RemoveCard(0);
+                    break;
+                
+                case DuelistSteps.END:
+                    break;
+            }
+
             CardGameManager.instance.TriggerNextState();
         }
     }

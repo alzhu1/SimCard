@@ -11,6 +11,11 @@ public enum DuelistSteps {
 
 public abstract class DuelistController : MonoBehaviour {
     protected DuelistSteps currStep = DuelistSteps.INACTIVE;
+    protected Duelist duelist;
+
+    void Awake() {
+        duelist = GetComponent<Duelist>();
+    }
 
     void Start() {
         CardGameManager.instance.OnStateEnter += ReceiveStateEnter;

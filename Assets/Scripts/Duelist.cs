@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Duelist : MonoBehaviour {
+    public Hand hand;
 
-    public List<int> hand;
-
-    void Start() {
-        
+    void Awake() {
+        hand = GetComponentInChildren<Hand>();
     }
 
-    void Update() {
-        
+    public Hand GetHand() {
+        return hand;
     }
 }
