@@ -15,12 +15,11 @@ public class PlayerController : DuelistController {
             switch (currStep) {
                 case DuelistSteps.DRAW:
                     Debug.Log("Adding to hand");
-                    duelist.GetHand().AddCard(Random.Range(1, 20));
+                    duelist.DrawCard();
                     break;
 
                 case DuelistSteps.MAIN:
-                    Debug.Log($"Playing first card {duelist.GetHand().cards[0]}");
-                    duelist.GetHand().RemoveCard(0);
+                    duelist.PlayFirstCard();
                     break;
                 
                 case DuelistSteps.END:

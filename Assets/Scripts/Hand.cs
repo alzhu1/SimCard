@@ -3,58 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Hand : MonoBehaviour {
-    public List<int> cards;
     public Sprite sprite;
 
-    private List<GameObject> cardObjects;
     private Duelist duelist;
+    private List<Card> cards;
 
     void Awake() {
         duelist = GetComponentInParent<Duelist>();
-
-        // TODO: Object pool?
-        cardObjects = new List<GameObject>();
-        foreach (var card in cards) {
-            GameObject cardObject = new GameObject();
-            cardObject.transform.SetParent(transform);
-
-            cardObject.name = $"Card v = {card}";
-            
-            SpriteRenderer sr = cardObject.AddComponent<SpriteRenderer>();
-            sr.sprite = sprite;
-
-            Vector3 pos = Vector3.zero;
-            pos.x = Random.Range(-6, 6);
-            pos.y = Random.Range(-5, 5);
-            cardObject.transform.localPosition = pos;
-
-            cardObjects.Add(cardObject);
-        }
+        cards = new List<Card>();
     }
 
-    public void AddCard(int card) {
+    public void AddCard(Card card) {
         cards.Add(card);
 
-        GameObject cardObject = new GameObject();
-        cardObject.transform.SetParent(transform);
+        card.transform.SetParent(transform);
 
-        cardObject.name = $"Card v = {card}";
-        
-        SpriteRenderer sr = cardObject.AddComponent<SpriteRenderer>();
-        sr.sprite = sprite;
-
+        card.gameObject.SetActive(true);
         Vector3 pos = Vector3.zero;
-        pos.x = Random.Range(-10, 10);
-        pos.y = Random.Range(-8, 8);
-        cardObject.transform.localPosition = pos;
-
-        cardObjects.Add(cardObject);
+        pos.x = Random.Range(-6, 6);
+        pos.y = Random.Range(-5, 5);
+        card.transform.localPosition = pos;
     }
 
     public void RemoveCard(int index) {
+        Destroy(cards[index].gameObject);
         cards.RemoveAt(index);
-        Destroy(cardObjects[index]);
-        cardObjects.RemoveAt(index);
     }
 
     void Start() {

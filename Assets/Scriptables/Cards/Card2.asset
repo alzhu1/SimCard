@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c79d4a37b05a400faf3ee71e768c002, type: 3}
+  m_Name: Card2
+  m_EditorClassIdentifier: 
+  cardName: bbbb
+  power: 124
+  sprite: {fileID: -2413806693520163455, guid: daf79a9bfe87046568cb0e70981218dc, type: 3}
+  flavorText: flavor2
+  effectText: effect2
