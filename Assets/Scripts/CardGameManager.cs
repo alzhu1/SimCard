@@ -5,6 +5,7 @@ using UnityEngine;
 
 // TODO: Move this to component/class based, not enum
 public enum CardGameState {
+    START = -1,
     PLAYER_DRAW = 0,
     PLAYER_MAIN = 1,
     PLAYER_END = 2,
@@ -21,7 +22,7 @@ public class CardGameManager : MonoBehaviour {
     public event Action<CardGameState> OnStateEnter = delegate {};
     public event Action<CardGameState> OnStateExit = delegate {};
 
-    private CardGameState currState = CardGameState.PLAYER_DRAW;
+    private CardGameState currState = CardGameState.START;
 
     void Awake() {
         instance = this;
@@ -30,6 +31,8 @@ public class CardGameManager : MonoBehaviour {
     IEnumerator Start() {
         yield return new WaitForSeconds(1f);
         OnStateEnter.Invoke(currState);
+        yield return new WaitForSeconds(2f);
+        TriggerNextState();
     }
 
     void Update() {
