@@ -5,18 +5,24 @@ using UnityEngine;
 public class Duelist : MonoBehaviour {
     private Hand hand;
     private Deck deck;
+    private Field field;
+
+    public List<Card> HandCards {
+        get { return hand.Cards; }
+    }
+
+    public List<Card> DeckCards {
+        get { return deck.Cards; }
+    }
+
+    public List<Card> FieldCards {
+        get { return field.Cards; }
+    }
 
     void Awake() {
         hand = GetComponentInChildren<Hand>();
         deck = GetComponentInChildren<Deck>();
-    }
-
-    public Hand GetHand() {
-        return hand;
-    }
-
-    public Deck GetDeck() {
-        return deck;
+        field = GetComponentInChildren<Field>();
     }
 
     public void DrawCard() {
@@ -24,8 +30,11 @@ public class Duelist : MonoBehaviour {
         hand.AddCard(card);
     }
 
-    // TODO: Generalize this with input
-    public void PlayFirstCard() {
-        hand.RemoveCard(0);
+    public void PlaySelectedCard(Card card) {
+        int cardIndex = this.HandCards.IndexOf(card);
+        if (cardIndex >= 0) {
+            hand.RemoveCard(cardIndex);
+            field.AddCard(card);
+        }
     }
 }

@@ -2,24 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Hand : CardHolder {
-    public Sprite sprite;
-
+public class Field : CardHolder {
     public void AddCard(Card card) {
         cards.Add(card);
         card.transform.SetParent(transform);
         card.gameObject.SetActive(true);
 
-        SpreadHand();
+        SpreadField();
     }
 
     public void RemoveCard(int index) {
+        Destroy(cards[index].gameObject);
         cards.RemoveAt(index);
 
-        SpreadHand();
+        SpreadField();
     }
 
-    void SpreadHand() {
+    void SpreadField() {
         int offset = 2;
         int leftEdgeX = (1 - cards.Count) * offset / 2;
         for (int i = 0; i < cards.Count; i++) {

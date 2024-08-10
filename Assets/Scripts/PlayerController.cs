@@ -7,6 +7,21 @@ public class PlayerController : DuelistController {
     public GameObject cursor;
     public float cursorSpeed = 1;
 
+    private Card currCard;
+    private Card CurrCard {
+        get { return currCard; }
+        set {
+            currCard?.ResetSelectedColor();
+            value?.SetSelectedColor();
+            currCard = value;
+        }
+    }
+
+    // TODO: Probably best way to represent cards for selection
+    // is with a graph, edges pertain to up/down/left/right
+    // For now, just use a big list
+    private List<Card> selectableCards = new();
+
     void Update() {
         if (currStep == DuelistSteps.INACTIVE) {
             return;
@@ -14,13 +29,26 @@ public class PlayerController : DuelistController {
 
         if (currStep == DuelistSteps.MAIN) {
             // Can move cursor
-            float horizontal = Input.GetAxisRaw("Horizontal");
-            float vertical = Input.GetAxisRaw("Vertical");
+            // float horizontal = Input.GetAxisRaw("Horizontal");
+            // float vertical = Input.GetAxisRaw("Vertical");
 
-            Vector3 position = cursor.transform.position;
-            position.x += horizontal * Time.deltaTime * cursorSpeed;
-            position.y += vertical * Time.deltaTime * cursorSpeed;
-            cursor.transform.position = position;
+            // Vector3 position = cursor.transform.position;
+            // position.x += horizontal * Time.deltaTime * cursorSpeed;
+            // position.y += vertical * Time.deltaTime * cursorSpeed;
+            // cursor.transform.position = position;
+
+            int nextCard = 0;
+            if (Input.GetKeyDown(KeyCode.LeftArrow)) {
+                nextCard = -1;
+            }
+            if (Input.GetKeyDown(KeyCode.RightArrow)) {
+                nextCard = 1;
+            }
+
+            if (nextCard != 0) {
+                int currCardIndex = selectableCards.IndexOf(this.CurrCard);
+                this.CurrCard = selectableCards[(currCardIndex + nextCard) % selectableCards.Count];
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Space)) {
@@ -30,10 +58,18 @@ public class PlayerController : DuelistController {
                 case DuelistSteps.DRAW:
                     Debug.Log("Adding to hand");
                     duelist.DrawCard();
+
+                    selectableCards.Clear();
+                    selectableCards.AddRange(duelist.HandCards);
+                    selectableCards.AddRange(duelist.DeckCards);
+                    selectableCards.AddRange(duelist.FieldCards);
+                    this.CurrCard = selectableCards[0];
                     break;
 
                 case DuelistSteps.MAIN:
-                    duelist.PlayFirstCard();
+                    // duelist.PlayFirstCard();
+                    duelist.PlaySelectedCard(currCard);
+                    this.CurrCard = null;
                     break;
                 
                 case DuelistSteps.END:
