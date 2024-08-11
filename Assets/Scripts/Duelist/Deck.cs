@@ -12,8 +12,12 @@ public class Deck : CardHolder {
     }
 
     public Card DrawCard() {
-        Card card = cards[0];
-        cards.RemoveAt(0);
-        return card;
+        if (cards.Count > 0) {
+            Card card = cards[0];
+            cards.RemoveAt(0);
+            return card;
+        }
+
+        return null;
     }
 }

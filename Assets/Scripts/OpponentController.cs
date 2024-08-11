@@ -6,24 +6,37 @@ public class OpponentController : DuelistController {
     private float t = 0;
 
     void Update() {
-        if (currStep != DuelistSteps.INACTIVE) {
-            t += Time.deltaTime;
-            if (t >= 2f) {
-                t = 0;
-                CardGameManager.instance.TriggerNextState();
+        if (duelistState != null) {
+            // TODO: Pass in any necessary inputs here? Or maybe just this whole controller
+            DuelistState nextState = duelistState.HandleState();
+
+            if (nextState != null) {
+                duelistState.ExitState();
+                duelistState = nextState;
+                duelistState.InitState(duelist, this);
+                duelistState.EnterState();
             }
-        } else {
-            t = 0;
         }
     }
 
+    protected override void SetDuelistType() {
+        duelist.type = DuelistType.AI;
+    }
+
     protected override void ReceiveStateEnter(CardGameState gameState) {
-        Debug.Log($"In player, gameState = {(int)gameState}");
-        if ((int)gameState >= 3) {
-            currStep = (DuelistSteps)((int)gameState % 6);
-            Debug.Log($"Player state = {currStep}");
+        // Debug.Log($"In player, gameState = {(int)gameState}");
+        // if ((int)gameState >= 3) {
+        //     currStep = (DuelistSteps)((int)gameState % 6);
+        //     Debug.Log($"Player state = {currStep}");
+        // } else {
+        //     currStep = DuelistSteps.INACTIVE;
+        // }
+        if (gameState == CardGameState.OPPONENT) {
+            Debug.Log("Opponent turn, for now just move on");
+            duelistState = new EndState();
+            duelistState.InitState(duelist, this);
         } else {
-            currStep = DuelistSteps.INACTIVE;
+            duelistState = null;
         }
     }
 

@@ -6,12 +6,8 @@ using UnityEngine;
 // TODO: Move this to component/class based, not enum
 public enum CardGameState {
     START = -1,
-    PLAYER_DRAW = 0,
-    PLAYER_MAIN = 1,
-    PLAYER_END = 2,
-    OPPONENT_DRAW = 3,
-    OPPONENT_MAIN = 4,
-    OPPONENT_END = 5
+    PLAYER = 0,
+    OPPONENT = 1
 }
 
 
@@ -42,7 +38,7 @@ public class CardGameManager : MonoBehaviour {
     public void TriggerNextState() {
         Debug.Log($"Exiting state {currState}");
         OnStateExit.Invoke(currState);
-        int nextState = ((int)currState + 1) % 6;
+        int nextState = ((int)currState + 1) % 2;
         currState = (CardGameState)nextState;
         Debug.Log($"Entering state {currState}");
         OnStateEnter.Invoke(currState);
