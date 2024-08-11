@@ -5,21 +5,29 @@ using UnityEngine;
 public class PlayerBaseState : DuelistState {
     private CardHolder highlightedHolder;
 
-    private Card _highlightedCard;
+    private Card highlightedCard;
     private Card HighlightedCard {
-        get { return _highlightedCard; }
+        get { return highlightedCard; }
         set {
-            _highlightedCard?.ResetSelectedColor();
-            value?.SetSelectedColor();
-            _highlightedCard = value;
+            highlightedCard?.ResetColor();
+            value?.SetHighlightedColor();
+            highlightedCard = value;
         }
+    }
+
+    public PlayerBaseState() {}
+    public PlayerBaseState(Card highlightedCard) {
+        this.HighlightedCard = highlightedCard;
     }
 
     public override void EnterState() {
         // throw new System.NotImplementedException();
         // For now, use Hand as holder
         highlightedHolder = duelist.Hand;
-        this.HighlightedCard = highlightedHolder.Cards[0];
+
+        if (this.HighlightedCard == null) {
+            this.HighlightedCard = highlightedHolder.Cards[0];
+        }
     }
 
     public override DuelistState HandleState() {
@@ -29,12 +37,8 @@ public class PlayerBaseState : DuelistState {
         // But think about where we could place player input and somehow merge that with DuelistController
 
         if (Input.GetKeyDown(KeyCode.Space)) {
-            // TODO: This logic is for playing the card, move to a different state
-            duelist.PlaySelectedCard(this.HighlightedCard);
-            this.HighlightedCard = null;
-
             // Move to a new state
-            return new EndState();
+            return new PlayerCardSelectedState(this.HighlightedCard);
         }
 
         int nextCard = 0;
@@ -45,8 +49,11 @@ public class PlayerBaseState : DuelistState {
         }
 
         if (nextCard != 0) {
-            int cardIndex = highlightedHolder.Cards.IndexOf(this.HighlightedCard);
-            this.HighlightedCard = highlightedHolder.Cards[(cardIndex + nextCard) % highlightedHolder.Cards.Count];
+            int nextCardIndex = highlightedHolder.Cards.IndexOf(this.HighlightedCard) + nextCard;
+            int cardCount = highlightedHolder.Cards.Count;
+
+            int highlightedCardIndex = nextCardIndex < 0 ? nextCardIndex + cardCount : nextCardIndex % cardCount;
+            this.HighlightedCard = highlightedHolder.Cards[highlightedCardIndex];
         }
 
         return null;
@@ -54,5 +61,6 @@ public class PlayerBaseState : DuelistState {
 
     public override void ExitState() {
         // throw new System.NotImplementedException();
+        this.HighlightedCard = null;
     }
 }

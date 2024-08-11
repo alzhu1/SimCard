@@ -27,10 +27,14 @@ public class Card : MonoBehaviour {
     public void PlayCard(List<Card> sacrifices) {}
     public void SacrificeCard() {}
 
-    public void SetSelectedColor() {
+    public void SetHighlightedColor() {
         sr.color = Color.yellow;
     }
-    public void ResetSelectedColor() {
+
+    public void SetSelectedColor() {
+        sr.color = Color.green;
+    }
+    public void ResetColor() {
         Debug.Log("Resetting color");
         sr.color = Color.white;
     }
