@@ -5,6 +5,8 @@ using UnityEngine;
 public class Card : MonoBehaviour {
     [SerializeField] private CardSO cardSO;
 
+    public int Power => cardSO.power;
+
     // TODO: Card likely needs to carry info about its own state
     // i.e. owned by player/opponent, whether it's on the field, etc
 
@@ -24,8 +26,19 @@ public class Card : MonoBehaviour {
         
     }
 
-    public void PlayCard(List<Card> sacrifices) {}
+    public void PlayCard() {}
     public void SacrificeCard() {}
+
+    public bool IsResourceCard() {
+        return cardSO.CardType == CardType.Resource;
+    }
+
+    public ResourceSO GetResource() {
+        if (IsResourceCard()) {
+            return ((ResourceCardSO)cardSO).resource;
+        }
+        return null;
+    }
 
     public void SetHighlightedColor() {
         sr.color = Color.yellow;

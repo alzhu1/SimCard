@@ -2,6 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum CardType {
+    Resource,
+    Unit
+}
+
+[System.Serializable]
+public struct ResourceCost {
+    public ResourceSO resource;
+    public int cost;
+}
+
 [System.Serializable]
 public struct CardCost {
     public CardSO card;
@@ -18,5 +29,8 @@ public class CardSO : ScriptableObject {
 
     // TODO: This is just an idea but could change in future
     // May want to do some kind of "level" summon system like YGO
-    public List<CardCost> cardCost;
+    public List<CardCost> cardCosts;
+    public List<ResourceCost> resourceCosts;
+
+    public CardType CardType => CardType.Unit;
 }

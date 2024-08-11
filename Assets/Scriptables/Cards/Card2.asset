@@ -9,11 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c79d4a37b05a400faf3ee71e768c002, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ab06e8d96c534169be15a4e08794305, type: 3}
   m_Name: Card2
   m_EditorClassIdentifier: 
   cardName: bbbb
-  power: 124
+  power: 1
   sprite: {fileID: -2413806693520163455, guid: daf79a9bfe87046568cb0e70981218dc, type: 3}
-  flavorText: flavor2
-  effectText: effect2
+  flavorText: aregerg
+  effectText: aewhgwehew
+  cardCosts: []
+  resourceCosts: []
+  resource: {fileID: 11400000, guid: d57ed53357a0440fdabffbffdacb3d4e, type: 2}

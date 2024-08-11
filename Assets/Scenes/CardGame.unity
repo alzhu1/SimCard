@@ -242,7 +242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8407bad4f558745a7b1334996c229e4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardSO: {fileID: 11400000, guid: 9533e964fc6bc4aeeba410dd55cc4360, type: 2}
+  cardSO: {fileID: 11400000, guid: 5b804fe02edc8471e8bb1df4d49d07ff, type: 2}
 --- !u!4 &446146992
 Transform:
   m_ObjectHideFlags: 0
@@ -432,7 +432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8407bad4f558745a7b1334996c229e4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardSO: {fileID: 11400000, guid: 429f4f4f4e928480e85a411bc4ee3967, type: 2}
+  cardSO: {fileID: 11400000, guid: 896e201daa6204271b88241e5b481cc7, type: 2}
 --- !u!4 &556315573
 Transform:
   m_ObjectHideFlags: 0
@@ -530,7 +530,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8407bad4f558745a7b1334996c229e4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardSO: {fileID: 11400000, guid: 9533e964fc6bc4aeeba410dd55cc4360, type: 2}
+  cardSO: {fileID: 11400000, guid: 5b804fe02edc8471e8bb1df4d49d07ff, type: 2}
 --- !u!4 &561310847
 Transform:
   m_ObjectHideFlags: 0
@@ -628,7 +628,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8407bad4f558745a7b1334996c229e4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardSO: {fileID: 11400000, guid: 429f4f4f4e928480e85a411bc4ee3967, type: 2}
+  cardSO: {fileID: 11400000, guid: 896e201daa6204271b88241e5b481cc7, type: 2}
 --- !u!4 &564640943
 Transform:
   m_ObjectHideFlags: 0
@@ -1093,7 +1093,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8407bad4f558745a7b1334996c229e4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardSO: {fileID: 11400000, guid: 429f4f4f4e928480e85a411bc4ee3967, type: 2}
+  cardSO: {fileID: 11400000, guid: 896e201daa6204271b88241e5b481cc7, type: 2}
 --- !u!4 &1605808572
 Transform:
   m_ObjectHideFlags: 0
