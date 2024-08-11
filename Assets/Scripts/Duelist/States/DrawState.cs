@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DrawState : DuelistState {
+public class DrawState<T> : DuelistState where T: DuelistState, new() {
     public override void EnterState() {
         // throw new System.NotImplementedException();
     }
@@ -10,15 +10,7 @@ public class DrawState : DuelistState {
     public override DuelistState HandleState() {
         Debug.Log("In draw state");
         duelist.DrawCard();
-        switch (duelist.type) {
-            case DuelistType.HUMAN:
-                return new PlayerBaseState();
-
-            case DuelistType.AI:
-                return null;
-        }
-
-        return null;
+        return new T();
     }
 
     public override void ExitState() {

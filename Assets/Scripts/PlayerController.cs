@@ -67,10 +67,6 @@ public class PlayerController : DuelistController {
         // }
     }
 
-    protected override void SetDuelistType() {
-        duelist.type = DuelistType.HUMAN;
-    }
-
     protected override void ReceiveStateEnter(CardGameState gameState) {
         Debug.Log($"In player, gameState = {(int)gameState}");
 
@@ -84,7 +80,7 @@ public class PlayerController : DuelistController {
                 break;
 
             case CardGameState.PLAYER:
-                duelistState = new DrawState();
+                duelistState = new DrawState<PlayerBaseState>();
                 duelistState.InitState(duelist, this);
                 duelistState.EnterState();
                 break;

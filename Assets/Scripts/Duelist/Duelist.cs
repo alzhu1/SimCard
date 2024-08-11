@@ -10,14 +10,7 @@ using UnityEngine;
 // There are some actions that seem like an AI wouldn't need to do, but if we model it as such anyways,
 // it might make the AI programming a little easier? Perhaps enemy AI can have its own state machine
 
-public enum DuelistType {
-    HUMAN,
-    AI
-}
-
 public class Duelist : MonoBehaviour {
-    [HideInInspector] public DuelistType type;
-
     private Hand hand;
     private Deck deck;
     private Field field;
@@ -48,6 +41,8 @@ public class Duelist : MonoBehaviour {
         if (card != null) {
             hand.AddCard(card);
         }
+
+        OrganizeArea();
     }
 
     public void PlaySelectedCard(Card card) {
@@ -56,5 +51,18 @@ public class Duelist : MonoBehaviour {
             hand.RemoveCard(cardIndex);
             field.AddCard(card);
         }
+
+        OrganizeArea();
+    }
+
+    void OrganizeArea() {
+        // This is called whenever a card based operation occurs
+
+        // TODO: Since the spreading functions use a pretty similar formula, could try to extrapolate?
+        // Field
+        field.SpreadField();
+
+        // Hand
+        hand.SpreadHand();
     }
 }

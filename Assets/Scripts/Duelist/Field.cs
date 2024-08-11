@@ -7,18 +7,14 @@ public class Field : CardHolder {
         cards.Add(card);
         card.transform.SetParent(transform);
         card.gameObject.SetActive(true);
-
-        SpreadField();
     }
 
     public void RemoveCard(int index) {
         Destroy(cards[index].gameObject);
         cards.RemoveAt(index);
-
-        SpreadField();
     }
 
-    void SpreadField() {
+    public void SpreadField() {
         int offset = 2;
         int leftEdgeX = (1 - cards.Count) * offset / 2;
         for (int i = 0; i < cards.Count; i++) {

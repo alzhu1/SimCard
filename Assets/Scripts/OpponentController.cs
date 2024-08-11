@@ -19,10 +19,6 @@ public class OpponentController : DuelistController {
         }
     }
 
-    protected override void SetDuelistType() {
-        duelist.type = DuelistType.AI;
-    }
-
     protected override void ReceiveStateEnter(CardGameState gameState) {
         // Debug.Log($"In player, gameState = {(int)gameState}");
         // if ((int)gameState >= 3) {

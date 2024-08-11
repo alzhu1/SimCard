@@ -9,17 +9,13 @@ public class Hand : CardHolder {
         cards.Add(card);
         card.transform.SetParent(transform);
         card.gameObject.SetActive(true);
-
-        SpreadHand();
     }
 
     public void RemoveCard(int index) {
         cards.RemoveAt(index);
-
-        SpreadHand();
     }
 
-    void SpreadHand() {
+    public void SpreadHand() {
         int offset = 2;
         int leftEdgeX = (1 - cards.Count) * offset / 2;
         for (int i = 0; i < cards.Count; i++) {

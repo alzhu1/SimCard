@@ -11,6 +11,10 @@ public class CardHolder : MonoBehaviour {
 
     protected Duelist duelist;
 
+    void Awake() {
+        Init();
+    }
+
     protected void InitCardsFromChildren() {
         Card[] childrenCards = GetComponentsInChildren<Card>(true);
         if (childrenCards != null) {
@@ -24,7 +28,7 @@ public class CardHolder : MonoBehaviour {
         duelist = GetComponentInParent<Duelist>();
     }
 
-    void Awake() {
+    protected void Init() {
         InitCardsFromChildren();
         InitDuelist();
     }

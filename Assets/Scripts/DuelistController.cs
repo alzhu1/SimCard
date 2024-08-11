@@ -8,7 +8,6 @@ public abstract class DuelistController : MonoBehaviour {
 
     void Awake() {
         duelist = GetComponent<Duelist>();
-        SetDuelistType();
     }
 
     void Start() {
@@ -25,8 +24,6 @@ public abstract class DuelistController : MonoBehaviour {
         duelistState = null;
         CardGameManager.instance.TriggerNextState();
     }
-
-    protected abstract void SetDuelistType();
 
     protected abstract void ReceiveStateEnter(CardGameState gameState);
     protected abstract void ReceiveStateExit(CardGameState gameState);
