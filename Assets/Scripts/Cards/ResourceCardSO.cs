@@ -6,5 +6,5 @@ using UnityEngine;
 public class ResourceCardSO : CardSO {
     public ResourceSO resource;
 
-    public new CardType CardType => CardType.Resource;
+    public override CardType CardType => CardType.Resource;
 }

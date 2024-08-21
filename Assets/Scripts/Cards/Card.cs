@@ -5,7 +5,12 @@ using UnityEngine;
 public class Card : MonoBehaviour {
     [SerializeField] private CardSO cardSO;
 
+    public CardSO CardSO => cardSO;
+
     public int Power => cardSO.power;
+
+    public List<CardCost> CardCosts => cardSO.cardCosts;
+    public List<ResourceCost> ResourceCosts => cardSO.resourceCosts;
 
     // TODO: Card likely needs to carry info about its own state
     // i.e. owned by player/opponent, whether it's on the field, etc
@@ -30,6 +35,7 @@ public class Card : MonoBehaviour {
     public void SacrificeCard() {}
 
     public bool IsResourceCard() {
+        Debug.Log($"The card type: {cardSO.CardType}");
         return cardSO.CardType == CardType.Resource;
     }
 
@@ -40,6 +46,10 @@ public class Card : MonoBehaviour {
         return null;
     }
 
+    public bool HasCosts() {
+        return CardCosts.Count + ResourceCosts.Count > 0;
+    }
+
     public void SetHighlightedColor() {
         sr.color = Color.yellow;
     }
@@ -47,6 +57,11 @@ public class Card : MonoBehaviour {
     public void SetSelectedColor() {
         sr.color = Color.green;
     }
+
+    public void SetSummonColor() {
+        sr.color = Color.red;
+    }
+
     public void ResetColor() {
         Debug.Log("Resetting color");
         sr.color = Color.white;

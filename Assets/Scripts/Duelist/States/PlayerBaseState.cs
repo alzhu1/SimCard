@@ -38,6 +38,10 @@ public class PlayerBaseState : DuelistState {
 
         if (Input.GetKeyDown(KeyCode.Space)) {
             // Move to a new state
+            if (this.HighlightedCard.HasCosts()) {
+                return new PlayerCardSummonRequirementState(this.HighlightedCard);
+            }
+
             return new PlayerCardSelectedState(this.HighlightedCard);
         }
 

@@ -18,6 +18,7 @@ public class Duelist : MonoBehaviour {
     private Dictionary<ResourceSO, int> currentResources;
 
     public Hand Hand => hand;
+    public Field Field => field;
 
     public List<Card> HandCards {
         get { return hand.Cards; }

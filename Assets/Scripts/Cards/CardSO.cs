@@ -32,5 +32,5 @@ public class CardSO : ScriptableObject {
     public List<CardCost> cardCosts;
     public List<ResourceCost> resourceCosts;
 
-    public CardType CardType => CardType.Unit;
+    public virtual CardType CardType => CardType.Unit;
 }
