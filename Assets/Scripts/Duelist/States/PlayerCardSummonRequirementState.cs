@@ -18,8 +18,7 @@ public class PlayerCardSummonRequirementState : DuelistState {
         }
     }
 
-    private Dictionary<CardSO, List<Card>> suppliedCards;
-    private Dictionary<ResourceSO, List<Card>> suppliedResources;
+    private Dictionary<EntitySO, List<Card>> suppliedEntities;
 
     public PlayerCardSummonRequirementState(Card selectedCard) {
         this.selectedCard = selectedCard;
@@ -38,8 +37,7 @@ public class PlayerCardSummonRequirementState : DuelistState {
         // Copy list that can be modified
         holderCopy = new List<Card>(highlightedHolder.Cards);
 
-        suppliedCards = new Dictionary<CardSO, List<Card>>();
-        suppliedResources = new Dictionary<ResourceSO, List<Card>>();
+        suppliedEntities = new Dictionary<EntitySO, List<Card>>();
     }
 
     public override DuelistState HandleState() {
@@ -70,25 +68,25 @@ public class PlayerCardSummonRequirementState : DuelistState {
 
         if (Input.GetKeyDown(KeyCode.Space)) {
             // You selected a card, only add if the card needs it
-            if (this.HighlightedCard.IsResourceCard()) {
-                Debug.Log("Is resource??");
-                ResourceSO resource = this.HighlightedCard.GetResource();
-                if (!suppliedResources.ContainsKey(resource)) {
-                    suppliedResources.Add(resource, new List<Card>());
-                }
+            // if (this.HighlightedCard.IsResourceCard()) {
+            //     Debug.Log("Is resource??");
+            //     ResourceSO resource = this.HighlightedCard.GetResource();
+            //     if (!suppliedResources.ContainsKey(resource)) {
+            //         suppliedResources.Add(resource, new List<Card>());
+            //     }
 
-                suppliedResources[resource].Add(this.HighlightedCard);
+            //     suppliedResources[resource].Add(this.HighlightedCard);
             
-                Debug.Log($"Added {resource.name} to resource list");
-            } else {
-                Debug.Log("Is card??");
-                CardSO card = this.HighlightedCard.CardSO;
-                if (!suppliedCards.ContainsKey(card)) {
-                    suppliedCards.Add(card, new List<Card>());
+            //     Debug.Log($"Added {resource.name} to resource list");
+            // } else {
+            //     Debug.Log("Is card??");
+                EntitySO entity = this.HighlightedCard.EntitySO;
+                if (!suppliedEntities.ContainsKey(entity)) {
+                    suppliedEntities.Add(entity, new List<Card>());
                 }
 
-                suppliedCards[card].Add(this.HighlightedCard);
-            }
+                suppliedEntities[entity].Add(this.HighlightedCard);
+            // }
 
             Card summonedCard = this.HighlightedCard;
 
@@ -121,13 +119,7 @@ public class PlayerCardSummonRequirementState : DuelistState {
 
         this.HighlightedCard = null;
 
-        foreach (var cards in suppliedCards.Values) {
-            foreach (var card in cards) {
-                card.ResetColor();
-            }
-        }
-
-        foreach (var cards in suppliedResources.Values) {
+        foreach (var cards in suppliedEntities.Values) {
             foreach (var card in cards) {
                 card.ResetColor();
             }
@@ -135,25 +127,15 @@ public class PlayerCardSummonRequirementState : DuelistState {
     }
 
     bool ValidateCostsMet() {
-        foreach (var cardCost in selectedCard.CardCosts) {
-            if (!suppliedCards.ContainsKey(cardCost.card)) {
+        foreach (var cost in selectedCard.Costs) {
+            // Debug.Log($"Current resource: {resourceCost.resource.name}: {resourceCost.cost}");
+            if (!suppliedEntities.ContainsKey(cost.entity)) {
                 return false;
             }
 
-            if (suppliedCards[cardCost.card].Count != cardCost.cost) {
-                return false;
-            }
-        }
+            // Debug.Log("Going to check count");
 
-        foreach (var resourceCost in selectedCard.ResourceCosts) {
-            Debug.Log($"Current resource: {resourceCost.resource.name}: {resourceCost.cost}");
-            if (!suppliedResources.ContainsKey(resourceCost.resource)) {
-                return false;
-            }
-
-            Debug.Log("Going to check count");
-
-            if (suppliedResources[resourceCost.resource].Count != resourceCost.cost) {
+            if (suppliedEntities[cost.entity].Count != cost.cost) {
                 return false;
             }
         }

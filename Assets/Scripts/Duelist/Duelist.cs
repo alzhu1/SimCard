@@ -15,7 +15,7 @@ public class Duelist : MonoBehaviour {
     private Deck deck;
     private Field field;
 
-    private Dictionary<ResourceSO, int> currentResources;
+    private Dictionary<ResourceEntitySO, int> currentResources;
 
     public Hand Hand => hand;
     public Field Field => field;
@@ -37,7 +37,7 @@ public class Duelist : MonoBehaviour {
         deck = GetComponentInChildren<Deck>();
         field = GetComponentInChildren<Field>();
 
-        currentResources = new Dictionary<ResourceSO, int>();
+        currentResources = new Dictionary<ResourceEntitySO, int>();
     }
 
     public void DrawCard() {
@@ -56,7 +56,7 @@ public class Duelist : MonoBehaviour {
             hand.RemoveCard(cardIndex);
 
             if (card.IsResourceCard()) {
-                ResourceSO resource = card.GetResource();
+                ResourceEntitySO resource = card.GetResource();
 
                 if (!currentResources.ContainsKey(resource)) {
                     currentResources.Add(resource, 0);

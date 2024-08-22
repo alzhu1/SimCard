@@ -8,14 +8,8 @@ public enum CardType {
 }
 
 [System.Serializable]
-public struct ResourceCost {
-    public ResourceSO resource;
-    public int cost;
-}
-
-[System.Serializable]
-public struct CardCost {
-    public CardSO card;
+public struct Cost {
+    public EntitySO entity;
     public int cost;
 }
 
@@ -27,10 +21,11 @@ public class CardSO : ScriptableObject {
     public string flavorText;
     public string effectText;
 
+    // Entity could represent global resources (e.g. food, fabrics)
+    // Or it could represent unique units (so a unit has a CardSO + EntitySO)
+    public EntitySO entity;
+
     // TODO: This is just an idea but could change in future
     // May want to do some kind of "level" summon system like YGO
-    public List<CardCost> cardCosts;
-    public List<ResourceCost> resourceCosts;
-
-    public virtual CardType CardType => CardType.Unit;
+    public List<Cost> costs;
 }
