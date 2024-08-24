@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Field : CardHolder {
-    public void AddCard(Card card) {
-        cards.Add(card);
-        card.transform.SetParent(transform);
-        card.gameObject.SetActive(true);
-    }
+    // public void AddCard(Card card) {
+    //     cards.Add(card);
+    //     card.transform.SetParent(transform);
+    //     card.gameObject.SetActive(true);
+    // }
 
-    public void RemoveCard(int index) {
-        Destroy(cards[index].gameObject);
-        cards.RemoveAt(index);
-    }
+    // public void RemoveCard(int index) {
+    //     Destroy(cards[index].gameObject);
+    //     cards.RemoveAt(index);
+    // }
 
     public void SpreadField() {
         int offset = 2;

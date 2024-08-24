@@ -52,10 +52,11 @@ public class Duelist : MonoBehaviour {
     }
 
     public void DrawCard() {
-        Card card = deck.DrawCard();
+        Card card = deck.GetFirstCard();
 
         if (card != null) {
-            hand.AddCard(card);
+            deck.TransferTo(hand, card, true);
+            deck.TryHideDeck();
         }
 
         OrganizeArea();
@@ -64,7 +65,7 @@ public class Duelist : MonoBehaviour {
     public void PlaySelectedCard(Card card) {
         int cardIndex = this.HandCards.IndexOf(card);
         if (cardIndex >= 0) {
-            hand.RemoveCard(cardIndex);
+            // hand.RemoveCard(cardIndex);
 
             // Remove from resources
             foreach (var resourceCost in card.ResourceCosts) {
@@ -82,9 +83,11 @@ public class Duelist : MonoBehaviour {
 
                 Debug.Log($"Adding power for resource {resource}, new count = {currentResources[resource]}");
             
-                graveyard.AddCard(card);
+                // graveyard.AddCard(card);
+                hand.TransferTo(graveyard, card, false);
             } else {
-                field.AddCard(card);
+                // field.AddCard(card);
+                hand.TransferTo(field, card, true);
             }
         }
 

@@ -18,18 +18,23 @@ public class Deck : CardHolder {
         
     }
 
-    public Card DrawCard() {
+    public Card GetFirstCard() {
         if (cards.Count > 0) {
             Card card = cards[0];
-            cards.RemoveAt(0);
 
-            if (cards.Count == 0) {
-                deckSr.enabled = false;
-            }
+            // if (cards.Count == 0) {
+            //     deckSr.enabled = false;
+            // }
 
             return card;
         }
 
         return null;
+    }
+
+    public void TryHideDeck() {
+        if (cards.Count == 0) {
+            deckSr.enabled = false;
+        }
     }
 }

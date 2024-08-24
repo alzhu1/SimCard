@@ -32,4 +32,11 @@ public class CardHolder : MonoBehaviour {
         InitCardsFromChildren();
         InitDuelist();
     }
+
+    public void TransferTo(CardHolder ch, Card card, bool isCardActive) {
+        Cards.Remove(card);
+        ch.Cards.Add(card);
+        card.transform.SetParent(ch.transform);
+        card.gameObject.SetActive(isCardActive);
+    }
 }

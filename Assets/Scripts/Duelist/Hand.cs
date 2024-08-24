@@ -3,17 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Hand : CardHolder {
-    public Sprite sprite;
+    // public void AddCard(Card card) {
+    //     cards.Add(card);
+    //     card.transform.SetParent(transform);
+    //     card.gameObject.SetActive(true);
+    // }
 
-    public void AddCard(Card card) {
-        cards.Add(card);
-        card.transform.SetParent(transform);
-        card.gameObject.SetActive(true);
-    }
-
-    public void RemoveCard(int index) {
-        cards.RemoveAt(index);
-    }
+    // public void RemoveCard(int index) {
+    //     cards.RemoveAt(index);
+    // }
 
     public void SpreadHand() {
         int offset = 2;
