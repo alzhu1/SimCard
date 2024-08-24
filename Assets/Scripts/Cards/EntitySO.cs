@@ -12,6 +12,10 @@ public class EntitySO : ScriptableObject {
     public string entityName;
 
     public virtual EntityType entityType => EntityType.NORMAL;
+
+    public bool IsResource() {
+        return entityType == EntityType.RESOURCE;
+    }
 }
 
 [CreateAssetMenu(fileName = "Card", menuName = "ScriptableObjects/ResourceEntity")]

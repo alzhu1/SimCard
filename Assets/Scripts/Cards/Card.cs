@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using EntityCost = Cost<EntitySO>;
+using ResourceCost = Cost<ResourceEntitySO>;
+
 public class Card : MonoBehaviour {
     [SerializeField] private CardSO cardSO;
 
@@ -9,7 +12,13 @@ public class Card : MonoBehaviour {
 
     public int Power => cardSO.power;
 
-    public List<Cost> Costs => cardSO.costs;
+    public List<EntityCost> Costs => cardSO.costs;
+
+    private List<ResourceCost> resourceCosts;
+    public List<ResourceCost> ResourceCosts => resourceCosts;
+
+    private List<EntityCost> nonResourceCosts;
+    public List<EntityCost> NonResourceCosts => nonResourceCosts;
 
     // TODO: Card likely needs to carry info about its own state
     // i.e. owned by player/opponent, whether it's on the field, etc
@@ -20,6 +29,17 @@ public class Card : MonoBehaviour {
         sr = GetComponent<SpriteRenderer>();
         sr.sprite = cardSO.sprite;
         gameObject.SetActive(false);
+
+        resourceCosts = new List<ResourceCost>();
+        nonResourceCosts = new List<EntityCost>();
+
+        foreach (var cost in Costs) {
+            if (cost.entity.IsResource()) {
+                resourceCosts.Add(cost.ToResourceCost());
+            } else {
+                nonResourceCosts.Add(cost);
+            }
+        }
     }
 
     void Start() {
@@ -34,7 +54,7 @@ public class Card : MonoBehaviour {
     public void SacrificeCard() {}
 
     public bool IsResourceCard() {
-        return EntitySO?.entityType == EntityType.RESOURCE;
+        return EntitySO?.IsResource() == true;
     }
 
     public ResourceEntitySO GetResource() {
@@ -47,6 +67,10 @@ public class Card : MonoBehaviour {
 
     public bool HasCosts() {
         return Costs.Count > 0;
+    }
+
+    public bool HasNonResourceCosts() {
+        return NonResourceCosts.Count > 0;
     }
 
     public void SetHighlightedColor() {

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerCardSelectedState : DuelistState {
     private Card selectedCard;
+    private bool isSummonAllowed;
 
     public PlayerCardSelectedState(Card selectedCard) {
         this.selectedCard = selectedCard;
@@ -15,6 +16,10 @@ public class PlayerCardSelectedState : DuelistState {
         // highlightedHolder = duelist.Hand;
         // this.HighlightedCard = highlightedHolder.Cards[0];
         selectedCard.SetSelectedColor();
+
+        // TODO: Depending on some criteria, we should determine a "strategy" to execute
+        // i.e. different functions to handle different cases?
+        isSummonAllowed = IsCardSummonAllowed();
     }
 
     public override DuelistState HandleState() {
@@ -25,12 +30,20 @@ public class PlayerCardSelectedState : DuelistState {
             return new PlayerBaseState(selectedCard);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            // Play the card (TODO: Add intermediate step if there is some requirement)
-            duelist.PlaySelectedCard(selectedCard);
-            selectedCard.ResetColor();
+        // TODO: Here, we should check if the card can even be summoned
 
-            return new EndState();
+        // TODO: Have better way to separate logic
+        // if (selectedCard.HasNonResourceCosts()) {
+        //     return HandleTributeSummon();
+        // } else {
+        //     return HandleRegularSummon();
+        // }
+        if (!isSummonAllowed) {
+            return null;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            return new PlayerCardSummonState(selectedCard);
         }
 
         return null;
@@ -38,5 +51,22 @@ public class PlayerCardSelectedState : DuelistState {
 
     public override void ExitState() {
         // throw new System.NotImplementedException();
+    }
+
+    bool IsCardSummonAllowed() {
+        // Card summon is allowed if resource cost is met
+        // And other cards exist on the field
+
+        foreach (var resourceCost in selectedCard.ResourceCosts) {
+            ResourceEntitySO resource = resourceCost.entity;
+
+            if (duelist.CurrentResources[resource] < resourceCost.cost) {
+                return false;
+            }
+        }
+
+        // TODO: Figure out tribute summon (card must be on field)
+
+        return true;
     }
 }

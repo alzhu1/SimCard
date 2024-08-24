@@ -1,6 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+using EntityCost = Cost<EntitySO>;
+using ResourceCost = Cost<ResourceEntitySO>;
 
 public enum CardType {
     Resource,
@@ -8,9 +12,20 @@ public enum CardType {
 }
 
 [System.Serializable]
-public struct Cost {
-    public EntitySO entity;
+public struct Cost<T> where T: EntitySO {
+    public T entity;
     public int cost;
+
+    public ResourceCost ToResourceCost() {
+        if (entity is ResourceEntitySO) {
+            return new()
+            {
+                entity = entity as ResourceEntitySO,
+                cost = cost
+            };
+        }
+        return new() { entity = null, cost = -1 };
+    }
 }
 
 [CreateAssetMenu(fileName = "Card", menuName = "ScriptableObjects/Card")]
@@ -27,5 +42,5 @@ public class CardSO : ScriptableObject {
 
     // TODO: This is just an idea but could change in future
     // May want to do some kind of "level" summon system like YGO
-    public List<Cost> costs;
+    public List<EntityCost> costs;
 }

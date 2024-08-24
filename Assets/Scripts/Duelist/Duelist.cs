@@ -14,11 +14,14 @@ public class Duelist : MonoBehaviour {
     private Hand hand;
     private Deck deck;
     private Field field;
+    private Graveyard graveyard;
 
     private Dictionary<ResourceEntitySO, int> currentResources;
 
     public Hand Hand => hand;
     public Field Field => field;
+
+    public Dictionary<ResourceEntitySO, int> CurrentResources => currentResources;
 
     public List<Card> HandCards {
         get { return hand.Cards; }
@@ -36,8 +39,16 @@ public class Duelist : MonoBehaviour {
         hand = GetComponentInChildren<Hand>();
         deck = GetComponentInChildren<Deck>();
         field = GetComponentInChildren<Field>();
+        graveyard = GetComponentInChildren<Graveyard>();
 
         currentResources = new Dictionary<ResourceEntitySO, int>();
+    }
+
+    void Update() {
+        // TODO: Remove this update function
+        foreach (var resources in currentResources) {
+            Debug.Log($"[Duelist] Resource {resources.Key.entityName} => {resources.Value}");
+        }
     }
 
     public void DrawCard() {
@@ -55,6 +66,11 @@ public class Duelist : MonoBehaviour {
         if (cardIndex >= 0) {
             hand.RemoveCard(cardIndex);
 
+            // Remove from resources
+            foreach (var resourceCost in card.ResourceCosts) {
+                currentResources[resourceCost.entity] -= resourceCost.cost;
+            }
+
             if (card.IsResourceCard()) {
                 ResourceEntitySO resource = card.GetResource();
 
@@ -65,8 +81,11 @@ public class Duelist : MonoBehaviour {
                 currentResources[resource] += card.Power;
 
                 Debug.Log($"Adding power for resource {resource}, new count = {currentResources[resource]}");
+            
+                graveyard.AddCard(card);
+            } else {
+                field.AddCard(card);
             }
-            field.AddCard(card);
         }
 
         OrganizeArea();
