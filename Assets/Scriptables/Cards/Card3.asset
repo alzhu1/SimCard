@@ -17,7 +17,7 @@ MonoBehaviour:
   sprite: {fileID: 7482667652216324306, guid: f13e034d061cb4b9e8fa91a17b46a79d, type: 3}
   flavorText: flavor3
   effectText: effect3
-  entity: {fileID: 0}
+  entity: {fileID: 11400000, guid: aeccd0c0afd7443b097edabba6135f39, type: 2}
   costs:
   - entity: {fileID: 11400000, guid: 63de11cacd8d6410a9cf1fbe6c99b341, type: 2}
     cost: 1

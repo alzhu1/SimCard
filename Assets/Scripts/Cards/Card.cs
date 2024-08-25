@@ -5,10 +5,15 @@ using UnityEngine;
 using EntityCost = Cost<EntitySO>;
 using ResourceCost = Cost<ResourceEntitySO>;
 
+public enum CardSummonType {
+    Regular,
+    Tribute
+}
+
 public class Card : MonoBehaviour {
     [SerializeField] private CardSO cardSO;
 
-    public EntitySO EntitySO => cardSO.entity;
+    public EntitySO Entity => cardSO.entity;
 
     public int Power => cardSO.power;
 
@@ -19,6 +24,16 @@ public class Card : MonoBehaviour {
 
     private List<EntityCost> nonResourceCosts;
     public List<EntityCost> NonResourceCosts => nonResourceCosts;
+
+    public CardSummonType SummonType {
+        get {
+            if (HasNonResourceCosts()) {
+                return CardSummonType.Tribute;
+            }
+
+            return CardSummonType.Regular;
+        }
+    }
 
     // TODO: Card likely needs to carry info about its own state
     // i.e. owned by player/opponent, whether it's on the field, etc
@@ -50,16 +65,13 @@ public class Card : MonoBehaviour {
         
     }
 
-    public void PlayCard() {}
-    public void SacrificeCard() {}
-
     public bool IsResourceCard() {
-        return EntitySO?.IsResource() == true;
+        return Entity?.IsResource() == true;
     }
 
     public ResourceEntitySO GetResource() {
         if (IsResourceCard()) {
-            return this.EntitySO as ResourceEntitySO;
+            return this.Entity as ResourceEntitySO;
         }
 
         return null;

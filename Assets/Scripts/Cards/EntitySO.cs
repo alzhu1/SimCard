@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum EntityType {
-    NORMAL,
-    RESOURCE
+    Normal,
+    Resource
 }
 
 [CreateAssetMenu(fileName = "Card", menuName = "ScriptableObjects/Entity")]
 public class EntitySO : ScriptableObject {
     public string entityName;
 
-    public virtual EntityType entityType => EntityType.NORMAL;
+    public virtual EntityType entityType => EntityType.Normal;
 
     public bool IsResource() {
-        return entityType == EntityType.RESOURCE;
+        return entityType == EntityType.Resource;
     }
 }
 
 [CreateAssetMenu(fileName = "Card", menuName = "ScriptableObjects/ResourceEntity")]
 public class ResourceEntitySO : EntitySO {
-    public override EntityType entityType => EntityType.RESOURCE;
+    public override EntityType entityType => EntityType.Resource;
 }

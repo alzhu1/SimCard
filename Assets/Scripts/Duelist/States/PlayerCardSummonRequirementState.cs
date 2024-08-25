@@ -80,7 +80,7 @@ public class PlayerCardSummonRequirementState : DuelistState {
             //     Debug.Log($"Added {resource.name} to resource list");
             // } else {
             //     Debug.Log("Is card??");
-                EntitySO entity = this.HighlightedCard.EntitySO;
+                EntitySO entity = this.HighlightedCard.Entity;
                 if (!suppliedEntities.ContainsKey(entity)) {
                     suppliedEntities.Add(entity, new List<Card>());
                 }

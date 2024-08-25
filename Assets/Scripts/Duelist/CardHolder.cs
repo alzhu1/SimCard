@@ -39,4 +39,14 @@ public class CardHolder : MonoBehaviour {
         card.transform.SetParent(ch.transform);
         card.gameObject.SetActive(isCardActive);
     }
+
+    public bool HasEntityCount(EntitySO entity, int count) {
+        foreach (var card in Cards) {
+            if (card.Entity.Equals(entity)) {
+                count--;
+            }
+        }
+
+        return count <= 0;
+    }
 }

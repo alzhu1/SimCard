@@ -65,7 +65,13 @@ public class PlayerCardSelectedState : DuelistState {
             }
         }
 
-        // TODO: Figure out tribute summon (card must be on field)
+        foreach (var nonResourceCost in selectedCard.NonResourceCosts) {
+            EntitySO entity = nonResourceCost.entity;
+
+            if (!duelist.Field.HasEntityCount(entity, nonResourceCost.cost)) {
+                return false;
+            }
+        }
 
         return true;
     }

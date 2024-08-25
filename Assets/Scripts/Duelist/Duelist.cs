@@ -62,7 +62,7 @@ public class Duelist : MonoBehaviour {
         OrganizeArea();
     }
 
-    public void PlaySelectedCard(Card card) {
+    public void PlaySelectedCard(Card card, IEnumerable<List<Card>> cardSacrifices = null) {
         int cardIndex = this.HandCards.IndexOf(card);
         if (cardIndex >= 0) {
             // hand.RemoveCard(cardIndex);
@@ -88,6 +88,14 @@ public class Duelist : MonoBehaviour {
             } else {
                 // field.AddCard(card);
                 hand.TransferTo(field, card, true);
+            }
+        }
+
+        if (cardSacrifices != null) {
+            foreach (var cardList in cardSacrifices) {
+                foreach (var cardSacrifice in cardList) {
+                    field.TransferTo(graveyard, cardSacrifice, false);
+                }
             }
         }
 
