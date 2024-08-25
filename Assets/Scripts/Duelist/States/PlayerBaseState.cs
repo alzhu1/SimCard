@@ -38,15 +38,6 @@ public class PlayerBaseState : DuelistState {
 
         if (Input.GetKeyDown(KeyCode.Space)) {
             // Move to a new state
-
-            // TODO: Could do a predetermined check here if it's even possible
-            // to summon the card right now
-
-            // e.g. only select card if you have enough resouces + units to summon
-            // if (this.HighlightedCard.HasCosts()) {
-            //     return new PlayerCardSummonRequirementState(this.HighlightedCard);
-            // }
-
             return new PlayerCardSelectedState(this.HighlightedCard);
         }
 
