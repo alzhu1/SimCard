@@ -10,11 +10,7 @@ public class PlayerCardSelectedState : DuelistState {
         this.selectedCard = selectedCard;
     }
 
-    public override void EnterState() {
-        // throw new System.NotImplementedException();
-        // For now, use Hand as holder
-        // highlightedHolder = duelist.Hand;
-        // this.HighlightedCard = highlightedHolder.Cards[0];
+    protected override void Enter() {
         selectedCard.SetSelectedColor();
 
         // TODO: Depending on some criteria, we should determine a "strategy" to execute
@@ -22,35 +18,24 @@ public class PlayerCardSelectedState : DuelistState {
         isSummonAllowed = IsCardSummonAllowed();
     }
 
-    public override DuelistState HandleState() {
+    protected override void Exit() {}
+
+    protected override IEnumerator Handle() {
         Debug.Log("In player card selected state");
 
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            // Revert to base state, keeping the original card
-            return new PlayerBaseState(selectedCard);
+        while (nextState == null) {
+            if (Input.GetKeyDown(KeyCode.Escape)) {
+                // Revert to base state, keeping the original card
+                nextState = new PlayerBaseState(selectedCard);
+                break;
+            }
+
+            if (isSummonAllowed && Input.GetKeyDown(KeyCode.Space)) {
+                nextState = new PlayerCardSummonState(selectedCard);
+            }
+
+            yield return null;
         }
-
-        // TODO: Here, we should check if the card can even be summoned
-
-        // TODO: Have better way to separate logic
-        // if (selectedCard.HasNonResourceCosts()) {
-        //     return HandleTributeSummon();
-        // } else {
-        //     return HandleRegularSummon();
-        // }
-        if (!isSummonAllowed) {
-            return null;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            return new PlayerCardSummonState(selectedCard);
-        }
-
-        return null;
-    }
-
-    public override void ExitState() {
-        // throw new System.NotImplementedException();
     }
 
     bool IsCardSummonAllowed() {

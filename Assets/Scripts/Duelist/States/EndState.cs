@@ -3,20 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EndState : DuelistState {
-    public override void EnterState() {
-        // throw new System.NotImplementedException();
-    }
+    protected override void Enter() {}
 
-    public override DuelistState HandleState() {
+    protected override void Exit() {}
+
+    protected override IEnumerator Handle() {
         Debug.Log("In end state");
-
-        // TODO: Move this somewhere else
-        controller.EndTurn();
-
-        return null;
-    }
-
-    public override void ExitState() {
-        // throw new System.NotImplementedException();
+        EndTurn();
+        yield break;
     }
 }

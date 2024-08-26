@@ -3,17 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DrawState<T> : DuelistState where T: DuelistState, new() {
-    public override void EnterState() {
-        // throw new System.NotImplementedException();
-    }
+    protected override void Enter() {}
 
-    public override DuelistState HandleState() {
+    protected override void Exit() {}
+
+    protected override IEnumerator Handle() {
         Debug.Log("In draw state");
         duelist.DrawCard();
-        return new T();
-    }
+        nextState = new T();
 
-    public override void ExitState() {
-        // throw new System.NotImplementedException();
+        yield break;
     }
 }

@@ -8,7 +8,7 @@ public class OpponentController : DuelistController {
 
     public override void StartTurn() {
         duelistState = new EndState();
-        duelistState.InitState(duelist, this);
-        duelistState.EnterState();
+        duelistState.Init(duelist, this);
+        duelistState.Begin();
     }
 }

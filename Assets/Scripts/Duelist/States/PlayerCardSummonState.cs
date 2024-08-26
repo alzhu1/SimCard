@@ -23,12 +23,7 @@ public class PlayerCardSummonState : DuelistState {
         this.cardToSummon = cardToSummon;
     }
 
-    public override void EnterState() {
-        // throw new System.NotImplementedException();
-        // For now, use Hand as holder
-        // highlightedHolder = duelist.Hand;
-        // this.HighlightedCard = highlightedHolder.Cards[0];
-
+    protected override void Enter() {
         switch (cardToSummon.SummonType) {
             case CardSummonType.Tribute: {
                 suppliedCards = new Dictionary<EntitySO, List<Card>>();
@@ -43,26 +38,29 @@ public class PlayerCardSummonState : DuelistState {
         }
     }
 
-    public override DuelistState HandleState() {
+    protected override void Exit() {}
+
+    protected override IEnumerator Handle() {
         Debug.Log("In player card summon state");
 
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            return new PlayerCardSelectedState(cardToSummon);
+        while (nextState == null) {
+            if (Input.GetKeyDown(KeyCode.Escape)) {
+                nextState = new PlayerCardSelectedState(cardToSummon);
+                break;
+            }
+
+            switch (cardToSummon.SummonType) {
+                case CardSummonType.Regular:
+                    nextState = HandleRegularSummon();
+                    break;
+
+                case CardSummonType.Tribute:
+                    nextState = HandleTributeSummon();
+                    break;
+            }
+
+            yield return null;
         }
-
-        switch (cardToSummon.SummonType) {
-            case CardSummonType.Regular:
-                return HandleRegularSummon();
-
-            case CardSummonType.Tribute:
-                return HandleTributeSummon();
-        }
-
-        return null;
-    }
-
-    public override void ExitState() {
-        // throw new System.NotImplementedException();
     }
 
     DuelistState HandleRegularSummon() {

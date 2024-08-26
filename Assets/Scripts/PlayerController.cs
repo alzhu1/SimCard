@@ -12,7 +12,7 @@ public class PlayerController : DuelistController {
 
     public override void StartTurn() {
         duelistState = new DrawState<PlayerBaseState>();
-        duelistState.InitState(duelist, this);
-        duelistState.EnterState();
+        duelistState.Init(duelist, this);
+        duelistState.Begin();
     }
 }

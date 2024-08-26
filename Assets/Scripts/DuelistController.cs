@@ -22,14 +22,12 @@ public abstract class DuelistController : MonoBehaviour {
 
     void Update() {
         if (duelistState != null) {
-            // TODO: Pass in any necessary inputs here? Or maybe just this whole controller
-            DuelistState nextState = duelistState.HandleState();
+            DuelistState nextState = duelistState.NextState;
 
             if (nextState != null) {
-                duelistState.ExitState();
                 duelistState = nextState;
-                duelistState.InitState(duelist, this);
-                duelistState.EnterState();
+                duelistState.Init(duelist, this);
+                duelistState.Begin();
             }
         }
     }
