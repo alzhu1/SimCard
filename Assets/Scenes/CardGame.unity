@@ -348,9 +348,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc65c84867d4b4b098df23bc45f6e484, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnOrder:
-  - {fileID: 1814205500}
-  - {fileID: 1559012902}
+  playerController: {fileID: 1814205500}
+  opponentController: {fileID: 1559012902}
 --- !u!4 &247781713
 Transform:
   m_ObjectHideFlags: 0

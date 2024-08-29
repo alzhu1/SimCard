@@ -6,7 +6,7 @@ public abstract class DuelistController : MonoBehaviour {
     protected Duelist duelist;
     protected DuelistState duelistState;
 
-    protected DuelistController nextTurn;
+    public int TotalPower => duelist.TotalPower;
 
     void Awake() {
         duelist = GetComponent<Duelist>();
@@ -32,13 +32,13 @@ public abstract class DuelistController : MonoBehaviour {
         }
     }
 
-    public void SetNextTurn(DuelistController nextTurn) {
-        this.nextTurn = nextTurn;
-    }
-
     public void EndTurn() {
         duelistState = null;
-        nextTurn.StartTurn();
+
+        // TODO: There is a long chain of EndTurn calls
+        // EndState -> DuelistState -> DuelistController -> CardGameManager
+        // Should simplify
+        CardGameManager.instance.EndTurn();
     }
 
     protected abstract void InitForGame();

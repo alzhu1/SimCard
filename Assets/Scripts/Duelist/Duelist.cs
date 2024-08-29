@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 // TODO: Thinking that this class should contain a state machine in it
@@ -35,6 +36,8 @@ public class Duelist : MonoBehaviour {
         get { return field.Cards; }
     }
 
+    public int TotalPower => Field?.Cards?.Sum(x => x.Power) ?? 0;
+
     void Awake() {
         hand = GetComponentInChildren<Hand>();
         deck = GetComponentInChildren<Deck>();
@@ -44,12 +47,12 @@ public class Duelist : MonoBehaviour {
         currentResources = new Dictionary<ResourceEntitySO, int>();
     }
 
-    void Update() {
-        // TODO: Remove this update function
-        foreach (var resources in currentResources) {
-            Debug.Log($"[Duelist] Resource {resources.Key.entityName} => {resources.Value}");
-        }
-    }
+    // void Update() {
+    //     // TODO: Remove this update function
+    //     foreach (var resources in currentResources) {
+    //         Debug.Log($"[Duelist] Resource {resources.Key.entityName} => {resources.Value}");
+    //     }
+    // }
 
     public void DrawCard() {
         Card card = deck.GetFirstCard();
