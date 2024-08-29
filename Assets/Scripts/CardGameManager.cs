@@ -13,22 +13,23 @@ public class CardGameManager : MonoBehaviour {
     // But would prefer the usage to be quite minimal
     public event Action OnGameStart = delegate {};
 
-    private Dictionary<DuelistController, int> duelistWins;
+    private Dictionary<Duelist, int> duelistWins;
 
-    // [SerializeField] private List<DuelistController> turnOrder;
-    [SerializeField] private DuelistController playerController;
-    [SerializeField] private DuelistController opponentController;
+    [SerializeField] private Duelist playerDuelist;
+    [SerializeField] private Duelist opponentDuelist;
 
-    private DuelistController currController;
+    private Duelist currDuelist;
 
     void Awake() {
         instance = this;
 
-        duelistWins = new Dictionary<DuelistController, int>();
-        duelistWins.Add(playerController, 0);
-        duelistWins.Add(opponentController, 0);
+        duelistWins = new Dictionary<Duelist, int>
+        {
+            { playerDuelist, 0 },
+            { opponentDuelist, 0 }
+        };
 
-        currController = playerController;
+        currDuelist = playerDuelist;
     }
 
     IEnumerator Start() {
@@ -36,27 +37,27 @@ public class CardGameManager : MonoBehaviour {
         OnGameStart.Invoke();
 
         yield return new WaitForSeconds(2f);
-        playerController.StartTurn();
+        playerDuelist.StartTurn();
     }
 
-    DuelistController GetNextController() {
-        return currController == playerController ? opponentController : playerController;
+    Duelist GetNextDuelist() {
+        return currDuelist == playerDuelist ? opponentDuelist : playerDuelist;
     }
 
     public void EndTurn() {
-        currController = GetNextController();
+        currDuelist = GetNextDuelist();
 
-        if (currController == playerController) {
+        if (currDuelist == playerDuelist) {
             // Looped back around, winner is the highest overall power
 
-            int playerPower = playerController.TotalPower;
-            int opponentPower = opponentController.TotalPower;
+            int playerPower = playerDuelist.TotalPower;
+            int opponentPower = opponentDuelist.TotalPower;
 
-            DuelistController winner;
+            Duelist winner;
             if (playerPower > opponentPower) {
-                winner = playerController;
+                winner = playerDuelist;
             } else if (playerPower < opponentPower) {
-                winner = opponentController;
+                winner = opponentDuelist;
             } else {
                 // TODO: Handle tie case
                 Debug.Log("TIE");
@@ -73,6 +74,6 @@ public class CardGameManager : MonoBehaviour {
             }
         }
 
-        currController.StartTurn();
+        currDuelist.StartTurn();
     }
 }

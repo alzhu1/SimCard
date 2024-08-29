@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class DuelistState {
-    private DuelistController controller;
     private bool completed;
 
     protected Duelist duelist;
-
     protected DuelistState nextState;
     public DuelistState NextState => completed ? nextState : null;
 
@@ -15,9 +13,8 @@ public abstract class DuelistState {
     protected abstract IEnumerator Handle();
     protected abstract void Exit();
 
-    public void Init(Duelist duelist, DuelistController controller) {
+    public void Init(Duelist duelist) {
         this.duelist = duelist;
-        this.controller = controller;
     }
 
     public void Begin() {
@@ -26,16 +23,12 @@ public abstract class DuelistState {
         // I feel like it should be fine
 
         // Alternative is to make the coroutine publich, and call StartCoroutine in controller
-        controller.StartCoroutine(HandleWithLifecycle());
-    }
-
-    protected void EndTurn() {
-        controller.EndTurn();
+        duelist.StartCoroutine(HandleWithLifecycle());
     }
 
     IEnumerator HandleWithLifecycle() {
         Enter();
-        yield return controller.StartCoroutine(Handle());
+        yield return duelist.StartCoroutine(Handle());
         Exit();
         completed = true;
     }

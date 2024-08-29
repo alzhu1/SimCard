@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Duelist : MonoBehaviour {
+public abstract class Duelist : MonoBehaviour {
+    private DuelistState duelistState;
+
     private Hand hand;
     private Deck deck;
     private Field field;
@@ -16,19 +18,9 @@ public class Duelist : MonoBehaviour {
 
     public Dictionary<ResourceEntitySO, int> CurrentResources => currentResources;
 
-    public List<Card> HandCards {
-        get { return hand.Cards; }
-    }
-
-    public List<Card> DeckCards {
-        get { return deck.Cards; }
-    }
-
-    public List<Card> FieldCards {
-        get { return field.Cards; }
-    }
-
     public int TotalPower => Field?.Cards?.Sum(x => x.Power) ?? 0;
+
+    private int turnActions;
 
     void Awake() {
         hand = GetComponentInChildren<Hand>();
@@ -39,12 +31,40 @@ public class Duelist : MonoBehaviour {
         currentResources = new Dictionary<ResourceEntitySO, int>();
     }
 
-    // void Update() {
-    //     // TODO: Remove this update function
-    //     foreach (var resources in currentResources) {
-    //         Debug.Log($"[Duelist] Resource {resources.Key.entityName} => {resources.Value}");
-    //     }
-    // }
+    void Start() {
+        CardGameManager.instance.OnGameStart += InitForGame;
+    }
+
+    void OnDestroy() {
+        CardGameManager.instance.OnGameStart -= InitForGame;
+    }
+
+    void Update() {
+        if (duelistState != null) {
+            DuelistState nextState = duelistState.NextState;
+
+            if (nextState != null) {
+                duelistState = nextState;
+                duelistState.Init(this);
+                duelistState.Begin();
+            }
+        }
+    }
+
+    public void StartTurn() {
+        turnActions = 4;
+        duelistState = StartState;
+        duelistState.Init(this);
+        duelistState.Begin();
+    }
+
+    public void EndTurn() {
+        duelistState = null;
+        CardGameManager.instance.EndTurn();
+    }
+
+    protected abstract void InitForGame();
+    protected abstract DuelistState StartState { get; }
 
     public void DrawCard() {
         Card card = deck.GetFirstCard();
@@ -58,7 +78,7 @@ public class Duelist : MonoBehaviour {
     }
 
     public void PlaySelectedCard(Card card, IEnumerable<List<Card>> cardSacrifices = null) {
-        int cardIndex = this.HandCards.IndexOf(card);
+        int cardIndex = this.Hand.Cards.IndexOf(card);
         if (cardIndex >= 0) {
             // hand.RemoveCard(cardIndex);
 

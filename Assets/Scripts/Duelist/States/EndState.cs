@@ -9,7 +9,7 @@ public class EndState : DuelistState {
 
     protected override IEnumerator Handle() {
         Debug.Log("In end state");
-        EndTurn();
+        duelist.EndTurn();
         yield break;
     }
 }
