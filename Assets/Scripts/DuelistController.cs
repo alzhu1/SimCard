@@ -8,6 +8,8 @@ public abstract class DuelistController : MonoBehaviour {
 
     public int TotalPower => duelist.TotalPower;
 
+    private int turnActions;
+
     void Awake() {
         duelist = GetComponent<Duelist>();
     }
@@ -32,6 +34,13 @@ public abstract class DuelistController : MonoBehaviour {
         }
     }
 
+    public void StartTurn() {
+        turnActions = 4;
+        duelistState = StartState;
+        duelistState.Init(duelist, this);
+        duelistState.Begin();
+    }
+
     public void EndTurn() {
         duelistState = null;
 
@@ -42,5 +51,5 @@ public abstract class DuelistController : MonoBehaviour {
     }
 
     protected abstract void InitForGame();
-    public abstract void StartTurn();
+    protected abstract DuelistState StartState { get; }
 }

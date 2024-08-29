@@ -68,7 +68,7 @@ public class PlayerCardSummonState : DuelistState {
         duelist.PlaySelectedCard(cardToSummon);
         cardToSummon.ResetColor();
 
-        return new EndState();
+        return new PlayerBaseState();
     }
 
     DuelistState HandleTributeSummon() {
@@ -80,7 +80,7 @@ public class PlayerCardSummonState : DuelistState {
             if (Input.GetKeyDown(KeyCode.Space)) {
                 duelist.PlaySelectedCard(cardToSummon, suppliedCards.Values);
                 cardToSummon.ResetColor();
-                return new EndState();
+                return new PlayerBaseState();
             }
 
             return null;

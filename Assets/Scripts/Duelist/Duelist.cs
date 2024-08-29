@@ -3,14 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-// TODO: Thinking that this class should contain a state machine in it
-// State machine to determine the current action being taken
-// Enter on DRAW
-// DRAW -> BASE
-// BASE phase can go to multiple options; CARD_SELECTED, PREVIEW_CARD, VIEW_DECK, etc
-// There are some actions that seem like an AI wouldn't need to do, but if we model it as such anyways,
-// it might make the AI programming a little easier? Perhaps enemy AI can have its own state machine
-
 public class Duelist : MonoBehaviour {
     private Hand hand;
     private Deck deck;

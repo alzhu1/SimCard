@@ -40,6 +40,11 @@ public class PlayerBaseState : DuelistState {
         // But think about where we could place player input and somehow merge that with DuelistController
 
         while (nextState == null) {
+            if (Input.GetKeyDown(KeyCode.Escape)) {
+                nextState = new EndState();
+                break;
+            }
+
             if (Input.GetKeyDown(KeyCode.Space)) {
                 // Move to a new state
                 nextState = new PlayerCardSelectedState(this.HighlightedCard);
