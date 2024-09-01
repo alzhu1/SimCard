@@ -3,34 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerBaseState : DuelistState {
-    private CardHolder highlightedHolder;
+    private Card startingCard;
 
-    private Card highlightedCard;
-    private Card HighlightedCard {
-        get { return highlightedCard; }
-        set {
-            highlightedCard?.ResetColor();
-            value?.SetHighlightedColor();
-            highlightedCard = value;
-        }
-    }
+    private CardGraph cardGraph;
 
     public PlayerBaseState() { }
-    public PlayerBaseState(Card highlightedCard) {
-        this.HighlightedCard = highlightedCard;
+    public PlayerBaseState(Card startingCard) {
+        this.startingCard = startingCard;
     }
 
     protected override void Enter() {
         // For now, use Hand as holder
-        highlightedHolder = duelist.Hand;
-
-        if (this.HighlightedCard == null) {
-            this.HighlightedCard = highlightedHolder.Cards[0];
-        }
+        // Initialize list of cards
+        cardGraph = new CardGraph(new() {
+            duelist.Hand.Cards
+        }, this.startingCard);
     }
 
     protected override void Exit() {
-        this.HighlightedCard = null;
+        cardGraph.Exit();
     }
 
     protected override IEnumerator Handle() {
@@ -47,23 +38,14 @@ public class PlayerBaseState : DuelistState {
 
             if (Input.GetKeyDown(KeyCode.Space)) {
                 // Move to a new state
-                nextState = new PlayerCardSelectedState(this.HighlightedCard);
+                nextState = new PlayerCardSelectedState(this.cardGraph.CurrCard);
                 break;
             }
 
-            int nextCard = 0;
             if (Input.GetKeyDown(KeyCode.LeftArrow)) {
-                nextCard = -1;
+                cardGraph.MoveNode(Vector2Int.left);
             } else if (Input.GetKeyDown(KeyCode.RightArrow)) {
-                nextCard = 1;
-            }
-
-            if (nextCard != 0) {
-                int nextCardIndex = highlightedHolder.Cards.IndexOf(this.HighlightedCard) + nextCard;
-                int cardCount = highlightedHolder.Cards.Count;
-
-                int highlightedCardIndex = nextCardIndex < 0 ? nextCardIndex + cardCount : nextCardIndex % cardCount;
-                this.HighlightedCard = highlightedHolder.Cards[highlightedCardIndex];
+                cardGraph.MoveNode(Vector2Int.right);
             }
 
             yield return null;

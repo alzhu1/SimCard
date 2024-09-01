@@ -348,8 +348,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc65c84867d4b4b098df23bc45f6e484, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerController: {fileID: 1814205500}
-  opponentController: {fileID: 1559012902}
+  playerDuelist: {fileID: 1814205500}
+  opponentDuelist: {fileID: 1559012902}
 --- !u!4 &247781713
 Transform:
   m_ObjectHideFlags: 0
@@ -1710,7 +1710,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1559012901}
-  - component: {fileID: 1559012903}
   - component: {fileID: 1559012902}
   m_Layer: 0
   m_Name: Opponent
@@ -1744,18 +1743,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: de01795390bdd42f3ab843a7e3443e8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1559012903
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1559012900}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0d8cc8ed125a475b89abfb7508368f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1605808570
@@ -2061,7 +2048,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1814205499}
-  - component: {fileID: 1814205501}
   - component: {fileID: 1814205500}
   m_Layer: 0
   m_Name: Player
@@ -2100,18 +2086,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 43bff4cdd1fe349b0b31a30bec9de4ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1814205501
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1814205498}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0d8cc8ed125a475b89abfb7508368f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1818488069
