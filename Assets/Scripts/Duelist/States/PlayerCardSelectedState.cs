@@ -18,7 +18,7 @@ public class PlayerCardSelectedState : DuelistState {
         isSummonAllowed = IsCardSummonAllowed();
     }
 
-    protected override void Exit() {}
+    protected override void Exit() { }
 
     protected override IEnumerator Handle() {
         Debug.Log("In player card selected state");

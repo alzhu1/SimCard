@@ -12,14 +12,13 @@ public enum CardType {
 }
 
 [System.Serializable]
-public struct Cost<T> where T: EntitySO {
+public struct Cost<T> where T : EntitySO {
     public T entity;
     public int cost;
 
     public ResourceCost ToResourceCost() {
         if (entity is ResourceEntitySO) {
-            return new()
-            {
+            return new() {
                 entity = entity as ResourceEntitySO,
                 cost = cost
             };

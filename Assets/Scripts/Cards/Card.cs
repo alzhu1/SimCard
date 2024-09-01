@@ -58,11 +58,11 @@ public class Card : MonoBehaviour {
     }
 
     void Start() {
-        
+
     }
 
     void Update() {
-        
+
     }
 
     public bool IsResourceCard() {

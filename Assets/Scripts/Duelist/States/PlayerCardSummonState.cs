@@ -38,7 +38,7 @@ public class PlayerCardSummonState : DuelistState {
         }
     }
 
-    protected override void Exit() {}
+    protected override void Exit() { }
 
     protected override IEnumerator Handle() {
         Debug.Log("In player card summon state");

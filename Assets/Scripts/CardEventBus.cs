@@ -5,13 +5,13 @@ using UnityEngine;
 public class CardEventBus : MonoBehaviour {
     public static CardEventBus instance = null;
 
-    
+
 
     void Start() {
-        
+
     }
 
     void Update() {
-        
+
     }
 }

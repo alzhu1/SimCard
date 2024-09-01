@@ -15,7 +15,7 @@ public class PlayerBaseState : DuelistState {
         }
     }
 
-    public PlayerBaseState() {}
+    public PlayerBaseState() { }
     public PlayerBaseState(Card highlightedCard) {
         this.HighlightedCard = highlightedCard;
     }

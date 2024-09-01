@@ -15,7 +15,7 @@ public class Deck : CardHolder {
     }
 
     void Update() {
-        
+
     }
 
     public Card GetFirstCard() {

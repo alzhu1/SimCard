@@ -97,7 +97,7 @@ public abstract class Duelist : MonoBehaviour {
                 currentResources[resource] += card.Power;
 
                 Debug.Log($"Adding power for resource {resource}, new count = {currentResources[resource]}");
-            
+
                 // graveyard.AddCard(card);
                 hand.TransferTo(graveyard, card, false);
             } else {

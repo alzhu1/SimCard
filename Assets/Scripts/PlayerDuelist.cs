@@ -6,7 +6,7 @@ public class PlayerDuelist : Duelist {
     protected override DuelistState StartState => new DrawState<PlayerBaseState>();
 
     protected override void InitForGame() {
-        for (int i = 0 ; i < 4; i ++) {
+        for (int i = 0; i < 4; i++) {
             DrawCard();
         }
     }

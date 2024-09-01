@@ -11,7 +11,7 @@ public class CardGameManager : MonoBehaviour {
 
     // TODO: We likely want to keep events for other non-gameplay stuff (i.e. UI)
     // But would prefer the usage to be quite minimal
-    public event Action OnGameStart = delegate {};
+    public event Action OnGameStart = delegate { };
 
     private Dictionary<Duelist, int> duelistWins;
 
@@ -63,7 +63,7 @@ public class CardGameManager : MonoBehaviour {
                 Debug.Log("TIE");
                 winner = null;
             }
-            
+
             if (winner != null) {
                 duelistWins[winner] += 1;
 
