@@ -6,8 +6,8 @@ using UnityEngine;
 
 
 public class CardGameManager : MonoBehaviour {
-    // TODO: Migrate away from singleton in final approach
-    public static CardGameManager instance = null;
+    // Singleton is private to avoid multiple instantiations (if it somehow happened)
+    private static CardGameManager instance = null;
 
     // TODO: We likely want to keep events for other non-gameplay stuff (i.e. UI)
     // But would prefer the usage to be quite minimal
@@ -21,7 +21,12 @@ public class CardGameManager : MonoBehaviour {
     private Duelist currDuelist;
 
     void Awake() {
-        instance = this;
+        if (instance == null) {
+            instance = this;
+        } else {
+            Destroy(gameObject);
+            return;
+        }
 
         duelistWins = new Dictionary<Duelist, int>
         {

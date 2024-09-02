@@ -6,6 +6,8 @@ using UnityEngine;
 public abstract class Duelist : MonoBehaviour {
     private DuelistState duelistState;
 
+    private CardGameManager cardGameManager;
+
     private Hand hand;
     private Deck deck;
     private Field field;
@@ -23,6 +25,10 @@ public abstract class Duelist : MonoBehaviour {
     private int turnActions;
 
     void Awake() {
+        // Should be provided by parent
+        cardGameManager = GetComponentInParent<CardGameManager>();
+
+        // Get different duelist aspects in children objects
         hand = GetComponentInChildren<Hand>();
         deck = GetComponentInChildren<Deck>();
         field = GetComponentInChildren<Field>();
@@ -32,11 +38,11 @@ public abstract class Duelist : MonoBehaviour {
     }
 
     void Start() {
-        CardGameManager.instance.OnGameStart += InitForGame;
+        cardGameManager.OnGameStart += InitForGame;
     }
 
     void OnDestroy() {
-        CardGameManager.instance.OnGameStart -= InitForGame;
+        cardGameManager.OnGameStart -= InitForGame;
     }
 
     void Update() {
@@ -60,7 +66,7 @@ public abstract class Duelist : MonoBehaviour {
 
     public void EndTurn() {
         duelistState = null;
-        CardGameManager.instance.EndTurn();
+        cardGameManager.EndTurn();
     }
 
     protected abstract void InitForGame();
