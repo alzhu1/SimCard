@@ -27,8 +27,11 @@ public abstract class DuelistState {
     }
 
     IEnumerator HandleWithLifecycle() {
+        Debug.Log($"Entering {this}");
         Enter();
+        Debug.Log($"Starting to handle {this}");
         yield return duelist.StartCoroutine(Handle());
+        Debug.Log($"Exiting {this}");
         Exit();
         completed = true;
     }

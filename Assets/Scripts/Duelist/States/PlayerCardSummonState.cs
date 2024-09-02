@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCardSummonState : DuelistState {
+public class PlayerCardSummonState : PlayerState {
     private Card cardToSummon;
 
     // Tribute summon
@@ -41,7 +41,6 @@ public class PlayerCardSummonState : DuelistState {
     protected override void Exit() { }
 
     protected override IEnumerator Handle() {
-        Debug.Log("In player card summon state");
 
         while (nextState == null) {
             if (Input.GetKeyDown(KeyCode.Escape)) {

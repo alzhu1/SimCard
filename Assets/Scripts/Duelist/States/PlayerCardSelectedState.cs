@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCardSelectedState : DuelistState {
+public class PlayerCardSelectedState : PlayerState {
     private Card selectedCard;
     private bool isSummonAllowed;
 
@@ -21,7 +21,6 @@ public class PlayerCardSelectedState : DuelistState {
     protected override void Exit() { }
 
     protected override IEnumerator Handle() {
-        Debug.Log("In player card selected state");
 
         while (nextState == null) {
             if (Input.GetKeyDown(KeyCode.Escape)) {

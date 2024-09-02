@@ -52,7 +52,7 @@ public class CardGraph {
             }
         }
 
-        if (this.CurrNode == null) {
+        if (rowCount > 0 && this.CurrNode == null) {
             this.CurrNode = nodesByRow[0][0];
         }
     }

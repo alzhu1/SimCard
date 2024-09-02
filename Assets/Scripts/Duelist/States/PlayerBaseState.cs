@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBaseState : DuelistState {
+public class PlayerBaseState : PlayerState {
     private Card startingCard;
 
     private CardGraph cardGraph;
@@ -25,8 +25,6 @@ public class PlayerBaseState : DuelistState {
     }
 
     protected override IEnumerator Handle() {
-        Debug.Log("In player base state");
-
         // TODO: For now input can be put here (maybe that's ok?)
         // But think about where we could place player input and somehow merge that with DuelistController
 
