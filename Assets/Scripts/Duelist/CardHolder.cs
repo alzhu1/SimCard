@@ -9,35 +9,35 @@ public class CardHolder : MonoBehaviour {
         get { return cards; }
     }
 
-    protected Duelist duelist;
-
-    void Awake() {
-        Init();
+    protected virtual void Awake() {
+        // Initialize any cards that should be children of the card holder
+        Card[] childrenCards = GetComponentsInChildren<Card>(true);
+        cards = new List<Card>(childrenCards ?? new Card[] { });
     }
 
-    protected void InitCardsFromChildren() {
-        Card[] childrenCards = GetComponentsInChildren<Card>(true);
-        if (childrenCards != null) {
-            cards = new List<Card>(childrenCards);
-        } else {
-            cards = new List<Card>();
+    public virtual void Spread() {
+        // Default spread: space out cards horizontally
+        int offset = 2;
+        int leftEdgeX = (1 - cards.Count) * offset / 2;
+        for (int i = 0; i < cards.Count; i++) {
+            Card card = cards[i];
+            Vector3 pos = Vector3.zero;
+
+            pos.x = leftEdgeX + (offset * i);
+            card.transform.localPosition = pos;
         }
     }
 
-    protected void InitDuelist() {
-        duelist = GetComponentInParent<Duelist>();
-    }
+    public bool TransferTo(CardHolder ch, Card card, bool isCardActive) {
+        if (card == null) {
+            return false;
+        }
 
-    protected void Init() {
-        InitCardsFromChildren();
-        InitDuelist();
-    }
-
-    public void TransferTo(CardHolder ch, Card card, bool isCardActive) {
         Cards.Remove(card);
         ch.Cards.Add(card);
         card.transform.SetParent(ch.transform);
         card.gameObject.SetActive(isCardActive);
+        return true;
     }
 
     public bool HasEntityCount(EntitySO entity, int count) {
