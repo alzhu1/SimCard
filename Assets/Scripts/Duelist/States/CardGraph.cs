@@ -29,33 +29,33 @@ public class CardGraph {
             List<CardNode> nextRow = nodesByRow[(i + 1) % rowCount];
 
             for (int j = 0; j < row.Count; j++) {
-                CardNode currNode = row[j];
+                CardNode node = row[j];
 
-                if (currNode.card == startingCard) {
-                    this.currNode = currNode;
+                if (node.card == startingCard) {
+                    currNode = node;
                 }
 
-                currNode.Left = row[(row.Count + j - 1) % row.Count];
-                currNode.Right = row[(j + 1) % row.Count];
+                node.Left = row[(row.Count + j - 1) % row.Count];
+                node.Right = row[(j + 1) % row.Count];
 
                 // For now, set the up/down to be the first item in the row
-                currNode.Up = nextRow[0];
-                currNode.Down = prevRow[0];
+                node.Up = nextRow[0];
+                node.Down = prevRow[0];
             }
         }
 
-        if (rowCount > 0 && this.currNode == null) {
-            this.currNode = nodesByRow[0][0];
+        if (rowCount > 0 && currNode == null) {
+            currNode = nodesByRow[0][0];
         }
     }
 
     public void MoveNode(Vector2Int direction) {
-        this.currNode = this.currNode.dir[direction];
+        currNode = currNode.dir[direction];
     }
 
     public void Exit() {
         // Reset color
-        this.currNode = null;
+        currNode = null;
     }
 
     private sealed class CardNode {

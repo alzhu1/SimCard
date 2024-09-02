@@ -19,11 +19,8 @@ public class Card : MonoBehaviour {
 
     public List<EntityCost> Costs => cardSO.costs;
 
-    private List<ResourceCost> resourceCosts;
-    public List<ResourceCost> ResourceCosts => resourceCosts;
-
-    private List<EntityCost> nonResourceCosts;
-    public List<EntityCost> NonResourceCosts => nonResourceCosts;
+    public List<ResourceCost> ResourceCosts { get; private set; }
+    public List<EntityCost> NonResourceCosts { get; private set; }
 
     public CardSummonType SummonType {
         get {
@@ -45,24 +42,16 @@ public class Card : MonoBehaviour {
         sr.sprite = cardSO.sprite;
         gameObject.SetActive(false);
 
-        resourceCosts = new List<ResourceCost>();
-        nonResourceCosts = new List<EntityCost>();
+        ResourceCosts = new List<ResourceCost>();
+        NonResourceCosts = new List<EntityCost>();
 
-        foreach (var cost in Costs) {
+        foreach (EntityCost cost in Costs) {
             if (cost.entity.IsResource()) {
-                resourceCosts.Add(cost.ToResourceCost());
+                ResourceCosts.Add(cost.ToResourceCost());
             } else {
-                nonResourceCosts.Add(cost);
+                NonResourceCosts.Add(cost);
             }
         }
-    }
-
-    void Start() {
-
-    }
-
-    void Update() {
-
     }
 
     public bool IsResourceCard() {
@@ -71,7 +60,7 @@ public class Card : MonoBehaviour {
 
     public ResourceEntitySO GetResource() {
         if (IsResourceCard()) {
-            return this.Entity as ResourceEntitySO;
+            return Entity as ResourceEntitySO;
         }
 
         return null;
@@ -85,16 +74,8 @@ public class Card : MonoBehaviour {
         return NonResourceCosts.Count > 0;
     }
 
-    public void SetHighlightedColor() {
-        sr.color = Color.yellow;
-    }
-
     public void SetSelectedColor() {
         sr.color = Color.green;
-    }
-
-    public void SetSummonColor() {
-        sr.color = Color.red;
     }
 
     public void ResetColor() {

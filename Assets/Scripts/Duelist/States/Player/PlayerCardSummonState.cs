@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerCardSummonState : PlayerState {
-    private Card cardToSummon;
+    private readonly Card cardToSummon;
 
     // Tribute summon
     private Dictionary<EntitySO, HashSet<Card>> suppliedCards;
@@ -21,9 +21,10 @@ public class PlayerCardSummonState : PlayerState {
                     suppliedCards[nonResourceCost.entity] = new HashSet<Card>();
                 }
 
-                this.cardGraph = new CardGraph(new() {
+                cardGraph = new CardGraph(new() {
                     playerDuelist.Field.Cards
                 }, null);
+
                 // Set cursor position
                 playerDuelist.ShowCursor();
                 playerDuelist.MoveCursorToCard(cardGraph.CurrCard, true);

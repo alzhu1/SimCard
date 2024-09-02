@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerBaseState : PlayerState {
-    private Card startingCard;
+    private readonly Card startingCard;
 
     private CardGraph cardGraph;
 
@@ -18,7 +18,7 @@ public class PlayerBaseState : PlayerState {
 
         cardGraph = new CardGraph(new() {
             playerDuelist.Hand.Cards
-        }, this.startingCard);
+        }, startingCard);
 
         // Set cursor position
         playerDuelist.ShowCursor();
@@ -42,7 +42,7 @@ public class PlayerBaseState : PlayerState {
 
             if (Input.GetKeyDown(KeyCode.Space)) {
                 // Move to a new state
-                nextState = new PlayerCardSelectedState(this.cardGraph.CurrCard);
+                nextState = new PlayerCardSelectedState(cardGraph.CurrCard);
                 break;
             }
 

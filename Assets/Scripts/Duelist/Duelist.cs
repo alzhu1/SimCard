@@ -15,7 +15,7 @@ public abstract class Duelist : MonoBehaviour {
 
     public Dictionary<ResourceEntitySO, int> CurrentResources { get; private set; }
 
-    public int TotalPower => Field?.Cards?.Sum(x => x.Power) ?? 0;
+    public int TotalPower => Field.Cards?.Sum(x => x.Power) ?? 0;
 
     private int turnActions;
 

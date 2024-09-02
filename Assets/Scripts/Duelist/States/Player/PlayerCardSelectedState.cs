@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerCardSelectedState : PlayerState {
-    private Card selectedCard;
+    private readonly Card selectedCard;
     private bool isSummonAllowed;
 
     public PlayerCardSelectedState(Card selectedCard) {
