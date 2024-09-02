@@ -13,7 +13,7 @@ public abstract class DuelistState {
     protected abstract IEnumerator Handle();
     protected abstract void Exit();
 
-    public void Init(Duelist duelist) {
+    public virtual void Init(Duelist duelist) {
         this.duelist = duelist;
     }
 

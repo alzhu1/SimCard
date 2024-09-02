@@ -18,7 +18,9 @@ public class PlayerCardSelectedState : PlayerState {
         isSummonAllowed = IsCardSummonAllowed();
     }
 
-    protected override void Exit() { }
+    protected override void Exit() {
+        selectedCard.ResetColor();
+    }
 
     protected override IEnumerator Handle() {
 

@@ -77,7 +77,7 @@ public abstract class Duelist : MonoBehaviour {
         OrganizeArea();
     }
 
-    public void PlaySelectedCard(Card card, IEnumerable<List<Card>> cardSacrifices = null) {
+    public void PlaySelectedCard(Card card, IEnumerable<HashSet<Card>> cardSacrifices = null) {
         int cardIndex = this.Hand.Cards.IndexOf(card);
         if (cardIndex >= 0) {
             // hand.RemoveCard(cardIndex);

@@ -15,13 +15,19 @@ public class PlayerBaseState : PlayerState {
     protected override void Enter() {
         // For now, use Hand as holder
         // Initialize list of cards
+
         cardGraph = new CardGraph(new() {
-            duelist.Hand.Cards
+            playerDuelist.Hand.Cards
         }, this.startingCard);
+
+        // Set cursor position
+        playerDuelist.ShowCursor();
+        playerDuelist.MoveCursorToCard(cardGraph.CurrCard, true);
     }
 
     protected override void Exit() {
         cardGraph.Exit();
+        playerDuelist.HideCursor();
     }
 
     protected override IEnumerator Handle() {
@@ -40,10 +46,20 @@ public class PlayerBaseState : PlayerState {
                 break;
             }
 
+            Vector2Int move = Vector2Int.zero;
+
             if (Input.GetKeyDown(KeyCode.LeftArrow)) {
-                cardGraph.MoveNode(Vector2Int.left);
+                move = Vector2Int.left;
             } else if (Input.GetKeyDown(KeyCode.RightArrow)) {
-                cardGraph.MoveNode(Vector2Int.right);
+                move = Vector2Int.right;
+            }
+
+            if (!move.Equals(Vector2Int.zero)) {
+                // Card fromCard = cardGraph.CurrCard;
+                cardGraph.MoveNode(move);
+                Card toCard = cardGraph.CurrCard;
+
+                yield return playerDuelist.MoveCursorToCard(toCard);
             }
 
             yield return null;

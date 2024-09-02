@@ -6,18 +6,8 @@ public class PlayerCardSummonState : PlayerState {
     private Card cardToSummon;
 
     // Tribute summon
-    private Dictionary<EntitySO, List<Card>> suppliedCards;
-    private Card highlightedCard;
-    private Card HighlightedCard {
-        get { return highlightedCard; }
-        set {
-            highlightedCard?.ResetColor();
-            value?.SetHighlightedColor();
-            highlightedCard = value;
-        }
-    }
-
-    private List<Card> holderCopy;
+    private Dictionary<EntitySO, HashSet<Card>> suppliedCards;
+    private CardGraph cardGraph;
 
     public PlayerCardSummonState(Card cardToSummon) {
         this.cardToSummon = cardToSummon;
@@ -26,19 +16,32 @@ public class PlayerCardSummonState : PlayerState {
     protected override void Enter() {
         switch (cardToSummon.SummonType) {
             case CardSummonType.Tribute: {
-                suppliedCards = new Dictionary<EntitySO, List<Card>>();
+                suppliedCards = new Dictionary<EntitySO, HashSet<Card>>();
                 foreach (var nonResourceCost in cardToSummon.NonResourceCosts) {
-                    suppliedCards[nonResourceCost.entity] = new List<Card>();
+                    suppliedCards[nonResourceCost.entity] = new HashSet<Card>();
                 }
 
-                this.HighlightedCard = duelist.Field.Cards?[0];
-                holderCopy = new List<Card>(duelist.Field.Cards);
+                this.cardGraph = new CardGraph(new() {
+                    playerDuelist.Field.Cards
+                }, null);
+                // Set cursor position
+                playerDuelist.ShowCursor();
+                playerDuelist.MoveCursorToCard(cardGraph.CurrCard, true);
                 break;
             }
         }
     }
 
-    protected override void Exit() { }
+    protected override void Exit() {
+        if (suppliedCards != null) {
+            foreach (var cardSet in suppliedCards.Values) {
+                foreach (var card in cardSet) {
+                    card.ResetColor();
+                }
+            }
+        }
+        playerDuelist.HideCursor();
+    }
 
     protected override IEnumerator Handle() {
 
@@ -71,10 +74,8 @@ public class PlayerCardSummonState : PlayerState {
     }
 
     DuelistState HandleTributeSummon() {
-        // TODO: Take in input
-
         if (IsTributeSummonAllowed()) {
-            this.HighlightedCard = null;
+            playerDuelist.HideCursor();
 
             if (Input.GetKeyDown(KeyCode.Space)) {
                 duelist.PlaySelectedCard(cardToSummon, suppliedCards.Values);
@@ -85,29 +86,38 @@ public class PlayerCardSummonState : PlayerState {
             return null;
         }
 
-        if (suppliedCards.ContainsKey(this.HighlightedCard.Entity) && Input.GetKeyDown(KeyCode.Space)) {
-            // It is a cost we can add
-            suppliedCards[this.HighlightedCard.Entity].Add(this.HighlightedCard);
+        Card currCard = cardGraph.CurrCard;
 
-            Card addedCard = this.HighlightedCard;
-            holderCopy.Remove(addedCard);
-            this.HighlightedCard = holderCopy.Count > 0 ? holderCopy[0] : null;
-            addedCard.SetSelectedColor();
+        if (suppliedCards.ContainsKey(currCard.Entity) && Input.GetKeyDown(KeyCode.Space)) {
+            HashSet<Card> cardSet = suppliedCards[currCard.Entity];
+
+            if (cardSet.Contains(currCard)) {
+                // Remove the card
+                cardSet.Remove(currCard);
+                currCard.ResetColor();
+            } else {
+                // It is a cost we can cadd
+                cardSet.Add(currCard);
+                currCard.SetSelectedColor();
+            }
         }
 
-        int nextCard = 0;
+        Vector2Int move = Vector2Int.zero;
+
         if (Input.GetKeyDown(KeyCode.LeftArrow)) {
-            nextCard = -1;
+            move = Vector2Int.left;
         } else if (Input.GetKeyDown(KeyCode.RightArrow)) {
-            nextCard = 1;
+            move = Vector2Int.right;
         }
 
-        if (nextCard != 0) {
-            int nextCardIndex = holderCopy.IndexOf(this.HighlightedCard) + nextCard;
-            int cardCount = holderCopy.Count;
+        if (!move.Equals(Vector2Int.zero)) {
+            // Card fromCard = cardGraph.CurrCard;
+            cardGraph.MoveNode(move);
+            Card toCard = cardGraph.CurrCard;
 
-            int highlightedCardIndex = nextCardIndex < 0 ? nextCardIndex + cardCount : nextCardIndex % cardCount;
-            this.HighlightedCard = holderCopy[highlightedCardIndex];
+            // TODO: How to run coroutine in this context??
+            // yield return playerDuelist.MoveCursorToCard(toCard);
+            playerDuelist.MoveCursorToCard(toCard);
         }
 
         return null;

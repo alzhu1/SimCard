@@ -4,17 +4,9 @@ using System.Linq;
 using UnityEngine;
 
 public class CardGraph {
-    private CardNode _currNode;
-    private CardNode CurrNode {
-        get { return _currNode; }
-        set {
-            _currNode?.card?.ResetColor();
-            value?.card?.SetHighlightedColor();
-            _currNode = value;
-        }
-    }
+    private CardNode currNode;
 
-    public Card CurrCard => CurrNode.card;
+    public Card CurrCard => currNode.card;
 
     // TODO: Graveyard - Field - Deck will be a row
     // However, the hover should treat graveyard and deck as one thing
@@ -40,7 +32,7 @@ public class CardGraph {
                 CardNode currNode = row[j];
 
                 if (currNode.card == startingCard) {
-                    this.CurrNode = currNode;
+                    this.currNode = currNode;
                 }
 
                 currNode.Left = row[(row.Count + j - 1) % row.Count];
@@ -52,18 +44,18 @@ public class CardGraph {
             }
         }
 
-        if (rowCount > 0 && this.CurrNode == null) {
-            this.CurrNode = nodesByRow[0][0];
+        if (rowCount > 0 && this.currNode == null) {
+            this.currNode = nodesByRow[0][0];
         }
     }
 
     public void MoveNode(Vector2Int direction) {
-        this.CurrNode = this.CurrNode.dir[direction];
+        this.currNode = this.currNode.dir[direction];
     }
 
     public void Exit() {
         // Reset color
-        this.CurrNode = null;
+        this.currNode = null;
     }
 
     private sealed class CardNode {
