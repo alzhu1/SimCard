@@ -5,8 +5,11 @@ using UnityEngine;
 namespace SimCard.CardGame {
     public class PlayerDuelist : Duelist {
         // TODO: Cursor as its own script?
-        [SerializeField] private SpriteRenderer cursor;
-        [SerializeField] private float cursorMoveTime = 1f;
+        [SerializeField]
+        private SpriteRenderer cursor;
+
+        [SerializeField]
+        private float cursorMoveTime = 1f;
 
         protected override DuelistState StartState => new DrawState<PlayerBaseState>();
 
@@ -16,8 +19,13 @@ namespace SimCard.CardGame {
             }
         }
 
-        public void ShowCursor() { cursor.enabled = true; }
-        public void HideCursor() { cursor.enabled = false; }
+        public void ShowCursor() {
+            cursor.enabled = true;
+        }
+
+        public void HideCursor() {
+            cursor.enabled = false;
+        }
 
         public Coroutine MoveCursorToCard(Card card, bool instant = false) {
             return StartCoroutine(MoveCursor(card.transform.position, instant));

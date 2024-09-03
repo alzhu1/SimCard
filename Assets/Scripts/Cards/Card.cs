@@ -1,18 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 using EntityCost = SimCard.CardGame.Cost<SimCard.CardGame.EntitySO>;
 using ResourceCost = SimCard.CardGame.Cost<SimCard.CardGame.ResourceEntitySO>;
 
 namespace SimCard.CardGame {
     public enum CardSummonType {
         Regular,
-        Tribute
+        Tribute,
     }
 
     public class Card : MonoBehaviour {
-        [SerializeField] private CardSO cardSO;
+        [SerializeField]
+        private CardSO cardSO;
 
         public EntitySO Entity => cardSO.entity;
 

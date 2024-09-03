@@ -23,8 +23,8 @@ namespace SimCard.CardGame {
                     }
 
                     cardGraph = new CardGraph(new() {
-                    playerDuelist.Field.Cards
-                }, null);
+                        playerDuelist.Field.Cards
+                    }, null);
 
                     // Set cursor position
                     playerDuelist.ShowCursor();
@@ -46,7 +46,6 @@ namespace SimCard.CardGame {
         }
 
         protected override IEnumerator Handle() {
-
             while (nextState == null) {
                 if (Input.GetKeyDown(KeyCode.Escape)) {
                     nextState = new PlayerCardSelectedState(cardToSummon);
@@ -69,7 +68,9 @@ namespace SimCard.CardGame {
 
         DuelistState HandleRegularSummon() {
             // Logic goes here for regular summon stuff
-            Debug.Log($"Playing card {cardToSummon}, resource: {cardToSummon.IsResourceCard()}, entity: {cardToSummon.Entity}");
+            Debug.Log(
+                $"Playing card {cardToSummon}, resource: {cardToSummon.IsResourceCard()}, entity: {cardToSummon.Entity}"
+            );
 
             duelist.PlaySelectedCard(cardToSummon);
             cardToSummon.ResetColor();

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace SimCard.CardGame {
     public enum EntityType {
         Normal,
-        Resource
+        Resource,
     }
 
     [CreateAssetMenu(fileName = "Card", menuName = "ScriptableObjects/Entity")]

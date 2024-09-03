@@ -24,7 +24,6 @@ namespace SimCard.CardGame {
         }
 
         protected override IEnumerator Handle() {
-
             while (nextState == null) {
                 if (Input.GetKeyDown(KeyCode.Escape)) {
                     // Revert to base state, keeping the original card

@@ -65,10 +65,10 @@ namespace SimCard.CardGame {
             public Dictionary<Vector2Int, CardNode> dir =
                 new()
                 {
-                { Vector2Int.up, null },
-                { Vector2Int.right, null },
-                { Vector2Int.down, null },
-                { Vector2Int.left, null },
+                    { Vector2Int.up, null },
+                    { Vector2Int.right, null },
+                    { Vector2Int.down, null },
+                    { Vector2Int.left, null },
                 };
 
             public CardNode Up {

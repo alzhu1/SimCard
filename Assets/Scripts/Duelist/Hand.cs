@@ -3,7 +3,5 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace SimCard.CardGame {
-    public class Hand : CardHolder {
-
-    }
+    public class Hand : CardHolder { }
 }

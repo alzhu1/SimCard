@@ -15,8 +15,11 @@ namespace SimCard.CardGame {
 
         private Dictionary<Duelist, int> duelistWins;
 
-        [SerializeField] private Duelist playerDuelist;
-        [SerializeField] private Duelist opponentDuelist;
+        [SerializeField]
+        private Duelist playerDuelist;
+
+        [SerializeField]
+        private Duelist opponentDuelist;
 
         private Duelist currDuelist;
 
@@ -30,9 +33,9 @@ namespace SimCard.CardGame {
 
             duelistWins = new Dictionary<Duelist, int>
             {
-            { playerDuelist, 0 },
-            { opponentDuelist, 0 }
-        };
+                { playerDuelist, 0 },
+                { opponentDuelist, 0 },
+            };
 
             currDuelist = playerDuelist;
         }

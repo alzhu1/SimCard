@@ -2,22 +2,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 using EntityCost = SimCard.CardGame.Cost<SimCard.CardGame.EntitySO>;
 using ResourceCost = SimCard.CardGame.Cost<SimCard.CardGame.ResourceEntitySO>;
 
 namespace SimCard.CardGame {
     [System.Serializable]
-    public struct Cost<T> where T : EntitySO {
+    public struct Cost<T>
+        where T : EntitySO {
         public T entity;
         public int cost;
 
         public ResourceCost ToResourceCost() {
             if (entity is ResourceEntitySO) {
-                return new() {
-                    entity = entity as ResourceEntitySO,
-                    cost = cost
-                };
+                return new() { entity = entity as ResourceEntitySO, cost = cost };
             }
             return new() { entity = null, cost = -1 };
         }

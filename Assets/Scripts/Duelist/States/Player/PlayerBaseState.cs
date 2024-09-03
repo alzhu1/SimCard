@@ -9,6 +9,7 @@ namespace SimCard.CardGame {
         private CardGraph cardGraph;
 
         public PlayerBaseState() { }
+
         public PlayerBaseState(Card startingCard) {
             this.startingCard = startingCard;
         }
@@ -18,8 +19,8 @@ namespace SimCard.CardGame {
             // Initialize list of cards
 
             cardGraph = new CardGraph(new() {
-            playerDuelist.Hand.Cards
-        }, startingCard);
+                playerDuelist.Hand.Cards
+            }, startingCard);
 
             // Set cursor position
             playerDuelist.ShowCursor();
