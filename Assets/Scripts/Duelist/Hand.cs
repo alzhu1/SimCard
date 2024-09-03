@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Hand : CardHolder {
+namespace SimCard.CardGame {
+    public class Hand : CardHolder {
 
+    }
 }

@@ -2,84 +2,86 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using EntityCost = Cost<EntitySO>;
-using ResourceCost = Cost<ResourceEntitySO>;
+using EntityCost = SimCard.CardGame.Cost<SimCard.CardGame.EntitySO>;
+using ResourceCost = SimCard.CardGame.Cost<SimCard.CardGame.ResourceEntitySO>;
 
-public enum CardSummonType {
-    Regular,
-    Tribute
-}
-
-public class Card : MonoBehaviour {
-    [SerializeField] private CardSO cardSO;
-
-    public EntitySO Entity => cardSO.entity;
-
-    public int Power => cardSO.power;
-
-    public List<EntityCost> Costs => cardSO.costs;
-
-    public List<ResourceCost> ResourceCosts { get; private set; }
-    public List<EntityCost> NonResourceCosts { get; private set; }
-
-    public CardSummonType SummonType {
-        get {
-            if (HasNonResourceCosts()) {
-                return CardSummonType.Tribute;
-            }
-
-            return CardSummonType.Regular;
-        }
+namespace SimCard.CardGame {
+    public enum CardSummonType {
+        Regular,
+        Tribute
     }
 
-    // TODO: Card likely needs to carry info about its own state
-    // i.e. owned by player/opponent, whether it's on the field, etc
+    public class Card : MonoBehaviour {
+        [SerializeField] private CardSO cardSO;
 
-    private SpriteRenderer sr;
+        public EntitySO Entity => cardSO.entity;
 
-    void Awake() {
-        sr = GetComponent<SpriteRenderer>();
-        sr.sprite = cardSO.sprite;
-        gameObject.SetActive(false);
+        public int Power => cardSO.power;
 
-        ResourceCosts = new List<ResourceCost>();
-        NonResourceCosts = new List<EntityCost>();
+        public List<EntityCost> Costs => cardSO.costs;
 
-        foreach (EntityCost cost in Costs) {
-            if (cost.entity.IsResource()) {
-                ResourceCosts.Add(cost.ToResourceCost());
-            } else {
-                NonResourceCosts.Add(cost);
+        public List<ResourceCost> ResourceCosts { get; private set; }
+        public List<EntityCost> NonResourceCosts { get; private set; }
+
+        public CardSummonType SummonType {
+            get {
+                if (HasNonResourceCosts()) {
+                    return CardSummonType.Tribute;
+                }
+
+                return CardSummonType.Regular;
             }
         }
-    }
 
-    public bool IsResourceCard() {
-        return Entity?.IsResource() == true;
-    }
+        // TODO: Card likely needs to carry info about its own state
+        // i.e. owned by player/opponent, whether it's on the field, etc
 
-    public ResourceEntitySO GetResource() {
-        if (IsResourceCard()) {
-            return Entity as ResourceEntitySO;
+        private SpriteRenderer sr;
+
+        void Awake() {
+            sr = GetComponent<SpriteRenderer>();
+            sr.sprite = cardSO.sprite;
+            gameObject.SetActive(false);
+
+            ResourceCosts = new List<ResourceCost>();
+            NonResourceCosts = new List<EntityCost>();
+
+            foreach (EntityCost cost in Costs) {
+                if (cost.entity.IsResource()) {
+                    ResourceCosts.Add(cost.ToResourceCost());
+                } else {
+                    NonResourceCosts.Add(cost);
+                }
+            }
         }
 
-        return null;
-    }
+        public bool IsResourceCard() {
+            return Entity.IsResource() == true;
+        }
 
-    public bool HasCosts() {
-        return Costs.Count > 0;
-    }
+        public ResourceEntitySO GetResource() {
+            if (IsResourceCard()) {
+                return Entity as ResourceEntitySO;
+            }
 
-    public bool HasNonResourceCosts() {
-        return NonResourceCosts.Count > 0;
-    }
+            return null;
+        }
 
-    public void SetSelectedColor() {
-        sr.color = Color.green;
-    }
+        public bool HasCosts() {
+            return Costs.Count > 0;
+        }
 
-    public void ResetColor() {
-        Debug.Log("Resetting color");
-        sr.color = Color.white;
+        public bool HasNonResourceCosts() {
+            return NonResourceCosts.Count > 0;
+        }
+
+        public void SetSelectedColor() {
+            sr.color = Color.green;
+        }
+
+        public void ResetColor() {
+            Debug.Log("Resetting color");
+            sr.color = Color.white;
+        }
     }
 }

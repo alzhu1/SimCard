@@ -19,7 +19,7 @@ MonoBehaviour:
   effectText: effect3
   entity: {fileID: 11400000, guid: aeccd0c0afd7443b097edabba6135f39, type: 2}
   costs:
-  - entity: {fileID: 11400000, guid: 63de11cacd8d6410a9cf1fbe6c99b341, type: 2}
+  - entity: {fileID: 11400000, guid: 7dfe7f3fde56342a68c614bb1e03ae6c, type: 2}
     cost: 1
   - entity: {fileID: 11400000, guid: d57ed53357a0440fdabffbffdacb3d4e, type: 2}
     cost: 1
