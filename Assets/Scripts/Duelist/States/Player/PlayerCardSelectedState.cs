@@ -40,9 +40,13 @@ namespace SimCard.CardGame {
         }
 
         bool IsCardSummonAllowed() {
+            // Duelist must have enough actions
+            if (!duelist.AllowAction) {
+                return false;
+            }
+
             // Card summon is allowed if resource cost is met
             // And other cards exist on the field
-
             foreach (var resourceCost in selectedCard.ResourceCosts) {
                 ResourceEntitySO resource = resourceCost.entity;
 

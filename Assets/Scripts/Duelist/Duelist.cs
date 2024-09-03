@@ -35,6 +35,7 @@ namespace SimCard.CardGame {
 
         void Start() {
             cardGameManager.OnGameStart += InitForGame;
+            cardGameManager.OnTurnStart += StartTurn;
         }
 
         void OnDestroy() {
@@ -53,8 +54,12 @@ namespace SimCard.CardGame {
             }
         }
 
-        public void StartTurn() {
-            turnActions = 4;
+        void StartTurn(Duelist currDuelist) {
+            if (currDuelist != this) {
+                return;
+            }
+
+            turnActions = 2;
             duelistState = StartState;
             duelistState.Init(this);
             duelistState.Begin();
@@ -68,6 +73,8 @@ namespace SimCard.CardGame {
         protected abstract void InitForGame();
         protected abstract DuelistState StartState { get; }
 
+        public bool AllowAction => turnActions > 0;
+
         public void DrawCard() {
             if (Deck.TransferTo(Hand, Deck.NextCard, true)) {
                 Deck.TryHideDeck();
@@ -77,6 +84,8 @@ namespace SimCard.CardGame {
         }
 
         public void PlaySelectedCard(Card card, IEnumerable<HashSet<Card>> cardSacrifices = null) {
+            turnActions--;
+
             // Remove from resources
             foreach (var resourceCost in card.ResourceCosts) {
                 CurrentResources[resourceCost.entity] -= resourceCost.cost;
@@ -92,7 +101,6 @@ namespace SimCard.CardGame {
             }
 
             // Play the card
-            Debug.Log(card.IsResourceCard());
             if (card.IsResourceCard()) {
                 ResourceEntitySO resource = card.GetResource();
                 CurrentResources[resource] =

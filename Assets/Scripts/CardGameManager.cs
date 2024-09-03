@@ -3,15 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace SimCard.CardGame {
     public class CardGameManager : MonoBehaviour {
         // Singleton is private to avoid multiple instantiations (if it somehow happened)
         private static CardGameManager instance = null;
 
-        // TODO: We likely want to keep events for other non-gameplay stuff (i.e. UI)
-        // But would prefer the usage to be quite minimal
+        // Overall game lifecycle events
         public event Action OnGameStart = delegate { };
+        public event Action<Duelist> OnTurnStart = delegate { };
 
         private Dictionary<Duelist, int> duelistWins;
 
@@ -21,7 +22,7 @@ namespace SimCard.CardGame {
         [SerializeField]
         private Duelist opponentDuelist;
 
-        private Duelist currDuelist;
+        private List<List<Duelist>> roundOrder;
 
         void Awake() {
             if (instance == null) {
@@ -37,7 +38,16 @@ namespace SimCard.CardGame {
                 { opponentDuelist, 0 },
             };
 
-            currDuelist = playerDuelist;
+            // ABBA order, then BAAB order
+            roundOrder = new List<List<Duelist>>
+            {
+                new(
+                    new Duelist[] { playerDuelist, opponentDuelist, opponentDuelist, playerDuelist }
+                ),
+                new(
+                    new Duelist[] { opponentDuelist, playerDuelist, playerDuelist, opponentDuelist }
+                ),
+            };
         }
 
         IEnumerator Start() {
@@ -45,19 +55,34 @@ namespace SimCard.CardGame {
             OnGameStart.Invoke();
 
             yield return new WaitForSeconds(2f);
-            playerDuelist.StartTurn();
+            PrepareRound();
+            StartTurn();
         }
 
-        Duelist GetNextDuelist() {
-            return currDuelist == playerDuelist ? opponentDuelist : playerDuelist;
+        void PrepareRound() {
+            Debug.Log("Preparing new round");
+            if (roundOrder[0].Count == 0) {
+                roundOrder.RemoveAt(0);
+            }
+
+            // Add a copy of list to end of round
+            // By end of func, there should be 3 lists in roundOrder
+            roundOrder.Add(new List<Duelist>(roundOrder[0]));
+            Assert.IsTrue(roundOrder.Count == 3);
+        }
+
+        void StartTurn() {
+            Duelist currDuelist = roundOrder[0][0];
+            Debug.Log($"Start turn for {currDuelist}");
+            OnTurnStart.Invoke(currDuelist);
         }
 
         public void EndTurn() {
-            currDuelist = GetNextDuelist();
+            Duelist currDuelist = roundOrder[0][0];
+            Debug.Log($"End turn for {currDuelist}");
+            roundOrder[0].RemoveAt(0);
 
-            if (currDuelist == playerDuelist) {
-                // Looped back around, winner is the highest overall power
-
+            if (roundOrder[0].Count == 0) {
                 int playerPower = playerDuelist.TotalPower;
                 int opponentPower = opponentDuelist.TotalPower;
 
@@ -80,9 +105,12 @@ namespace SimCard.CardGame {
                         return;
                     }
                 }
+
+                // Prepare next round
+                PrepareRound();
             }
 
-            currDuelist.StartTurn();
+            StartTurn();
         }
     }
 }
