@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.SceneManagement;
 
 namespace SimCard.CardGame {
     public class CardGameManager : MonoBehaviour {
@@ -13,6 +14,7 @@ namespace SimCard.CardGame {
         // Overall game lifecycle events
         public event Action OnGameStart = delegate { };
         public event Action<Duelist> OnTurnStart = delegate { };
+        public event Action OnGameEnd = delegate { };
 
         private Dictionary<Duelist, int> duelistWins;
 
@@ -102,6 +104,7 @@ namespace SimCard.CardGame {
 
                     if (duelistWins[winner] == 5) {
                         Debug.Log($"Winner: {winner}");
+                        StartCoroutine(EndCardGame());
                         return;
                     }
                 }
@@ -111,6 +114,18 @@ namespace SimCard.CardGame {
             }
 
             StartTurn();
+        }
+
+        // TODO: Not sure if this is the best place to put this?
+        IEnumerator EndCardGame() {
+            // For now, let's just reload the level
+            OnGameEnd.Invoke();
+
+            while (!Input.GetKeyDown(KeyCode.Return)) {
+                yield return null;
+            }
+
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 }
