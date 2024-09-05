@@ -3,18 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace SimCard.CardGame {
-    public enum OpponentAIType {
-        Dummy,
-        Simple,
-    }
-
     public class OpponentDuelist : Duelist {
         [SerializeField]
-        private OpponentAIType opponentAIType;
-        public OpponentAIType OpponentAIType => opponentAIType;
+        private OpponentAI opponentAI;
+        public OpponentAI AI => opponentAI;
 
         protected override DuelistState StartState => new DrawState<OpponentThinkState>();
 
-        protected override void InitForGame() { }
+        protected override void InitForGame() {
+            opponentAI.InitOpponentDuelist(this);
+        }
     }
 }

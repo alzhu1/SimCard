@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace SimCard.CardGame {
-    public abstract class OpponentAI {
+    public abstract class OpponentAI : ScriptableObject {
         protected List<OpponentAction> actions = new List<OpponentAction>();
         public List<OpponentAction> Actions => actions;
 
@@ -13,7 +13,12 @@ namespace SimCard.CardGame {
             this.opponentDuelist = opponentDuelist;
         }
 
+        public Coroutine ExecuteBehavior() {
+            actions.Clear();
+            return opponentDuelist.StartCoroutine(Think());
+        }
+
         // This method should add on to the actions
-        public abstract IEnumerator Think();
+        protected abstract IEnumerator Think();
     }
 }

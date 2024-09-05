@@ -2041,6 +2041,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de01795390bdd42f3ab843a7e3443e8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  opponentAI: {fileID: 11400000, guid: 06a61582aee3f4495a74e18d29c7f8c1, type: 2}
 --- !u!1 &1605808570
 GameObject:
   m_ObjectHideFlags: 0
