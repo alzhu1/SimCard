@@ -4,10 +4,18 @@ using UnityEngine;
 
 namespace SimCard.CardGame {
     public class OpponentThinkState : OpponentState {
-        protected override void Enter() { }
+        private OpponentAI opponentAI;
+
+        protected override void Enter() {
+            opponentAI = opponentDuelist.OpponentAIType switch {
+                OpponentAIType.Dummy => new DummyAI(),
+                OpponentAIType.Simple => new SimpleAI(),
+                _ => new DummyAI(),
+            };
+            opponentAI.InitOpponentDuelist(opponentDuelist);
+        }
 
         protected override IEnumerator Handle() {
-            OpponentAI opponentAI = opponentDuelist.AI;
             yield return opponentDuelist.StartCoroutine(opponentAI.Think());
 
             // At this point, there should be some actions
