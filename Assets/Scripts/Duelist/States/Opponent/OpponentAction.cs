@@ -6,11 +6,11 @@ namespace SimCard.CardGame {
     // TODO: Decide if the actions need separate classes
     public interface OpponentAction { }
 
-    public class PlayCardAction : OpponentAction {
-        public Card cardToSummon;
+    public struct PlayCardAction : OpponentAction {
+        public Card CardToSummon { get; private set; }
 
-        public PlayCardAction(Card cardToSummon) => this.cardToSummon = cardToSummon;
+        public PlayCardAction(Card cardToSummon) => CardToSummon = cardToSummon;
     }
 
-    public class EndAction : OpponentAction { }
+    public struct EndAction : OpponentAction { }
 }

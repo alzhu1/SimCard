@@ -15,6 +15,8 @@ namespace SimCard.CardGame {
                 switch (action) {
                     case PlayCardAction playCardAction:
                         Debug.Log("PlayCardAction");
+                        // TODO: When playing cards with sacs, figure out how to include
+                        opponentDuelist.PlaySelectedCard(playCardAction.CardToSummon, null);
                         break;
 
                     case EndAction endAction:
@@ -23,7 +25,7 @@ namespace SimCard.CardGame {
                         break;
                 }
 
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(opponentDuelist.GeneralWaitTime);
             }
 
             if (nextState == null) {

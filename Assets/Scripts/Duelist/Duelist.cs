@@ -18,7 +18,7 @@ namespace SimCard.CardGame {
 
         public int TotalPower => Field.Cards?.Sum(x => x.Power) ?? 0;
 
-        private int turnActions;
+        public int TurnActions { get; private set; }
 
         void Awake() {
             // Should be provided by parent
@@ -59,7 +59,7 @@ namespace SimCard.CardGame {
                 return;
             }
 
-            turnActions = 2;
+            TurnActions = 2;
             duelistState = StartState;
             duelistState.Init(this);
             duelistState.Begin();
@@ -73,7 +73,7 @@ namespace SimCard.CardGame {
         protected abstract void InitForGame();
         protected abstract DuelistState StartState { get; }
 
-        public bool AllowAction => turnActions > 0;
+        public bool AllowAction => TurnActions > 0;
 
         public void DrawCard() {
             if (Deck.TransferTo(Hand, Deck.NextCard, true)) {
@@ -84,7 +84,7 @@ namespace SimCard.CardGame {
         }
 
         public void PlaySelectedCard(Card card, IEnumerable<HashSet<Card>> cardSacrifices = null) {
-            turnActions--;
+            TurnActions--;
 
             // Remove from resources
             foreach (var resourceCost in card.ResourceCosts) {
