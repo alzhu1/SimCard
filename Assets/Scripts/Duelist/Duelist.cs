@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,12 +35,12 @@ namespace SimCard.CardGame {
         }
 
         void Start() {
-            cardGameManager.EventBus.OnGameStart += InitForGame;
-            cardGameManager.EventBus.OnTurnStart += StartTurn;
+            cardGameManager.EventBus.OnGameStart.Event += InitForGame;
+            cardGameManager.EventBus.OnTurnStart.Event += StartTurn;
         }
 
         void OnDestroy() {
-            cardGameManager.EventBus.OnGameStart -= InitForGame;
+            cardGameManager.EventBus.OnGameStart.Event -= InitForGame;
         }
 
         void Update() {
@@ -54,7 +55,9 @@ namespace SimCard.CardGame {
             }
         }
 
-        void StartTurn(Duelist currDuelist) {
+        void StartTurn(DuelistArgs args) {
+            Duelist currDuelist = args.duelist;
+
             if (currDuelist != this) {
                 return;
             }
@@ -70,7 +73,7 @@ namespace SimCard.CardGame {
             cardGameManager.EndTurn();
         }
 
-        protected abstract void InitForGame();
+        protected abstract void InitForGame(EventArgs _args);
         protected abstract DuelistState StartState { get; }
 
         public bool AllowAction => TurnActions > 0;

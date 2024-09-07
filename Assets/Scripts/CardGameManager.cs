@@ -54,7 +54,7 @@ namespace SimCard.CardGame {
 
         IEnumerator Start() {
             yield return new WaitForSeconds(1f);
-            EventBus.RaiseOnGameStart();
+            EventBus.OnGameStart.Raise(EventArgs.Empty);
 
             yield return new WaitForSeconds(2f);
             PrepareRound();
@@ -76,7 +76,7 @@ namespace SimCard.CardGame {
         void StartTurn() {
             Duelist currDuelist = roundOrder[0][0];
             Debug.Log($"Start turn for {currDuelist}");
-            EventBus.RaiseOnTurnStart(currDuelist);
+            EventBus.OnTurnStart.Raise(new DuelistArgs(currDuelist));
         }
 
         public void EndTurn() {
@@ -119,7 +119,7 @@ namespace SimCard.CardGame {
         // TODO: Not sure if this is the best place to put this?
         IEnumerator EndCardGame() {
             // For now, let's just reload the level
-            EventBus.RaiseOnGameEnd();
+            EventBus.OnGameEnd.Raise(EventArgs.Empty);
 
             while (!Input.GetKeyDown(KeyCode.Return)) {
                 yield return null;

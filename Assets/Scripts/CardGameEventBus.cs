@@ -4,31 +4,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace SimCard.CardGame {
-    // TODO: Maybe revisit this idea of a class containing the event + raise method
-    // Main challenge is figuring out how to pass args
-    // i.e. is there a simple way to pass in no/1/2/etc args
+    // TODO: Should move args/event stuff into a different file?
+    public class DuelistArgs : EventArgs {
+        public Duelist duelist;
+        public DuelistArgs(Duelist duelist) => this.duelist = duelist;
+    }
 
-    // public abstract class CardGameEventArgs { }
-    // public class EmptyArgs : CardGameEventArgs { }
-    // public class DuelistArgs: CardGameEventArgs {
-    //     public Duelist duelist;
-    //     public DuelistArgs(Duelist duelist) => this.duelist = duelist;
-    // }
-
-    // public class CardGameEvent {
-    //     public event Action<CardGameEventArgs> Event = delegate { };
-
-    //     public void Raise(CardGameEventArgs args) {
-    //         Event?.Invoke(args);
-    //     }
-    // }
+    public class CardGameEvent<T> where T: EventArgs {
+        public event Action<T> Event = delegate { };
+        public void Raise(T args) => Event?.Invoke(args);
+    }
 
     public class CardGameEventBus : MonoBehaviour {
         private static CardGameEventBus instance = null;
 
-        public event Action OnGameStart = delegate { };
-        public event Action<Duelist> OnTurnStart = delegate { };
-        public event Action OnGameEnd = delegate { };
+        public CardGameEvent<EventArgs> OnGameStart = new();
+        public CardGameEvent<DuelistArgs> OnTurnStart = new();
+        public CardGameEvent<EventArgs> OnGameEnd = new();
 
         void Awake() {
             if (instance == null) {
@@ -37,18 +29,6 @@ namespace SimCard.CardGame {
                 Destroy(gameObject);
                 return;
             }
-        }
-
-        public void RaiseOnGameStart() {
-            OnGameStart?.Invoke();
-        }
-
-        public void RaiseOnTurnStart(Duelist duelist) {
-            OnTurnStart?.Invoke(duelist);
-        }
-
-        public void RaiseOnGameEnd() {
-            OnGameEnd?.Invoke();
         }
     }
 }
