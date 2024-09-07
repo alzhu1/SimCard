@@ -34,12 +34,12 @@ namespace SimCard.CardGame {
         }
 
         void Start() {
-            cardGameManager.OnGameStart += InitForGame;
-            cardGameManager.OnTurnStart += StartTurn;
+            cardGameManager.EventBus.OnGameStart += InitForGame;
+            cardGameManager.EventBus.OnTurnStart += StartTurn;
         }
 
         void OnDestroy() {
-            cardGameManager.OnGameStart -= InitForGame;
+            cardGameManager.EventBus.OnGameStart -= InitForGame;
         }
 
         void Update() {

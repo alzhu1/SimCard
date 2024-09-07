@@ -12,9 +12,7 @@ namespace SimCard.CardGame {
         private static CardGameManager instance = null;
 
         // Overall game lifecycle events
-        public event Action OnGameStart = delegate { };
-        public event Action<Duelist> OnTurnStart = delegate { };
-        public event Action OnGameEnd = delegate { };
+        public CardGameEventBus EventBus { get; private set; }
 
         private Dictionary<Duelist, int> duelistWins;
 
@@ -33,6 +31,8 @@ namespace SimCard.CardGame {
                 Destroy(gameObject);
                 return;
             }
+
+            EventBus = GetComponent<CardGameEventBus>();
 
             duelistWins = new Dictionary<Duelist, int>
             {
@@ -54,7 +54,7 @@ namespace SimCard.CardGame {
 
         IEnumerator Start() {
             yield return new WaitForSeconds(1f);
-            OnGameStart.Invoke();
+            EventBus.RaiseOnGameStart();
 
             yield return new WaitForSeconds(2f);
             PrepareRound();
@@ -76,7 +76,7 @@ namespace SimCard.CardGame {
         void StartTurn() {
             Duelist currDuelist = roundOrder[0][0];
             Debug.Log($"Start turn for {currDuelist}");
-            OnTurnStart.Invoke(currDuelist);
+            EventBus.RaiseOnTurnStart(currDuelist);
         }
 
         public void EndTurn() {
@@ -119,7 +119,7 @@ namespace SimCard.CardGame {
         // TODO: Not sure if this is the best place to put this?
         IEnumerator EndCardGame() {
             // For now, let's just reload the level
-            OnGameEnd.Invoke();
+            EventBus.RaiseOnGameEnd();
 
             while (!Input.GetKeyDown(KeyCode.Return)) {
                 yield return null;
