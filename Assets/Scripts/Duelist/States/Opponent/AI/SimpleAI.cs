@@ -27,6 +27,10 @@ namespace SimCard.CardGame {
                 }
             }
 
+            if (actions.Count == 0) {
+                actions.Add(new EndAction());
+            }
+
             yield break;
         }
     }

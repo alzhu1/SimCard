@@ -23,6 +23,10 @@ namespace SimCard.CardGame {
                         Debug.Log("EndAction");
                         nextState = new EndState();
                         break;
+
+                    default:
+                        Debug.Log($"Hitting default, action: {action}");
+                        break;
                 }
 
                 yield return new WaitForSeconds(opponentDuelist.GeneralWaitTime);
