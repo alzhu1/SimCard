@@ -46,7 +46,6 @@ namespace SimCard.CardGame {
             }
 
             cursor.transform.position = dest;
-            CardGameManager.EventBus.OnPlayerCardSelect.Raise(new CardArgs(card));
         }
     }
 }

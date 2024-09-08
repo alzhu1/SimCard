@@ -14,11 +14,11 @@ namespace SimCard.CardGame {
         }
 
         void Start() {
-            cardGameManager.EventBus.OnPlayerCardSelect.Event += UpdateCardText;
+            cardGameManager.EventBus.OnPlayerCardHover.Event += UpdateCardText;
         }
 
         void OnDestroy() {
-            cardGameManager.EventBus.OnPlayerCardSelect.Event -= UpdateCardText;
+            cardGameManager.EventBus.OnPlayerCardHover.Event -= UpdateCardText;
         }
 
         void UpdateCardText(CardArgs args) {

@@ -13,6 +13,20 @@ namespace SimCard.CardGame {
     public class CardArgs: EventArgs {
         public Card card;
         public CardArgs(Card card) => this.card = card;
+
+        // TODO: Hacky, think of alternative
+        // Maybe have args based on DuelistState?
+        public bool isSummonAllowed;
+        public CardArgs WithSummonAllowed(bool isSummonAllowed) {
+            this.isSummonAllowed = isSummonAllowed;
+            return this;
+        }
+    }
+
+    // TODO: Would prefer not to expose the details of "icon" to gameplay
+    public class IconArgs: EventArgs {
+        public string iconName;
+        public IconArgs(string iconName) => this.iconName = iconName;
     }
 
     public class CardGameEvent<T> where T: EventArgs {
@@ -29,7 +43,9 @@ namespace SimCard.CardGame {
         public CardGameEvent<EventArgs> OnGameEnd = new();
 
         // Card-specific
+        public CardGameEvent<CardArgs> OnPlayerCardHover = new();
         public CardGameEvent<CardArgs> OnPlayerCardSelect = new();
+        public CardGameEvent<IconArgs> OnCardIconHover = new();
 
         void Awake() {
             if (instance == null) {

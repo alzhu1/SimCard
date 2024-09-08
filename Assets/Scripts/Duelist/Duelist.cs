@@ -8,9 +8,7 @@ namespace SimCard.CardGame {
     public abstract class Duelist : MonoBehaviour {
         private DuelistState duelistState;
 
-        // private CardGameManager cardGameManager;
-        // protected CardGameManager CardGameManager => cardGameManager;
-        protected CardGameManager CardGameManager { get; private set; }
+        public CardGameManager CardGameManager { get; private set; }
 
         public Hand Hand { get; private set; }
         public Deck Deck { get; private set; }
