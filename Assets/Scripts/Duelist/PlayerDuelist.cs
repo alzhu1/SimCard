@@ -29,11 +29,12 @@ namespace SimCard.CardGame {
         }
 
         public Coroutine MoveCursorToCard(Card card, bool instant = false) {
-            return StartCoroutine(MoveCursor(card.transform.position, instant));
+            return StartCoroutine(MoveCursor(card, instant));
         }
 
-        IEnumerator MoveCursor(Vector3 dest, bool instant) {
+        IEnumerator MoveCursor(Card card, bool instant) {
             Vector3 start = cursor.transform.position;
+            Vector3 dest = card.transform.position;
             float t = 0;
 
             if (!instant) {
@@ -45,6 +46,7 @@ namespace SimCard.CardGame {
             }
 
             cursor.transform.position = dest;
+            CardGameManager.EventBus.OnPlayerCardSelect.Raise(new CardArgs(card));
         }
     }
 }

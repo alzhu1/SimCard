@@ -13,6 +13,7 @@ namespace SimCard.CardGame {
     public class Card : MonoBehaviour {
         [SerializeField]
         private CardSO cardSO;
+        public CardSO CardSO => cardSO;
 
         public EntitySO Entity => cardSO.entity;
 

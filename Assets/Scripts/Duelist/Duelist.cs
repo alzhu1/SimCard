@@ -8,7 +8,9 @@ namespace SimCard.CardGame {
     public abstract class Duelist : MonoBehaviour {
         private DuelistState duelistState;
 
-        private CardGameManager cardGameManager;
+        // private CardGameManager cardGameManager;
+        // protected CardGameManager CardGameManager => cardGameManager;
+        protected CardGameManager CardGameManager { get; private set; }
 
         public Hand Hand { get; private set; }
         public Deck Deck { get; private set; }
@@ -23,7 +25,7 @@ namespace SimCard.CardGame {
 
         void Awake() {
             // Should be provided by parent
-            cardGameManager = GetComponentInParent<CardGameManager>();
+            CardGameManager = GetComponentInParent<CardGameManager>();
 
             // Get different duelist aspects in children objects
             Hand = GetComponentInChildren<Hand>();
@@ -35,12 +37,12 @@ namespace SimCard.CardGame {
         }
 
         void Start() {
-            cardGameManager.EventBus.OnGameStart.Event += InitForGame;
-            cardGameManager.EventBus.OnTurnStart.Event += StartTurn;
+            CardGameManager.EventBus.OnGameStart.Event += InitForGame;
+            CardGameManager.EventBus.OnTurnStart.Event += StartTurn;
         }
 
         void OnDestroy() {
-            cardGameManager.EventBus.OnGameStart.Event -= InitForGame;
+            CardGameManager.EventBus.OnGameStart.Event -= InitForGame;
         }
 
         void Update() {
@@ -70,7 +72,7 @@ namespace SimCard.CardGame {
 
         public void EndTurn() {
             duelistState = null;
-            cardGameManager.EndTurn();
+            CardGameManager.EndTurn();
         }
 
         protected abstract void InitForGame(EventArgs _args);
