@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace SimCard.CardGame {
+    public enum PlayerCardAction {
+        None,
+        Preview,
+        Summon
+    }
+
     public class PlayerCardSelectedState : PlayerState {
         private readonly Card selectedCard;
-        private bool isSummonAllowed;
 
-        // TODO: Don't reference "icon" in name
-        private string iconName;
+        private List<PlayerCardAction> allowedActions;
+        private int actionIndex;
 
         public PlayerCardSelectedState(Card selectedCard) {
             this.selectedCard = selectedCard;
@@ -17,20 +22,24 @@ namespace SimCard.CardGame {
         protected override void Enter() {
             selectedCard.SetSelectedColor();
 
-            // TODO: Depending on some criteria, we should determine a "strategy" to execute
-            // i.e. different functions to handle different cases?
-            isSummonAllowed = IsCardSummonAllowed();
+            // Card can always be previewed
+            allowedActions = new List<PlayerCardAction> {
+                PlayerCardAction.Preview
+            };
+            if (IsCardSummonAllowed()) {
+                allowedActions.Add(PlayerCardAction.Summon);
+            }
 
-            playerDuelist.CardGameManager.EventBus.OnPlayerCardSelect.Raise(new CardArgs(selectedCard).WithSummonAllowed(isSummonAllowed));
+            playerDuelist.CardGameManager.EventBus.OnPlayerCardSelect.Raise(new CardArgs(selectedCard, allowedActions));
 
-            iconName = "Preview";
-            playerDuelist.CardGameManager.EventBus.OnCardIconHover.Raise(new IconArgs(iconName));
+            actionIndex = 0;
+            playerDuelist.CardGameManager.EventBus.OnCardActionHover.Raise(new PlayerCardActionArgs(allowedActions[actionIndex]));
         }
 
         protected override void Exit() {
             selectedCard.ResetColor();
             playerDuelist.CardGameManager.EventBus.OnPlayerCardSelect.Raise(new CardArgs(null));
-            playerDuelist.CardGameManager.EventBus.OnCardIconHover.Raise(new IconArgs(null));
+            playerDuelist.CardGameManager.EventBus.OnCardActionHover.Raise(new PlayerCardActionArgs(PlayerCardAction.None));
         }
 
         protected override IEnumerator Handle() {
@@ -41,13 +50,24 @@ namespace SimCard.CardGame {
                     break;
                 }
 
-                if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow)) {
-                    iconName = iconName.Equals("Preview") ? "Summon" : "Preview";
-                    playerDuelist.CardGameManager.EventBus.OnCardIconHover.Raise(new IconArgs(iconName));
+                if (Input.GetKeyDown(KeyCode.LeftArrow)) {
+                    actionIndex = (allowedActions.Count + actionIndex - 1) % allowedActions.Count;
+                    playerDuelist.CardGameManager.EventBus.OnCardActionHover.Raise(new PlayerCardActionArgs(allowedActions[actionIndex]));
+                } else if (Input.GetKeyDown(KeyCode.RightArrow)) {
+                    actionIndex = (actionIndex + 1) % allowedActions.Count;
+                    playerDuelist.CardGameManager.EventBus.OnCardActionHover.Raise(new PlayerCardActionArgs(allowedActions[actionIndex]));
                 }
 
-                if (isSummonAllowed && Input.GetKeyDown(KeyCode.Space)) {
-                    nextState = new PlayerCardSummonState(selectedCard);
+                if (Input.GetKeyDown(KeyCode.Space)) {
+                    switch (allowedActions[actionIndex]) {
+                        case PlayerCardAction.Preview:
+                            nextState = new PlayerCardPreviewState(selectedCard);
+                            break;
+
+                        case PlayerCardAction.Summon:
+                            nextState = new PlayerCardSummonState(selectedCard);
+                            break;
+                    }
                 }
 
                 yield return null;

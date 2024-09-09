@@ -1,15 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 namespace SimCard.CardGame {
-    public class CardTitleText : MonoBehaviour {
+    public class BottomBorderUI : MonoBehaviour {
+        [SerializeField]
         private TextMeshProUGUI cardTitleText;
+
         private CardGameManager cardGameManager;
 
         void Awake() {
-            cardTitleText = GetComponent<TextMeshProUGUI>();
             cardGameManager = GetComponentInParent<CardGameManager>();
         }
 

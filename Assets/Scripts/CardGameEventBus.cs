@@ -10,26 +10,20 @@ namespace SimCard.CardGame {
         public DuelistArgs(Duelist duelist) => this.duelist = duelist;
     }
 
-    public class CardArgs: EventArgs {
+    public class CardArgs : EventArgs {
         public Card card;
-        public CardArgs(Card card) => this.card = card;
+        public List<PlayerCardAction> allowedActions;
 
-        // TODO: Hacky, think of alternative
-        // Maybe have args based on DuelistState?
-        public bool isSummonAllowed;
-        public CardArgs WithSummonAllowed(bool isSummonAllowed) {
-            this.isSummonAllowed = isSummonAllowed;
-            return this;
-        }
+        public CardArgs(Card card) => (this.card, allowedActions) = (card, new());
+        public CardArgs(Card card, List<PlayerCardAction> allowedActions) => (this.card, this.allowedActions) = (card, allowedActions);
     }
 
-    // TODO: Would prefer not to expose the details of "icon" to gameplay
-    public class IconArgs: EventArgs {
-        public string iconName;
-        public IconArgs(string iconName) => this.iconName = iconName;
+    public class PlayerCardActionArgs : EventArgs {
+        public PlayerCardAction action;
+        public PlayerCardActionArgs(PlayerCardAction action) => this.action = action;
     }
 
-    public class CardGameEvent<T> where T: EventArgs {
+    public class CardGameEvent<T> where T : EventArgs {
         public event Action<T> Event = delegate { };
         public void Raise(T args) => Event?.Invoke(args);
     }
@@ -45,7 +39,10 @@ namespace SimCard.CardGame {
         // Card-specific
         public CardGameEvent<CardArgs> OnPlayerCardHover = new();
         public CardGameEvent<CardArgs> OnPlayerCardSelect = new();
-        public CardGameEvent<IconArgs> OnCardIconHover = new();
+        public CardGameEvent<CardArgs> OnPlayerCardPreview = new();
+
+        // public CardGameEvent<IconArgs> OnCardIconHover = new();
+        public CardGameEvent<PlayerCardActionArgs> OnCardActionHover = new();
 
         void Awake() {
             if (instance == null) {
