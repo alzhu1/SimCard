@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf831a100c5014a79bb524ed32f51747, type: 3}
-  m_Name: Food
+  m_Script: {fileID: 11500000, guid: 3b1f22afb4dd04568ac7f03e05caf205, type: 3}
+  m_Name: _Card3Entity
   m_EditorClassIdentifier: 
-  entityName: Food
+  entityName: card3ent

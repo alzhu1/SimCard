@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SimCard.CardGame {
+namespace SimCard.Common {
     public enum EntityType {
         Normal,
         Resource,

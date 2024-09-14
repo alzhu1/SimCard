@@ -83,17 +83,13 @@ namespace SimCard.CardGame {
             // Card summon is allowed if resource cost is met
             // And other cards exist on the field
             foreach (var resourceCost in selectedCard.ResourceCosts) {
-                ResourceEntitySO resource = resourceCost.entity;
-
-                if (duelist.CurrentResources[resource] < resourceCost.cost) {
+                if (duelist.CurrentResources[resourceCost.entity] < resourceCost.cost) {
                     return false;
                 }
             }
 
             foreach (var nonResourceCost in selectedCard.NonResourceCosts) {
-                EntitySO entity = nonResourceCost.entity;
-
-                if (!duelist.Field.HasEntityCount(entity, nonResourceCost.cost)) {
+                if (!duelist.Field.HasEntityCount(nonResourceCost.entity, nonResourceCost.cost)) {
                     return false;
                 }
             }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using ResourceEntitySO = SimCard.Common.ResourceEntitySO;
 
 namespace SimCard.CardGame {
     public abstract class Duelist : MonoBehaviour {

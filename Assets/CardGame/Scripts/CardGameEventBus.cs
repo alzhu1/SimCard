@@ -2,47 +2,24 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SimCard.Common;
 
 namespace SimCard.CardGame {
-    // TODO: Should move args/event stuff into a different file?
-    public class DuelistArgs : EventArgs {
-        public Duelist duelist;
-        public DuelistArgs(Duelist duelist) => this.duelist = duelist;
-    }
-
-    public class CardArgs : EventArgs {
-        public Card card;
-        public List<PlayerCardAction> allowedActions;
-
-        public CardArgs(Card card) => (this.card, allowedActions) = (card, new());
-        public CardArgs(Card card, List<PlayerCardAction> allowedActions) => (this.card, this.allowedActions) = (card, allowedActions);
-    }
-
-    public class PlayerCardActionArgs : EventArgs {
-        public PlayerCardAction action;
-        public PlayerCardActionArgs(PlayerCardAction action) => this.action = action;
-    }
-
-    public class CardGameEvent<T> where T : EventArgs {
-        public event Action<T> Event = delegate { };
-        public void Raise(T args) => Event?.Invoke(args);
-    }
-
     public class CardGameEventBus : MonoBehaviour {
         private static CardGameEventBus instance = null;
 
         // Game Lifecycle
-        public CardGameEvent<EventArgs> OnGameStart = new();
-        public CardGameEvent<DuelistArgs> OnTurnStart = new();
-        public CardGameEvent<EventArgs> OnGameEnd = new();
+        public GameEvent<EventArgs> OnGameStart = new();
+        public GameEvent<DuelistArgs> OnTurnStart = new();
+        public GameEvent<EventArgs> OnGameEnd = new();
 
         // Card-specific
-        public CardGameEvent<CardArgs> OnPlayerCardHover = new();
-        public CardGameEvent<CardArgs> OnPlayerCardSelect = new();
-        public CardGameEvent<CardArgs> OnPlayerCardPreview = new();
+        public GameEvent<CardArgs> OnPlayerCardHover = new();
+        public GameEvent<CardArgs> OnPlayerCardSelect = new();
+        public GameEvent<CardArgs> OnPlayerCardPreview = new();
 
-        // public CardGameEvent<IconArgs> OnCardIconHover = new();
-        public CardGameEvent<PlayerCardActionArgs> OnCardActionHover = new();
+        // public GameEvent<IconArgs> OnCardIconHover = new();
+        public GameEvent<PlayerCardActionArgs> OnCardActionHover = new();
 
         void Awake() {
             if (instance == null) {

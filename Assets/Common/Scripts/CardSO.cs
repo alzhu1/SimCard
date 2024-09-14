@@ -2,10 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using EntityCost = SimCard.CardGame.Cost<SimCard.CardGame.EntitySO>;
-using ResourceCost = SimCard.CardGame.Cost<SimCard.CardGame.ResourceEntitySO>;
+using EntityCost = SimCard.Common.Cost<SimCard.Common.EntitySO>;
+using ResourceCost = SimCard.Common.Cost<SimCard.Common.ResourceEntitySO>;
 
-namespace SimCard.CardGame {
+namespace SimCard.Common {
     [System.Serializable]
     public struct Cost<T>
         where T : EntitySO {

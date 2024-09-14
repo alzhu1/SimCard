@@ -51,7 +51,7 @@ namespace SimCard.SimGame {
             float priorityValue = Vector3.Dot(direction, nextMove);
             if (priorityValue < 0f) {
                 // Go in oppo direction
-                direction = Vector3Int.zero - direction;
+                direction *= -1;
                 return;
             } else if (priorityValue > 0f) {
                 return;

@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using EntityCost = SimCard.CardGame.Cost<SimCard.CardGame.EntitySO>;
-using ResourceCost = SimCard.CardGame.Cost<SimCard.CardGame.ResourceEntitySO>;
+using SimCard.Common;
+using EntityCost = SimCard.Common.Cost<SimCard.Common.EntitySO>;
+using ResourceCost = SimCard.Common.Cost<SimCard.Common.ResourceEntitySO>;
 
 namespace SimCard.CardGame {
     public enum CardSummonType {
