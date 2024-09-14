@@ -7,8 +7,8 @@ namespace SimCard.CardGame {
         protected OpponentDuelist opponentDuelist;
 
         public override void Init(Duelist duelist) {
-            this.duelist = duelist;
-            this.opponentDuelist = (OpponentDuelist)duelist;
+            base.Init(duelist);
+            opponentDuelist = (OpponentDuelist)duelist;
         }
     }
 }

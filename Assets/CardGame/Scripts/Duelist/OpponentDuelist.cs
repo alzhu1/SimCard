@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using State = SimCard.Common.State;
 
 namespace SimCard.CardGame {
     public class OpponentDuelist : Duelist {
