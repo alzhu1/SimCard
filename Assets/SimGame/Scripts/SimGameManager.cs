@@ -11,6 +11,8 @@ namespace SimCard.SimGame {
         // Singleton is private to avoid multiple instantiations (if it somehow happened)
         private static SimGameManager instance = null;
 
+        public SimGameEventBus EventBus { get; private set; }
+
         void Awake() {
             if (instance == null) {
                 instance = this;
@@ -19,6 +21,7 @@ namespace SimCard.SimGame {
                 return;
             }
 
+            EventBus = GetComponent<SimGameEventBus>();
         }
     }
 }

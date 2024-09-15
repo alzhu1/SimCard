@@ -7,24 +7,31 @@ namespace SimCard.SimGame {
         private Vector3 move;
         private Vector3Int direction;
 
+        private GameObject interactable;
+
         public override Vector2 RBVelocity => player.MoveSpeed * Time.fixedDeltaTime * move;
 
-        protected override void Enter() { }
+        protected override void Enter() {
+            player.SimGameManager.EventBus.OnCanInteract.Event += EnableInteraction;
+        }
 
-        protected override void Exit() { }
+        protected override void Exit() {
+            player.SimGameManager.EventBus.OnCanInteract.Event -= EnableInteraction;
+        }
 
         protected override IEnumerator Handle() {
             while (nextState == null) {
+                if (interactable != null && Input.GetKeyDown(KeyCode.Z)) {
+                    nextState = new InteractState(interactable);
+                    break;
+                }
+
                 Vector3 nextMove = new Vector2(
                     Input.GetAxisRaw("Horizontal"),
                     Input.GetAxisRaw("Vertical")
                 ).normalized;
 
-                var a = direction;
                 SetDirection(nextMove);
-                var b = direction;
-
-                Debug.Log($"Prev dir = {a}, next dir = {b}");
 
                 move = nextMove;
                 yield return null;
@@ -59,6 +66,10 @@ namespace SimCard.SimGame {
             }
 
             player.FrontCheck.localPosition = direction;
+        }
+
+        void EnableInteraction(InteractArgs args) {
+            interactable = args.interactable;
         }
     }
 }

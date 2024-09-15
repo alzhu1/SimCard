@@ -7,6 +7,8 @@ namespace SimCard.SimGame {
         [SerializeField] private Transform frontCheck;
         [SerializeField] private float moveSpeed = 1f;
 
+        public SimGameManager SimGameManager { get; private set; }
+
         private Rigidbody2D rb;
 
         public Transform FrontCheck => frontCheck;
@@ -19,16 +21,16 @@ namespace SimCard.SimGame {
         private SimPlayerState playerState;
 
         void Awake() {
+            SimGameManager = GetComponentInParent<SimGameManager>();
+
             rb = GetComponent<Rigidbody2D>();
             direction = Vector3Int.down;
-
-            playerState = new RegularState();
-            playerState.Init(this);
-            playerState.Begin();
         }
 
         void Start() {
-
+            playerState = new RegularState();
+            playerState.Init(this);
+            playerState.Begin();
         }
 
         void Update() {
@@ -50,6 +52,12 @@ namespace SimCard.SimGame {
         // TODO: Collisions in another class/script?
         void OnTriggerEnter2D(Collider2D collider) {
             Debug.Log($"Collider: {collider}");
+
+            SimGameManager.EventBus.OnCanInteract.Raise(new InteractArgs(collider.gameObject));
+        }
+
+        void OnTriggerExit2D(Collider2D collider) {
+            SimGameManager.EventBus.OnCanInteract.Raise(new InteractArgs(null));
         }
     }
 }
