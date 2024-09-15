@@ -57,6 +57,7 @@ namespace SimCard.SimGame {
         }
 
         void OnTriggerExit2D(Collider2D collider) {
+            Debug.Log($"Collider (exit): {collider}");
             SimGameManager.EventBus.OnCanInteract.Raise(new InteractArgs(null));
         }
     }

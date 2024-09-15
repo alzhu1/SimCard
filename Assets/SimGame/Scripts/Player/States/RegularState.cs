@@ -9,6 +9,9 @@ namespace SimCard.SimGame {
 
         private GameObject interactable;
 
+        public RegularState() { }
+        public RegularState(GameObject interactable) => this.interactable = interactable;
+
         public override Vector2 RBVelocity => player.MoveSpeed * Time.fixedDeltaTime * move;
 
         protected override void Enter() {
