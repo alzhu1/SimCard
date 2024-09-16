@@ -5,7 +5,6 @@ using UnityEngine;
 namespace SimCard.SimGame {
     public class RegularState : SimPlayerState {
         private Vector3 move;
-        private Vector3Int direction;
 
         private GameObject interactable;
 
@@ -29,14 +28,12 @@ namespace SimCard.SimGame {
                     break;
                 }
 
-                Vector3 nextMove = new Vector2(
+                move = new Vector2(
                     Input.GetAxisRaw("Horizontal"),
                     Input.GetAxisRaw("Vertical")
                 ).normalized;
 
-                SetDirection(nextMove);
-
-                move = nextMove;
+                SetDirection(move);
                 yield return null;
             }
         }
@@ -45,6 +42,8 @@ namespace SimCard.SimGame {
             if (nextMove.Equals(Vector3.zero)) {
                 return;
             }
+
+            Vector3 direction = player.FrontCheck.localPosition;
 
             // Dot product should tell us what effect to use
             // Negative means moving in opposite direction of primary dir
