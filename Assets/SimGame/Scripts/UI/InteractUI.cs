@@ -3,7 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace SimCard.SimGame {
-    public class InteractPromptUI : MonoBehaviour {
+    public class InteractUI : MonoBehaviour {
+        // TODO: This InteractUI class should be used for 2 things:
+        //   1. Making things visible when interaction is possible (RegularState)
+        //   2. Raising/lowering the border UI to start/stop the interaction (InteractState)
+        // Not sure if this should also take care of keeping track of interaction updates/choices (prob not?)
+        
+
         private CanvasGroup interactPromptGroup;
         private SimGameManager simGameManager;
 
