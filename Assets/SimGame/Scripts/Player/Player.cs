@@ -53,10 +53,15 @@ namespace SimCard.SimGame {
         void OnTriggerEnter2D(Collider2D collider) {
             Debug.Log($"Collider: {collider}");
 
-            SimGameManager.EventBus.OnCanInteract.Raise(new InteractArgs(collider.gameObject));
+            Interactable interactable = collider.GetComponent<Interactable>();
+            if (interactable != null) {
+                SimGameManager.EventBus.OnCanInteract.Raise(new InteractArgs(interactable));
+            }
         }
 
         void OnTriggerExit2D(Collider2D collider) {
+            // TODO: Figure out how to distinguish between interactable and non interactable
+
             Debug.Log($"Collider (exit): {collider}");
             SimGameManager.EventBus.OnCanInteract.Raise(new InteractArgs(null));
         }

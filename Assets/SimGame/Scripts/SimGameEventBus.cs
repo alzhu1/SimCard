@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using SimCard.Common;
@@ -8,6 +9,8 @@ namespace SimCard.SimGame {
         private static SimGameEventBus instance = null;
 
         public GameEvent<InteractArgs> OnCanInteract = new();
+        public GameEvent<Args<InteractionParser>> OnStartInteract = new();
+        public GameEvent<EventArgs> OnEndInteract = new();
 
         void Awake() {
             if (instance == null) {

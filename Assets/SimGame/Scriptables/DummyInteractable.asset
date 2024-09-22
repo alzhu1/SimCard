@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e896ca7fe43cf438da4f82a0324bca88, type: 3}
+  m_Name: DummyInteractable
+  m_EditorClassIdentifier: 
+  interactions:
+  - text: Hello! I am a test interaction, and this is a test to see if the interaction
+      parser is working.
+    advance:
+      options: []
+  - text: '[2222] Hello! I am a test interaction, and this is a test to see if the
+      interaction parser is working.'
+    advance:
+      options: []
+  - text: '[3333] Hello! I am a test interaction, and this is a test to see if the
+      interaction parser is working.'
+    advance:
+      options: []
+  - text: '[4444] Hello! I am a test interaction, and this is a test to see if the
+      interaction parser is working.'
+    advance:
+      options: []
+  - text: '[5555] Hello! I am a test interaction, and this is a test to see if the
+      interaction parser is working.'
+    advance:
+      options: []
+  - text: '[6666] Hello! I am a test interaction, and this is a test to see if the
+      interaction parser is working.'
+    advance:
+      options: []

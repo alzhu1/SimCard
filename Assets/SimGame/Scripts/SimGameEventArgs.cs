@@ -5,7 +5,12 @@ using UnityEngine;
 
 namespace SimCard.SimGame {
     public class InteractArgs : EventArgs {
-        public GameObject interactable;
-        public InteractArgs(GameObject interactable) => this.interactable = interactable;
+        public Interactable interactable;
+        public InteractArgs(Interactable interactable) => this.interactable = interactable;
+    }
+
+    public class Args<T> : EventArgs {
+        public T argument;
+        public Args(T argument) => this.argument = argument;
     }
 }

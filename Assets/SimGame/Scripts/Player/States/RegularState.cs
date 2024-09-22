@@ -6,10 +6,10 @@ namespace SimCard.SimGame {
     public class RegularState : SimPlayerState {
         private Vector3 move;
 
-        private GameObject interactable;
+        private Interactable interactable;
 
         public RegularState() { }
-        public RegularState(GameObject interactable) => this.interactable = interactable;
+        public RegularState(Interactable interactable) => this.interactable = interactable;
 
         public override Vector2 RBVelocity => player.MoveSpeed * Time.fixedDeltaTime * move;
 
