@@ -6,6 +6,8 @@ namespace SimCard.SimGame {
     public class InteractionParser {
         private Interactable interactable;
 
+        public bool Completed => CurrInteraction == null;
+
         public Interaction CurrInteraction {
             get {
                 List<Interaction> interactions = interactable.InteractableSO.interactions;
@@ -21,7 +23,7 @@ namespace SimCard.SimGame {
                 if (CurrInteraction == null) {
                     return 0;
                 }
-                return CurrInteraction.text.Length * CurrInteraction.typeTime;
+                return CurrInteraction.text.Length * CurrInteraction.TypeTime;
             }
         }
 
@@ -31,33 +33,30 @@ namespace SimCard.SimGame {
 
         public InteractionParser(Interactable interactable) => this.interactable = interactable;
 
-        public IEnumerator BeginInteraction() {
+        public IEnumerator HandleInteraction() {
             while (CurrInteraction != null) {
                 if (CurrInteractionTime >= MaxInteractionTime) {
                     yield return null;
                     continue;
                 }
 
-                yield return new WaitForSeconds(CurrInteraction.typeTime);
-                CurrInteractionTime += CurrInteraction.typeTime;
+                yield return new WaitForSeconds(CurrInteraction.TypeTime);
+                CurrInteractionTime += CurrInteraction.TypeTime;
             }
-
-            // TODO: Need to send some signal to
         }
 
-        public bool HandleAdvance() {
-            // TODO: Thinking about make this signal based
-            // So HandleAdvance will just set a signal, and the signal is handled in coroutine
+        public void HandleAdvance() {
             if (CurrInteractionTime < MaxInteractionTime) {
                 CurrInteractionTime = MaxInteractionTime;
-                return false;
+                return;
             }
+
+            // TODO: When HandleAdvance is called on last interaction, it should close dialogue
+            // However, because the check is done in InteractState, we have to press again to exit interact state
+            // Should fix this, i.e. on the last interaction, we want the HandleAdvance to assist in ending the interaction
 
             interactionIndex++;
             CurrInteractionTime = 0;
-
-            // Interaction ended if CurrInteraction is null
-            return CurrInteraction == null;
         }
     }
 }

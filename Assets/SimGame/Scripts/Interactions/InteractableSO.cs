@@ -11,10 +11,14 @@ namespace SimCard.SimGame {
 
     [System.Serializable]
     public class Interaction {
+        private static float GlobalTypeTime => 0.08f;
+
         [TextArea]
         public string text;
+        [SerializeField] private float typeTime;
         public InteractionAdvance advance;
-        public float typeTime = 0.1f;
+
+        public float TypeTime => typeTime == 0f ? GlobalTypeTime : typeTime;
     }
 
     [CreateAssetMenu(fileName = "Interactable", menuName = "ScriptableObjects/Interactable")]

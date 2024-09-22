@@ -12,7 +12,7 @@ namespace SimCard.SimGame {
 
         protected override void Enter() {
             interactionParser = new InteractionParser(interactable);
-            actor.StartCoroutine(interactionParser.BeginInteraction());
+            actor.StartCoroutine(interactionParser.HandleInteraction());
 
             player.SimGameManager.EventBus.OnStartInteract.Raise(new(interactionParser));
         }
@@ -26,11 +26,11 @@ namespace SimCard.SimGame {
                 }
 
                 if (Input.GetKeyDown(KeyCode.Z)) {
-                    bool interactionComplete = interactionParser.HandleAdvance();
-
-                    if (interactionComplete) {
+                    if (interactionParser.Completed) {
                         player.SimGameManager.EventBus.OnEndInteract.Raise(EventArgs.Empty);
                         nextState = new RegularState(interactable);
+                    } else {
+                        interactionParser.HandleAdvance();
                     }
                 }
 

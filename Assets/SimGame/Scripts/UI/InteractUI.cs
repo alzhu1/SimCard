@@ -58,7 +58,7 @@ namespace SimCard.SimGame {
             Interaction currInteraction = parser.CurrInteraction;
             while (currInteraction != null) {
                 dialogueText.text = currInteraction.text;
-                dialogueText.maxVisibleCharacters = (int)(parser.CurrInteractionTime / currInteraction.typeTime);
+                dialogueText.maxVisibleCharacters = (int)(parser.CurrInteractionTime / currInteraction.TypeTime);
 
                 yield return null;
                 currInteraction = parser.CurrInteraction;
