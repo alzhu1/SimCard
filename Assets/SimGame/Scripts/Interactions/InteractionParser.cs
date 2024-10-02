@@ -36,6 +36,10 @@ namespace SimCard.SimGame {
         public IEnumerator HandleInteraction() {
             while (CurrInteraction != null) {
                 if (CurrInteractionTime >= MaxInteractionTime) {
+                    if (interactionIndex == interactable.InteractableSO.interactions.Count - 1) {
+                        interactionIndex++;
+                    }
+
                     yield return null;
                     continue;
                 }
@@ -48,6 +52,7 @@ namespace SimCard.SimGame {
         public void HandleAdvance() {
             if (CurrInteractionTime < MaxInteractionTime) {
                 CurrInteractionTime = MaxInteractionTime;
+
                 return;
             }
 
