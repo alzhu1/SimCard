@@ -1,15 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
-using System;
+using UnityEngine;
+using UnityEngine.UI;
+using InteractionParserUIListener = SimCard.SimGame.InteractionParser.InteractionParserUIListener;
 
 namespace SimCard.SimGame {
     public class InteractUI : MonoBehaviour {
-        // TODO: This InteractUI class should be used for 2 things:
-        //   1. Making things visible when interaction is possible (RegularState)
-        //   2. Raising/lowering the border UI to start/stop the interaction (InteractState)
-        // Not sure if this should also take care of keeping track of interaction updates/choices (prob not?)
+        [SerializeField] private Image interactArea;
         [SerializeField] private TextMeshProUGUI interactText;
         [SerializeField] private TextMeshProUGUI dialogueText;
 
@@ -40,8 +39,8 @@ namespace SimCard.SimGame {
             dialogueText.enabled = false;
         }
 
-        void StartInteraction(Args<InteractionParser> args) {
-            InteractionParser parser = args.argument;
+        void StartInteraction(Args<InteractionParserUIListener> args) {
+            InteractionParserUIListener parser = args.argument;
 
             interactText.enabled = false;
             dialogueText.enabled = true;
@@ -54,15 +53,47 @@ namespace SimCard.SimGame {
             dialogueText.enabled = false;
         }
 
-        IEnumerator DisplayInteraction(InteractionParser parser) {
-            Interaction currInteraction = parser.CurrInteraction;
-            while (currInteraction != null) {
-                dialogueText.text = currInteraction.text;
-                dialogueText.maxVisibleCharacters = (int)(parser.CurrInteractionTime / currInteraction.TypeTime);
+        IEnumerator DisplayInteraction(InteractionParserUIListener parser) {
+            Vector2 startOffsetMax = interactArea.rectTransform.offsetMax;
+            Vector2 endOffsetMax = startOffsetMax + 50 * Vector2.up;
+
+            // TODO: Standardize this
+            float t = 0;
+            while (t < 1) {
+                interactArea.rectTransform.offsetMax = Vector2.Lerp(
+                    startOffsetMax,
+                    endOffsetMax,
+                    t
+                );
+                yield return null;
+                t += Time.deltaTime;
+            }
+            interactArea.rectTransform.offsetMax = endOffsetMax;
+
+            parser.NotifyFromUI();
+
+            while (parser.CurrInteraction != null) {
+                dialogueText.text = parser.CurrInteraction.text;
+                dialogueText.maxVisibleCharacters = parser.MaxVisibleCharacters;
 
                 yield return null;
-                currInteraction = parser.CurrInteraction;
             }
+
+            dialogueText.text = "";
+
+            t = 0;
+            while (t < 1) {
+                interactArea.rectTransform.offsetMax = Vector2.Lerp(
+                    endOffsetMax,
+                    startOffsetMax,
+                    t
+                );
+                yield return null;
+                t += Time.deltaTime;
+            }
+            interactArea.rectTransform.offsetMax = startOffsetMax;
+
+            parser.NotifyFromUI();
         }
     }
 }

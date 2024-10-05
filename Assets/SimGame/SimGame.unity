@@ -861,6 +861,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c441038d0130744fda53eff1b90bd375, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactArea: {fileID: 1830215170}
   interactText: {fileID: 1957808310}
   dialogueText: {fileID: 2099376399}
 --- !u!225 &1830215173

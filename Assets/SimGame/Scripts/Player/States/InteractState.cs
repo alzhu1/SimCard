@@ -20,22 +20,26 @@ namespace SimCard.SimGame {
         protected override void Exit() { }
 
         protected override IEnumerator Handle() {
+            SimPlayerState nextState = null;
+
             while (nextState == null) {
                 if (Input.GetKeyDown(KeyCode.Escape)) {
                     nextState = new RegularState(interactable);
                 }
 
                 if (Input.GetKeyDown(KeyCode.Z)) {
-                    if (interactionParser.Completed) {
-                        player.SimGameManager.EventBus.OnEndInteract.Raise(EventArgs.Empty);
-                        nextState = new RegularState(interactable);
-                    } else {
-                        interactionParser.HandleAdvance();
-                    }
+                    interactionParser.HandleAdvance();
+                }
+
+                if (interactionParser.Completed) {
+                    player.SimGameManager.EventBus.OnEndInteract.Raise(EventArgs.Empty);
+                    nextState = new RegularState(interactable);
                 }
 
                 yield return null;
             }
+
+            this.nextState = nextState;
         }
     }
 }

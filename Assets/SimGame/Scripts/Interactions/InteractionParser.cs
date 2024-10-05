@@ -3,10 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace SimCard.SimGame {
-    public class InteractionParser {
+    public class InteractionParser : InteractionParser.InteractionParserUIListener {
+        // Presenter interface for UI to work with
+        // This allows us to limit the methods it will work with
+        public interface InteractionParserUIListener {
+            public Interaction CurrInteraction { get; }
+            public int MaxVisibleCharacters { get; }
+
+            public void NotifyFromUI();
+        }
+
         private Interactable interactable;
 
-        public bool Completed => CurrInteraction == null;
+        public bool Completed { get; private set; }
 
         public Interaction CurrInteraction {
             get {
@@ -18,50 +27,53 @@ namespace SimCard.SimGame {
                 return interactions[interactionIndex];
             }
         }
-        public float MaxInteractionTime {
-            get {
-                if (CurrInteraction == null) {
-                    return 0;
-                }
-                return CurrInteraction.text.Length * CurrInteraction.TypeTime;
-            }
-        }
 
-        public float CurrInteractionTime { get; private set; }
+        public int InteractionTextLength =>
+            CurrInteraction == null ? 0 : CurrInteraction.text.Length;
+
+        public int MaxVisibleCharacters { get; private set; }
 
         private int interactionIndex = 0;
+        private bool waitingForUI = false;
 
         public InteractionParser(Interactable interactable) => this.interactable = interactable;
 
         public IEnumerator HandleInteraction() {
-            while (CurrInteraction != null) {
-                if (CurrInteractionTime >= MaxInteractionTime) {
-                    if (interactionIndex == interactable.InteractableSO.interactions.Count - 1) {
-                        interactionIndex++;
-                    }
+            waitingForUI = true;
+            yield return new WaitWhile(() => waitingForUI);
 
+            while (CurrInteraction != null) {
+                if (MaxVisibleCharacters >= InteractionTextLength) {
                     yield return null;
                     continue;
                 }
 
                 yield return new WaitForSeconds(CurrInteraction.TypeTime);
-                CurrInteractionTime += CurrInteraction.TypeTime;
+                MaxVisibleCharacters++;
             }
+
+            waitingForUI = true;
+            yield return new WaitWhile(() => waitingForUI);
+
+            Completed = true;
         }
 
         public void HandleAdvance() {
-            if (CurrInteractionTime < MaxInteractionTime) {
-                CurrInteractionTime = MaxInteractionTime;
-
+            if (waitingForUI) {
                 return;
             }
 
-            // TODO: When HandleAdvance is called on last interaction, it should close dialogue
-            // However, because the check is done in InteractState, we have to press again to exit interact state
-            // Should fix this, i.e. on the last interaction, we want the HandleAdvance to assist in ending the interaction
+            if (MaxVisibleCharacters < InteractionTextLength) {
+                MaxVisibleCharacters = InteractionTextLength;
+                return;
+            }
 
             interactionIndex++;
-            CurrInteractionTime = 0;
+            MaxVisibleCharacters = 0;
+        }
+
+        public void NotifyFromUI() {
+            waitingForUI = false;
         }
     }
 }
