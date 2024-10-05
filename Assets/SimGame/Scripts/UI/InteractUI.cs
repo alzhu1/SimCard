@@ -8,9 +8,14 @@ using InteractionParserUIListener = SimCard.SimGame.InteractionParser.Interactio
 
 namespace SimCard.SimGame {
     public class InteractUI : MonoBehaviour {
-        [SerializeField] private Image interactArea;
-        [SerializeField] private TextMeshProUGUI interactText;
-        [SerializeField] private TextMeshProUGUI dialogueText;
+        [SerializeField]
+        private Image interactArea;
+
+        [SerializeField]
+        private TextMeshProUGUI interactText;
+
+        [SerializeField]
+        private TextMeshProUGUI dialogueText;
 
         private CanvasGroup interactPromptGroup;
         private SimGameManager simGameManager;

@@ -4,8 +4,11 @@ using UnityEngine;
 
 namespace SimCard.SimGame {
     public class Player : MonoBehaviour {
-        [SerializeField] private Transform frontCheck;
-        [SerializeField] private float moveSpeed = 1f;
+        [SerializeField]
+        private Transform frontCheck;
+
+        [SerializeField]
+        private float moveSpeed = 1f;
 
         public SimGameManager SimGameManager { get; private set; }
 

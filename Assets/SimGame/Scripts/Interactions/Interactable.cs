@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace SimCard.SimGame {
     public class Interactable : MonoBehaviour {
-        [field: SerializeField] public InteractableSO InteractableSO { get; private set; }
+        [field: SerializeField]
+        public InteractableSO InteractableSO { get; private set; }
     }
 }

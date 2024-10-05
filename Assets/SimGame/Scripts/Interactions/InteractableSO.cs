@@ -15,7 +15,9 @@ namespace SimCard.SimGame {
 
         [TextArea]
         public string text;
-        [SerializeField] private float typeTime;
+
+        [SerializeField]
+        private float typeTime;
         public InteractionAdvance advance;
 
         public float TypeTime => typeTime == 0f ? GlobalTypeTime : typeTime;

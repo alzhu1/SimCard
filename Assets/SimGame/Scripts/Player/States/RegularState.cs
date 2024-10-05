@@ -9,6 +9,7 @@ namespace SimCard.SimGame {
         private Interactable interactable;
 
         public RegularState() { }
+
         public RegularState(Interactable interactable) => this.interactable = interactable;
 
         public override Vector2 RBVelocity => player.MoveSpeed * Time.fixedDeltaTime * move;
@@ -63,7 +64,7 @@ namespace SimCard.SimGame {
                     Vector3 v when v.x < 0 => Vector3Int.left,
                     Vector3 v when v.y > 0 => Vector3Int.up,
                     Vector3 v when v.y < 0 => Vector3Int.down,
-                    _ => direction
+                    _ => direction,
                 };
             }
 
