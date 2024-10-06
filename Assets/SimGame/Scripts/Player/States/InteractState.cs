@@ -12,7 +12,7 @@ namespace SimCard.SimGame {
 
         protected override void Enter() {
             interactionParser = new InteractionParser(interactable);
-            actor.StartCoroutine(interactionParser.HandleInteraction());
+            actor.StartCoroutine(HandleInputs());
 
             player.SimGameManager.EventBus.OnStartInteract.Raise(new(interactionParser));
         }
@@ -20,26 +20,33 @@ namespace SimCard.SimGame {
         protected override void Exit() { }
 
         protected override IEnumerator Handle() {
-            SimPlayerState nextState = null;
+            yield return interactionParser.WaitForUI;
 
             while (nextState == null) {
-                if (Input.GetKeyDown(KeyCode.Escape)) {
+                yield return interactionParser.Tick();
+
+                if (interactionParser.Completed) {
                     nextState = new RegularState(interactable);
+                }
+            }
+
+            // When complete, wait for UI before cleaning up
+            yield return interactionParser.WaitForUI;
+
+            player.SimGameManager.EventBus.OnEndInteract.Raise(EventArgs.Empty);
+        }
+
+        IEnumerator HandleInputs() {
+            while (nextState == null) {
+                if (Input.GetKeyDown(KeyCode.Escape)) {
+                    interactionParser.ForceEnd();
                 }
 
                 if (Input.GetKeyDown(KeyCode.Z)) {
                     interactionParser.HandleAdvance();
                 }
-
-                if (interactionParser.Completed) {
-                    player.SimGameManager.EventBus.OnEndInteract.Raise(EventArgs.Empty);
-                    nextState = new RegularState(interactable);
-                }
-
                 yield return null;
             }
-
-            this.nextState = nextState;
         }
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace SimCard.SimGame {
@@ -17,45 +18,34 @@ namespace SimCard.SimGame {
 
         public bool Completed { get; private set; }
 
-        public Interaction CurrInteraction {
-            get {
-                List<Interaction> interactions = interactable.InteractableSO.interactions;
-                if (interactionIndex >= interactions.Count) {
-                    return null;
-                }
+        public Interaction CurrInteraction =>
+            interactable.InteractableSO.interactions.ElementAtOrDefault(interactionIndex);
 
-                return interactions[interactionIndex];
-            }
-        }
+        public int MaxVisibleCharacters { get; private set; }
 
         public int InteractionTextLength =>
             CurrInteraction == null ? 0 : CurrInteraction.text.Length;
 
-        public int MaxVisibleCharacters { get; private set; }
-
         private int interactionIndex = 0;
-        private bool waitingForUI = false;
+        private bool waitingForUI = true;
+
+        public CustomYieldInstruction WaitForUI => new WaitWhile(() => waitingForUI);
 
         public InteractionParser(Interactable interactable) => this.interactable = interactable;
 
-        public IEnumerator HandleInteraction() {
-            waitingForUI = true;
-            yield return new WaitWhile(() => waitingForUI);
-
-            while (CurrInteraction != null) {
-                if (MaxVisibleCharacters >= InteractionTextLength) {
-                    yield return null;
-                    continue;
-                }
-
-                yield return new WaitForSeconds(CurrInteraction.TypeTime);
-                MaxVisibleCharacters++;
+        public YieldInstruction Tick() {
+            if (CurrInteraction == null) {
+                waitingForUI = true;
+                Completed = true;
+                return null;
             }
 
-            waitingForUI = true;
-            yield return new WaitWhile(() => waitingForUI);
+            if (MaxVisibleCharacters >= InteractionTextLength) {
+                return null;
+            }
 
-            Completed = true;
+            MaxVisibleCharacters++;
+            return new WaitForSeconds(CurrInteraction.TypeTime);
         }
 
         public void HandleAdvance() {
@@ -70,6 +60,10 @@ namespace SimCard.SimGame {
 
             interactionIndex++;
             MaxVisibleCharacters = 0;
+        }
+
+        public void ForceEnd() {
+            interactionIndex = interactable.InteractableSO.interactions.Count;
         }
 
         public void NotifyFromUI() {
