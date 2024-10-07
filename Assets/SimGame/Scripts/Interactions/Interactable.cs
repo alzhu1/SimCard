@@ -8,7 +8,8 @@ namespace SimCard.SimGame {
     public class Interactable : MonoBehaviour {
         private static float GlobalTypeTime => 0.08f;
 
-        [SerializeField] private float typeTime;
+        [SerializeField]
+        private float typeTime;
         public float TypeTime => typeTime == 0 ? GlobalTypeTime : typeTime;
 
         [field: SerializeField]
@@ -19,7 +20,10 @@ namespace SimCard.SimGame {
         public string InteractionPath { get; set; }
 
         void Awake() {
-            InteractionPaths = InteractableSO.interactionPaths.ToDictionary(x => x.name, x => x.interactions);
+            InteractionPaths = InteractableSO.interactionPaths.ToDictionary(
+                x => x.name,
+                x => x.interactions
+            );
             Assert.IsFalse(InteractionPaths.ContainsKey("Default"));
             InteractionPaths.Add("Default", InteractableSO.defaultInteractions);
 

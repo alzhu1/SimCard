@@ -12,6 +12,7 @@ namespace SimCard.SimGame {
         // Interaction events
         public GameEvent<InteractArgs> OnCanInteract = new();
         public GameEvent<Args<InteractionParserUIListener>> OnStartInteract = new();
+        public GameEvent<Args<List<string>>> OnDisplayInteractOptions = new();
         public GameEvent<EventArgs> OnEndInteract = new();
 
         void Awake() {

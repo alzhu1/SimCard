@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,28 +11,42 @@ namespace SimCard.SimGame {
         public interface InteractionParserUIListener {
             public Interaction CurrInteraction { get; }
             public int MaxVisibleCharacters { get; }
+            public int OptionIndex { get; }
 
             public void NotifyFromUI();
         }
 
         private Interactable interactable;
 
-        public bool Completed { get; private set; }
+        // UI wait utils
+        private bool waitingForUI = true;
+        public CustomYieldInstruction WaitForUI => new WaitWhile(() => waitingForUI);
 
+        // Properties common to UI
         public Interaction CurrInteraction =>
-            interactable.InteractionPaths.GetValueOrDefault(interactable.InteractionPath)?.ElementAtOrDefault(interactionIndex);
-
+            interactable
+                .InteractionPaths.GetValueOrDefault(interactable.InteractionPath)
+                ?.ElementAtOrDefault(interactionIndex);
         public int MaxVisibleCharacters { get; private set; }
+        public int OptionIndex { get; private set; }
+
+        public bool Completed { get; private set; }
 
         public int InteractionTextLength =>
             CurrInteraction == null ? 0 : CurrInteraction.text.Length;
 
         private int interactionIndex = 0;
-        private bool waitingForUI = true;
 
-        public CustomYieldInstruction WaitForUI => new WaitWhile(() => waitingForUI);
+        // Events that the parser can call
+        public Action<Args<List<string>>> DisplayInteractionOptions;
 
-        public InteractionParser(Interactable interactable) => this.interactable = interactable;
+        public InteractionParser(
+            Interactable interactable,
+            Action<Args<List<string>>> DisplayInteractionOptions
+        ) {
+            this.interactable = interactable;
+            this.DisplayInteractionOptions = DisplayInteractionOptions;
+        }
 
         public YieldInstruction Tick() {
             if (CurrInteraction == null) {
@@ -45,6 +60,12 @@ namespace SimCard.SimGame {
             }
 
             MaxVisibleCharacters++;
+            if (MaxVisibleCharacters >= InteractionTextLength && CurrInteraction.options.Count > 0) {
+                DisplayInteractionOptions?.Invoke(
+                    new(CurrInteraction.options.Select(x => x.option).ToList())
+                );
+            }
+
             return new WaitForSeconds(interactable.TypeTime);
         }
 
@@ -55,20 +76,42 @@ namespace SimCard.SimGame {
 
             if (MaxVisibleCharacters < InteractionTextLength) {
                 MaxVisibleCharacters = InteractionTextLength;
+
+                if (CurrInteraction.options.Count > 0) {
+                    DisplayInteractionOptions?.Invoke(
+                        new(CurrInteraction.options.Select(x => x.option).ToList())
+                    );
+                }
                 return;
             }
 
-            // TODO: Check if there are options
+            // HandleAdvance means we picked an option
             if (CurrInteraction.options.Count > 0) {
-                // HandleAdvance means we picked an option
-                interactable.InteractionPath = CurrInteraction.options[0].nextInteractionPath;
+                interactable.InteractionPath = CurrInteraction
+                    .options[OptionIndex]
+                    .nextInteractionPath;
                 interactionIndex = 0;
+                OptionIndex = 0;
                 MaxVisibleCharacters = 0;
+
+                // Hide the options UI once an option is picked
+                DisplayInteractionOptions?.Invoke(null);
                 return;
             }
 
             interactionIndex++;
             MaxVisibleCharacters = 0;
+        }
+
+        public void UpdateOptionIndex(int diff) {
+            if (MaxVisibleCharacters < InteractionTextLength) {
+                return;
+            }
+
+            int optionCount = CurrInteraction.options.Count;
+            if (optionCount > 0) {
+                OptionIndex = (optionCount + OptionIndex + diff) % optionCount;
+            }
         }
 
         public void NotifyFromUI() {

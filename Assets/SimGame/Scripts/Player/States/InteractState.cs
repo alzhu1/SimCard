@@ -11,7 +11,10 @@ namespace SimCard.SimGame {
         public InteractState(Interactable interactable) => this.interactable = interactable;
 
         protected override void Enter() {
-            interactionParser = new InteractionParser(interactable);
+            interactionParser = new InteractionParser(
+                interactable,
+                player.SimGameManager.EventBus.OnDisplayInteractOptions.Raise
+            );
             actor.StartCoroutine(HandleInputs());
 
             player.SimGameManager.EventBus.OnStartInteract.Raise(new(interactionParser));
@@ -41,6 +44,15 @@ namespace SimCard.SimGame {
                 if (Input.GetKeyDown(KeyCode.Z)) {
                     interactionParser.HandleAdvance();
                 }
+
+                if (Input.GetKeyDown(KeyCode.UpArrow)) {
+                    interactionParser.UpdateOptionIndex(-1);
+                }
+
+                if (Input.GetKeyDown(KeyCode.DownArrow)) {
+                    interactionParser.UpdateOptionIndex(1);
+                }
+
                 yield return null;
             }
         }
