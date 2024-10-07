@@ -12,28 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e896ca7fe43cf438da4f82a0324bca88, type: 3}
   m_Name: DummyInteractable
   m_EditorClassIdentifier: 
-  interactions:
-  - text: Hello! I am a test interaction, and this is a test to see if the interaction
-      parser is working.
-    advance:
+  defaultInteractions:
+  - text: '[111111 (Default)] Hello! This is me re-writing the test for interaction
+      parsing, now with paths!'
+    options: []
+  - text: Presenting you now with a choice
+    options:
+    - option: Yes
+      nextInteractionPath: DefaultYes
+    - option: No
+      nextInteractionPath: DefaultNo
+  interactionPaths:
+  - name: DefaultYes
+    interactions:
+    - text: You pressed yes!
       options: []
-  - text: '[2222] Hello! I am a test interaction, and this is a test to see if the
-      interaction parser is working.'
-    advance:
-      options: []
-  - text: '[3333] Hello! I am a test interaction, and this is a test to see if the
-      interaction parser is working.'
-    advance:
-      options: []
-  - text: '[4444] Hello! I am a test interaction, and this is a test to see if the
-      interaction parser is working.'
-    advance:
-      options: []
-  - text: '[5555] Hello! I am a test interaction, and this is a test to see if the
-      interaction parser is working.'
-    advance:
-      options: []
-  - text: '[6666] Hello! I am a test interaction, and this is a test to see if the
-      interaction parser is working.'
-    advance:
+  - name: DefaultNo
+    interactions:
+    - text: You pressed no...
       options: []

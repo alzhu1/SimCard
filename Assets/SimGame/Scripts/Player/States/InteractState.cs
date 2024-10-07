@@ -38,10 +38,6 @@ namespace SimCard.SimGame {
 
         IEnumerator HandleInputs() {
             while (nextState == null) {
-                if (Input.GetKeyDown(KeyCode.Escape)) {
-                    interactionParser.ForceEnd();
-                }
-
                 if (Input.GetKeyDown(KeyCode.Z)) {
                     interactionParser.HandleAdvance();
                 }

@@ -19,7 +19,7 @@ namespace SimCard.SimGame {
         public bool Completed { get; private set; }
 
         public Interaction CurrInteraction =>
-            interactable.InteractableSO.interactions.ElementAtOrDefault(interactionIndex);
+            interactable.InteractionPaths.GetValueOrDefault(interactable.InteractionPath)?.ElementAtOrDefault(interactionIndex);
 
         public int MaxVisibleCharacters { get; private set; }
 
@@ -45,7 +45,7 @@ namespace SimCard.SimGame {
             }
 
             MaxVisibleCharacters++;
-            return new WaitForSeconds(CurrInteraction.TypeTime);
+            return new WaitForSeconds(interactable.TypeTime);
         }
 
         public void HandleAdvance() {
@@ -58,12 +58,17 @@ namespace SimCard.SimGame {
                 return;
             }
 
+            // TODO: Check if there are options
+            if (CurrInteraction.options.Count > 0) {
+                // HandleAdvance means we picked an option
+                interactable.InteractionPath = CurrInteraction.options[0].nextInteractionPath;
+                interactionIndex = 0;
+                MaxVisibleCharacters = 0;
+                return;
+            }
+
             interactionIndex++;
             MaxVisibleCharacters = 0;
-        }
-
-        public void ForceEnd() {
-            interactionIndex = interactable.InteractableSO.interactions.Count;
         }
 
         public void NotifyFromUI() {
