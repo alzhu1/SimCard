@@ -46,7 +46,7 @@ namespace SimCard.SimGame {
             return new InteractionPath {
                 name = "Default",
                 startingPriority = 0,
-                interactions = defaultInteractions
+                interactions = defaultInteractions,
             };
         }
     }

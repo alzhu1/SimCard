@@ -11,7 +11,7 @@ namespace SimCard.SimGame {
     public enum ScriptTag {
         Bool,
         Quest,
-        PathTraversedCount
+        PathTraversedCount,
     }
 
     [System.Serializable]
@@ -20,6 +20,9 @@ namespace SimCard.SimGame {
         public bool boolArg;
         public string strArg;
         public int intArg;
+
+        // TODO: Need more fine grained control on conditions?
+        // e.g. negating condition, or equals for int
     }
 
 #if UNITY_EDITOR
@@ -31,41 +34,41 @@ namespace SimCard.SimGame {
             PropertyField tagField = new PropertyField(property.FindPropertyRelative("tag"));
             container.Add(tagField);
 
-            PropertyField boolArgField = new PropertyField(property.FindPropertyRelative("boolArg"));
+            PropertyField boolArgField = new PropertyField(
+                property.FindPropertyRelative("boolArg")
+            );
             PropertyField strArgField = new PropertyField(property.FindPropertyRelative("strArg"));
             PropertyField intArgField = new PropertyField(property.FindPropertyRelative("intArg"));
-            PropertyField[] argFields = new[] {
-                boolArgField,
-                strArgField,
-                intArgField
-        };
+            PropertyField[] argFields = new[] { boolArgField, strArgField, intArgField };
 
             // Add all fields above to the container
             Array.ForEach(argFields, container.Add);
 
             // This should "repaint" on change (i.e. show and hide elements)
-            tagField.RegisterValueChangeCallback((changeEvent) => {
-                ScriptTag scriptTag = (ScriptTag)changeEvent.changedProperty.intValue;
+            tagField.RegisterValueChangeCallback(
+                (changeEvent) => {
+                    ScriptTag scriptTag = (ScriptTag)changeEvent.changedProperty.intValue;
 
-                foreach (PropertyField argField in argFields) {
-                    argField.style.display = DisplayStyle.None;
+                    foreach (PropertyField argField in argFields) {
+                        argField.style.display = DisplayStyle.None;
+                    }
+
+                    switch (scriptTag) {
+                        case ScriptTag.Bool:
+                            boolArgField.style.display = DisplayStyle.Flex;
+                            break;
+
+                        case ScriptTag.PathTraversedCount:
+                            intArgField.style.display = DisplayStyle.Flex;
+                            strArgField.style.display = DisplayStyle.Flex;
+                            break;
+
+                        default:
+                            strArgField.style.display = DisplayStyle.Flex;
+                            break;
+                    }
                 }
-
-                switch (scriptTag) {
-                    case ScriptTag.Bool:
-                        boolArgField.style.display = DisplayStyle.Flex;
-                        break;
-
-                    case ScriptTag.PathTraversedCount:
-                        intArgField.style.display = DisplayStyle.Flex;
-                        strArgField.style.display = DisplayStyle.Flex;
-                        break;
-
-                    default:
-                        strArgField.style.display = DisplayStyle.Flex;
-                        break;
-                }
-            });
+            );
 
             return container;
         }

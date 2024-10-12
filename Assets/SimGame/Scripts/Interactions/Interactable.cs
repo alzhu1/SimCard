@@ -23,15 +23,18 @@ namespace SimCard.SimGame {
         public string CurrInteractionPath { get; private set; } = "Default";
 
         void Awake() {
-            interactionPaths = InteractableSO.interactionPaths.ToDictionary(
-                x => x.name,
-                x => x
-            );
+            interactionPaths = InteractableSO.interactionPaths.ToDictionary(x => x.name, x => x);
             Assert.IsFalse(interactionPaths.ContainsKey("Default"));
-            interactionPaths.Add("Default", InteractionPath.CreateDefaultPath(InteractableSO.defaultInteractions));
+            interactionPaths.Add(
+                "Default",
+                InteractionPath.CreateDefaultPath(InteractableSO.defaultInteractions)
+            );
 
             // Ensure that all paths with positive starting priority is unique
-            int uniqueStartingPriorityCount = interactionPaths.Values.Where(x => x.startingPriority > 0).ToHashSet().Count;
+            int uniqueStartingPriorityCount = interactionPaths
+                .Values.Where(x => x.startingPriority > 0)
+                .ToHashSet()
+                .Count;
             Assert.AreEqual(interactionPaths.Count, uniqueStartingPriorityCount);
         }
 
@@ -56,7 +59,9 @@ namespace SimCard.SimGame {
         }
 
         public Interaction GetCurrentInteraction(int interactionIndex) {
-            return interactionPaths.GetValueOrDefault(CurrInteractionPath)?.interactions.ElementAtOrDefault(interactionIndex);
+            return interactionPaths
+                .GetValueOrDefault(CurrInteractionPath)
+                ?.interactions.ElementAtOrDefault(interactionIndex);
         }
 
         public bool ProcessInteractionTags(int interactionIndex) {
@@ -69,16 +74,18 @@ namespace SimCard.SimGame {
         }
 
         public void ProcessInteractionOption(int interactionIndex, int optionIndex) {
-            InteractionOption currOption = GetCurrentInteraction(interactionIndex)?.options[optionIndex];
+            InteractionOption currOption = GetCurrentInteraction(interactionIndex)
+                ?.options[optionIndex];
             Assert.IsNotNull(currOption);
 
             // If the next path contains some conditional tags, go there only if conditions are met
             // For now, just assume a singular fallback path
-            if (ProcessTagsOn(interactionPaths.GetValueOrDefault(currOption.nextInteractionPath)?.pathTags)) {
-                CurrInteractionPath = currOption.nextInteractionPath;
-            } else {
-                CurrInteractionPath = currOption.fallbackInteractionPath;
-            }
+            bool toNextPath = ProcessTagsOn(
+                interactionPaths.GetValueOrDefault(currOption.nextInteractionPath)?.pathTags
+            );
+            CurrInteractionPath = toNextPath
+                ? currOption.nextInteractionPath
+                : currOption.fallbackInteractionPath;
         }
 
         bool ProcessTagsOn(List<InteractionTag> interactionTags) {
