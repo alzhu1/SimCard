@@ -23,10 +23,7 @@ namespace SimCard.SimGame {
         public CustomYieldInstruction WaitForUI => new WaitWhile(() => waitingForUI);
 
         // Properties common to UI
-        public Interaction CurrInteraction =>
-            interactable
-                .InteractionPaths.GetValueOrDefault(interactable.InteractionPath)
-                ?.ElementAtOrDefault(interactionIndex);
+        public Interaction CurrInteraction => interactable.GetCurrentInteraction(interactionIndex);
         public int MaxVisibleCharacters { get; private set; }
         public int OptionIndex { get; private set; }
 
@@ -46,6 +43,8 @@ namespace SimCard.SimGame {
         ) {
             this.interactable = interactable;
             this.DisplayInteractionOptions = DisplayInteractionOptions;
+
+            this.interactable.InitInteraction();
         }
 
         public YieldInstruction Tick() {
@@ -87,9 +86,7 @@ namespace SimCard.SimGame {
 
             // HandleAdvance means we picked an option
             if (CurrInteraction.options.Count > 0) {
-                interactable.InteractionPath = CurrInteraction
-                    .options[OptionIndex]
-                    .nextInteractionPath;
+                interactable.ProcessInteractionOption(interactionIndex, OptionIndex);
                 interactionIndex = 0;
                 OptionIndex = 0;
                 MaxVisibleCharacters = 0;
@@ -99,7 +96,11 @@ namespace SimCard.SimGame {
                 return;
             }
 
-            interactionIndex++;
+            // If tags indicate that the interaction is not renderable, keep incrementing
+            do {
+                interactionIndex++;
+            } while (!interactable.ProcessInteractionTags(interactionIndex));
+
             MaxVisibleCharacters = 0;
         }
 

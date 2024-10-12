@@ -16,18 +16,35 @@ MonoBehaviour:
   - text: '[111111 (Default)] Hello! This is me re-writing the test for interaction
       parsing, now with paths!'
     options: []
+    tags: []
+  - text: (This should not be displayed)
+    options: []
+    tags:
+    - tag: 0
+      boolArg: 0
+      strArg: 
   - text: Presenting you now with a choice
     options:
     - option: Yes
       nextInteractionPath: DefaultYes
+      fallbackInteractionPath: DefaultNo
     - option: No
       nextInteractionPath: DefaultNo
+      fallbackInteractionPath: DefaultYes
+    tags: []
   interactionPaths:
   - name: DefaultYes
     interactions:
     - text: You pressed yes!
       options: []
+      tags: []
+    pathTags:
+    - tag: 0
+      boolArg: 0
+      strArg: 
   - name: DefaultNo
     interactions:
     - text: You pressed no...
       options: []
+      tags: []
+    pathTags: []

@@ -15,19 +15,67 @@ namespace SimCard.SimGame {
         [field: SerializeField]
         public InteractableSO InteractableSO { get; private set; }
 
-        public Dictionary<string, List<Interaction>> InteractionPaths { get; private set; }
+        public Dictionary<string, InteractionPath> InteractionPaths { get; private set; }
 
-        public string InteractionPath { get; set; }
+        private string interactionPath = "Default";
 
         void Awake() {
             InteractionPaths = InteractableSO.interactionPaths.ToDictionary(
                 x => x.name,
-                x => x.interactions
+                x => x
             );
             Assert.IsFalse(InteractionPaths.ContainsKey("Default"));
-            InteractionPaths.Add("Default", InteractableSO.defaultInteractions);
+            InteractionPaths.Add("Default", InteractionPath.CreateDefaultPath(InteractableSO.defaultInteractions));
+        }
 
-            InteractionPath = "Default";
+        public void InitInteraction() {
+            // TODO: Set the starting interaction path
+            interactionPath = "Default";
+        }
+
+        public Interaction GetCurrentInteraction(int interactionIndex) {
+            return InteractionPaths.GetValueOrDefault(interactionPath)?.interactions.ElementAtOrDefault(interactionIndex);
+        }
+
+        public bool ProcessInteractionTags(int interactionIndex) {
+            Interaction currentInteraction = GetCurrentInteraction(interactionIndex);
+            if (currentInteraction == null) {
+                return true;
+            }
+
+            return ProcessTagsOn(currentInteraction.tags);
+        }
+
+        public void ProcessInteractionOption(int interactionIndex, int optionIndex) {
+            InteractionOption currOption = GetCurrentInteraction(interactionIndex)?.options[optionIndex];
+            Assert.IsNotNull(currOption);
+
+            // If the next path contains some conditional tags, go there only if conditions are met
+            // For now, just assume a singular fallback path
+            if (ProcessTagsOn(InteractionPaths.GetValueOrDefault(currOption.nextInteractionPath)?.pathTags)) {
+                interactionPath = currOption.nextInteractionPath;
+            } else {
+                interactionPath = currOption.fallbackInteractionPath;
+            }
+        }
+
+        bool ProcessTagsOn(List<InteractionTag> interactionTags) {
+            if (interactionTags == null) {
+                return true;
+            }
+
+            foreach (InteractionTag interactionTag in interactionTags) {
+                switch (interactionTag.tag) {
+                    case ScriptTag.Bool: {
+                        if (!interactionTag.boolArg) {
+                            return false;
+                        }
+                        break;
+                    }
+                }
+            }
+
+            return true;
         }
     }
 }
