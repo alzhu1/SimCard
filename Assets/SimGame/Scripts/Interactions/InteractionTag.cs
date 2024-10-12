@@ -10,7 +10,8 @@ using UnityEngine.UIElements;
 namespace SimCard.SimGame {
     public enum ScriptTag {
         Bool,
-        Quest
+        Quest,
+        PathTraversedCount
     }
 
     [System.Serializable]
@@ -18,6 +19,7 @@ namespace SimCard.SimGame {
         public ScriptTag tag;
         public bool boolArg;
         public string strArg;
+        public int intArg;
     }
 
 #if UNITY_EDITOR
@@ -31,10 +33,12 @@ namespace SimCard.SimGame {
 
             PropertyField boolArgField = new PropertyField(property.FindPropertyRelative("boolArg"));
             PropertyField strArgField = new PropertyField(property.FindPropertyRelative("strArg"));
+            PropertyField intArgField = new PropertyField(property.FindPropertyRelative("intArg"));
             PropertyField[] argFields = new[] {
                 boolArgField,
-                strArgField
-            };
+                strArgField,
+                intArgField
+        };
 
             // Add all fields above to the container
             Array.ForEach(argFields, container.Add);
@@ -50,6 +54,11 @@ namespace SimCard.SimGame {
                 switch (scriptTag) {
                     case ScriptTag.Bool:
                         boolArgField.style.display = DisplayStyle.Flex;
+                        break;
+
+                    case ScriptTag.PathTraversedCount:
+                        intArgField.style.display = DisplayStyle.Flex;
+                        strArgField.style.display = DisplayStyle.Flex;
                         break;
 
                     default:

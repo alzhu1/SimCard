@@ -15,26 +15,48 @@ namespace SimCard.SimGame {
         [field: SerializeField]
         public InteractableSO InteractableSO { get; private set; }
 
-        public Dictionary<string, InteractionPath> InteractionPaths { get; private set; }
+        private Dictionary<string, InteractionPath> interactionPaths = new();
 
-        private string interactionPath = "Default";
+        // Metadata
+        private Dictionary<string, int> pathTraversedCount = new();
+
+        public string CurrInteractionPath { get; private set; } = "Default";
 
         void Awake() {
-            InteractionPaths = InteractableSO.interactionPaths.ToDictionary(
+            interactionPaths = InteractableSO.interactionPaths.ToDictionary(
                 x => x.name,
                 x => x
             );
-            Assert.IsFalse(InteractionPaths.ContainsKey("Default"));
-            InteractionPaths.Add("Default", InteractionPath.CreateDefaultPath(InteractableSO.defaultInteractions));
+            Assert.IsFalse(interactionPaths.ContainsKey("Default"));
+            interactionPaths.Add("Default", InteractionPath.CreateDefaultPath(InteractableSO.defaultInteractions));
+
+            // Ensure that all paths with positive starting priority is unique
+            int uniqueStartingPriorityCount = interactionPaths.Values.Where(x => x.startingPriority > 0).ToHashSet().Count;
+            Assert.AreEqual(interactionPaths.Count, uniqueStartingPriorityCount);
         }
 
         public void InitInteraction() {
-            // TODO: Set the starting interaction path
-            interactionPath = "Default";
+            CurrInteractionPath = "Default";
+            int priority = 0;
+
+            foreach (InteractionPath path in interactionPaths.Values) {
+                if (path.startingPriority > priority && ProcessTagsOn(path.pathTags)) {
+                    CurrInteractionPath = path.name;
+                    priority = path.startingPriority;
+                }
+            }
+        }
+
+        public void EndInteraction(HashSet<string> traversedPaths) {
+            // Keep track of path counts
+            foreach (string traversedPath in traversedPaths) {
+                int pathCount = pathTraversedCount.GetValueOrDefault(traversedPath);
+                pathTraversedCount[traversedPath] = pathCount + 1;
+            }
         }
 
         public Interaction GetCurrentInteraction(int interactionIndex) {
-            return InteractionPaths.GetValueOrDefault(interactionPath)?.interactions.ElementAtOrDefault(interactionIndex);
+            return interactionPaths.GetValueOrDefault(CurrInteractionPath)?.interactions.ElementAtOrDefault(interactionIndex);
         }
 
         public bool ProcessInteractionTags(int interactionIndex) {
@@ -52,10 +74,10 @@ namespace SimCard.SimGame {
 
             // If the next path contains some conditional tags, go there only if conditions are met
             // For now, just assume a singular fallback path
-            if (ProcessTagsOn(InteractionPaths.GetValueOrDefault(currOption.nextInteractionPath)?.pathTags)) {
-                interactionPath = currOption.nextInteractionPath;
+            if (ProcessTagsOn(interactionPaths.GetValueOrDefault(currOption.nextInteractionPath)?.pathTags)) {
+                CurrInteractionPath = currOption.nextInteractionPath;
             } else {
-                interactionPath = currOption.fallbackInteractionPath;
+                CurrInteractionPath = currOption.fallbackInteractionPath;
             }
         }
 
@@ -68,6 +90,15 @@ namespace SimCard.SimGame {
                 switch (interactionTag.tag) {
                     case ScriptTag.Bool: {
                         if (!interactionTag.boolArg) {
+                            return false;
+                        }
+                        break;
+                    }
+
+                    case ScriptTag.PathTraversedCount: {
+                        int requiredTraversedCount = interactionTag.intArg;
+                        string pathName = interactionTag.strArg;
+                        if (pathTraversedCount.GetValueOrDefault(pathName) < requiredTraversedCount) {
                             return false;
                         }
                         break;

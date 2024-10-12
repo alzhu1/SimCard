@@ -35,6 +35,7 @@ namespace SimCard.SimGame {
 
             // When complete, wait for UI before cleaning up
             yield return interactionParser.WaitForUI;
+            interactionParser.EndInteraction();
 
             player.SimGameManager.EventBus.OnEndInteract.Raise(EventArgs.Empty);
         }

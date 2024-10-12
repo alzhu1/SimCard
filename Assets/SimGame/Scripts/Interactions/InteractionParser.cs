@@ -17,6 +17,10 @@ namespace SimCard.SimGame {
         }
 
         private Interactable interactable;
+        private HashSet<string> traversedPaths;
+
+        // Events that the parser can call
+        public Action<Args<List<string>>> DisplayInteractionOptions;
 
         // UI wait utils
         private bool waitingForUI = true;
@@ -34,17 +38,16 @@ namespace SimCard.SimGame {
 
         private int interactionIndex = 0;
 
-        // Events that the parser can call
-        public Action<Args<List<string>>> DisplayInteractionOptions;
-
         public InteractionParser(
             Interactable interactable,
             Action<Args<List<string>>> DisplayInteractionOptions
         ) {
             this.interactable = interactable;
             this.DisplayInteractionOptions = DisplayInteractionOptions;
+            traversedPaths = new HashSet<string>();
 
             this.interactable.InitInteraction();
+            traversedPaths.Add(this.interactable.CurrInteractionPath);
         }
 
         public YieldInstruction Tick() {
@@ -91,6 +94,8 @@ namespace SimCard.SimGame {
                 OptionIndex = 0;
                 MaxVisibleCharacters = 0;
 
+                traversedPaths.Add(interactable.CurrInteractionPath);
+
                 // Hide the options UI once an option is picked
                 DisplayInteractionOptions?.Invoke(null);
                 return;
@@ -113,6 +118,10 @@ namespace SimCard.SimGame {
             if (optionCount > 0) {
                 OptionIndex = (optionCount + OptionIndex + diff) % optionCount;
             }
+        }
+
+        public void EndInteraction() {
+            interactable.EndInteraction(traversedPaths);
         }
 
         public void NotifyFromUI() {

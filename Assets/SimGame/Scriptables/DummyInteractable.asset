@@ -23,6 +23,7 @@ MonoBehaviour:
     - tag: 0
       boolArg: 0
       strArg: 
+      intArg: 0
   - text: Presenting you now with a choice
     options:
     - option: Yes
@@ -34,17 +35,34 @@ MonoBehaviour:
     tags: []
   interactionPaths:
   - name: DefaultYes
+    startingPriority: -1
     interactions:
     - text: You pressed yes!
       options: []
       tags: []
-    pathTags:
-    - tag: 0
-      boolArg: 0
-      strArg: 
+    pathTags: []
   - name: DefaultNo
+    startingPriority: -1
     interactions:
     - text: You pressed no...
       options: []
       tags: []
+    - text: But you pressed yes before...
+      options: []
+      tags:
+      - tag: 2
+        boolArg: 0
+        strArg: DefaultYes
+        intArg: 1
     pathTags: []
+  - name: TooManyTalks
+    startingPriority: 1
+    interactions:
+    - text: I don't want to ask you anymore...
+      options: []
+      tags: []
+    pathTags:
+    - tag: 2
+      boolArg: 0
+      strArg: Default
+      intArg: 5

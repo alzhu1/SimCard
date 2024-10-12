@@ -38,12 +38,14 @@ namespace SimCard.SimGame {
     [System.Serializable]
     public class InteractionPath {
         public string name;
+        public int startingPriority = -1;
         public List<Interaction> interactions;
         public List<InteractionTag> pathTags;
 
         public static InteractionPath CreateDefaultPath(List<Interaction> defaultInteractions) {
             return new InteractionPath {
                 name = "Default",
+                startingPriority = 0,
                 interactions = defaultInteractions
             };
         }
