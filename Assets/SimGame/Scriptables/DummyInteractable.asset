@@ -23,6 +23,7 @@ MonoBehaviour:
     - tag: 0
       boolArg: 0
       strArg: 
+      conditionArg: 0
       intArg: 0
   - text: Presenting you now with a choice
     options:
@@ -53,6 +54,7 @@ MonoBehaviour:
       - tag: 2
         boolArg: 0
         strArg: DefaultYes
+        conditionArg: 4
         intArg: 1
     pathTags: []
   - name: TooManyTalks
@@ -65,4 +67,5 @@ MonoBehaviour:
     - tag: 2
       boolArg: 0
       strArg: Default
+      conditionArg: 4
       intArg: 5

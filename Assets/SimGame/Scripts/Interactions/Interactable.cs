@@ -103,9 +103,16 @@ namespace SimCard.SimGame {
                     }
 
                     case ScriptTag.PathTraversedCount: {
-                        int requiredTraversedCount = interactionTag.intArg;
                         string pathName = interactionTag.strArg;
-                        if (pathTraversedCount.GetValueOrDefault(pathName) < requiredTraversedCount) {
+                        int requiredTraversedCount = interactionTag.intArg;
+                        int currentTraversedCount = pathTraversedCount.GetValueOrDefault(pathName);
+
+                        if (
+                            !interactionTag.ApplyCondition(
+                                currentTraversedCount,
+                                requiredTraversedCount
+                            )
+                        ) {
                             return false;
                         }
                         break;
