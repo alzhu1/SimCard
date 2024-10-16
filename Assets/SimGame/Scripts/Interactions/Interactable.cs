@@ -31,11 +31,14 @@ namespace SimCard.SimGame {
             );
 
             // Ensure that all paths with positive starting priority is unique
-            int uniqueStartingPriorityCount = interactionPaths
-                .Values.Where(x => x.startingPriority > 0)
-                .ToHashSet()
-                .Count;
-            Assert.AreEqual(interactionPaths.Count, uniqueStartingPriorityCount);
+            IEnumerable<int> startingPriorities = interactionPaths.Values.Where(x =>
+                x.startingPriority > 0
+            ).Select(x => x.startingPriority);
+
+            int allStartingPriorityCounts = startingPriorities.Count();
+            int uniqueStartingPriorityCount = startingPriorities.ToHashSet().Count;
+
+            Assert.AreEqual(uniqueStartingPriorityCount, allStartingPriorityCounts);
         }
 
         public void InitInteraction() {
