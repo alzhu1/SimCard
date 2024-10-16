@@ -15,6 +15,10 @@ namespace SimCard.SimGame {
         public GameEvent<Args<List<string>>> OnDisplayInteractOptions = new();
         public GameEvent<EventArgs> OnEndInteract = new();
 
+        // TODO: This is currently the catch-all event for interaction triggered events
+        // Would like a more dynamic solution via scripting, somehow
+        public GameEvent<Args<string>> OnInteractionEvent = new();
+
         void Awake() {
             if (instance == null) {
                 instance = this;

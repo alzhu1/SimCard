@@ -13,7 +13,8 @@ namespace SimCard.SimGame {
         protected override void Enter() {
             interactionParser = new InteractionParser(
                 interactable,
-                player.SimGameManager.EventBus.OnDisplayInteractOptions.Raise
+                player.SimGameManager.EventBus.OnDisplayInteractOptions,
+                player.SimGameManager.EventBus.OnInteractionEvent
             );
             actor.StartCoroutine(HandleInputs());
 

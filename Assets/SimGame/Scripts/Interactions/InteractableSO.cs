@@ -33,6 +33,8 @@ namespace SimCard.SimGame {
         public List<InteractionOption> options;
 
         public List<InteractionTag> tags;
+
+        public List<string> eventTriggers;
     }
 
     [System.Serializable]

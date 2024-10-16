@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using SimCard.Common;
 
 namespace SimCard.SimGame {
     public class InteractionParser : InteractionParser.InteractionParserUIListener {
@@ -20,7 +21,8 @@ namespace SimCard.SimGame {
         private HashSet<string> traversedPaths;
 
         // Events that the parser can call
-        public Action<Args<List<string>>> DisplayInteractionOptions;
+        public GameEventAction<Args<List<string>>> DisplayInteractionOptions;
+        public GameEventAction<Args<string>> InteractionEvent;
 
         // UI wait utils
         private bool waitingForUI = true;
@@ -40,10 +42,12 @@ namespace SimCard.SimGame {
 
         public InteractionParser(
             Interactable interactable,
-            Action<Args<List<string>>> DisplayInteractionOptions
+            GameEventAction<Args<List<string>>> DisplayInteractionOptions,
+            GameEventAction<Args<string>> InteractionEvent
         ) {
             this.interactable = interactable;
             this.DisplayInteractionOptions = DisplayInteractionOptions;
+            this.InteractionEvent = InteractionEvent;
             traversedPaths = new HashSet<string>();
 
             this.interactable.InitInteraction();
@@ -62,10 +66,20 @@ namespace SimCard.SimGame {
             }
 
             MaxVisibleCharacters++;
-            if (MaxVisibleCharacters >= InteractionTextLength && CurrInteraction.options.Count > 0) {
-                DisplayInteractionOptions?.Invoke(
-                    new(CurrInteraction.options.Select(x => x.option).ToList())
-                );
+            if (MaxVisibleCharacters >= InteractionTextLength) {
+                // Display options
+                if (CurrInteraction.options.Count > 0) {
+                    DisplayInteractionOptions.Raise(
+                        new(CurrInteraction.options.Select(x => x.option).ToList())
+                    );
+                }
+
+                // Event triggers for interaction
+                if (CurrInteraction.eventTriggers.Count > 0) {
+                    foreach (string eventTrigger in CurrInteraction.eventTriggers) {
+                        InteractionEvent.Raise(new(eventTrigger));
+                    }
+                }
             }
 
             return new WaitForSeconds(interactable.TypeTime);
@@ -80,7 +94,7 @@ namespace SimCard.SimGame {
                 MaxVisibleCharacters = InteractionTextLength;
 
                 if (CurrInteraction.options.Count > 0) {
-                    DisplayInteractionOptions?.Invoke(
+                    DisplayInteractionOptions.Raise(
                         new(CurrInteraction.options.Select(x => x.option).ToList())
                     );
                 }
@@ -97,7 +111,7 @@ namespace SimCard.SimGame {
                 traversedPaths.Add(interactable.CurrInteractionPath);
 
                 // Hide the options UI once an option is picked
-                DisplayInteractionOptions?.Invoke(null);
+                DisplayInteractionOptions.Raise(null);
                 return;
             }
 

@@ -22,6 +22,7 @@ MonoBehaviour:
       nextInteractionPath: 
       fallbackInteractionPath: 
     tags: []
+    eventTriggers: []
   interactionPaths:
   - name: DefaultYes
     startingPriority: 0
@@ -29,4 +30,8 @@ MonoBehaviour:
     - text: Sleep?
       options: []
       tags: []
+      eventTriggers:
+      - aaaaa
+      - bbbbb
+      - ccccc
     pathTags: []
