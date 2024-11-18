@@ -51,7 +51,7 @@ namespace SimCard.SimGame {
             traversedPaths = new HashSet<string>();
 
             this.interactable.InitInteraction();
-            traversedPaths.Add(this.interactable.CurrInteractionPath);
+            traversedPaths.Add(this.interactable.CurrInteractionPathName);
         }
 
         public YieldInstruction Tick() {
@@ -86,7 +86,7 @@ namespace SimCard.SimGame {
                 OptionIndex = 0;
                 MaxVisibleCharacters = 0;
 
-                traversedPaths.Add(interactable.CurrInteractionPath);
+                traversedPaths.Add(interactable.CurrInteractionPathName);
 
                 // Hide the options UI once an option is picked
                 DisplayInteractionOptions.Raise(null);
@@ -113,6 +113,12 @@ namespace SimCard.SimGame {
         }
 
         public void EndInteraction() {
+            if (interactable.CurrInteractionPath.endingEventTriggers.Count > 0) {
+                foreach (string eventTrigger in interactable.CurrInteractionPath.endingEventTriggers) {
+                    InteractionEvent.Raise(new(eventTrigger));
+                }
+            }
+
             interactable.EndInteraction(traversedPaths);
         }
 

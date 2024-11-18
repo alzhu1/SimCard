@@ -27,9 +27,10 @@ MonoBehaviour:
   - name: DefaultYes
     startingPriority: 0
     interactions:
-    - text: Sleep?
+    - text: Go to sleep now...
       options: []
       tags: []
-      eventTriggers:
-      - NextDay
+      eventTriggers: []
     pathTags: []
+    endingEventTriggers:
+    - NextDay

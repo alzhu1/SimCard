@@ -20,7 +20,8 @@ namespace SimCard.SimGame {
         // Metadata
         private Dictionary<string, int> pathTraversedCount = new();
 
-        public string CurrInteractionPath { get; private set; } = "Default";
+        public string CurrInteractionPathName { get; private set; } = "Default";
+        public InteractionPath CurrInteractionPath => interactionPaths.GetValueOrDefault(CurrInteractionPathName);
 
         void Awake() {
             interactionPaths = InteractableSO.interactionPaths.ToDictionary(x => x.name, x => x);
@@ -42,12 +43,12 @@ namespace SimCard.SimGame {
         }
 
         public void InitInteraction() {
-            CurrInteractionPath = "Default";
+            CurrInteractionPathName = "Default";
             int priority = 0;
 
             foreach (InteractionPath path in interactionPaths.Values) {
                 if (path.startingPriority > priority && ProcessTagsOn(path.pathTags)) {
-                    CurrInteractionPath = path.name;
+                    CurrInteractionPathName = path.name;
                     priority = path.startingPriority;
                 }
             }
@@ -63,7 +64,7 @@ namespace SimCard.SimGame {
 
         public Interaction GetCurrentInteraction(int interactionIndex) {
             return interactionPaths
-                .GetValueOrDefault(CurrInteractionPath)
+                .GetValueOrDefault(CurrInteractionPathName)
                 ?.interactions.ElementAtOrDefault(interactionIndex);
         }
 
@@ -86,7 +87,7 @@ namespace SimCard.SimGame {
             bool toNextPath = ProcessTagsOn(
                 interactionPaths.GetValueOrDefault(currOption.nextInteractionPath)?.pathTags
             );
-            CurrInteractionPath = toNextPath
+            CurrInteractionPathName = toNextPath
                 ? currOption.nextInteractionPath
                 : currOption.fallbackInteractionPath;
         }
