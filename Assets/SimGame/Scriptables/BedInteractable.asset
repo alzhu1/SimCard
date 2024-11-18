@@ -31,7 +31,5 @@ MonoBehaviour:
       options: []
       tags: []
       eventTriggers:
-      - aaaaa
-      - bbbbb
-      - ccccc
+      - NextDay
     pathTags: []

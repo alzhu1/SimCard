@@ -24,6 +24,11 @@ namespace SimCard.SimGame {
 
         protected override IEnumerator Handle() {
             while (nextState == null) {
+                if (player.Paused) {
+                    yield return null;
+                    continue;
+                }
+
                 if (interactable != null && Input.GetKeyDown(KeyCode.Z)) {
                     nextState = new InteractState(interactable);
                     break;

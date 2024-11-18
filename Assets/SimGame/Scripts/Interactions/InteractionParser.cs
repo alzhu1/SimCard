@@ -65,23 +65,7 @@ namespace SimCard.SimGame {
                 return null;
             }
 
-            MaxVisibleCharacters++;
-            if (MaxVisibleCharacters >= InteractionTextLength) {
-                // Display options
-                if (CurrInteraction.options.Count > 0) {
-                    DisplayInteractionOptions.Raise(
-                        new(CurrInteraction.options.Select(x => x.option).ToList())
-                    );
-                }
-
-                // Event triggers for interaction
-                if (CurrInteraction.eventTriggers.Count > 0) {
-                    foreach (string eventTrigger in CurrInteraction.eventTriggers) {
-                        InteractionEvent.Raise(new(eventTrigger));
-                    }
-                }
-            }
-
+            UpdateMaxVisibleCharacters(MaxVisibleCharacters + 1);
             return new WaitForSeconds(interactable.TypeTime);
         }
 
@@ -91,13 +75,7 @@ namespace SimCard.SimGame {
             }
 
             if (MaxVisibleCharacters < InteractionTextLength) {
-                MaxVisibleCharacters = InteractionTextLength;
-
-                if (CurrInteraction.options.Count > 0) {
-                    DisplayInteractionOptions.Raise(
-                        new(CurrInteraction.options.Select(x => x.option).ToList())
-                    );
-                }
+                UpdateMaxVisibleCharacters(InteractionTextLength);
                 return;
             }
 
@@ -140,6 +118,29 @@ namespace SimCard.SimGame {
 
         public void NotifyFromUI() {
             waitingForUI = false;
+        }
+
+        // Update character value + associated events
+        void UpdateMaxVisibleCharacters(int value) {
+            MaxVisibleCharacters = value;
+
+            if (MaxVisibleCharacters >= InteractionTextLength) {
+                // Display options
+                if (CurrInteraction.options.Count > 0) {
+                    DisplayInteractionOptions.Raise(
+                        new(CurrInteraction.options.Select(x => x.option).ToList())
+                    );
+                }
+
+                // Event triggers for interaction
+                // TODO: Need a way to set the event trigger granularly
+                // e.g. want it at end of interaction
+                if (CurrInteraction.eventTriggers.Count > 0) {
+                    foreach (string eventTrigger in CurrInteraction.eventTriggers) {
+                        InteractionEvent.Raise(new(eventTrigger));
+                    }
+                }
+            }
         }
     }
 }

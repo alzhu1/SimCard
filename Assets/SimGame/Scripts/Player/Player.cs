@@ -13,10 +13,12 @@ namespace SimCard.SimGame {
         public SimGameManager SimGameManager { get; private set; }
 
         private Rigidbody2D rb;
+        private bool paused;
 
         public Transform FrontCheck => frontCheck;
         public float MoveSpeed => moveSpeed;
         public Rigidbody2D RB => rb;
+        public bool Paused => paused;
 
         private Vector3 move;
         private Vector3Int direction;
@@ -67,6 +69,14 @@ namespace SimCard.SimGame {
 
             Debug.Log($"Collider (exit): {collider}");
             SimGameManager.EventBus.OnCanInteract.Raise(new InteractArgs(null));
+        }
+
+        public void Pause() {
+            paused = true;
+        }
+
+        public void Unpause() {
+            paused = false;
         }
     }
 }
