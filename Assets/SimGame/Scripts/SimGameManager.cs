@@ -14,6 +14,7 @@ namespace SimCard.SimGame {
         public SimGameEventBus EventBus { get; private set; }
 
         private Player player;
+        private InteractUI interactUI;
         private FadeUI fadeUI;
 
         // TODO: Should we move game-level properties to another object?
@@ -30,6 +31,7 @@ namespace SimCard.SimGame {
             EventBus = GetComponent<SimGameEventBus>();
 
             player = GetComponentInChildren<Player>();
+            interactUI = GetComponentInChildren<InteractUI>();
             fadeUI = GetComponentInChildren<FadeUI>();
         }
 
@@ -61,6 +63,29 @@ namespace SimCard.SimGame {
             day++;
 
             player.Unpause();
+        }
+
+        // Interaction mediator methods
+        public Coroutine StartInteractionCoroutine(InteractionParser parser) {
+            return StartCoroutine(StartInteraction(parser));
+        }
+
+        IEnumerator StartInteraction(InteractionParser parser) {
+            // Animate UI up
+            yield return interactUI.StartInteraction();
+
+            // Start coroutine (but don't wait) for UI to listen
+            interactUI.HandleInteraction(parser);
+        }
+
+        public Coroutine EndInteractionCoroutine(InteractionParser parser) {
+            return StartCoroutine(EndInteraction(parser));
+        }
+
+        IEnumerator EndInteraction(InteractionParser parser) {
+            // Animate UI down
+            yield return interactUI.EndInteraction();
+            parser.EndInteraction();
         }
     }
 }

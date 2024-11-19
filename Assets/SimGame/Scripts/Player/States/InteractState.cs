@@ -16,15 +16,13 @@ namespace SimCard.SimGame {
                 player.SimGameManager.EventBus.OnDisplayInteractOptions,
                 player.SimGameManager.EventBus.OnInteractionEvent
             );
-            actor.StartCoroutine(HandleInputs());
-
-            player.SimGameManager.EventBus.OnStartInteract.Raise(new(interactionParser));
         }
 
         protected override void Exit() { }
 
         protected override IEnumerator Handle() {
-            yield return interactionParser.WaitForUI;
+            yield return player.SimGameManager.StartInteractionCoroutine(interactionParser);
+            actor.StartCoroutine(HandleInputs());
 
             while (nextState == null) {
                 yield return interactionParser.Tick();
@@ -35,10 +33,7 @@ namespace SimCard.SimGame {
             }
 
             // When complete, wait for UI before cleaning up
-            yield return interactionParser.WaitForUI;
-            interactionParser.EndInteraction();
-
-            player.SimGameManager.EventBus.OnEndInteract.Raise(EventArgs.Empty);
+            yield return player.SimGameManager.EndInteractionCoroutine(interactionParser);
         }
 
         IEnumerator HandleInputs() {

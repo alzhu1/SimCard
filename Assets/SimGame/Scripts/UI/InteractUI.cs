@@ -28,41 +28,43 @@ namespace SimCard.SimGame {
         private SimGameManager simGameManager;
 
         private List<TextMeshProUGUI> optionTexts;
+        private Vector2 borderMinimizedOffset;
 
         void Awake() {
             interactPromptGroup = GetComponent<CanvasGroup>();
             simGameManager = GetComponentInParent<SimGameManager>();
 
             optionTexts = optionsGroup.GetComponentsInChildren<TextMeshProUGUI>().ToList();
+            borderMinimizedOffset = interactArea.rectTransform.offsetMax;
         }
 
         void Start() {
             simGameManager.EventBus.OnCanInteract.Event += DisplayInteractPrompt;
-            simGameManager.EventBus.OnStartInteract.Event += StartInteraction;
             simGameManager.EventBus.OnDisplayInteractOptions.Event += DisplayInteractOptions;
-            simGameManager.EventBus.OnEndInteract.Event += EndInteraction;
         }
 
         void OnDestroy() {
             simGameManager.EventBus.OnCanInteract.Event -= DisplayInteractPrompt;
-            simGameManager.EventBus.OnStartInteract.Event -= StartInteraction;
             simGameManager.EventBus.OnDisplayInteractOptions.Event -= DisplayInteractOptions;
-            simGameManager.EventBus.OnEndInteract.Event -= EndInteraction;
         }
 
-        void DisplayInteractPrompt(InteractArgs args) {
-            interactPromptGroup.alpha = args.interactable == null ? 0 : 1;
+        void DisplayInteractPrompt(Args<Interactable> args) {
+            interactPromptGroup.alpha = args.argument == null ? 0 : 1;
 
+            // Enable interact text so future appearance has it displayed
             interactText.enabled = true;
             dialogueText.enabled = false;
         }
 
-        void StartInteraction(Args<InteractionParserUIListener> args) {
-            InteractionParserUIListener parser = args.argument;
+        public Coroutine StartInteraction() {
+            return StartCoroutine(AnimateInteractionWindow(true));
+        }
 
-            interactText.enabled = false;
-            dialogueText.enabled = true;
+        public Coroutine EndInteraction() {
+            return StartCoroutine(AnimateInteractionWindow(false));
+        }
 
+        public void HandleInteraction(InteractionParserUIListener parser) {
             StartCoroutine(DisplayInteraction(parser));
         }
 
@@ -85,16 +87,16 @@ namespace SimCard.SimGame {
             }
         }
 
-        void EndInteraction(EventArgs args) {
-            interactText.enabled = true;
-            dialogueText.enabled = false;
-        }
+        IEnumerator AnimateInteractionWindow(bool start) {
+            if (start) {
+                interactText.enabled = false;
+                dialogueText.enabled = true;
+            }
 
-        IEnumerator DisplayInteraction(InteractionParserUIListener parser) {
-            Vector2 startOffsetMax = interactArea.rectTransform.offsetMax;
-            Vector2 endOffsetMax = startOffsetMax + 50 * Vector2.up;
+            Vector2 maximizedOffset = borderMinimizedOffset + 50 * Vector2.up;
+            Vector2 startOffsetMax = start ? borderMinimizedOffset : maximizedOffset;
+            Vector2 endOffsetMax = start ? maximizedOffset : borderMinimizedOffset;
 
-            // TODO: Standardize this
             float t = 0;
             while (t < 1) {
                 interactArea.rectTransform.offsetMax = Vector2.Lerp(
@@ -107,8 +109,13 @@ namespace SimCard.SimGame {
             }
             interactArea.rectTransform.offsetMax = endOffsetMax;
 
-            parser.NotifyFromUI();
+            if (!start) {
+                interactText.enabled = true;
+                dialogueText.enabled = false;
+            }
+        }
 
+        IEnumerator DisplayInteraction(InteractionParserUIListener parser) {
             while (parser.CurrInteraction != null) {
                 dialogueText.text = parser.CurrInteraction.text;
                 dialogueText.maxVisibleCharacters = parser.MaxVisibleCharacters;
@@ -123,20 +130,6 @@ namespace SimCard.SimGame {
             }
 
             dialogueText.text = "";
-
-            t = 0;
-            while (t < 1) {
-                interactArea.rectTransform.offsetMax = Vector2.Lerp(
-                    endOffsetMax,
-                    startOffsetMax,
-                    t
-                );
-                yield return null;
-                t += Time.deltaTime;
-            }
-            interactArea.rectTransform.offsetMax = startOffsetMax;
-
-            parser.NotifyFromUI();
         }
     }
 }

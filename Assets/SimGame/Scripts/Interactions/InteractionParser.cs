@@ -13,8 +13,6 @@ namespace SimCard.SimGame {
             public Interaction CurrInteraction { get; }
             public int MaxVisibleCharacters { get; }
             public int OptionIndex { get; }
-
-            public void NotifyFromUI();
         }
 
         private Interactable interactable;
@@ -23,10 +21,6 @@ namespace SimCard.SimGame {
         // Events that the parser can call
         public GameEventAction<Args<List<string>>> DisplayInteractionOptions;
         public GameEventAction<Args<string>> InteractionEvent;
-
-        // UI wait utils
-        private bool waitingForUI = true;
-        public CustomYieldInstruction WaitForUI => new WaitWhile(() => waitingForUI);
 
         // Properties common to UI
         public Interaction CurrInteraction => interactable.GetCurrentInteraction(interactionIndex);
@@ -56,7 +50,6 @@ namespace SimCard.SimGame {
 
         public YieldInstruction Tick() {
             if (CurrInteraction == null) {
-                waitingForUI = true;
                 Completed = true;
                 return null;
             }
@@ -70,10 +63,6 @@ namespace SimCard.SimGame {
         }
 
         public void HandleAdvance() {
-            if (waitingForUI) {
-                return;
-            }
-
             if (MaxVisibleCharacters < InteractionTextLength) {
                 UpdateMaxVisibleCharacters(InteractionTextLength);
                 return;
@@ -122,10 +111,6 @@ namespace SimCard.SimGame {
             interactable.EndInteraction(traversedPaths);
         }
 
-        public void NotifyFromUI() {
-            waitingForUI = false;
-        }
-
         // Update character value + associated events
         void UpdateMaxVisibleCharacters(int value) {
             MaxVisibleCharacters = value;
@@ -139,8 +124,6 @@ namespace SimCard.SimGame {
                 }
 
                 // Event triggers for interaction
-                // TODO: Need a way to set the event trigger granularly
-                // e.g. want it at end of interaction
                 if (CurrInteraction.eventTriggers.Count > 0) {
                     foreach (string eventTrigger in CurrInteraction.eventTriggers) {
                         InteractionEvent.Raise(new(eventTrigger));

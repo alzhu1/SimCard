@@ -76,8 +76,8 @@ namespace SimCard.SimGame {
             player.FrontCheck.localPosition = direction;
         }
 
-        void EnableInteraction(InteractArgs args) {
-            interactable = args.interactable;
+        void EnableInteraction(Args<Interactable> args) {
+            interactable = args.argument;
         }
     }
 }

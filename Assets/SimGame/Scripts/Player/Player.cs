@@ -60,7 +60,7 @@ namespace SimCard.SimGame {
 
             Interactable interactable = collider.GetComponent<Interactable>();
             if (interactable != null) {
-                SimGameManager.EventBus.OnCanInteract.Raise(new InteractArgs(interactable));
+                SimGameManager.EventBus.OnCanInteract.Raise(new(interactable));
             }
         }
 
@@ -68,7 +68,7 @@ namespace SimCard.SimGame {
             // TODO: Figure out how to distinguish between interactable and non interactable
 
             Debug.Log($"Collider (exit): {collider}");
-            SimGameManager.EventBus.OnCanInteract.Raise(new InteractArgs(null));
+            SimGameManager.EventBus.OnCanInteract.Raise(new(null));
         }
 
         public void Pause() {
