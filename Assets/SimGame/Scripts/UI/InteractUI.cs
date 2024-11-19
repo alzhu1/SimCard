@@ -24,6 +24,8 @@ namespace SimCard.SimGame {
         [SerializeField]
         private Image optionCursor;
 
+        public InteractionParserUIListener Parser { get; set; }
+
         private CanvasGroup interactPromptGroup;
         private SimGameManager simGameManager;
 
@@ -48,6 +50,21 @@ namespace SimCard.SimGame {
             simGameManager.EventBus.OnDisplayInteractOptions.Event -= DisplayInteractOptions;
         }
 
+        void Update() {
+            if (Parser != null && Parser.CurrInteraction != null) {
+                // Non-null means we should update the dialogue text based on parser status
+                dialogueText.text = Parser.CurrInteraction.text;
+                dialogueText.maxVisibleCharacters = Parser.MaxVisibleCharacters;
+
+                // For existing options, set cursor position
+                if (Parser.CurrInteraction.options.Count > 0) {
+                    Vector2 pos = optionCursor.rectTransform.anchoredPosition;
+                    pos.y = optionTexts[Parser.OptionIndex].rectTransform.anchoredPosition.y;
+                    optionCursor.rectTransform.anchoredPosition = pos;
+                }
+            }
+        }
+
         void DisplayInteractPrompt(Args<Interactable> args) {
             interactPromptGroup.alpha = args.argument == null ? 0 : 1;
 
@@ -61,11 +78,8 @@ namespace SimCard.SimGame {
         }
 
         public Coroutine EndInteraction() {
+            dialogueText.text = "";
             return StartCoroutine(AnimateInteractionWindow(false));
-        }
-
-        public void HandleInteraction(InteractionParserUIListener parser) {
-            StartCoroutine(DisplayInteraction(parser));
         }
 
         void DisplayInteractOptions(Args<List<string>> args) {
@@ -113,23 +127,6 @@ namespace SimCard.SimGame {
                 interactText.enabled = true;
                 dialogueText.enabled = false;
             }
-        }
-
-        IEnumerator DisplayInteraction(InteractionParserUIListener parser) {
-            while (parser.CurrInteraction != null) {
-                dialogueText.text = parser.CurrInteraction.text;
-                dialogueText.maxVisibleCharacters = parser.MaxVisibleCharacters;
-
-                if (parser.CurrInteraction.options.Count > 0) {
-                    Vector2 pos = optionCursor.rectTransform.anchoredPosition;
-                    pos.y = optionTexts[parser.OptionIndex].rectTransform.anchoredPosition.y;
-                    optionCursor.rectTransform.anchoredPosition = pos;
-                }
-
-                yield return null;
-            }
-
-            dialogueText.text = "";
         }
     }
 }

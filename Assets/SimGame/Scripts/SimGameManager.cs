@@ -70,20 +70,19 @@ namespace SimCard.SimGame {
             return StartCoroutine(StartInteraction(parser));
         }
 
-        IEnumerator StartInteraction(InteractionParser parser) {
-            // Animate UI up
-            yield return interactUI.StartInteraction();
-
-            // Start coroutine (but don't wait) for UI to listen
-            interactUI.HandleInteraction(parser);
-        }
-
         public Coroutine EndInteractionCoroutine(InteractionParser parser) {
             return StartCoroutine(EndInteraction(parser));
         }
 
+        IEnumerator StartInteraction(InteractionParser parser) {
+            // Animate UI up + init parser for listening
+            yield return interactUI.StartInteraction();
+            interactUI.Parser = parser;
+        }
+
         IEnumerator EndInteraction(InteractionParser parser) {
-            // Animate UI down
+            // Don't reference parser anymore + animate UI down
+            interactUI.Parser = null;
             yield return interactUI.EndInteraction();
             parser.EndInteraction();
         }
