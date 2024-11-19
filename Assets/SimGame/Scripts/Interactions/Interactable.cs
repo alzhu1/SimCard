@@ -20,9 +20,6 @@ namespace SimCard.SimGame {
         // Metadata
         private Dictionary<string, int> pathTraversedCount = new();
 
-        public string CurrInteractionPathName { get; private set; } = "Default";
-        public InteractionPath CurrInteractionPath => interactionPaths.GetValueOrDefault(CurrInteractionPathName);
-
         void Awake() {
             interactionPaths = InteractableSO.interactionPaths.ToDictionary(x => x.name, x => x);
             Assert.IsFalse(interactionPaths.ContainsKey("Default"));
@@ -32,9 +29,9 @@ namespace SimCard.SimGame {
             );
 
             // Ensure that all paths with positive starting priority is unique
-            IEnumerable<int> startingPriorities = interactionPaths.Values.Where(x =>
-                x.startingPriority > 0
-            ).Select(x => x.startingPriority);
+            IEnumerable<int> startingPriorities = interactionPaths
+                .Values.Where(x => x.startingPriority > 0)
+                .Select(x => x.startingPriority);
 
             int allStartingPriorityCounts = startingPriorities.Count();
             int uniqueStartingPriorityCount = startingPriorities.ToHashSet().Count;
@@ -42,16 +39,18 @@ namespace SimCard.SimGame {
             Assert.AreEqual(uniqueStartingPriorityCount, allStartingPriorityCounts);
         }
 
-        public void InitInteraction() {
-            CurrInteractionPathName = "Default";
+        public string InitInteraction() {
+            string startingPathName = "Default";
             int priority = 0;
 
             foreach (InteractionPath path in interactionPaths.Values) {
                 if (path.startingPriority > priority && ProcessTagsOn(path.pathTags)) {
-                    CurrInteractionPathName = path.name;
+                    startingPathName = path.name;
                     priority = path.startingPriority;
                 }
             }
+
+            return startingPathName;
         }
 
         public void EndInteraction(HashSet<string> traversedPaths) {
@@ -62,14 +61,17 @@ namespace SimCard.SimGame {
             }
         }
 
-        public Interaction GetCurrentInteraction(int interactionIndex) {
-            return interactionPaths
-                .GetValueOrDefault(CurrInteractionPathName)
+        public InteractionPath GetCurrentInteractionPath(string pathName) {
+            return interactionPaths.GetValueOrDefault(pathName);
+        }
+
+        public Interaction GetCurrentInteraction(string pathName, int interactionIndex) {
+            return GetCurrentInteractionPath(pathName)
                 ?.interactions.ElementAtOrDefault(interactionIndex);
         }
 
-        public bool ProcessInteractionTags(int interactionIndex) {
-            Interaction currentInteraction = GetCurrentInteraction(interactionIndex);
+        public bool ProcessInteractionTags(string pathName, int interactionIndex) {
+            Interaction currentInteraction = GetCurrentInteraction(pathName, interactionIndex);
             if (currentInteraction == null) {
                 return true;
             }
@@ -77,8 +79,12 @@ namespace SimCard.SimGame {
             return ProcessTagsOn(currentInteraction.tags);
         }
 
-        public void ProcessInteractionOption(int interactionIndex, int optionIndex) {
-            InteractionOption currOption = GetCurrentInteraction(interactionIndex)
+        public string ProcessInteractionOption(
+            string pathName,
+            int interactionIndex,
+            int optionIndex
+        ) {
+            InteractionOption currOption = GetCurrentInteraction(pathName, interactionIndex)
                 ?.options[optionIndex];
             Assert.IsNotNull(currOption);
 
@@ -87,9 +93,7 @@ namespace SimCard.SimGame {
             bool toNextPath = ProcessTagsOn(
                 interactionPaths.GetValueOrDefault(currOption.nextInteractionPath)?.pathTags
             );
-            CurrInteractionPathName = toNextPath
-                ? currOption.nextInteractionPath
-                : currOption.fallbackInteractionPath;
+            return toNextPath ? currOption.nextInteractionPath : currOption.fallbackInteractionPath;
         }
 
         bool ProcessTagsOn(List<InteractionTag> interactionTags) {

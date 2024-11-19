@@ -2,8 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 using SimCard.Common;
+using UnityEngine;
 
 namespace SimCard.SimGame {
     public class InteractionParser : InteractionParser.InteractionParserUIListener {
@@ -17,22 +17,23 @@ namespace SimCard.SimGame {
 
         private Interactable interactable;
         private HashSet<string> traversedPaths;
+        private string pathName;
+        private int interactionIndex;
 
         // Events that the parser can call
-        public GameEventAction<Args<List<string>>> DisplayInteractionOptions;
-        public GameEventAction<Args<string>> InteractionEvent;
+        private GameEventAction<Args<List<string>>> DisplayInteractionOptions;
+        private GameEventAction<Args<string>> InteractionEvent;
 
         // Properties common to UI
-        public Interaction CurrInteraction => interactable.GetCurrentInteraction(interactionIndex);
+        public Interaction CurrInteraction =>
+            interactable.GetCurrentInteraction(pathName, interactionIndex);
         public int MaxVisibleCharacters { get; private set; }
         public int OptionIndex { get; private set; }
 
         public bool Completed { get; private set; }
 
-        public int InteractionTextLength =>
+        private int InteractionTextLength =>
             CurrInteraction == null ? 0 : CurrInteraction.text.Length;
-
-        private int interactionIndex = 0;
 
         public InteractionParser(
             Interactable interactable,
@@ -42,10 +43,11 @@ namespace SimCard.SimGame {
             this.interactable = interactable;
             this.DisplayInteractionOptions = DisplayInteractionOptions;
             this.InteractionEvent = InteractionEvent;
-            traversedPaths = new HashSet<string>();
 
-            this.interactable.InitInteraction();
-            traversedPaths.Add(this.interactable.CurrInteractionPathName);
+            traversedPaths = new HashSet<string>();
+            pathName = this.interactable.InitInteraction();
+            interactionIndex = 0;
+            traversedPaths.Add(pathName);
         }
 
         public YieldInstruction Tick() {
@@ -70,12 +72,16 @@ namespace SimCard.SimGame {
 
             // HandleAdvance means we picked an option
             if (CurrInteraction.options.Count > 0) {
-                interactable.ProcessInteractionOption(interactionIndex, OptionIndex);
+                pathName = interactable.ProcessInteractionOption(
+                    pathName,
+                    interactionIndex,
+                    OptionIndex
+                );
                 interactionIndex = 0;
                 OptionIndex = 0;
                 MaxVisibleCharacters = 0;
 
-                traversedPaths.Add(interactable.CurrInteractionPathName);
+                traversedPaths.Add(pathName);
 
                 // Hide the options UI once an option is picked
                 DisplayInteractionOptions.Raise(null);
@@ -85,7 +91,7 @@ namespace SimCard.SimGame {
             // If tags indicate that the interaction is not renderable, keep incrementing
             do {
                 interactionIndex++;
-            } while (!interactable.ProcessInteractionTags(interactionIndex));
+            } while (!interactable.ProcessInteractionTags(pathName, interactionIndex));
 
             MaxVisibleCharacters = 0;
         }
@@ -102,8 +108,9 @@ namespace SimCard.SimGame {
         }
 
         public void EndInteraction() {
-            if (interactable.CurrInteractionPath.endingEventTriggers.Count > 0) {
-                foreach (string eventTrigger in interactable.CurrInteractionPath.endingEventTriggers) {
+            InteractionPath interactionPath = interactable.GetCurrentInteractionPath(pathName);
+            if (interactionPath.endingEventTriggers.Count > 0) {
+                foreach (string eventTrigger in interactionPath.endingEventTriggers) {
                     InteractionEvent.Raise(new(eventTrigger));
                 }
             }
