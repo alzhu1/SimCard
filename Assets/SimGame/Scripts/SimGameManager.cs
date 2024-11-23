@@ -132,12 +132,13 @@ namespace SimCard.SimGame {
         }
 
         IEnumerator EndCardGame() {
-            AsyncOperation asyncLoad = SceneManager.UnloadSceneAsync(0);
             canvasUI.SetActive(true);
             simGameCamera.gameObject.SetActive(true);
 
-            asyncLoad.allowSceneActivation = false;
             yield return fadeUI.FadeIn();
+
+            AsyncOperation asyncLoad = SceneManager.UnloadSceneAsync(0);
+            asyncLoad.allowSceneActivation = false;
 
             while (asyncLoad.progress < 0.9f) {
                 yield return null;
