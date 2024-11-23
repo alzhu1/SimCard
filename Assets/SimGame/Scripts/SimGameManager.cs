@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
@@ -12,6 +13,11 @@ namespace SimCard.SimGame {
         private static SimGameManager instance = null;
 
         public SimGameEventBus EventBus { get; private set; }
+
+        [SerializeField] private GameObject environment;
+        [SerializeField] private GameObject canvasUI;
+
+        private Camera simGameCamera;
 
         private Player player;
         private InteractUI interactUI;
@@ -30,9 +36,11 @@ namespace SimCard.SimGame {
 
             EventBus = GetComponent<SimGameEventBus>();
 
-            player = GetComponentInChildren<Player>();
-            interactUI = GetComponentInChildren<InteractUI>();
-            fadeUI = GetComponentInChildren<FadeUI>();
+            simGameCamera = Camera.main;
+
+            player = environment.GetComponentInChildren<Player>();
+            interactUI = canvasUI.GetComponentInChildren<InteractUI>();
+            fadeUI = canvasUI.GetComponentInChildren<FadeUI>();
         }
 
         void Start() {
@@ -47,6 +55,19 @@ namespace SimCard.SimGame {
             switch (args.argument) {
                 case "NextDay": {
                     StartCoroutine(GoToNextDay());
+                    break;
+                }
+
+                case "StartCardGame": {
+                    StartCoroutine(StartCardGame());
+                    break;
+                }
+
+                // TODO: I prefer this approach but it's a bit hacky, also no info can be transferred back to the SimGame this way
+                // Either go back to method-based invocation from CardGameManager,
+                // Or add a way to include parameters here
+                case "EndCardGame": {
+                    StartCoroutine(EndCardGame());
                     break;
                 }
 
@@ -85,6 +106,48 @@ namespace SimCard.SimGame {
             interactUI.Parser = null;
             yield return interactUI.EndInteraction();
             parser.EndInteraction();
+        }
+
+        IEnumerator StartCardGame() {
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(0, LoadSceneMode.Additive);
+
+            asyncLoad.allowSceneActivation = false;
+            yield return fadeUI.FadeIn();
+
+            while (asyncLoad.progress < 0.9f) {
+                yield return null;
+            }
+
+            // Disable environmental objects in sim game
+            environment.SetActive(false);
+            asyncLoad.allowSceneActivation = true;
+
+            // TODO: Maybe rely on fade out for card game scene load?
+            yield return fadeUI.FadeOut();
+            canvasUI.SetActive(false);
+            simGameCamera.gameObject.SetActive(false);
+
+            yield return null;
+            EventBus.OnCardGameInit.Raise(new("temp"));
+        }
+
+        IEnumerator EndCardGame() {
+            AsyncOperation asyncLoad = SceneManager.UnloadSceneAsync(0);
+            canvasUI.SetActive(true);
+            simGameCamera.gameObject.SetActive(true);
+
+            asyncLoad.allowSceneActivation = false;
+            yield return fadeUI.FadeIn();
+
+            while (asyncLoad.progress < 0.9f) {
+                yield return null;
+            }
+
+            // Disable environmental objects in sim game
+            environment.SetActive(true);
+            asyncLoad.allowSceneActivation = true;
+
+            yield return fadeUI.FadeOut();
         }
     }
 }

@@ -15,6 +15,8 @@ namespace SimCard.Common {
         protected abstract IEnumerator Handle();
         protected abstract void Exit();
 
+        private IEnumerator handle;
+
         protected void InitActor(MonoBehaviour actor) {
             this.actor = actor;
         }
@@ -25,7 +27,8 @@ namespace SimCard.Common {
             // I feel like it should be fine
 
             // Alternative is to make the coroutine public, and call StartCoroutine in controller
-            actor.StartCoroutine(HandleWithLifecycle());
+            handle = HandleWithLifecycle();
+            actor.StartCoroutine(handle);
         }
 
         IEnumerator HandleWithLifecycle() {
@@ -36,6 +39,15 @@ namespace SimCard.Common {
             Debug.Log($"Exiting {this}");
             Exit();
             completed = true;
+        }
+
+        public void Restart() {
+            if (handle != null) {
+                actor.StopCoroutine(handle);
+            }
+
+            handle = HandleWithLifecycle();
+            actor.StartCoroutine(handle);
         }
     }
 }

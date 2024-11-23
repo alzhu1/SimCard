@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using SimCard.SimGame;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
@@ -24,6 +25,9 @@ namespace SimCard.CardGame {
 
         private List<List<Duelist>> roundOrder;
 
+        // From scene load
+        private SimGameManager simGameManager;
+
         void Awake() {
             if (instance == null) {
                 instance = this;
@@ -31,6 +35,9 @@ namespace SimCard.CardGame {
                 Destroy(gameObject);
                 return;
             }
+
+            // If loaded additively by SimGame scene, set the SimGameManager here
+            simGameManager = FindAnyObjectByType<SimGameManager>();
 
             EventBus = GetComponent<CardGameEventBus>();
 
@@ -52,7 +59,22 @@ namespace SimCard.CardGame {
             };
         }
 
-        IEnumerator Start() {
+        void Start() {
+            if (simGameManager != null) {
+                simGameManager.EventBus.OnCardGameInit.Event += InitCardGame;
+                return;
+            }
+
+            StartCoroutine(StartCardGame());
+        }
+
+        void OnDestroy() {
+            if (simGameManager != null) {
+                simGameManager.EventBus.OnCardGameInit.Event -= InitCardGame;
+            }
+        }
+
+        IEnumerator StartCardGame() {
             yield return new WaitForSeconds(1f);
             EventBus.OnGameStart.Raise(EventArgs.Empty);
 
@@ -122,10 +144,19 @@ namespace SimCard.CardGame {
             EventBus.OnGameEnd.Raise(EventArgs.Empty);
 
             while (!Input.GetKeyDown(KeyCode.Return)) {
+                Debug.Log("KeyDown return please");
                 yield return null;
             }
 
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            if (simGameManager != null) {
+                simGameManager.EventBus.OnInteractionEvent.Raise(new("EndCardGame"));
+            } else {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+        }
+
+        void InitCardGame(Args<string> args) {
+            StartCoroutine(StartCardGame());
         }
     }
 }

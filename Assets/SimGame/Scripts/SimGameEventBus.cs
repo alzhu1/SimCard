@@ -17,6 +17,9 @@ namespace SimCard.SimGame {
         // Would like a more dynamic solution via scripting, somehow
         public GameEvent<Args<string>> OnInteractionEvent = new();
 
+        // Cross scene event
+        public GameEvent<Args<string>> OnCardGameInit = new();
+
         void Awake() {
             if (instance == null) {
                 instance = this;

@@ -20,16 +20,12 @@ namespace SimCard.SimGame {
         public Rigidbody2D RB => rb;
         public bool Paused => paused;
 
-        private Vector3 move;
-        private Vector3Int direction;
-
         private SimPlayerState playerState;
 
         void Awake() {
             SimGameManager = GetComponentInParent<SimGameManager>();
 
             rb = GetComponent<Rigidbody2D>();
-            direction = Vector3Int.down;
         }
 
         void Start() {
@@ -77,6 +73,10 @@ namespace SimCard.SimGame {
 
         public void Unpause() {
             paused = false;
+        }
+
+        void OnEnable() {
+            playerState?.Restart();
         }
     }
 }
