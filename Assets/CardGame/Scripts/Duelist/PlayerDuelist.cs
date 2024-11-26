@@ -16,7 +16,7 @@ namespace SimCard.CardGame {
         protected override DuelistState StartState => new DrawState<PlayerBaseState>();
 
         protected override void InitForGame(EventArgs args) {
-            if (args is SimGame.CardGameArgs cardGameArgs) {
+            if (args is InitCardGameArgs cardGameArgs) {
                 Deck.InitFromCardMetadata(cardGameArgs.playerDeck, cardPrefab);
             }
 

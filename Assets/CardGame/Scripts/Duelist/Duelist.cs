@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using SimCard.Common;
 using UnityEngine;
 using ResourceEntitySO = SimCard.Common.ResourceEntitySO;
 
@@ -59,10 +60,8 @@ namespace SimCard.CardGame {
             }
         }
 
-        void StartTurn(DuelistArgs args) {
-            Duelist currDuelist = args.duelist;
-
-            if (currDuelist != this) {
+        void StartTurn(EventArgs<Duelist> args) {
+            if (args.argument != this) {
                 return;
             }
 

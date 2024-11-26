@@ -9,15 +9,15 @@ namespace SimCard.SimGame {
         private static SimGameEventBus instance = null;
 
         // Interaction events
-        public GameEvent<Args<Interactable>> OnCanInteract = new();
-        public GameEvent<Args<List<string>>> OnDisplayInteractOptions = new();
+        public GameEvent<EventArgs<Interactable>> OnCanInteract = new();
+        public GameEvent<EventArgs<List<string>>> OnDisplayInteractOptions = new();
 
         // TODO: This is currently the catch-all event for interaction triggered events
         // Would like a more dynamic solution via scripting, somehow
-        public GameEvent<Args<Interactable, string>> OnInteractionEvent = new();
+        public GameEvent<EventArgs<Interactable, string>> OnInteractionEvent = new();
 
         // Cross scene event
-        public GameEvent<CardGameArgs> OnCardGameInit = new();
+        public GameEvent<InitCardGameArgs> OnCardGameInit = new();
 
         void Awake() {
             if (instance == null) {

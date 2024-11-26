@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using SimCard.Common;
 using SimCard.SimGame;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -106,7 +107,7 @@ namespace SimCard.CardGame {
         void StartTurn() {
             Duelist currDuelist = roundOrder[0][0];
             Debug.Log($"Start turn for {currDuelist}");
-            EventBus.OnTurnStart.Raise(new DuelistArgs(currDuelist));
+            EventBus.OnTurnStart.Raise(new(currDuelist));
         }
 
         public void EndTurn() {
@@ -163,7 +164,7 @@ namespace SimCard.CardGame {
             }
         }
 
-        void InitCardGame(CardGameArgs args) {
+        void InitCardGame(InitCardGameArgs args) {
             StartCoroutine(StartCardGame(args));
         }
     }

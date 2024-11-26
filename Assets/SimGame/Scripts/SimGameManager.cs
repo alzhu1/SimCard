@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.SceneManagement;
+using SimCard.Common;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
@@ -51,7 +51,7 @@ namespace SimCard.SimGame {
             EventBus.OnInteractionEvent.Event -= HandleInteractionEvent;
         }
 
-        void HandleInteractionEvent(Args<Interactable, string> args) {
+        void HandleInteractionEvent(EventArgs<Interactable, string> args) {
             switch (args.arg2) {
                 case "NextDay": {
                     StartCoroutine(GoToNextDay());

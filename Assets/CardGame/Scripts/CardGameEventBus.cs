@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using SimCard.Common;
+using UnityEngine;
 
 namespace SimCard.CardGame {
     public class CardGameEventBus : MonoBehaviour {
@@ -10,16 +10,16 @@ namespace SimCard.CardGame {
 
         // Game Lifecycle
         public GameEvent<EventArgs> OnGameStart = new();
-        public GameEvent<DuelistArgs> OnTurnStart = new();
+        public GameEvent<EventArgs<Duelist>> OnTurnStart = new ();
         public GameEvent<EventArgs> OnGameEnd = new();
 
         // Card-specific
-        public GameEvent<CardArgs> OnPlayerCardHover = new();
-        public GameEvent<CardArgs> OnPlayerCardSelect = new();
-        public GameEvent<CardArgs> OnPlayerCardPreview = new();
+        public GameEvent<EventArgs<Card, List<PlayerCardAction>>> OnPlayerCardHover = new ();
+        public GameEvent<EventArgs<Card, List<PlayerCardAction>>> OnPlayerCardSelect = new ();
+        public GameEvent<EventArgs<Card, List<PlayerCardAction>>> OnPlayerCardPreview = new ();
 
         // public GameEvent<IconArgs> OnCardIconHover = new();
-        public GameEvent<PlayerCardActionArgs> OnCardActionHover = new();
+        public GameEvent<EventArgs<PlayerCardAction>> OnCardActionHover = new ();
 
         void Awake() {
             if (instance == null) {

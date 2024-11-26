@@ -21,8 +21,8 @@ namespace SimCard.SimGame {
         private int interactionIndex;
 
         // Events that the parser can call
-        private GameEventAction<Args<List<string>>> DisplayInteractionOptions;
-        private GameEventAction<Args<Interactable, string>> InteractionEvent;
+        private GameEventAction<EventArgs<List<string>>> DisplayInteractionOptions;
+        private GameEventAction<EventArgs<Interactable, string>> InteractionEvent;
 
         // Properties common to UI
         public Interaction CurrInteraction =>
@@ -37,8 +37,8 @@ namespace SimCard.SimGame {
 
         public InteractionParser(
             Interactable interactable,
-            GameEventAction<Args<List<string>>> DisplayInteractionOptions,
-            GameEventAction<Args<Interactable, string>> InteractionEvent
+            GameEventAction<EventArgs<List<string>>> DisplayInteractionOptions,
+            GameEventAction<EventArgs<Interactable, string>> InteractionEvent
         ) {
             this.interactable = interactable;
             this.DisplayInteractionOptions = DisplayInteractionOptions;

@@ -12,11 +12,11 @@ namespace SimCard.CardGame {
 
         protected override void Enter() {
             Debug.Log("Going to preview the card now");
-            playerDuelist.CardGameManager.EventBus.OnPlayerCardPreview.Raise(new CardArgs(previewedCard));
+            playerDuelist.CardGameManager.EventBus.OnPlayerCardPreview.Raise(new(previewedCard, new()));
         }
 
         protected override void Exit() {
-            playerDuelist.CardGameManager.EventBus.OnPlayerCardPreview.Raise(new CardArgs(null));
+            playerDuelist.CardGameManager.EventBus.OnPlayerCardPreview.Raise(new(null, new()));
         }
 
         protected override IEnumerator Handle() {

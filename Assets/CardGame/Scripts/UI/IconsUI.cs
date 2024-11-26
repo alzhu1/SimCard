@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using SimCard.Common;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -59,15 +60,14 @@ namespace SimCard.CardGame {
             }
         }
 
-        void DisplayIcons(CardArgs args) {
-            currCard = args.card;
-            List<Image> icons = args
-                .allowedActions.Select(action => {
-                    Image icon = iconMap[action];
-                    icon.enabled = true;
-                    return icon;
-                })
-                .ToList();
+        void DisplayIcons(EventArgs<Card, List<PlayerCardAction>> args) {
+            currCard = args.arg1;
+            List<Image> icons = args.arg2.Select(action => {
+                Image icon = iconMap[action];
+                icon.enabled = true;
+                return icon;
+            })
+            .ToList();
 
             if (currCard == null) {
                 foreach (Image icon in iconMap.Values) {
@@ -97,11 +97,11 @@ namespace SimCard.CardGame {
             }
         }
 
-        void SelectIcon(PlayerCardActionArgs args) {
+        void SelectIcon(EventArgs<PlayerCardAction> args) {
             if (currIcon) {
                 currIcon.rectTransform.sizeDelta = Vector2.one * iconSize;
             }
-            currIcon = iconMap[args.action];
+            currIcon = iconMap[args.argument];
         }
     }
 }

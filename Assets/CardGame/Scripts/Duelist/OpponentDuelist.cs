@@ -18,7 +18,7 @@ namespace SimCard.CardGame {
         protected override void InitForGame(EventArgs args) {
             opponentAI.InitOpponentDuelist(this);
 
-            if (args is SimGame.CardGameArgs cardGameArgs) {
+            if (args is InitCardGameArgs cardGameArgs) {
                 Deck.InitFromCardMetadata(cardGameArgs.opponentDeck, cardPrefab);
             }
 

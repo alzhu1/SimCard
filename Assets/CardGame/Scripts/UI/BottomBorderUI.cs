@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using SimCard.Common;
 using TMPro;
 using UnityEngine;
 
@@ -22,8 +23,8 @@ namespace SimCard.CardGame {
             cardGameManager.EventBus.OnPlayerCardHover.Event -= UpdateCardText;
         }
 
-        void UpdateCardText(CardArgs args) {
-            Card card = args.card;
+        void UpdateCardText(EventArgs<Card, List<PlayerCardAction>> args) {
+            Card card = args.arg1;
             cardTitleText.text = card.CardSO.cardName;
         }
     }

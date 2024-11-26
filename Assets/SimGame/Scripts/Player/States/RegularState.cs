@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using SimCard.Common;
 using UnityEngine;
 
 namespace SimCard.SimGame {
@@ -76,7 +77,7 @@ namespace SimCard.SimGame {
             player.FrontCheck.localPosition = direction;
         }
 
-        void EnableInteraction(Args<Interactable> args) {
+        void EnableInteraction(EventArgs<Interactable> args) {
             interactable = args.argument;
         }
     }

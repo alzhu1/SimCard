@@ -30,16 +30,16 @@ namespace SimCard.CardGame {
                 allowedActions.Add(PlayerCardAction.Summon);
             }
 
-            playerDuelist.CardGameManager.EventBus.OnPlayerCardSelect.Raise(new CardArgs(selectedCard, allowedActions));
+            playerDuelist.CardGameManager.EventBus.OnPlayerCardSelect.Raise(new(selectedCard, allowedActions));
 
             actionIndex = 0;
-            playerDuelist.CardGameManager.EventBus.OnCardActionHover.Raise(new PlayerCardActionArgs(allowedActions[actionIndex]));
+            playerDuelist.CardGameManager.EventBus.OnCardActionHover.Raise(new(allowedActions[actionIndex]));
         }
 
         protected override void Exit() {
             selectedCard.ResetColor();
-            playerDuelist.CardGameManager.EventBus.OnPlayerCardSelect.Raise(new CardArgs(null));
-            playerDuelist.CardGameManager.EventBus.OnCardActionHover.Raise(new PlayerCardActionArgs(PlayerCardAction.None));
+            playerDuelist.CardGameManager.EventBus.OnPlayerCardSelect.Raise(new(null, new()));
+            playerDuelist.CardGameManager.EventBus.OnCardActionHover.Raise(new(PlayerCardAction.None));
         }
 
         protected override IEnumerator Handle() {
@@ -52,10 +52,10 @@ namespace SimCard.CardGame {
 
                 if (Input.GetKeyDown(KeyCode.LeftArrow)) {
                     actionIndex = (allowedActions.Count + actionIndex - 1) % allowedActions.Count;
-                    playerDuelist.CardGameManager.EventBus.OnCardActionHover.Raise(new PlayerCardActionArgs(allowedActions[actionIndex]));
+                    playerDuelist.CardGameManager.EventBus.OnCardActionHover.Raise(new(allowedActions[actionIndex]));
                 } else if (Input.GetKeyDown(KeyCode.RightArrow)) {
                     actionIndex = (actionIndex + 1) % allowedActions.Count;
-                    playerDuelist.CardGameManager.EventBus.OnCardActionHover.Raise(new PlayerCardActionArgs(allowedActions[actionIndex]));
+                    playerDuelist.CardGameManager.EventBus.OnCardActionHover.Raise(new(allowedActions[actionIndex]));
                 }
 
                 if (Input.GetKeyDown(KeyCode.Space)) {

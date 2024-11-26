@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using SimCard.Common;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -65,7 +66,7 @@ namespace SimCard.SimGame {
             }
         }
 
-        void DisplayInteractPrompt(Args<Interactable> args) {
+        void DisplayInteractPrompt(EventArgs<Interactable> args) {
             interactPromptGroup.alpha = args.argument == null ? 0 : 1;
 
             // Enable interact text so future appearance has it displayed
@@ -82,7 +83,7 @@ namespace SimCard.SimGame {
             return StartCoroutine(AnimateInteractionWindow(false));
         }
 
-        void DisplayInteractOptions(Args<List<string>> args) {
+        void DisplayInteractOptions(EventArgs<List<string>> args) {
             List<string> options = args?.argument;
             if (options == null) {
                 optionsGroup.alpha = 0;

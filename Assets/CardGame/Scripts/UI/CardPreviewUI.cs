@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using SimCard.Common;
 using TMPro;
 using UnityEngine;
 
@@ -27,8 +28,8 @@ namespace SimCard.CardGame {
             cardGameManager.EventBus.OnPlayerCardPreview.Event -= UpdatePreview;
         }
 
-        void UpdatePreview(CardArgs args) {
-            Card card = args.card;
+        void UpdatePreview(EventArgs<Card, List<PlayerCardAction>> args) {
+            Card card = args.arg1;
 
             if (card == null) {
                 canvasGroup.alpha = 0;

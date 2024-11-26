@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace SimCard.Common {
-    public interface GameEventAction<T> where T: EventArgs {
+    public interface GameEventAction<T> where T : EventArgs {
         public void Raise(T args);
     }
 
