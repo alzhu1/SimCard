@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using SimCard.Common;
 using UnityEngine;
 
 namespace SimCard.SimGame {
@@ -10,11 +11,15 @@ namespace SimCard.SimGame {
         [SerializeField]
         private float moveSpeed = 1f;
 
+        [SerializeField]
+        private List<CardMetadata> deck;
+
         public SimGameManager SimGameManager { get; private set; }
 
         private Rigidbody2D rb;
         private bool paused;
 
+        public List<CardMetadata> Deck => deck;
         public Transform FrontCheck => frontCheck;
         public float MoveSpeed => moveSpeed;
         public Rigidbody2D RB => rb;

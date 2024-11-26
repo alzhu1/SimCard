@@ -51,15 +51,15 @@ namespace SimCard.SimGame {
             EventBus.OnInteractionEvent.Event -= HandleInteractionEvent;
         }
 
-        void HandleInteractionEvent(Args<string> args) {
-            switch (args.argument) {
+        void HandleInteractionEvent(Args<Interactable, string> args) {
+            switch (args.arg2) {
                 case "NextDay": {
                     StartCoroutine(GoToNextDay());
                     break;
                 }
 
                 case "StartCardGame": {
-                    StartCoroutine(StartCardGame());
+                    StartCoroutine(StartCardGame(args.arg1));
                     break;
                 }
 
@@ -108,7 +108,7 @@ namespace SimCard.SimGame {
             parser.EndInteraction();
         }
 
-        IEnumerator StartCardGame() {
+        IEnumerator StartCardGame(Interactable interactable) {
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(0, LoadSceneMode.Additive);
 
             asyncLoad.allowSceneActivation = false;
@@ -128,7 +128,7 @@ namespace SimCard.SimGame {
             simGameCamera.gameObject.SetActive(false);
 
             yield return null;
-            EventBus.OnCardGameInit.Raise(new("temp"));
+            EventBus.OnCardGameInit.Raise(new(player.Deck, interactable.Deck));
         }
 
         IEnumerator EndCardGame() {

@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using SimCard.Common;
 using UnityEngine;
-using InteractionParserUIListener = SimCard.SimGame.InteractionParser.InteractionParserUIListener;
 
 namespace SimCard.SimGame {
     public class SimGameEventBus : MonoBehaviour {
@@ -15,10 +14,10 @@ namespace SimCard.SimGame {
 
         // TODO: This is currently the catch-all event for interaction triggered events
         // Would like a more dynamic solution via scripting, somehow
-        public GameEvent<Args<string>> OnInteractionEvent = new();
+        public GameEvent<Args<Interactable, string>> OnInteractionEvent = new();
 
         // Cross scene event
-        public GameEvent<Args<string>> OnCardGameInit = new();
+        public GameEvent<CardGameArgs> OnCardGameInit = new();
 
         void Awake() {
             if (instance == null) {

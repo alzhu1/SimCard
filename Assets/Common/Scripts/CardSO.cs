@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,5 +34,11 @@ namespace SimCard.Common {
         // TODO: This is just an idea but could change in future
         // May want to do some kind of "level" summon system like YGO
         public List<EntityCost> costs;
+    }
+
+    [System.Serializable]
+    public class CardMetadata {
+        public CardSO cardSO;
+        public int count;
     }
 }

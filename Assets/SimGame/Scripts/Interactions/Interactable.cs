@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using SimCard.Common;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -11,6 +12,10 @@ namespace SimCard.SimGame {
         [SerializeField]
         private float typeTime;
         public float TypeTime => typeTime == 0 ? GlobalTypeTime : typeTime;
+
+        [SerializeField]
+        private List<CardMetadata> deck;
+        public List<CardMetadata> Deck => deck;
 
         [field: SerializeField]
         public InteractableSO InteractableSO { get; private set; }

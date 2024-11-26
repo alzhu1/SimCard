@@ -22,7 +22,7 @@ namespace SimCard.SimGame {
 
         // Events that the parser can call
         private GameEventAction<Args<List<string>>> DisplayInteractionOptions;
-        private GameEventAction<Args<string>> InteractionEvent;
+        private GameEventAction<Args<Interactable, string>> InteractionEvent;
 
         // Properties common to UI
         public Interaction CurrInteraction =>
@@ -38,7 +38,7 @@ namespace SimCard.SimGame {
         public InteractionParser(
             Interactable interactable,
             GameEventAction<Args<List<string>>> DisplayInteractionOptions,
-            GameEventAction<Args<string>> InteractionEvent
+            GameEventAction<Args<Interactable, string>> InteractionEvent
         ) {
             this.interactable = interactable;
             this.DisplayInteractionOptions = DisplayInteractionOptions;
@@ -111,7 +111,7 @@ namespace SimCard.SimGame {
             InteractionPath interactionPath = interactable.GetCurrentInteractionPath(pathName);
             if (interactionPath.endingEventTriggers.Count > 0) {
                 foreach (string eventTrigger in interactionPath.endingEventTriggers) {
-                    InteractionEvent.Raise(new(eventTrigger));
+                    InteractionEvent.Raise(new(interactable, eventTrigger));
                 }
             }
 
@@ -133,7 +133,7 @@ namespace SimCard.SimGame {
                 // Event triggers for interaction
                 if (CurrInteraction.eventTriggers.Count > 0) {
                     foreach (string eventTrigger in CurrInteraction.eventTriggers) {
-                        InteractionEvent.Raise(new(eventTrigger));
+                        InteractionEvent.Raise(new(interactable, eventTrigger));
                     }
                 }
             }

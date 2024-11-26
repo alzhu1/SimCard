@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using SimCard.Common;
 using UnityEngine;
-using State = SimCard.Common.State;
 
 namespace SimCard.CardGame {
     public class OpponentDuelist : Duelist {
@@ -15,8 +15,12 @@ namespace SimCard.CardGame {
 
         protected override DuelistState StartState => new DrawState<OpponentThinkState>();
 
-        protected override void InitForGame(EventArgs _args) {
+        protected override void InitForGame(EventArgs args) {
             opponentAI.InitOpponentDuelist(this);
+
+            if (args is SimGame.CardGameArgs cardGameArgs) {
+                Deck.InitFromCardMetadata(cardGameArgs.opponentDeck, cardPrefab);
+            }
 
             for (int i = 0; i < 4; i++) {
                 DrawCard();

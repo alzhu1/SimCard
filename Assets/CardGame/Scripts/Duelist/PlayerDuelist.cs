@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using SimCard.Common;
 using UnityEngine;
 
 namespace SimCard.CardGame {
@@ -14,7 +15,11 @@ namespace SimCard.CardGame {
 
         protected override DuelistState StartState => new DrawState<PlayerBaseState>();
 
-        protected override void InitForGame(EventArgs _args) {
+        protected override void InitForGame(EventArgs args) {
+            if (args is SimGame.CardGameArgs cardGameArgs) {
+                Deck.InitFromCardMetadata(cardGameArgs.playerDeck, cardPrefab);
+            }
+
             for (int i = 0; i < 4; i++) {
                 DrawCard();
             }

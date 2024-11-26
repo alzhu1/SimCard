@@ -7,6 +7,8 @@ using ResourceEntitySO = SimCard.Common.ResourceEntitySO;
 
 namespace SimCard.CardGame {
     public abstract class Duelist : MonoBehaviour {
+        [SerializeField] protected GameObject cardPrefab;
+
         private DuelistState duelistState;
 
         public CardGameManager CardGameManager { get; private set; }
@@ -42,6 +44,7 @@ namespace SimCard.CardGame {
 
         void OnDestroy() {
             CardGameManager.EventBus.OnGameStart.Event -= InitForGame;
+            CardGameManager.EventBus.OnTurnStart.Event -= StartTurn;
         }
 
         void Update() {

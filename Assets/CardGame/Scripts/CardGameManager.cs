@@ -5,6 +5,7 @@ using System.Linq;
 using SimCard.SimGame;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 namespace SimCard.CardGame {
@@ -16,6 +17,9 @@ namespace SimCard.CardGame {
         public CardGameEventBus EventBus { get; private set; }
 
         private Dictionary<Duelist, int> duelistWins;
+
+        [SerializeField] private AudioListener audioListener;
+        [SerializeField] private EventSystem eventSystem;
 
         [SerializeField]
         private Duelist playerDuelist;
@@ -38,6 +42,10 @@ namespace SimCard.CardGame {
 
             // If loaded additively by SimGame scene, set the SimGameManager here
             simGameManager = FindAnyObjectByType<SimGameManager>();
+            if (simGameManager == null) {
+                audioListener.enabled = true;
+                eventSystem.enabled = true;
+            }
 
             EventBus = GetComponent<CardGameEventBus>();
 
@@ -65,7 +73,7 @@ namespace SimCard.CardGame {
                 return;
             }
 
-            StartCoroutine(StartCardGame());
+            StartCoroutine(StartCardGame(null));
         }
 
         void OnDestroy() {
@@ -74,9 +82,9 @@ namespace SimCard.CardGame {
             }
         }
 
-        IEnumerator StartCardGame() {
+        IEnumerator StartCardGame(EventArgs args) {
             yield return new WaitForSeconds(1f);
-            EventBus.OnGameStart.Raise(EventArgs.Empty);
+            EventBus.OnGameStart.Raise(args);
 
             yield return new WaitForSeconds(2f);
             PrepareRound();
@@ -149,14 +157,14 @@ namespace SimCard.CardGame {
             }
 
             if (simGameManager != null) {
-                simGameManager.EventBus.OnInteractionEvent.Raise(new("EndCardGame"));
+                simGameManager.EventBus.OnInteractionEvent.Raise(new(null, "EndCardGame"));
             } else {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
 
-        void InitCardGame(Args<string> args) {
-            StartCoroutine(StartCardGame());
+        void InitCardGame(CardGameArgs args) {
+            StartCoroutine(StartCardGame(args));
         }
     }
 }

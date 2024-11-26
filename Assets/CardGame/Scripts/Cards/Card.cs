@@ -41,6 +41,10 @@ namespace SimCard.CardGame {
         private SpriteRenderer sr;
 
         void Awake() {
+            if (cardSO == null) {
+                return;
+            }
+
             sr = GetComponent<SpriteRenderer>();
             sr.sprite = cardSO.sprite;
             gameObject.SetActive(false);
@@ -55,6 +59,11 @@ namespace SimCard.CardGame {
                     NonResourceCosts.Add(cost);
                 }
             }
+        }
+
+        public void InitCardSO(CardSO cardSO) {
+            this.cardSO = cardSO;
+            Awake();
         }
 
         public bool IsResourceCard() {
