@@ -18,6 +18,7 @@ namespace SimCard.SimGame {
 
         // Cross scene event
         public GameEvent<InitCardGameArgs> OnCardGameInit = new();
+        public GameEvent<CardGameResultArgs> OnCardGameEnd = new();
 
         void Awake() {
             if (instance == null) {

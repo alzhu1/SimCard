@@ -22,4 +22,17 @@ namespace SimCard.Common {
         public InitCardGameArgs(List<CardMetadata> playerDeck) => this.playerDeck = playerDeck;
         public InitCardGameArgs(List<CardMetadata> playerDeck, List<CardMetadata> opponentDeck) => (this.playerDeck, this.opponentDeck) = (playerDeck, opponentDeck);
     }
+
+    // TODO: May need to refactor, instead of creating new args for it
+    // e.g. creating new class specifically for the thing
+    public class CardGameResultArgs : EventArgs {
+        public bool won;
+        public int goldWon;
+
+        public CardGameResultArgs(bool won) : this(won, 50) { }
+        public CardGameResultArgs(bool won, int goldWon) {
+            this.won = won;
+            this.goldWon = goldWon;
+        }
+    }
 }

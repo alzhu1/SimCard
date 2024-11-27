@@ -135,7 +135,9 @@ namespace SimCard.CardGame {
 
                     if (duelistWins[winner] == 5) {
                         Debug.Log($"Winner: {winner}");
-                        StartCoroutine(EndCardGame());
+
+                        bool playerWon = winner == playerDuelist;
+                        StartCoroutine(EndCardGame(playerWon));
                         return;
                     }
                 }
@@ -148,7 +150,7 @@ namespace SimCard.CardGame {
         }
 
         // TODO: Not sure if this is the best place to put this?
-        IEnumerator EndCardGame() {
+        IEnumerator EndCardGame(bool playerWon) {
             // For now, let's just reload the level
             EventBus.OnGameEnd.Raise(EventArgs.Empty);
 
@@ -158,7 +160,7 @@ namespace SimCard.CardGame {
             }
 
             if (simGameManager != null) {
-                simGameManager.EventBus.OnInteractionEvent.Raise(new(null, "EndCardGame"));
+                simGameManager.EventBus.OnCardGameEnd.Raise(new(playerWon));
             } else {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
@@ -166,6 +168,7 @@ namespace SimCard.CardGame {
 
         void InitCardGame(InitCardGameArgs args) {
             StartCoroutine(StartCardGame(args));
+            // StartCoroutine(EndCardGame(true));
         }
     }
 }

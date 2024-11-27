@@ -45,10 +45,12 @@ namespace SimCard.SimGame {
 
         void Start() {
             EventBus.OnInteractionEvent.Event += HandleInteractionEvent;
+            EventBus.OnCardGameEnd.Event += HandleCardGameEndEvent;
         }
 
         void OnDestroy() {
             EventBus.OnInteractionEvent.Event -= HandleInteractionEvent;
+            EventBus.OnCardGameEnd.Event -= HandleCardGameEndEvent;
         }
 
         void HandleInteractionEvent(EventArgs<Interactable, string> args) {
@@ -63,17 +65,14 @@ namespace SimCard.SimGame {
                     break;
                 }
 
-                // TODO: I prefer this approach but it's a bit hacky, also no info can be transferred back to the SimGame this way
-                // Either go back to method-based invocation from CardGameManager,
-                // Or add a way to include parameters here
-                case "EndCardGame": {
-                    StartCoroutine(EndCardGame());
-                    break;
-                }
-
                 default:
                     break;
             }
+        }
+
+        void HandleCardGameEndEvent(CardGameResultArgs args) {
+            Debug.Log($"Result: {args.won}, gold won: {args.goldWon}");
+            StartCoroutine(EndCardGame());
         }
 
         IEnumerator GoToNextDay() {

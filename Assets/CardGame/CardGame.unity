@@ -5226,6 +5226,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Card1
       objectReference: {fileID: 0}
+    - target: {fileID: 4850676250668131846, guid: 23d03b8627b614cd7a07fddc95e220b2, type: 3}
+      propertyPath: cardSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 5b804fe02edc8471e8bb1df4d49d07ff, type: 2}
     - target: {fileID: 5152416772057680260, guid: 23d03b8627b614cd7a07fddc95e220b2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
