@@ -17,6 +17,8 @@ namespace SimCard.CardGame {
         // Overall game lifecycle events
         public CardGameEventBus EventBus { get; private set; }
 
+        public CardPool CardPool { get; private set; }
+
         private Dictionary<Duelist, int> duelistWins;
 
         [SerializeField] private AudioListener audioListener;
@@ -49,6 +51,7 @@ namespace SimCard.CardGame {
             }
 
             EventBus = GetComponent<CardGameEventBus>();
+            CardPool = GetComponentInChildren<CardPool>();
 
             duelistWins = new Dictionary<Duelist, int>
             {

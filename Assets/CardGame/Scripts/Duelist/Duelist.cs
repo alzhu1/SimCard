@@ -8,8 +8,6 @@ using ResourceEntitySO = SimCard.Common.ResourceEntitySO;
 
 namespace SimCard.CardGame {
     public abstract class Duelist : MonoBehaviour {
-        [SerializeField] protected GameObject cardPrefab;
-
         private DuelistState duelistState;
 
         public CardGameManager CardGameManager { get; private set; }

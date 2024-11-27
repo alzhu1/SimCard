@@ -29,7 +29,7 @@ namespace SimCard.CardGame {
             cards.Clear();
         }
 
-        public void InitFromCardMetadata(List<CardMetadata> initData, GameObject cardPrefab) {
+        public void InitFromCardMetadata(List<CardMetadata> initData, CardGameManager cardGameManager) {
             ClearDeck();
 
             foreach (CardMetadata cardMetadata in initData) {
@@ -37,10 +37,9 @@ namespace SimCard.CardGame {
                 int count = cardMetadata.count;
 
                 for (int i = 0; i < count; i++) {
-                    GameObject cardObject = Instantiate(cardPrefab, Vector3.zero, Quaternion.identity, transform);
-                    Card card = cardObject.GetComponent<Card>();
-                    card.InitCardSO(cardSO);
-                    cards.Add(card);
+                    Card cardFromPool = cardGameManager.CardPool.GetPooledCard();
+                    cardFromPool.InitCardSO(cardSO);
+                    cardGameManager.CardPool.TransferTo(this, cardFromPool, false);
                 }
             }
         }
