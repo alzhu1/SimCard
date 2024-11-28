@@ -87,6 +87,7 @@ namespace SimCard.SimGame {
                 );
 
                 interactionIndex = 0;
+                MaxVisibleCharacters = 0;
 
                 // Consume option's energy
                 player.ConsumeEnergy(options[OptionIndex].energyCost);
