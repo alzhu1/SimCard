@@ -11,6 +11,11 @@ namespace SimCard.SimGame {
         public string option;
         public string nextInteractionPath;
         public string fallbackInteractionPath;
+
+        // TODO: Might need to add energy to options?
+        // Talking to someone will never require energy
+        // And I think the only energy consuming actions would be through interaction choices
+        public int energyCost = 0;
     }
 
     [System.Serializable]

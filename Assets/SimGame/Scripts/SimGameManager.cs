@@ -82,6 +82,8 @@ namespace SimCard.SimGame {
             Debug.Log($"The day is {day}");
             day++;
 
+            player.RefreshEnergy();
+
             player.Unpause();
         }
 

@@ -15,13 +15,16 @@ namespace SimCard.SimGame {
             public int OptionIndex { get; }
         }
 
+        private Player player;
         private Interactable interactable;
         private HashSet<string> traversedPaths;
+        private List<int> validOptionIndices;
         private string pathName;
         private int interactionIndex;
+        private int validOptionIndex;
 
         // Events that the parser can call
-        private GameEventAction<EventArgs<List<string>>> DisplayInteractionOptions;
+        private GameEventAction<EventArgs<List<(string, bool)>>> DisplayInteractionOptions;
         private GameEventAction<EventArgs<Interactable, string>> InteractionEvent;
 
         // Properties common to UI
@@ -36,17 +39,21 @@ namespace SimCard.SimGame {
             CurrInteraction == null ? 0 : CurrInteraction.text.Length;
 
         public InteractionParser(
+            Player player,
             Interactable interactable,
-            GameEventAction<EventArgs<List<string>>> DisplayInteractionOptions,
+            GameEventAction<EventArgs<List<(string, bool)>>> DisplayInteractionOptions,
             GameEventAction<EventArgs<Interactable, string>> InteractionEvent
         ) {
+            this.player = player;
             this.interactable = interactable;
             this.DisplayInteractionOptions = DisplayInteractionOptions;
             this.InteractionEvent = InteractionEvent;
 
             traversedPaths = new HashSet<string>();
+            validOptionIndices = new List<int>();
             pathName = this.interactable.InitInteraction();
             interactionIndex = 0;
+            validOptionIndex = 0;
             traversedPaths.Add(pathName);
         }
 
@@ -71,15 +78,18 @@ namespace SimCard.SimGame {
             }
 
             // HandleAdvance means we picked an option
-            if (CurrInteraction.options.Count > 0) {
+            List<InteractionOption> options = CurrInteraction.options;
+            if (options.Count > 0) {
                 pathName = interactable.ProcessInteractionOption(
                     pathName,
                     interactionIndex,
                     OptionIndex
                 );
+
                 interactionIndex = 0;
-                OptionIndex = 0;
-                MaxVisibleCharacters = 0;
+
+                // Consume option's energy
+                player.ConsumeEnergy(options[OptionIndex].energyCost);
 
                 traversedPaths.Add(pathName);
 
@@ -101,10 +111,8 @@ namespace SimCard.SimGame {
                 return;
             }
 
-            int optionCount = CurrInteraction.options.Count;
-            if (optionCount > 0) {
-                OptionIndex = (optionCount + OptionIndex + diff) % optionCount;
-            }
+            validOptionIndex = (validOptionIndices.Count + validOptionIndex + diff) % validOptionIndices.Count;
+            OptionIndex = validOptionIndices[validOptionIndex];
         }
 
         public void EndInteraction() {
@@ -124,10 +132,20 @@ namespace SimCard.SimGame {
 
             if (MaxVisibleCharacters >= InteractionTextLength) {
                 // Display options
-                if (CurrInteraction.options.Count > 0) {
-                    DisplayInteractionOptions.Raise(
-                        new(CurrInteraction.options.Select(x => x.option).ToList())
-                    );
+                List<InteractionOption> options = CurrInteraction.options;
+                if (options.Count > 0) {
+                    List<(string, bool)> optionsAllowed = options.Select(x => (x.option, x.energyCost <= player.Energy)).ToList();
+                    DisplayInteractionOptions.Raise(new(optionsAllowed));
+
+                    validOptionIndices.Clear();
+                    validOptionIndex = 0;
+                    for (int i = 0; i < optionsAllowed.Count; i++) {
+                        if (optionsAllowed[i].Item2) {
+                            validOptionIndices.Add(i);
+                        }
+                    }
+
+                    OptionIndex = validOptionIndices[0];
                 }
 
                 // Event triggers for interaction

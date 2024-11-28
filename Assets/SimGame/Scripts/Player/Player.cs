@@ -18,12 +18,14 @@ namespace SimCard.SimGame {
 
         private Rigidbody2D rb;
         private bool paused;
+        private int energy = 100;
 
         public List<CardMetadata> Deck => deck;
         public Transform FrontCheck => frontCheck;
         public float MoveSpeed => moveSpeed;
         public Rigidbody2D RB => rb;
         public bool Paused => paused;
+        public int Energy => energy;
 
         private SimPlayerState playerState;
 
@@ -78,6 +80,14 @@ namespace SimCard.SimGame {
 
         public void Unpause() {
             paused = false;
+        }
+
+        public void RefreshEnergy() {
+            energy = 100;
+        }
+
+        public void ConsumeEnergy(int energyUsed) {
+            energy = Mathf.Max(0, energy - energyUsed);
         }
 
         void OnEnable() {

@@ -83,8 +83,8 @@ namespace SimCard.SimGame {
             return StartCoroutine(AnimateInteractionWindow(false));
         }
 
-        void DisplayInteractOptions(EventArgs<List<string>> args) {
-            List<string> options = args?.argument;
+        void DisplayInteractOptions(EventArgs<List<(string, bool)>> args) {
+            List<(string, bool)> options = args?.argument;
             if (options == null) {
                 optionsGroup.alpha = 0;
                 return;
@@ -92,10 +92,11 @@ namespace SimCard.SimGame {
 
             optionsGroup.alpha = 1;
             for (int i = 0; i < optionTexts.Count; i++) {
-                string option = options.ElementAtOrDefault(i);
+                (string option, bool allowed) = options.ElementAtOrDefault(i);
                 if (option != null) {
                     optionTexts[i].gameObject.SetActive(true);
                     optionTexts[i].text = option;
+                    optionTexts[i].color = allowed ? Color.white : Color.gray;
                 } else {
                     optionTexts[i].gameObject.SetActive(false);
                 }

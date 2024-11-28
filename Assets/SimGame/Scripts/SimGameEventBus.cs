@@ -10,7 +10,7 @@ namespace SimCard.SimGame {
 
         // Interaction events
         public GameEvent<EventArgs<Interactable>> OnCanInteract = new();
-        public GameEvent<EventArgs<List<string>>> OnDisplayInteractOptions = new();
+        public GameEvent<EventArgs<List<(string, bool)>>> OnDisplayInteractOptions = new();
 
         // TODO: This is currently the catch-all event for interaction triggered events
         // Would like a more dynamic solution via scripting, somehow
