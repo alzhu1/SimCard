@@ -110,7 +110,7 @@ namespace SimCard.SimGame {
 
         public void EndInteraction() {
             InteractionPath interactionPath = interactable.GetCurrentInteractionPath(pathName);
-            if (interactionPath.endingEventTriggers.Count > 0) {
+            if (interactionPath?.endingEventTriggers?.Count > 0) {
                 foreach (string eventTrigger in interactionPath.endingEventTriggers) {
                     InteractionEvent.Raise(new(interactable, eventTrigger));
                 }
