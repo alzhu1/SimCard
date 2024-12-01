@@ -32,6 +32,11 @@ namespace SimCard.SimGame {
                     break;
                 }
 
+                if (Input.GetKeyDown(KeyCode.P)) {
+                    nextState = new MenuState();
+                    break;
+                }
+
                 move = new Vector2(
                     Input.GetAxisRaw("Horizontal"),
                     Input.GetAxisRaw("Vertical")

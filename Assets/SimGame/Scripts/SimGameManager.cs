@@ -65,6 +65,11 @@ namespace SimCard.SimGame {
                     break;
                 }
 
+                case "StartDeckBuild": {
+                    StartCoroutine(StartDeckBuild());
+                    break;
+                }
+
                 default:
                     break;
             }
@@ -154,6 +159,32 @@ namespace SimCard.SimGame {
             asyncLoad.allowSceneActivation = true;
 
             yield return fadeUI.FadeOut();
+        }
+
+        IEnumerator StartDeckBuild() {
+            // FIXME: Need to switch to loading DeckBuild scene
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(0, LoadSceneMode.Additive);
+
+            asyncLoad.allowSceneActivation = false;
+            // Disable player movement beforehand, keep sprite (will disable later)
+            EventBus.OnPlayerPause.Raise(new(false));
+            yield return fadeUI.FadeIn();
+
+            while (asyncLoad.progress < 0.9f) {
+                yield return null;
+            }
+
+            // Disable environmental objects in sim game
+            EventBus.OnPlayerPause.Raise(new(true));
+            environment.SetActive(false);
+            asyncLoad.allowSceneActivation = true;
+
+            yield return fadeUI.FadeOut();
+            canvasUI.SetActive(false);
+            simGameCamera.gameObject.SetActive(false);
+
+            // yield return null;
+            // EventBus.OnCardGameInit.Raise(new(player.Deck, interactable.Deck));
         }
     }
 }
