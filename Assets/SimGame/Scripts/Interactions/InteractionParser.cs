@@ -6,15 +6,7 @@ using SimCard.Common;
 using UnityEngine;
 
 namespace SimCard.SimGame {
-    public class InteractionParser : InteractionParser.InteractionParserUIListener {
-        // Presenter interface for UI to work with
-        // This allows us to limit the methods it will work with
-        public interface InteractionParserUIListener {
-            public Interaction CurrInteraction { get; }
-            public int MaxVisibleCharacters { get; }
-            public int OptionIndex { get; }
-        }
-
+    public class InteractionParser : InteractUIListener, OptionsUIListener {
         private Player player;
         private Interactable interactable;
         private HashSet<string> traversedPaths;
@@ -24,7 +16,7 @@ namespace SimCard.SimGame {
         private int validOptionIndex;
 
         // Events that the parser can call
-        private GameEventAction<EventArgs<List<(string, bool)>>> DisplayInteractionOptions;
+        private GameEventAction<EventArgs<OptionsUIListener, List<(string, bool)>>> DisplayInteractionOptions;
         private GameEventAction<EventArgs<Interactable, string>> InteractionEvent;
 
         // Properties common to UI
@@ -41,7 +33,7 @@ namespace SimCard.SimGame {
         public InteractionParser(
             Player player,
             Interactable interactable,
-            GameEventAction<EventArgs<List<(string, bool)>>> DisplayInteractionOptions,
+            GameEventAction<EventArgs<OptionsUIListener, List<(string, bool)>>> DisplayInteractionOptions,
             GameEventAction<EventArgs<Interactable, string>> InteractionEvent
         ) {
             this.player = player;
@@ -136,7 +128,7 @@ namespace SimCard.SimGame {
                 List<InteractionOption> options = CurrInteraction.options;
                 if (options.Count > 0) {
                     List<(string, bool)> optionsAllowed = options.Select(x => (x.option, x.energyCost <= player.Energy)).ToList();
-                    DisplayInteractionOptions.Raise(new(optionsAllowed));
+                    DisplayInteractionOptions.Raise(new(this, optionsAllowed));
 
                     validOptionIndices.Clear();
                     validOptionIndex = 0;

@@ -6,7 +6,6 @@ using SimCard.Common;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using InteractionParserUIListener = SimCard.SimGame.InteractionParser.InteractionParserUIListener;
 
 namespace SimCard.SimGame {
     public class InteractUI : MonoBehaviour {
@@ -19,36 +18,26 @@ namespace SimCard.SimGame {
         [SerializeField]
         private TextMeshProUGUI dialogueText;
 
-        [SerializeField]
-        private CanvasGroup optionsGroup;
-
-        [SerializeField]
-        private Image optionCursor;
-
-        public InteractionParserUIListener Parser { get; set; }
+        public InteractUIListener Parser { get; set; }
 
         private CanvasGroup interactPromptGroup;
         private SimGameManager simGameManager;
 
-        private List<TextMeshProUGUI> optionTexts;
         private Vector2 borderMinimizedOffset;
 
         void Awake() {
             interactPromptGroup = GetComponent<CanvasGroup>();
             simGameManager = GetComponentInParent<SimGameManager>();
 
-            optionTexts = optionsGroup.GetComponentsInChildren<TextMeshProUGUI>().ToList();
             borderMinimizedOffset = interactArea.rectTransform.offsetMax;
         }
 
         void Start() {
             simGameManager.EventBus.OnCanInteract.Event += DisplayInteractPrompt;
-            simGameManager.EventBus.OnDisplayInteractOptions.Event += DisplayInteractOptions;
         }
 
         void OnDestroy() {
             simGameManager.EventBus.OnCanInteract.Event -= DisplayInteractPrompt;
-            simGameManager.EventBus.OnDisplayInteractOptions.Event -= DisplayInteractOptions;
         }
 
         void Update() {
@@ -56,13 +45,6 @@ namespace SimCard.SimGame {
                 // Non-null means we should update the dialogue text based on parser status
                 dialogueText.text = Parser.CurrInteraction.text;
                 dialogueText.maxVisibleCharacters = Parser.MaxVisibleCharacters;
-
-                // For existing options, set cursor position
-                if (Parser.CurrInteraction.options.Count > 0) {
-                    Vector2 pos = optionCursor.rectTransform.anchoredPosition;
-                    pos.y = optionTexts[Parser.OptionIndex].rectTransform.anchoredPosition.y;
-                    optionCursor.rectTransform.anchoredPosition = pos;
-                }
             }
         }
 
@@ -81,26 +63,6 @@ namespace SimCard.SimGame {
         public Coroutine EndInteraction() {
             dialogueText.text = "";
             return StartCoroutine(AnimateInteractionWindow(false));
-        }
-
-        void DisplayInteractOptions(EventArgs<List<(string, bool)>> args) {
-            List<(string, bool)> options = args?.argument;
-            if (options == null) {
-                optionsGroup.alpha = 0;
-                return;
-            }
-
-            optionsGroup.alpha = 1;
-            for (int i = 0; i < optionTexts.Count; i++) {
-                (string option, bool allowed) = options.ElementAtOrDefault(i);
-                if (option != null) {
-                    optionTexts[i].gameObject.SetActive(true);
-                    optionTexts[i].text = option;
-                    optionTexts[i].color = allowed ? Color.white : Color.gray;
-                } else {
-                    optionTexts[i].gameObject.SetActive(false);
-                }
-            }
         }
 
         IEnumerator AnimateInteractionWindow(bool start) {
