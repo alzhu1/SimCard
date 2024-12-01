@@ -38,7 +38,7 @@ namespace SimCard.SimGame {
 
             simGameCamera = Camera.main;
 
-            player = environment.GetComponentInChildren<Player>();
+            player = GetComponentInChildren<Player>();
             interactUI = canvasUI.GetComponentInChildren<InteractUI>();
             fadeUI = canvasUI.GetComponentInChildren<FadeUI>();
         }
