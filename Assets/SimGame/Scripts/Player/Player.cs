@@ -17,6 +17,7 @@ namespace SimCard.SimGame {
         public SimGameManager SimGameManager { get; private set; }
 
         private Rigidbody2D rb;
+        private SpriteRenderer sr;
         private bool paused;
         private int energy = 100;
 
@@ -24,6 +25,7 @@ namespace SimCard.SimGame {
         public Transform FrontCheck => frontCheck;
         public float MoveSpeed => moveSpeed;
         public Rigidbody2D RB => rb;
+        public SpriteRenderer SR => sr;
         public bool Paused => paused;
         public int Energy => energy;
 
@@ -33,6 +35,7 @@ namespace SimCard.SimGame {
             SimGameManager = GetComponentInParent<SimGameManager>();
 
             rb = GetComponent<Rigidbody2D>();
+            sr = GetComponent<SpriteRenderer>();
         }
 
         void Start() {

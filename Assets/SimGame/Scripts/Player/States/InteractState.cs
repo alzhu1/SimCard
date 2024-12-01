@@ -11,6 +11,7 @@ namespace SimCard.SimGame {
         public InteractState(Interactable interactable) => this.interactable = interactable;
 
         protected override void Enter() {
+            base.Enter();
             interactionParser = new InteractionParser(
                 player,
                 interactable,
@@ -19,7 +20,9 @@ namespace SimCard.SimGame {
             );
         }
 
-        protected override void Exit() { }
+        protected override void Exit() {
+            base.Exit();
+        }
 
         protected override IEnumerator Handle() {
             yield return player.SimGameManager.StartInteractionCoroutine(interactionParser);

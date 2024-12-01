@@ -76,7 +76,7 @@ namespace SimCard.SimGame {
         }
 
         IEnumerator GoToNextDay() {
-            player.Pause();
+            EventBus.OnPlayerPause.Raise(new(false));
 
             yield return fadeUI.FadeInOut();
             Debug.Log($"The day is {day}");
@@ -84,7 +84,7 @@ namespace SimCard.SimGame {
 
             player.RefreshEnergy();
 
-            player.Unpause();
+            EventBus.OnPlayerUnpause.Raise(new());
         }
 
         // Interaction mediator methods
@@ -113,6 +113,8 @@ namespace SimCard.SimGame {
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(0, LoadSceneMode.Additive);
 
             asyncLoad.allowSceneActivation = false;
+            // Disable player movement beforehand, keep sprite (will disable later)
+            EventBus.OnPlayerPause.Raise(new(false));
             yield return fadeUI.FadeIn();
 
             while (asyncLoad.progress < 0.9f) {
@@ -120,6 +122,7 @@ namespace SimCard.SimGame {
             }
 
             // Disable environmental objects in sim game
+            EventBus.OnPlayerPause.Raise(new(true));
             environment.SetActive(false);
             asyncLoad.allowSceneActivation = true;
 
@@ -146,6 +149,7 @@ namespace SimCard.SimGame {
             }
 
             // Disable environmental objects in sim game
+            EventBus.OnPlayerUnpause.Raise(new());
             environment.SetActive(true);
             asyncLoad.allowSceneActivation = true;
 

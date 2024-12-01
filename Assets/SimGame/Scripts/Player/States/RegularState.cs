@@ -16,17 +16,19 @@ namespace SimCard.SimGame {
         public override Vector2 RBVelocity => player.MoveSpeed * Time.fixedDeltaTime * move;
 
         protected override void Enter() {
+            base.Enter();
             player.SimGameManager.EventBus.OnCanInteract.Event += EnableInteraction;
         }
 
         protected override void Exit() {
+            base.Exit();
             player.SimGameManager.EventBus.OnCanInteract.Event -= EnableInteraction;
         }
 
         protected override IEnumerator Handle() {
             while (nextState == null) {
                 if (player.Paused) {
-                    yield return null;
+                    nextState = new PauseState();
                     continue;
                 }
 
