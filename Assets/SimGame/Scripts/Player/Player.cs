@@ -18,7 +18,6 @@ namespace SimCard.SimGame {
 
         private Rigidbody2D rb;
         private SpriteRenderer sr;
-        private bool paused;
         private int energy = 100;
 
         public List<CardMetadata> Deck => deck;
@@ -26,7 +25,6 @@ namespace SimCard.SimGame {
         public float MoveSpeed => moveSpeed;
         public Rigidbody2D RB => rb;
         public SpriteRenderer SR => sr;
-        public bool Paused => paused;
         public int Energy => energy;
 
         private SimPlayerState playerState;
@@ -70,19 +68,14 @@ namespace SimCard.SimGame {
             }
         }
 
+        // FIXME: Minor bug after sleep transition. The state goes back to RegularState, but this isn't triggered
+        // So no interactable is set, but the UI is still there
+        // Should do a check on startup to see if we need to set interactable again
         void OnTriggerExit2D(Collider2D collider) {
             // TODO: Figure out how to distinguish between interactable and non interactable
 
             Debug.Log($"Collider (exit): {collider}");
             SimGameManager.EventBus.OnCanInteract.Raise(new(null));
-        }
-
-        public void Pause() {
-            paused = true;
-        }
-
-        public void Unpause() {
-            paused = false;
         }
 
         public void RefreshEnergy() {
