@@ -46,11 +46,13 @@ namespace SimCard.SimGame {
         void Start() {
             EventBus.OnInteractionEvent.Event += HandleInteractionEvent;
             EventBus.OnCardGameEnd.Event += HandleCardGameEndEvent;
+            EventBus.OnDeckBuilderEnd.Event += HandleDeckBuilderEndEvent;
         }
 
         void OnDestroy() {
             EventBus.OnInteractionEvent.Event -= HandleInteractionEvent;
             EventBus.OnCardGameEnd.Event -= HandleCardGameEndEvent;
+            EventBus.OnDeckBuilderEnd.Event -= HandleDeckBuilderEndEvent;
         }
 
         void HandleInteractionEvent(EventArgs<Interactable, string> args) {
@@ -66,7 +68,7 @@ namespace SimCard.SimGame {
                 }
 
                 case "StartDeckBuild": {
-                    StartCoroutine(StartDeckBuild());
+                    StartCoroutine(StartDeckBuilder());
                     break;
                 }
 
@@ -78,6 +80,13 @@ namespace SimCard.SimGame {
         void HandleCardGameEndEvent(CardGameResultArgs args) {
             Debug.Log($"Result: {args.won}, gold won: {args.goldWon}");
             StartCoroutine(EndCardGame());
+        }
+
+        void HandleDeckBuilderEndEvent(EventArgs<List<CardMetadata>> args) {
+            foreach (var c in args.argument) {
+                Debug.Log($"Returned card {c.cardSO} with count {c.count}");
+            }
+            StartCoroutine(EndDeckBuilder());
         }
 
         IEnumerator GoToNextDay() {
@@ -123,9 +132,14 @@ namespace SimCard.SimGame {
             yield return StartCoroutine(UnloadSubScene(1));
         }
 
-        IEnumerator StartDeckBuild() {
+        IEnumerator StartDeckBuilder() {
             // FIXME: Need to switch to loading DeckBuild scene
-            yield return StartCoroutine(LoadSubScene(1));
+            yield return StartCoroutine(LoadSubScene(2));
+            EventBus.OnDeckBuilderInit.Raise(new(player.Deck));
+        }
+
+        IEnumerator EndDeckBuilder() {
+            yield return StartCoroutine(UnloadSubScene(2));
         }
 
         // Scene loading helpers

@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/CardGame/CardGame.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/DeckBuilder/DeckBuilder.unity
+    guid: 54d652133f12b4667bc171049da694d4
   m_configObjects: {}
