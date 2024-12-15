@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace SimCard.Common {
-    public abstract class CardSO : ScriptableObject {
+    [CreateAssetMenu(fileName = "Card", menuName = "ScriptableObjects/Card")]
+    public class CardSO : ScriptableObject {
         // Native properties
         public string cardName;
         public Sprite sprite;
         public int cost;
         public string flavorText;
 
-        // Base effect
-        [SerializeReference] public Effect effect;
+        // Income (resource gained per turn start)
+        public int income;
+
+        // Effects
+        [SerializeReference] public List<Effect> effects;
     }
 
     [System.Serializable]

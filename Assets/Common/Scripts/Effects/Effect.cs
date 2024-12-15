@@ -7,6 +7,7 @@ using UnityEditor.UIElements;
 using SimCard.CardGame;
 
 namespace SimCard.Common {
+    [System.Serializable]
     public abstract class Effect {
         public abstract void ApplyEffect(params Card[] targets);
     }
