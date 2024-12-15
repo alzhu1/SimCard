@@ -41,4 +41,17 @@ namespace SimCard.Common {
         public CardSO cardSO;
         public int count;
     }
+
+    /* FIXME: V2 WIP */
+
+    public abstract class CardSOV2 : ScriptableObject {
+        // Native properties
+        public string cardName;
+        public Sprite sprite;
+        public int cost;
+        public string flavorText;
+
+        // Base effect
+        [SerializeReference] public Effect effect;
+    }
 }
