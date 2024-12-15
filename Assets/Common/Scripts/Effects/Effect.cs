@@ -40,7 +40,7 @@ namespace SimCard.Common {
             // TODO: Not a fan of this approach, should look into AdvancedDropdown and a helper class
             string currPropertyTypeName = property.managedReferenceFullTypename;
             string currTypeName = currPropertyTypeName.Split(".").Last();
-            int dropdownIndex = EFFECT_TYPE_NAMES.FindIndex((x) => currTypeName.Equals(x));
+            int dropdownIndex = Mathf.Max(EFFECT_TYPE_NAMES.FindIndex((x) => currTypeName.Equals(x)), 0);
 
             DropdownField field = new DropdownField(property.name, EFFECT_TYPE_NAMES, dropdownIndex);
 

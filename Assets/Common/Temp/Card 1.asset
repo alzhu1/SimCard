@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5d6e14685c3546b795aa79bf276138a, type: 3}
   m_Name: Card 1
   m_EditorClassIdentifier: 
-  cardName: 
-  sprite: {fileID: 0}
-  cost: 0
+  cardName: Card circle
+  sprite: {fileID: -2413806693520163455, guid: daf79a9bfe87046568cb0e70981218dc, type: 3}
+  cost: 10
   flavorText: 
   effect:
     rid: -2
-  generateCount: 0
+  generateCount: 3
   references:
     version: 2
     RefIds:

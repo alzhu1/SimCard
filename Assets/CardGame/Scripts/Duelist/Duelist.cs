@@ -19,7 +19,9 @@ namespace SimCard.CardGame {
 
         public Dictionary<ResourceEntitySO, int> CurrentResources { get; private set; }
 
-        public int TotalPower => Field.Cards?.Sum(x => x.Power) ?? 0;
+        public int Currency { get; private set; }
+
+        public int TotalPower => 0;//Field.Cards?.Sum(x => x.Power) ?? 0;
 
         public int TurnActions { get; private set; }
 
@@ -34,6 +36,8 @@ namespace SimCard.CardGame {
             Graveyard = GetComponentInChildren<Graveyard>();
 
             CurrentResources = new Dictionary<ResourceEntitySO, int>();
+
+            Currency = 50;
         }
 
         void Start() {
@@ -63,6 +67,9 @@ namespace SimCard.CardGame {
                 return;
             }
 
+            // TODO: Remove this
+            Currency = 50;
+
             TurnActions = 2;
             duelistState = StartState;
             duelistState.Init(this);
@@ -87,32 +94,11 @@ namespace SimCard.CardGame {
             OrganizeArea();
         }
 
-        public void PlaySelectedCard(Card card, IEnumerable<HashSet<Card>> cardSacrifices = null) {
+        public void PlaySelectedCard(Card card) {
             TurnActions--;
+            Currency -= card.Cost;
 
-            // Remove from resources
-            foreach (var resourceCost in card.ResourceCosts) {
-                CurrentResources[resourceCost.entity] -= resourceCost.cost;
-            }
-
-            // Remove sacrificed cards
-            if (cardSacrifices != null) {
-                foreach (var cardList in cardSacrifices) {
-                    foreach (var cardSacrifice in cardList) {
-                        Field.TransferTo(Graveyard, cardSacrifice, false);
-                    }
-                }
-            }
-
-            // Play the card
-            if (card.IsResourceCard()) {
-                ResourceEntitySO resource = card.GetResource();
-                CurrentResources[resource] =
-                    CurrentResources.GetValueOrDefault(resource, 0) + card.Power;
-                Hand.TransferTo(Graveyard, card, false);
-            } else {
-                Hand.TransferTo(Field, card, true);
-            }
+            Hand.TransferTo(Field, card, true);
 
             OrganizeArea();
         }

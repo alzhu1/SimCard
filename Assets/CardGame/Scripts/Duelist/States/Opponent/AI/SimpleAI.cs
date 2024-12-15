@@ -22,9 +22,11 @@ namespace SimCard.CardGame {
                     break;
                 }
 
-                if (card.IsResourceCard()) {
+                if (opponentDuelist.Currency >= card.Cost) {
                     actions.Add(new PlayCardAction(card));
                 }
+
+                break;
             }
 
             if (actions.Count == 0) {

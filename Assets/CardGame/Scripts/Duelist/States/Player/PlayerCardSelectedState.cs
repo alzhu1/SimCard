@@ -65,7 +65,10 @@ namespace SimCard.CardGame {
                             break;
 
                         case PlayerCardAction.Summon:
-                            nextState = new PlayerCardSummonState(selectedCard);
+                            // nextState = new PlayerCardSummonState(selectedCard);
+                            duelist.PlaySelectedCard(selectedCard);
+                            selectedCard.ResetColor();
+                            nextState = new PlayerBaseState();
                             break;
                     }
                 }
@@ -80,21 +83,23 @@ namespace SimCard.CardGame {
                 return false;
             }
 
+            // TODO: Check currency cost here
+
             // Card summon is allowed if resource cost is met
             // And other cards exist on the field
-            foreach (var resourceCost in selectedCard.ResourceCosts) {
-                if (duelist.CurrentResources[resourceCost.entity] < resourceCost.cost) {
-                    return false;
-                }
-            }
+            // foreach (var resourceCost in selectedCard.ResourceCosts) {
+            //     if (duelist.CurrentResources[resourceCost.entity] < resourceCost.cost) {
+            //         return false;
+            //     }
+            // }
 
-            foreach (var nonResourceCost in selectedCard.NonResourceCosts) {
-                if (!duelist.Field.HasEntityCount(nonResourceCost.entity, nonResourceCost.cost)) {
-                    return false;
-                }
-            }
+            // foreach (var nonResourceCost in selectedCard.NonResourceCosts) {
+            //     if (!duelist.Field.HasEntityCount(nonResourceCost.entity, nonResourceCost.cost)) {
+            //         return false;
+            //     }
+            // }
 
-            return true;
+            return duelist.Currency >= selectedCard.Cost;
         }
     }
 }

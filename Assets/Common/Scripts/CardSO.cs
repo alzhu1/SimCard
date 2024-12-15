@@ -40,6 +40,9 @@ namespace SimCard.Common {
     public class CardMetadata {
         public CardSO cardSO;
         public int count;
+
+        // TODO: Fix
+        public CardSOV2 cardSOV2;
     }
 
     /* FIXME: V2 WIP */

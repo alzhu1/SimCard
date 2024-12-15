@@ -15,11 +15,10 @@ namespace SimCard.CardGame {
                 switch (action) {
                     case PlayCardAction playCardAction:
                         Debug.Log("PlayCardAction");
-                        // TODO: When playing cards with sacs, figure out how to include
-                        opponentDuelist.PlaySelectedCard(playCardAction.CardToSummon, null);
+                        opponentDuelist.PlaySelectedCard(playCardAction.CardToSummon);
                         break;
 
-                    case EndAction endAction:
+                    case EndAction:
                         Debug.Log("EndAction");
                         nextState = new EndState();
                         break;

@@ -12,17 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5d6e14685c3546b795aa79bf276138a, type: 3}
   m_Name: Card
   m_EditorClassIdentifier: 
-  cardName: 
-  sprite: {fileID: 0}
-  cost: 0
+  cardName: Card square
+  sprite: {fileID: 7482667652216324306, guid: 97867988a38784269a4dd3c3235ef3ae, type: 3}
+  cost: 5
   flavorText: 
   effect:
-    rid: 7715484402242813965
-  generateCount: 0
+    rid: -2
+  generateCount: 2
   references:
     version: 2
     RefIds:
-    - rid: 7715484402242813965
-      type: {class: DummyEffect2, ns: SimCard.Common, asm: Assembly-CSharp}
-      data:
-        dummyEffectNum2: 100
+    - rid: -2
+      type: {class: , ns: , asm: }

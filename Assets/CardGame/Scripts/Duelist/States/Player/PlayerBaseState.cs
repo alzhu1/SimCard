@@ -34,9 +34,6 @@ namespace SimCard.CardGame {
         }
 
         protected override IEnumerator Handle() {
-            // TODO: For now input can be put here (maybe that's ok?)
-            // But think about where we could place player input and somehow merge that with DuelistController
-
             while (nextState == null) {
                 if (Input.GetKeyDown(KeyCode.Escape)) {
                     nextState = new EndState();

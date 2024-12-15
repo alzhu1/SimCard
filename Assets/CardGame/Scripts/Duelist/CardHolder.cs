@@ -41,15 +41,5 @@ namespace SimCard.CardGame {
             card.gameObject.SetActive(isCardActive);
             return true;
         }
-
-        public bool HasEntityCount(EntitySO entity, int count) {
-            foreach (var card in Cards) {
-                if (card.Entity.Equals(entity)) {
-                    count--;
-                }
-            }
-
-            return count <= 0;
-        }
     }
 }
