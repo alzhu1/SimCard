@@ -33,7 +33,7 @@ namespace SimCard.CardGame {
             ClearDeck();
 
             foreach (CardMetadata cardMetadata in initData) {
-                CardSOV2 cardSO = cardMetadata.cardSOV2;
+                CardSO cardSO = cardMetadata.cardSO;
                 int count = cardMetadata.count;
 
                 for (int i = 0; i < count; i++) {

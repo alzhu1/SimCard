@@ -1611,7 +1611,7 @@ MonoBehaviour:
   frontCheck: {fileID: 1658193425}
   moveSpeed: 250
   deck:
-  - cardSO: {fileID: 11400000, guid: 5b804fe02edc8471e8bb1df4d49d07ff, type: 2}
+  - cardSO: {fileID: 11400000, guid: 58d024a76cc894787abd01f571d1c82f, type: 2}
     count: 20
 --- !u!61 &1741206561
 BoxCollider2D:
@@ -1863,8 +1863,6 @@ MonoBehaviour:
   interactArea: {fileID: 1830215170}
   interactText: {fileID: 1957808310}
   dialogueText: {fileID: 2099376399}
-  optionsGroup: {fileID: 752936072}
-  optionCursor: {fileID: 1304976548}
 --- !u!225 &1830215173
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -2121,7 +2119,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeTime: 0
   deck:
-  - cardSO: {fileID: 11400000, guid: 896e201daa6204271b88241e5b481cc7, type: 2}
+  - cardSO: {fileID: 11400000, guid: 643af89b9f973416ea69544877944c98, type: 2}
     count: 10
   <InteractableSO>k__BackingField: {fileID: 11400000, guid: 151a702af7542412da82d5f4178ded52, type: 2}
 --- !u!58 &2027661460

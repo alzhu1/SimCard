@@ -6,8 +6,8 @@ using SimCard.Common;
 namespace SimCard.CardGame {
     public class Card : MonoBehaviour {
         [SerializeField]
-        private CardSOV2 cardSO;
-        public CardSOV2 CardSO => cardSO;
+        private CardSO cardSO;
+        public CardSO CardSO => cardSO;
 
         public int Cost => CardSO.cost;
 
@@ -23,7 +23,7 @@ namespace SimCard.CardGame {
             gameObject.SetActive(false);
         }
 
-        public void InitCardSO(CardSOV2 cardSO) {
+        public void InitCardSO(CardSO cardSO) {
             this.cardSO = cardSO;
             Awake();
         }
