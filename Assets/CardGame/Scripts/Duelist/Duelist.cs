@@ -67,9 +67,6 @@ namespace SimCard.CardGame {
                 return;
             }
 
-            // TODO: Remove this
-            Currency = 50;
-
             TurnActions = 2;
             duelistState = StartState;
             duelistState.Init(this);
@@ -107,6 +104,10 @@ namespace SimCard.CardGame {
             // This is called whenever a card based operation occurs
             Field.Spread();
             Hand.Spread();
+        }
+
+        public void AdjustCurrency(int delta) {
+            Currency += delta;
         }
     }
 }

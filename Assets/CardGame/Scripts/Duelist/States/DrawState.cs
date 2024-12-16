@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace SimCard.CardGame {
     public class DrawState<T> : DuelistState where T : DuelistState, new() {
@@ -11,7 +12,12 @@ namespace SimCard.CardGame {
             duelist.DrawCard();
             nextState = new T();
 
-            yield break;
+            foreach (Card card in duelist.Field.Cards) {
+                int preCurrency = duelist.Currency;
+                duelist.AdjustCurrency(card.Income);
+                Debug.Log($"Currency ({preCurrency}) + income ({card.Income}) = {duelist.Currency}");
+                yield return new WaitForSeconds(0.5f);
+            }
         }
     }
 }

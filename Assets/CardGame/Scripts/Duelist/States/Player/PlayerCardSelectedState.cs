@@ -20,8 +20,6 @@ namespace SimCard.CardGame {
         }
 
         protected override void Enter() {
-            selectedCard.SetSelectedColor();
-
             // Card can always be previewed
             allowedActions = new List<PlayerCardAction> {
                 PlayerCardAction.Preview
@@ -37,7 +35,6 @@ namespace SimCard.CardGame {
         }
 
         protected override void Exit() {
-            selectedCard.ResetColor();
             playerDuelist.CardGameManager.EventBus.OnPlayerCardSelect.Raise(new(null, new()));
             playerDuelist.CardGameManager.EventBus.OnCardActionHover.Raise(new(PlayerCardAction.None));
         }
@@ -67,7 +64,6 @@ namespace SimCard.CardGame {
                         case PlayerCardAction.Summon:
                             // nextState = new PlayerCardSummonState(selectedCard);
                             duelist.PlaySelectedCard(selectedCard);
-                            selectedCard.ResetColor();
                             nextState = new PlayerBaseState();
                             break;
                     }

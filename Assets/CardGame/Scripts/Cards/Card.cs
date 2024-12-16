@@ -11,6 +11,8 @@ namespace SimCard.CardGame {
 
         public int Cost => CardSO.cost;
 
+        public int Income => CardSO.income;
+
         private SpriteRenderer sr;
 
         void Awake() {
@@ -28,13 +30,6 @@ namespace SimCard.CardGame {
             Awake();
         }
 
-        public void SetSelectedColor() {
-            sr.color = Color.green;
-        }
 
-        public void ResetColor() {
-            Debug.Log("Resetting color");
-            sr.color = Color.white;
-        }
     }
 }
