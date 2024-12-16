@@ -21,8 +21,6 @@ namespace SimCard.CardGame {
 
         public int Currency { get; private set; }
 
-        public int TotalPower => 0;//Field.Cards?.Sum(x => x.Power) ?? 0;
-
         public int TurnActions { get; private set; }
 
         void Awake() {

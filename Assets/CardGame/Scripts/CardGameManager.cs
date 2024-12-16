@@ -119,19 +119,16 @@ namespace SimCard.CardGame {
             roundOrder[0].RemoveAt(0);
 
             if (roundOrder[0].Count == 0) {
-                int playerPower = playerDuelist.TotalPower;
-                int opponentPower = opponentDuelist.TotalPower;
+                int playerCurrency = playerDuelist.Currency;
+                int opponentCurrency = opponentDuelist.Currency;
 
-                Duelist winner;
-                if (playerPower > opponentPower) {
+                Duelist winner = null;
+                if (playerCurrency > opponentCurrency) {
                     winner = playerDuelist;
-                } else if (playerPower < opponentPower) {
+                } else if (playerCurrency < opponentCurrency) {
                     winner = opponentDuelist;
-                } else {
-                    // TODO: Handle tie case
-                    Debug.Log("TIE");
-                    winner = null;
                 }
+                Debug.Log($"Winner: {winner}");
 
                 if (winner != null) {
                     duelistWins[winner] += 1;
@@ -154,7 +151,6 @@ namespace SimCard.CardGame {
 
         // TODO: Not sure if this is the best place to put this?
         IEnumerator EndCardGame(bool playerWon) {
-            // For now, let's just reload the level
             EventBus.OnGameEnd.Raise(EventArgs.Empty);
 
             while (!Input.GetKeyDown(KeyCode.Return)) {
