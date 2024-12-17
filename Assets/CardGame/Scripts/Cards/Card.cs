@@ -12,11 +12,13 @@ namespace SimCard.CardGame {
         public int Cost => CardSO.cost;
         public int Income => CardSO.income;
         public int TurnLimit => CardSO.turnLimit;
-        private List<Effect> Effects => CardSO.effects;
 
         public int ActiveTurns { get; private set; }
         public void IncrementActiveTurns() => ActiveTurns++;
         public bool ReachedTurnLimit() => ActiveTurns >= TurnLimit;
+
+        public List<Effect> CardActiveEffects { get; private set; }
+        public List<Effect> CardPassiveEffects { get; private set; }
 
         private SpriteRenderer sr;
 
@@ -28,17 +30,18 @@ namespace SimCard.CardGame {
             sr = GetComponent<SpriteRenderer>();
             sr.sprite = cardSO.sprite;
             gameObject.SetActive(false);
+
+            CardActiveEffects = new();
+            CardPassiveEffects = new();
+            foreach (Effect effect in CardSO.effects) {
+                List<Effect> effectList = effect.active ? CardActiveEffects : CardPassiveEffects;
+                effectList.Add(effect);
+            }
         }
 
         public void InitCardSO(CardSO cardSO) {
             this.cardSO = cardSO;
             Awake();
-        }
-
-        public void TriggerCardEffects() {
-            foreach (Effect effect in Effects) {
-                effect.ApplyEffect(this, this);
-            }
         }
 
         public CardHolder GetCurrentHolder() {

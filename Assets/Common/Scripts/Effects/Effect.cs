@@ -12,6 +12,12 @@ namespace SimCard.Common {
         // TODO: Also might need a way to indicate to outside Card
         // whether this effect is meant to apply to another card, or itself
 
+        // Self effect requires no selection for target
+        public bool selfEffect;
+
+        // Active: every owner upkeep this is triggered. Else passive: on first play.
+        public bool active;
+
         // TODO: Should add an optional timer object
         // Should be fine to operate on 1 card at a time
         // Include source + target, so the effect itself can keep track of whether it needs to apply it

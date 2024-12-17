@@ -81,6 +81,8 @@ namespace SimCard.CardGame {
 
         public bool AllowAction => TurnActions > 0;
 
+        // TODO: Thinking that for these card operations, they should be co-routines so that other states can wait on them
+
         public void DrawCard() {
             if (Deck.TransferTo(Hand, Deck.NextCard, true)) {
                 Deck.TryHideDeck();
@@ -96,6 +98,14 @@ namespace SimCard.CardGame {
             Hand.TransferTo(Field, card, true);
 
             OrganizeArea();
+
+            foreach (Effect passiveEffect in card.CardPassiveEffects) {
+                if (passiveEffect.selfEffect) {
+                    passiveEffect.ApplyEffect(card, card);
+                } else {
+                    // TODO: Fix this (need a better way to trigger "other" effects)
+                }
+            }
         }
 
         public void Discard(Card card) {
