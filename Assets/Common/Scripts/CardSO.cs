@@ -14,6 +14,9 @@ namespace SimCard.Common {
         // Income (resource gained per turn start)
         public int income;
 
+        // Limit (number of owner turns a card will last for)
+        public int turnLimit;
+
         // Effects
         [SerializeReference] public List<Effect> effects;
     }

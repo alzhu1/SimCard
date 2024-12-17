@@ -98,6 +98,11 @@ namespace SimCard.CardGame {
             OrganizeArea();
         }
 
+        public void Discard(Card card) {
+            CardHolder currentCardHolder = card.GetCurrentHolder();
+            currentCardHolder.TransferTo(Graveyard, card, false);
+        }
+
         void OrganizeArea() {
             // This is called whenever a card based operation occurs
             Field.Spread();
