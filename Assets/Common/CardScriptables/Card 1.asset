@@ -17,7 +17,7 @@ MonoBehaviour:
   cost: 10
   flavorText: 
   income: 5
-  turnLimit: 1
+  turnLimit: 5
   effects:
   - rid: 7715484402765529133
   references:
@@ -28,4 +28,4 @@ MonoBehaviour:
       data:
         selfEffect: 1
         active: 0
-        gainAmount: 0
+        gainAmount: 2

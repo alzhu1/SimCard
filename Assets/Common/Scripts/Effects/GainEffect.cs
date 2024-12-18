@@ -6,8 +6,9 @@ namespace SimCard.Common {
     public class GainEffect : Effect {
         [SerializeField] private int gainAmount;
 
-        public override void ApplyEffect(Card source, Card target) {
+        public override void Apply(Card source, Card target) {
             Debug.Log($"Gain effect, amount: {gainAmount}");
+            target.UpdateIncome(gainAmount);
         }
     }
 }

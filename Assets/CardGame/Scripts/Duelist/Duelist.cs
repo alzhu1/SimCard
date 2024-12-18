@@ -99,11 +99,14 @@ namespace SimCard.CardGame {
 
             OrganizeArea();
 
-            foreach (Effect passiveEffect in card.CardPassiveEffects) {
-                if (passiveEffect.selfEffect) {
-                    passiveEffect.ApplyEffect(card, card);
+            foreach (Effect effect in card.Effects) {
+                // TODO: If not self effect, need a way to pick another card
+                Card target = effect.selfEffect ? card : null;
+
+                if (effect.active) {
+                    target.AddActiveAppliedEffect(card, effect);
                 } else {
-                    // TODO: Fix this (need a better way to trigger "other" effects)
+                    effect.Apply(card, target);
                 }
             }
         }

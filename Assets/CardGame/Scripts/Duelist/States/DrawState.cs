@@ -28,6 +28,9 @@ namespace SimCard.CardGame {
                     continue;
                 }
 
+                // Apply active effects
+                card.ApplyActiveEffects();
+
                 // Check for currency
                 int preCurrency = duelist.Currency;
                 duelist.AdjustCurrency(card.Income);

@@ -7,6 +7,14 @@ using UnityEditor.UIElements;
 using SimCard.CardGame;
 
 namespace SimCard.Common {
+    public class EffectApplier {
+        public Card source;
+        public Effect effect;
+
+        public EffectApplier(Card source, Effect effect) => (this.source, this.effect) = (source, effect);
+        public void ApplyEffect(Card target) => effect.Apply(source, target);
+    }
+
     [System.Serializable]
     public abstract class Effect {
         // TODO: Also might need a way to indicate to outside Card
@@ -22,7 +30,7 @@ namespace SimCard.Common {
         // Should be fine to operate on 1 card at a time
         // Include source + target, so the effect itself can keep track of whether it needs to apply it
         // Assuming it's an effect that applies on self
-        public abstract void ApplyEffect(Card source, Card target);
+        public abstract void Apply(Card source, Card target);
     }
 
 #if UNITY_EDITOR
