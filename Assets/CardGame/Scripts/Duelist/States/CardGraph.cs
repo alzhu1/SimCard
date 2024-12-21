@@ -54,11 +54,6 @@ namespace SimCard.CardGame {
             currNode = currNode.dir[direction];
         }
 
-        public void Exit() {
-            // Reset color
-            currNode = null;
-        }
-
         private sealed class CardNode {
             public Card card;
 

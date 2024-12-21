@@ -20,5 +20,10 @@ namespace SimCard.CardGame {
 
         // This method should add on to the actions
         protected abstract IEnumerator Think();
+
+        // TODO: I don't really like how the effect selection works in this system
+        // When opponent plays a card, they have to be able to select the effect right after
+        // This means there's a back and forth between playing the card, and selecting card effects
+        // Necessitates a pause between playing cards
     }
 }

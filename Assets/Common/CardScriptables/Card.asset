@@ -17,7 +17,7 @@ MonoBehaviour:
   cost: 5
   flavorText: 
   income: 2
-  turnLimit: 1
+  turnLimit: 3
   effects: []
   references:
     version: 2

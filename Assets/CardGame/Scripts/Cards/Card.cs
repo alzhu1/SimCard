@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using SimCard.Common;
 
@@ -22,6 +23,9 @@ namespace SimCard.CardGame {
         public List<EffectApplier> ActiveAppliedEffects { get; private set; }
         public void AddActiveAppliedEffect(Card source, Effect effect) => ActiveAppliedEffects.Add(new(source, effect));
 
+        public List<Effect> SelfEffects { get; private set; }
+        public List<Effect> NonSelfEffects { get; private set; }
+
         public int Income { get; private set; }
 
         private SpriteRenderer sr;
@@ -37,6 +41,9 @@ namespace SimCard.CardGame {
 
             ActiveAppliedEffects = new();
 
+            SelfEffects = Effects.Where(effect => effect.selfEffect).ToList();
+            NonSelfEffects = Effects.Where(effect => !effect.selfEffect).ToList();
+
             Income = BaseIncome;
         }
 
@@ -48,6 +55,14 @@ namespace SimCard.CardGame {
         public CardHolder GetCurrentHolder() {
             // TODO: Can probably optimize this a bit
             return GetComponentInParent<CardHolder>();
+        }
+
+        public void ApplyEffectTo(Card target, Effect effect) {
+            if (effect.active) {
+                target.AddActiveAppliedEffect(this, effect);
+            } else {
+                effect.Apply(this, target);
+            }
         }
 
         public void ApplyActiveEffects() {

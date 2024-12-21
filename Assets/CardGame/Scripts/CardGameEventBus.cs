@@ -10,16 +10,15 @@ namespace SimCard.CardGame {
 
         // Game Lifecycle
         public GameEvent<EventArgs> OnGameStart = new();
-        public GameEvent<EventArgs<Duelist>> OnTurnStart = new ();
+        public GameEvent<EventArgs<Duelist>> OnTurnStart = new();
         public GameEvent<EventArgs> OnGameEnd = new();
 
         // Card-specific
-        public GameEvent<EventArgs<Card, List<PlayerCardAction>>> OnPlayerCardHover = new ();
-        public GameEvent<EventArgs<Card, List<PlayerCardAction>>> OnPlayerCardSelect = new ();
-        public GameEvent<EventArgs<Card, List<PlayerCardAction>>> OnPlayerCardPreview = new ();
+        public GameEvent<EventArgs<Card, List<PlayerCardAction>>> OnPlayerCardHover = new();
+        public GameEvent<EventArgs<Card, List<PlayerCardAction>>> OnPlayerCardSelect = new();
+        public GameEvent<EventArgs<Card, List<PlayerCardAction>>> OnPlayerCardPreview = new();
 
-        // public GameEvent<IconArgs> OnCardIconHover = new();
-        public GameEvent<EventArgs<PlayerCardAction>> OnCardActionHover = new ();
+        public GameEvent<EventArgs<PlayerCardAction>> OnCardActionHover = new();
 
         void Awake() {
             if (instance == null) {

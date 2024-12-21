@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using SimCard.Common;
 using UnityEngine;
 
 namespace SimCard.CardGame {
@@ -10,6 +11,18 @@ namespace SimCard.CardGame {
         public Card CardToSummon { get; private set; }
 
         public PlayCardAction(Card cardToSummon) => CardToSummon = cardToSummon;
+    }
+
+    public struct ApplyEffectAction : OpponentAction {
+        public Effect Effect { get; private set; }
+        public Card Source { get; private set; }
+        public Card Target { get; private set; }
+
+        public ApplyEffectAction(Effect effect, Card source, Card target) {
+            Effect = effect;
+            Source = source;
+            Target = target;
+        }
     }
 
     public struct EndAction : OpponentAction { }

@@ -3541,6 +3541,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de01795390bdd42f3ab843a7e3443e8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemy: {fileID: 1814205500}
   generalWaitTime: 1
   opponentAI: {fileID: 11400000, guid: 38a2202181f734f8ab743e6f49d85d45, type: 2}
 --- !u!1 &1633765830
@@ -3984,6 +3985,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43bff4cdd1fe349b0b31a30bec9de4ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemy: {fileID: 1559012902}
   cursor: {fileID: 730406812}
   cursorMoveTime: 0.08
 --- !u!1 &1818488069

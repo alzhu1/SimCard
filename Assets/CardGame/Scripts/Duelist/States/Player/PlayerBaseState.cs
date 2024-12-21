@@ -29,7 +29,6 @@ namespace SimCard.CardGame {
         }
 
         protected override void Exit() {
-            cardGraph.Exit();
             playerDuelist.HideCursor();
         }
 

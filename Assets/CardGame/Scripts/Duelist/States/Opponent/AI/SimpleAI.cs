@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SimCard.Common;
 
 namespace SimCard.CardGame {
     /// <summary>
@@ -24,6 +25,13 @@ namespace SimCard.CardGame {
 
                 if (opponentDuelist.Currency >= card.Cost) {
                     actions.Add(new PlayCardAction(card));
+
+                    if (card.NonSelfEffects.Count > 0) {
+                        // For now just apply any non-self effects to self
+                        foreach (Effect effect in card.NonSelfEffects) {
+                            actions.Add(new ApplyEffectAction(effect, card, card));
+                        }
+                    }
                 }
 
                 break;

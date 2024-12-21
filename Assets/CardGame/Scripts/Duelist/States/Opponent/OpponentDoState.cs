@@ -18,6 +18,11 @@ namespace SimCard.CardGame {
                         opponentDuelist.PlaySelectedCard(playCardAction.CardToSummon);
                         break;
 
+                    case ApplyEffectAction applyEffectAction:
+                        Debug.Log("ApplyEffectAction");
+                        opponentDuelist.ApplyCardEffect(applyEffectAction.Effect, applyEffectAction.Source, applyEffectAction.Target);
+                        break;
+
                     case EndAction:
                         Debug.Log("EndAction");
                         nextState = new EndState();

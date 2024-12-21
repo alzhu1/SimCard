@@ -8,6 +8,10 @@ using ResourceEntitySO = SimCard.Common.ResourceEntitySO;
 
 namespace SimCard.CardGame {
     public abstract class Duelist : MonoBehaviour {
+        // TODO: Would prefer not to serialize if possible...
+        [SerializeField] private Duelist enemy;
+        public Duelist Enemy => enemy;
+
         private DuelistState duelistState;
 
         public CardGameManager CardGameManager { get; private set; }
@@ -99,16 +103,13 @@ namespace SimCard.CardGame {
 
             OrganizeArea();
 
-            foreach (Effect effect in card.Effects) {
-                // TODO: If not self effect, need a way to pick another card
-                Card target = effect.selfEffect ? card : null;
-
-                if (effect.active) {
-                    target.AddActiveAppliedEffect(card, effect);
-                } else {
-                    effect.Apply(card, target);
-                }
+            foreach (Effect effect in card.SelfEffects) {
+                ApplyCardEffect(effect, card, card);
             }
+        }
+
+        public void ApplyCardEffect(Effect effect, Card source, Card target) {
+            source.ApplyEffectTo(target, effect);
         }
 
         public void Discard(Card card) {

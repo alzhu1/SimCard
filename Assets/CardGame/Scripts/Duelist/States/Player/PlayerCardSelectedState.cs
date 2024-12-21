@@ -28,9 +28,8 @@ namespace SimCard.CardGame {
                 allowedActions.Add(PlayerCardAction.Summon);
             }
 
-            playerDuelist.CardGameManager.EventBus.OnPlayerCardSelect.Raise(new(selectedCard, allowedActions));
-
             actionIndex = 0;
+            playerDuelist.CardGameManager.EventBus.OnPlayerCardSelect.Raise(new(selectedCard, allowedActions));
             playerDuelist.CardGameManager.EventBus.OnCardActionHover.Raise(new(allowedActions[actionIndex]));
         }
 
@@ -62,9 +61,13 @@ namespace SimCard.CardGame {
                             break;
 
                         case PlayerCardAction.Summon:
-                            // nextState = new PlayerCardSummonState(selectedCard);
                             duelist.PlaySelectedCard(selectedCard);
-                            nextState = new PlayerBaseState();
+
+                            if (selectedCard.NonSelfEffects.Count > 0) {
+                                nextState = new PlayerCardEffectSelectionState(selectedCard);
+                            } else {
+                                nextState = new PlayerBaseState();
+                            }
                             break;
                     }
                 }
@@ -78,22 +81,6 @@ namespace SimCard.CardGame {
             if (!duelist.AllowAction) {
                 return false;
             }
-
-            // TODO: Check currency cost here
-
-            // Card summon is allowed if resource cost is met
-            // And other cards exist on the field
-            // foreach (var resourceCost in selectedCard.ResourceCosts) {
-            //     if (duelist.CurrentResources[resourceCost.entity] < resourceCost.cost) {
-            //         return false;
-            //     }
-            // }
-
-            // foreach (var nonResourceCost in selectedCard.NonResourceCosts) {
-            //     if (!duelist.Field.HasEntityCount(nonResourceCost.entity, nonResourceCost.cost)) {
-            //         return false;
-            //     }
-            // }
 
             return duelist.Currency >= selectedCard.Cost;
         }
