@@ -27,6 +27,7 @@ namespace SimCard.CardGame {
         public List<Effect> NonSelfEffects { get; private set; }
 
         public int Income { get; private set; }
+        public void UpdateIncome(int delta) => Income += delta;
 
         private SpriteRenderer sr;
 
@@ -53,7 +54,7 @@ namespace SimCard.CardGame {
         }
 
         public CardHolder GetCurrentHolder() {
-            // TODO: Can probably optimize this a bit
+            // MINOR: Can probably optimize this a bit
             return GetComponentInParent<CardHolder>();
         }
 
@@ -70,24 +71,5 @@ namespace SimCard.CardGame {
                 effectApplier.ApplyEffect(this);
             }
         }
-
-        // TODO: Need a better way to update income
-        public void UpdateIncome(int delta) {
-            Income += delta;
-        }
-
-        // TODO: Next is figuring out how to apply the card effects
-
-        // Need to figure out effects that change over time. Maybe need to copy the card effect to a new struct?
-        // Or a special "timer struct" that takes the effect
-        // Idea for the above: Apply could optionally take in a Timer object
-        // And the effect behavior changes depending on the timer. This timer could be instantiated by something else
-        // Or perhaps it's a default property of the Effect that can be changed in inspector if you want different behavior
-
-        // Notes on card effects applied to a non-self card:
-        // Since we target other cards, this will likely require a new PlayerState to select the card that will be affected
-        // When the effect is to be applied, pause the PlaySelectedCard coroutine (side note: make it a coroutine)
-        // Also, transfer the state to be in card selection for effect
-        // Will need a way to consistently go back to this state, to apply multiple non-self card effects
     }
 }
