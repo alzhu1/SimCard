@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using EntitySO = SimCard.Common.EntitySO;
 
 namespace SimCard.CardGame {
     // CardHolder should be owned by a duelist

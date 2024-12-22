@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using SimCard.Common;
 using UnityEngine;
-using ResourceEntitySO = SimCard.Common.ResourceEntitySO;
 
 namespace SimCard.CardGame {
     public abstract class Duelist : MonoBehaviour {
@@ -20,8 +19,6 @@ namespace SimCard.CardGame {
         public Deck Deck { get; private set; }
         public Field Field { get; private set; }
         public Graveyard Graveyard { get; private set; }
-
-        public Dictionary<ResourceEntitySO, int> CurrentResources { get; private set; }
 
         public int Currency { get; private set; }
         public void AdjustCurrency(int delta) {
@@ -59,8 +56,6 @@ namespace SimCard.CardGame {
             Deck = GetComponentInChildren<Deck>();
             Field = GetComponentInChildren<Field>();
             Graveyard = GetComponentInChildren<Graveyard>();
-
-            CurrentResources = new Dictionary<ResourceEntitySO, int>();
 
             Currency = 50;
             Taxes = 0;
