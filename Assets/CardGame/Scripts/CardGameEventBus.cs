@@ -9,7 +9,7 @@ namespace SimCard.CardGame {
         private static CardGameEventBus instance = null;
 
         // Game Lifecycle
-        public GameEvent<EventArgs> OnGameStart = new();
+        public GameEvent<InitCardGameArgs> OnGameStart = new();
         public GameEvent<EventArgs<Duelist>> OnTurnStart = new();
         public GameEvent<EventArgs<Duelist, Duelist>> OnGameEnd = new();
 

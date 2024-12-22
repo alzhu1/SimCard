@@ -107,7 +107,7 @@ namespace SimCard.CardGame {
             duelistState = null;
         }
 
-        protected abstract void InitForGame(EventArgs _args);
+        protected abstract void InitForGame(InitCardGameArgs args);
         protected abstract DuelistState StartState { get; }
 
         public bool AllowAction => TurnActions > 0;

@@ -81,8 +81,7 @@ namespace SimCard.CardGame {
             }
         }
 
-        IEnumerator StartCardGame(EventArgs args) {
-            // FIXME: Make it more clear that the args passed in here are required to be the same (because of SimGameManager)
+        IEnumerator StartCardGame(InitCardGameArgs args) {
             yield return new WaitForSeconds(1f);
             EventBus.OnGameStart.Raise(args);
 

@@ -15,11 +15,11 @@ namespace SimCard.CardGame {
 
         protected override DuelistState StartState => new DrawState<OpponentThinkState>();
 
-        protected override void InitForGame(EventArgs args) {
+        protected override void InitForGame(InitCardGameArgs args) {
             opponentAI.InitOpponentDuelist(this);
 
-            if (args is InitCardGameArgs cardGameArgs) {
-                Deck.InitFromCardMetadata(cardGameArgs.opponentDeck, CardGameManager);
+            if (args != null) {
+                Deck.InitFromCardMetadata(args.opponentDeck, CardGameManager);
             }
 
             for (int i = 0; i < FirstDrawAmount; i++) {
