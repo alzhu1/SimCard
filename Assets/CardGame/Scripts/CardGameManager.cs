@@ -19,8 +19,6 @@ namespace SimCard.CardGame {
 
         public CardPool CardPool { get; private set; }
 
-        private Dictionary<Duelist, int> duelistWins;
-
         [SerializeField] private AudioListener audioListener;
         [SerializeField] private EventSystem eventSystem;
 
@@ -30,10 +28,12 @@ namespace SimCard.CardGame {
         [SerializeField]
         private Duelist opponentDuelist;
 
-        private List<List<Duelist>> roundOrder;
-
         // From scene load
         private SimGameManager simGameManager;
+
+        private Duelist[] duelistTurnOrder;
+
+        private int currTurn;
 
         void Awake() {
             if (instance == null) {
@@ -53,22 +53,13 @@ namespace SimCard.CardGame {
             EventBus = GetComponent<CardGameEventBus>();
             CardPool = GetComponentInChildren<CardPool>();
 
-            duelistWins = new Dictionary<Duelist, int>
-            {
-                { playerDuelist, 0 },
-                { opponentDuelist, 0 },
+            // TODO: Create mechanism to determine who goes first/second
+            duelistTurnOrder = new Duelist[]{
+                playerDuelist,
+                opponentDuelist
             };
-
-            // ABBA order, then BAAB order
-            roundOrder = new List<List<Duelist>>
-            {
-                new(
-                    new Duelist[] { playerDuelist, opponentDuelist, opponentDuelist, playerDuelist }
-                ),
-                new(
-                    new Duelist[] { opponentDuelist, playerDuelist, playerDuelist, opponentDuelist }
-                ),
-            };
+            duelistTurnOrder[0].SetFirstTurn();
+            currTurn = 0;
         }
 
         void Start() {
@@ -87,64 +78,29 @@ namespace SimCard.CardGame {
         }
 
         IEnumerator StartCardGame(EventArgs args) {
+            // FIXME: Make it more clear that the args passed in here are required to be the same (because of SimGameManager)
             yield return new WaitForSeconds(1f);
             EventBus.OnGameStart.Raise(args);
 
             yield return new WaitForSeconds(2f);
-            PrepareRound();
             StartTurn();
         }
 
-        void PrepareRound() {
-            Debug.Log("Preparing new round");
-            if (roundOrder[0].Count == 0) {
-                roundOrder.RemoveAt(0);
-            }
-
-            // Add a copy of list to end of round
-            // By end of func, there should be 3 lists in roundOrder
-            roundOrder.Add(new List<Duelist>(roundOrder[0]));
-            Assert.IsTrue(roundOrder.Count == 3);
-        }
-
         void StartTurn() {
-            Duelist currDuelist = roundOrder[0][0];
+            // Duelist currDuelist = roundOrder[0][0];
+            Duelist currDuelist = duelistTurnOrder[currTurn % 2];
             Debug.Log($"Start turn for {currDuelist}");
             EventBus.OnTurnStart.Raise(new(currDuelist));
         }
 
         public void EndTurn() {
-            Duelist currDuelist = roundOrder[0][0];
+            // Duelist currDuelist = roundOrder[0][0];
+            Duelist currDuelist = duelistTurnOrder[currTurn % 2];
             Debug.Log($"End turn for {currDuelist}");
-            roundOrder[0].RemoveAt(0);
 
-            if (roundOrder[0].Count == 0) {
-                int playerCurrency = playerDuelist.Currency;
-                int opponentCurrency = opponentDuelist.Currency;
+            currTurn++;
 
-                Duelist winner = null;
-                if (playerCurrency > opponentCurrency) {
-                    winner = playerDuelist;
-                } else if (playerCurrency < opponentCurrency) {
-                    winner = opponentDuelist;
-                }
-                Debug.Log($"Winner: {winner}");
-
-                if (winner != null) {
-                    duelistWins[winner] += 1;
-
-                    if (duelistWins[winner] == 5) {
-                        Debug.Log($"Winner: {winner}");
-
-                        bool playerWon = winner == playerDuelist;
-                        StartCoroutine(EndCardGame(playerWon));
-                        return;
-                    }
-                }
-
-                // Prepare next round
-                PrepareRound();
-            }
+            // TODO: Win condition check? Also need it in Upkeep step, in case someone exceeds the required amount
 
             StartTurn();
         }

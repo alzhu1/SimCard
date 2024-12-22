@@ -22,8 +22,12 @@ namespace SimCard.CardGame {
                 Deck.InitFromCardMetadata(cardGameArgs.opponentDeck, CardGameManager);
             }
 
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < FirstDrawAmount; i++) {
                 DrawCard();
+            }
+
+            if (HasFirstTurn) {
+                AdjustCurrency(5);
             }
         }
     }
