@@ -14,8 +14,6 @@ namespace SimCard.CardGame {
     [CreateAssetMenu(fileName = "SimpleAI", menuName = "ScriptableObjects/AI/SimpleAI")]
     public class SimpleAI : OpponentAI {
         protected override IEnumerator Think() {
-            // TODO: Play resource only for now
-            // But need helper methods to determine if card can be played
             yield return new WaitForSeconds(opponentDuelist.GeneralWaitTime);
 
             foreach (Card card in opponentDuelist.Hand.Cards) {

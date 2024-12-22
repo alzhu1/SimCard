@@ -16,7 +16,7 @@ namespace SimCard.SimGame {
         public GameEvent<EventArgs<bool>> OnPlayerPause = new();
         public GameEvent<EventArgs> OnPlayerUnpause = new();
 
-        // TODO: This is currently the catch-all event for interaction triggered events
+        // MINOR: This is currently the catch-all event for interaction triggered events
         // Would like a more dynamic solution via scripting, somehow
         public GameEvent<EventArgs<Interactable, string>> OnInteractionEvent = new();
 

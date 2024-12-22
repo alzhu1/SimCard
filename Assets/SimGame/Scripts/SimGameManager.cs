@@ -23,7 +23,7 @@ namespace SimCard.SimGame {
         private InteractUI interactUI;
         private FadeUI fadeUI;
 
-        // TODO: Should we move game-level properties to another object?
+        // MINOR: Should we move game-level properties to another object?
         private int day = 0;
 
         void Awake() {

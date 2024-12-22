@@ -12,25 +12,13 @@ namespace SimCard.SimGame {
         public string nextInteractionPath;
         public string fallbackInteractionPath;
 
-        // TODO: Might need to add energy to options?
-        // Talking to someone will never require energy
-        // And I think the only energy consuming actions would be through interaction choices
         public int energyCost = 0;
     }
 
     [System.Serializable]
     public class Interaction {
-        // TODO: To add conditions, we need to define something on the dialogue itself
-        // Maybe the dialogue, or the InteractionPath
-        // Could have general conditions on path, and more specific conditions on Interaction
-
-        // Couple options:
-        // 1. Use a scripting language (e.g. JS with Jint)
-        //    This would be attached as a property on InteractionPath or Interaction
-        // 2. Adding a List<string> for "scriptTags"
-        //    And basically building my own "scripting language"
-        //    Different starting characters/enum can represent different options
-        //    e.g. checking if you talked with someone else, or if quest complete, or story progress (i.e. day 7 reached)
+        // MINOR: Eventually, would be good to replace this ScriptableObject system with a scripting language.
+        // Look into Jint (JS) to bring in a scriptable language that can process interactions on the fly.
 
         [TextArea]
         public string text;

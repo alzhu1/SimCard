@@ -40,6 +40,7 @@ namespace SimCard.CardGame {
         public void AdjustTaxes(int delta) => Taxes += delta;
 
         public int TurnActions { get; private set; }
+        public bool IsActionAllowed() => TurnActions > 0;
 
         protected int FirstDrawAmount => 4;
 
@@ -105,8 +106,6 @@ namespace SimCard.CardGame {
 
         protected abstract void InitForGame(InitCardGameArgs args);
         protected abstract DuelistState StartState { get; }
-
-        public bool AllowAction => TurnActions > 0;
 
         // TODO: Thinking that for these card operations, they should be co-routines so that other states can wait on them
 

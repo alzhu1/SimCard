@@ -78,7 +78,7 @@ namespace SimCard.CardGame {
 
         bool IsCardSummonAllowed() {
             // Duelist must have enough actions
-            if (!duelist.AllowAction) {
+            if (!duelist.IsActionAllowed()) {
                 return false;
             }
 

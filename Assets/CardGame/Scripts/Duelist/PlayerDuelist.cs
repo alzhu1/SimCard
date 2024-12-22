@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace SimCard.CardGame {
     public class PlayerDuelist : Duelist {
-        // TODO: Cursor as its own script?
+        // MINOR: Cursor as its own script?
         [SerializeField]
         private SpriteRenderer cursor;
 
