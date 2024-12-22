@@ -108,8 +108,6 @@ namespace SimCard.CardGame {
                 }
             }
 
-            // TODO: Win condition check? Also need it in Upkeep step, in case someone exceeds the required amount
-
             StartTurn();
         }
 
@@ -120,7 +118,6 @@ namespace SimCard.CardGame {
             StartCoroutine(EndCardGame(winner == playerDuelist));
         }
 
-        // TODO: Not sure if this is the best place to put this?
         IEnumerator EndCardGame(bool playerWon) {
             while (!Input.GetKeyDown(KeyCode.Return)) {
                 Debug.Log("KeyDown return please");

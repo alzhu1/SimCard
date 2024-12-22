@@ -64,7 +64,6 @@ namespace SimCard.CardGame {
                 }
 
                 if (!move.Equals(Vector2Int.zero)) {
-                    // Card fromCard = cardGraph.CurrCard;
                     cardEffectSelectionGraph.MoveNode(move);
                     Card toCard = cardEffectSelectionGraph.CurrCard;
 
@@ -76,44 +75,6 @@ namespace SimCard.CardGame {
             }
 
             nextState = new PlayerBaseState();
-
-            // while (nextState == null) {
-            //     if (Input.GetKeyDown(KeyCode.Escape)) {
-            //         // Revert to base state, keeping the original card
-            //         nextState = new PlayerBaseState(selectedCard);
-            //         break;
-            //     }
-
-            //     if (Input.GetKeyDown(KeyCode.LeftArrow)) {
-            //         actionIndex = (allowedActions.Count + actionIndex - 1) % allowedActions.Count;
-            //         playerDuelist.CardGameManager.EventBus.OnCardActionHover.Raise(new(allowedActions[actionIndex]));
-            //     } else if (Input.GetKeyDown(KeyCode.RightArrow)) {
-            //         actionIndex = (actionIndex + 1) % allowedActions.Count;
-            //         playerDuelist.CardGameManager.EventBus.OnCardActionHover.Raise(new(allowedActions[actionIndex]));
-            //     }
-
-            //     if (Input.GetKeyDown(KeyCode.Space)) {
-            //         switch (allowedActions[actionIndex]) {
-            //             case PlayerCardAction.Preview:
-            //                 nextState = new PlayerCardPreviewState(selectedCard);
-            //                 break;
-
-            //             case PlayerCardAction.Summon:
-            //                 // nextState = new PlayerCardSummonState(selectedCard);
-            //                 duelist.PlaySelectedCard(selectedCard);
-
-            //                 if (selectedCard.NonSelfEffects.Count > 0) {
-            //                     // TODO: Create a new player state that will build a graph of cards on the field, for selecting which to apply effects on
-            //                     // Only need to do this if list is not empty
-            //                 }
-
-            //                 nextState = new PlayerBaseState();
-            //                 break;
-            //         }
-            //     }
-
-            //     yield return null;
-            // }
         }
     }
 }
