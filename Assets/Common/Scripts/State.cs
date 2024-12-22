@@ -41,11 +41,16 @@ namespace SimCard.Common {
             completed = true;
         }
 
-        public void Restart() {
+        public void Stop() {
+            Debug.Log($"Requesting handle stop for {this}");
             if (handle != null) {
                 actor.StopCoroutine(handle);
+                Exit();
             }
+        }
 
+        public void Restart() {
+            Stop();
             handle = HandleWithLifecycle();
             actor.StartCoroutine(handle);
         }

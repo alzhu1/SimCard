@@ -24,6 +24,23 @@ namespace SimCard.CardGame {
         public Dictionary<ResourceEntitySO, int> CurrentResources { get; private set; }
 
         public int Currency { get; private set; }
+        public void AdjustCurrency(int delta) {
+            Currency += delta;
+
+            // Handle win/loss
+            if (Currency < 0) {
+                // Lose
+                CardGameManager.EventBus.OnGameEnd.Raise(new(Enemy, this));
+            }
+
+            if (Currency > 200) {
+                // Win
+                CardGameManager.EventBus.OnGameEnd.Raise(new(this, Enemy));
+            }
+        }
+
+        public int Taxes { get; private set; }
+        public void AdjustTaxes(int delta) => Taxes += delta;
 
         public int TurnActions { get; private set; }
 
@@ -46,16 +63,19 @@ namespace SimCard.CardGame {
             CurrentResources = new Dictionary<ResourceEntitySO, int>();
 
             Currency = 50;
+            Taxes = 0;
         }
 
         void Start() {
             CardGameManager.EventBus.OnGameStart.Event += InitForGame;
             CardGameManager.EventBus.OnTurnStart.Event += StartTurn;
+            CardGameManager.EventBus.OnGameEnd.Event += StopDuelist;
         }
 
         void OnDestroy() {
             CardGameManager.EventBus.OnGameStart.Event -= InitForGame;
             CardGameManager.EventBus.OnTurnStart.Event -= StartTurn;
+            CardGameManager.EventBus.OnGameEnd.Event -= StopDuelist;
         }
 
         void Update() {
@@ -86,6 +106,12 @@ namespace SimCard.CardGame {
             CardGameManager.EndTurn();
         }
 
+        void StopDuelist(EventArgs<Duelist, Duelist> _args) {
+            Debug.Log("Stop the duelist");
+            duelistState?.Stop();
+            duelistState = null;
+        }
+
         protected abstract void InitForGame(EventArgs _args);
         protected abstract DuelistState StartState { get; }
 
@@ -103,7 +129,7 @@ namespace SimCard.CardGame {
 
         public void PlaySelectedCard(Card card) {
             TurnActions--;
-            Currency -= card.Cost;
+            AdjustCurrency(-card.Cost);
 
             Hand.TransferTo(Field, card, true);
 
@@ -127,10 +153,6 @@ namespace SimCard.CardGame {
             // This is called whenever a card based operation occurs
             Field.Spread();
             Hand.Spread();
-        }
-
-        public void AdjustCurrency(int delta) {
-            Currency += delta;
         }
     }
 }

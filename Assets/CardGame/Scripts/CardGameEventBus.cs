@@ -11,7 +11,7 @@ namespace SimCard.CardGame {
         // Game Lifecycle
         public GameEvent<EventArgs> OnGameStart = new();
         public GameEvent<EventArgs<Duelist>> OnTurnStart = new();
-        public GameEvent<EventArgs> OnGameEnd = new();
+        public GameEvent<EventArgs<Duelist, Duelist>> OnGameEnd = new();
 
         // Card-specific
         public GameEvent<EventArgs<Card, List<PlayerCardAction>>> OnPlayerCardHover = new();

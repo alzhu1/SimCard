@@ -16,6 +16,9 @@ namespace SimCard.CardGame {
         }
 
         IEnumerator Upkeep() {
+            Debug.Log($"Paying taxes of value {duelist.Taxes}");
+            duelist.AdjustCurrency(-duelist.Taxes);
+
             List<Card> cardsToDiscard = new();
 
             foreach (Card card in duelist.Field.Cards) {

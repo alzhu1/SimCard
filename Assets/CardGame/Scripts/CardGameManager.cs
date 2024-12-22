@@ -63,6 +63,8 @@ namespace SimCard.CardGame {
         }
 
         void Start() {
+            EventBus.OnGameEnd.Event += HandleGameEnd;
+
             if (simGameManager != null) {
                 simGameManager.EventBus.OnCardGameInit.Event += InitCardGame;
                 return;
@@ -72,6 +74,8 @@ namespace SimCard.CardGame {
         }
 
         void OnDestroy() {
+            EventBus.OnGameEnd.Event -= HandleGameEnd;
+
             if (simGameManager != null) {
                 simGameManager.EventBus.OnCardGameInit.Event -= InitCardGame;
             }
@@ -87,28 +91,37 @@ namespace SimCard.CardGame {
         }
 
         void StartTurn() {
-            // Duelist currDuelist = roundOrder[0][0];
             Duelist currDuelist = duelistTurnOrder[currTurn % 2];
             Debug.Log($"Start turn for {currDuelist}");
             EventBus.OnTurnStart.Raise(new(currDuelist));
         }
 
         public void EndTurn() {
-            // Duelist currDuelist = roundOrder[0][0];
             Duelist currDuelist = duelistTurnOrder[currTurn % 2];
             Debug.Log($"End turn for {currDuelist}");
 
             currTurn++;
+
+            if (currTurn % 4 == 0) {
+                foreach (Duelist duelist in duelistTurnOrder) {
+                    duelist.AdjustTaxes(1);
+                }
+            }
 
             // TODO: Win condition check? Also need it in Upkeep step, in case someone exceeds the required amount
 
             StartTurn();
         }
 
+        void HandleGameEnd(EventArgs<Duelist, Duelist> args) {
+            Duelist winner = args.arg1;
+            Duelist loser = args.arg2;
+
+            StartCoroutine(EndCardGame(winner == playerDuelist));
+        }
+
         // TODO: Not sure if this is the best place to put this?
         IEnumerator EndCardGame(bool playerWon) {
-            EventBus.OnGameEnd.Raise(EventArgs.Empty);
-
             while (!Input.GetKeyDown(KeyCode.Return)) {
                 Debug.Log("KeyDown return please");
                 yield return null;
