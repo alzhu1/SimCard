@@ -23,10 +23,6 @@ namespace SimCard.CardGame {
             for (int i = 0; i < FirstDrawAmount; i++) {
                 DrawCard();
             }
-
-            if (HasFirstTurn) {
-                AdjustCurrency(5);
-            }
         }
 
         public void ShowCursor() {

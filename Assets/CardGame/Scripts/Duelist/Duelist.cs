@@ -41,11 +41,7 @@ namespace SimCard.CardGame {
 
         public int TurnActions { get; private set; }
 
-        // TODO: I hate this way of doing it
-        public bool HasFirstTurn { get; private set; }
-        public void SetFirstTurn() => HasFirstTurn = true;
-
-        protected int FirstDrawAmount => HasFirstTurn ? 3 : 4;
+        protected int FirstDrawAmount => 4;
 
         void Awake() {
             // Should be provided by parent
