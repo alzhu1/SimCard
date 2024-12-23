@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,15 +52,8 @@ namespace SimCard.CardGame {
             EventBus = GetComponent<CardGameEventBus>();
             CardPool = GetComponentInChildren<CardPool>();
 
-            // TODO: Create mechanism to determine who goes first/second
-            duelistTurnOrder = new Duelist[]{
-                playerDuelist,
-                opponentDuelist
-            };
+            duelistTurnOrder = new Duelist[2];
             currTurn = 0;
-
-            // Second player advantage
-            duelistTurnOrder[1].AdjustCurrency(25);
         }
 
         void Start() {
@@ -84,11 +76,34 @@ namespace SimCard.CardGame {
         }
 
         IEnumerator StartCardGame(InitCardGameArgs args) {
-            yield return new WaitForSeconds(1f);
+            // yield return new WaitForSeconds(1f);
+            yield return StartCoroutine(DetermineTurnOrder());
             EventBus.OnGameStart.Raise(args);
 
             yield return new WaitForSeconds(2f);
             StartTurn();
+        }
+
+        IEnumerator DetermineTurnOrder() {
+            // TODO: Add the UI
+            while (!Input.GetKeyDown(KeyCode.Space)) {
+                Debug.Log("Space to start coin flip");
+                yield return null;
+            }
+
+            float coinFlipValue = Random.Range(0f, 1f);
+            yield return new WaitForSeconds(2f);
+
+            Debug.Log($"Coin flip occurred, value: {coinFlipValue}");
+
+            Duelist duelist1 = coinFlipValue < 0.5 ? playerDuelist : opponentDuelist;
+            Duelist duelist2 = duelist1 == playerDuelist ? opponentDuelist : playerDuelist;
+
+            duelistTurnOrder[0] = duelist1;
+            duelistTurnOrder[1] = duelist2;
+
+            // Second player advantage
+            duelistTurnOrder[1].AdjustCurrency(25);
         }
 
         void StartTurn() {
