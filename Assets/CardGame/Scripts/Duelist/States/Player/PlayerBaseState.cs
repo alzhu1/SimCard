@@ -15,12 +15,14 @@ namespace SimCard.CardGame {
         }
 
         protected override void Enter() {
-            // For now, use Hand as holder
             // Initialize list of cards
+            Card initCard = startingCard ?? playerDuelist.Hand.Cards[0];
 
             cardGraph = new CardGraph(new() {
-                playerDuelist.Hand.Cards
-            }, startingCard);
+                playerDuelist.Enemy.Field,
+                playerDuelist.Field,
+                playerDuelist.Hand
+            }, initCard);
 
             // Set cursor position
             playerDuelist.ShowCursor();
@@ -51,6 +53,10 @@ namespace SimCard.CardGame {
                     move = Vector2Int.left;
                 } else if (Input.GetKeyDown(KeyCode.RightArrow)) {
                     move = Vector2Int.right;
+                } else if (Input.GetKeyDown(KeyCode.UpArrow)) {
+                    move = Vector2Int.up;
+                } else if (Input.GetKeyDown(KeyCode.DownArrow)) {
+                    move = Vector2Int.down;
                 }
 
                 if (!move.Equals(Vector2Int.zero)) {

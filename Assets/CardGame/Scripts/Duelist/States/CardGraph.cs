@@ -12,13 +12,13 @@ namespace SimCard.CardGame {
         // TODO: Graveyard - Field - Deck will be a row
         // However, the hover should treat graveyard and deck as one thing
         // Might need to add a "Card" attribute to the Graveyard or Deck
-        public CardGraph(List<List<Card>> cardsByRow, Card startingCard) {
+        public CardGraph(List<CardHolder> cardHoldersByRow, Card startingCard) {
             // First, iterate through all cards by row, replace with CardNode
             // Set left/right
 
-            List<List<CardNode>> nodesByRow = cardsByRow
-                .Where(row => row.Count > 0)
-                .Select(row => row.Select(card => new CardNode(card)).ToList())
+            List<List<CardNode>> nodesByRow = cardHoldersByRow
+                .Where(cardHolder => cardHolder.Cards.Count > 0)
+                .Select(cardHolder => cardHolder.Cards.Select(card => new CardNode(card)).ToList())
                 .ToList();
             int rowCount = nodesByRow.Count;
 
@@ -40,8 +40,9 @@ namespace SimCard.CardGame {
                     node.Right = row[(j + 1) % row.Count];
 
                     // For now, set the up/down to be the first item in the row
-                    node.Up = nextRow[0];
-                    node.Down = prevRow[0];
+                    // nextRow should represent the row below, and prevRow goes up
+                    node.Down = nextRow[0];
+                    node.Up = prevRow[0];
                 }
             }
 

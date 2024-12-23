@@ -82,6 +82,11 @@ namespace SimCard.CardGame {
                 return false;
             }
 
+            // Also, the card must be in the hand of player
+            if (duelist.Hand != selectedCard.GetCurrentHolder()) {
+                return false;
+            }
+
             return duelist.Currency >= selectedCard.Cost;
         }
     }

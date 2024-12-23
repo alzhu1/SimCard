@@ -16,8 +16,8 @@ namespace SimCard.CardGame {
 
         protected override void Enter() {
             cardEffectSelectionGraph = new CardGraph(new() {
-                playerDuelist.Enemy.Field.Cards,
-                playerDuelist.Field.Cards
+                playerDuelist.Enemy.Field,
+                playerDuelist.Field
             }, playedCard);
 
             // Set cursor position
@@ -42,8 +42,8 @@ namespace SimCard.CardGame {
 
                     Debug.Log("Effect has been applied");
                     cardEffectSelectionGraph = new CardGraph(new() {
-                        playerDuelist.Enemy.Field.Cards,
-                        playerDuelist.Field.Cards
+                        playerDuelist.Enemy.Field,
+                        playerDuelist.Field
                     }, playedCard);
                     playerDuelist.MoveCursorToCard(cardEffectSelectionGraph.CurrCard, true);
                     playerDuelist.CardGameManager.EventBus.OnPlayerCardHover.Raise(new(cardEffectSelectionGraph.CurrCard, new()));
