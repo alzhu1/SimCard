@@ -1,17 +1,20 @@
 using System.Collections.Generic;
 using System.Linq;
+using SimCard.CardGame;
+using UnityEditor;
+using UnityEditor.IMGUI.Controls;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
-using UnityEditor;
-using UnityEditor.UIElements;
-using SimCard.CardGame;
 
 namespace SimCard.Common {
     public class EffectApplier {
         public Card source;
         public Effect effect;
 
-        public EffectApplier(Card source, Effect effect) => (this.source, this.effect) = (source, effect);
+        public EffectApplier(Card source, Effect effect) =>
+            (this.source, this.effect) = (source, effect);
+
         public void ApplyEffect(Card target) => effect.Apply(source, target);
     }
 
@@ -30,55 +33,103 @@ namespace SimCard.Common {
     }
 
 #if UNITY_EDITOR
-    [CustomPropertyDrawer(typeof(Effect))]
-    public class EffectDrawer : PropertyDrawer {
-        private static List<System.Type> EFFECT_TYPES;
+    public class EffectDropdown : AdvancedDropdown {
         private static List<string> EFFECT_TYPE_NAMES;
         private static Dictionary<string, System.Type> TYPE_MAP;
 
-        static EffectDrawer() {
+        private Button effectButton;
+        private SerializedProperty effectProperty;
+        private PropertyField effectPropertyField;
+
+        static EffectDropdown() {
             Debug.Log("Constructor init");
-            EFFECT_TYPES = TypeCache.GetTypesDerivedFrom<Effect>().ToList();
-            EFFECT_TYPES.Sort((a, b) => a.Name.CompareTo(b.Name));
+            List<System.Type> effectTypes = TypeCache.GetTypesDerivedFrom<Effect>().ToList();
+            effectTypes.Sort((a, b) => a.Name.CompareTo(b.Name));
 
-            EFFECT_TYPE_NAMES = new List<string> { "null " };
-            EFFECT_TYPE_NAMES.AddRange(EFFECT_TYPES.Select(x => x.Name));
-
-            TYPE_MAP = EFFECT_TYPES.ToDictionary(x => x.Name);
+            EFFECT_TYPE_NAMES = effectTypes.Select(x => x.Name).ToList();
+            TYPE_MAP = effectTypes.ToDictionary(x => x.Name);
         }
 
+        public EffectDropdown(
+            AdvancedDropdownState state,
+            Button effectButton,
+            SerializedProperty effectProperty,
+            PropertyField effectPropertyField
+        ) : base(state) {
+            this.effectButton = effectButton;
+            this.effectProperty = effectProperty;
+            this.effectPropertyField = effectPropertyField;
+        }
+
+        protected override AdvancedDropdownItem BuildRoot() {
+            AdvancedDropdownItem root = new AdvancedDropdownItem("Effects");
+
+            foreach (string typeName in EFFECT_TYPE_NAMES) {
+                root.AddChild(new AdvancedDropdownItem(typeName));
+            }
+
+            return root;
+        }
+
+        protected override void ItemSelected(AdvancedDropdownItem item) {
+            base.ItemSelected(item);
+            Debug.Log($"Selected an item: {item} ({item.id} + {item.name})");
+
+            object newObject = null;
+            if (TYPE_MAP.TryGetValue(item.name, out System.Type type)) {
+                newObject = System.Runtime.Serialization.FormatterServices.GetUninitializedObject(
+                    type
+                );
+            }
+            Debug.Log($"Setting to object of type {newObject}");
+
+            effectButton.text = item.name;
+
+            effectProperty.managedReferenceValue = newObject;
+            effectProperty.serializedObject.ApplyModifiedProperties();
+            effectProperty.serializedObject.Update();
+            effectPropertyField.BindProperty(effectProperty);
+        }
+    }
+
+    // Inspired by https://github.com/AlexeyTaranov/SerializeReferenceDropdown/blob/master/Editor/PropertyDrawer.cs
+    [CustomPropertyDrawer(typeof(Effect))]
+    public class EffectDrawer : PropertyDrawer {
         public override VisualElement CreatePropertyGUI(SerializedProperty property) {
             VisualElement container = new VisualElement();
 
+            // Force property to update to display effect
             PropertyField propertyField = new PropertyField();
             property.serializedObject.ApplyModifiedProperties();
             property.serializedObject.Update();
             propertyField.BindProperty(property);
 
-            // TODO: Not a fan of this approach, should look into AdvancedDropdown and a helper class
-            string currPropertyTypeName = property.managedReferenceFullTypename;
-            string currTypeName = currPropertyTypeName.Split(".").Last();
-            int dropdownIndex = Mathf.Max(EFFECT_TYPE_NAMES.FindIndex((x) => currTypeName.Equals(x)), 0);
+            // Create button dropdown
+            Button button = new Button();
+            string currTypeName = property.managedReferenceFullTypename.Split(".").Last();
+            button.text = currTypeName?.Length > 0 ? currTypeName : "(null)";
+            button.displayTooltipWhenElided = false;
+            button.clickable.clicked += ShowDropdown;
 
-            DropdownField field = new DropdownField(property.name, EFFECT_TYPE_NAMES, dropdownIndex);
-
-            container.Add(field);
+            container.Add(button);
             container.Add(propertyField);
 
-            field.RegisterValueChangedCallback((changeEvent) => {
-                object newObject = null;
-                if (TYPE_MAP.TryGetValue(changeEvent.newValue, out System.Type type)) {
-                    newObject = System.Runtime.Serialization.FormatterServices.GetUninitializedObject(type);
-                }
-                Debug.Log($"Setting to object of type {newObject}");
+            void ShowDropdown() {
+                EffectDropdown dropdown = new EffectDropdown(
+                    new AdvancedDropdownState(),
+                    button,
+                    property,
+                    propertyField
+                );
 
-                property.managedReferenceValue = newObject;
-                property.serializedObject.ApplyModifiedProperties();
-                property.serializedObject.Update();
-                propertyField.BindProperty(property);
-            });
-
-            Debug.Log($"Outer part, binding path: {propertyField.bindingPath}");
+                // Set position/size
+                var buttonMatrix = container.worldTransform;
+                var buttonRect = new Rect(
+                    new Vector3(buttonMatrix.m03, buttonMatrix.m13, buttonMatrix.m23),
+                    container.contentRect.size
+                );
+                dropdown.Show(buttonRect);
+            }
 
             return container;
         }
