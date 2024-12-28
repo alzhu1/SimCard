@@ -8,14 +8,28 @@ using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace SimCard.Common {
-    public class EffectApplier {
+    public class ActiveEffectApplier {
         public Card source;
         public Effect effect;
 
-        public EffectApplier(Card source, Effect effect) =>
-            (this.source, this.effect) = (source, effect);
+        private int turnsPassed;
 
-        public void ApplyEffect(Card target) => effect.Apply(source, target);
+        public ActiveEffectApplier(Card source, Effect effect) {
+            this.source = source;
+            this.effect = effect;
+
+            this.turnsPassed = 0;
+        }
+
+        public bool ApplyEffect(Card target) {
+            if (effect.duration > 0 && turnsPassed >= effect.duration) {
+                return false;
+            }
+
+            turnsPassed++;
+            effect.Apply(source, target);
+            return true;
+        }
     }
 
     [System.Serializable]

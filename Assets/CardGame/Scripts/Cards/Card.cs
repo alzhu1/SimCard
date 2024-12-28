@@ -20,7 +20,7 @@ namespace SimCard.CardGame {
         public bool ReachedTurnLimit() => ActiveTurns >= TurnLimit;
 
         // For applied effects per turn
-        public List<EffectApplier> ActiveAppliedEffects { get; private set; }
+        public List<ActiveEffectApplier> ActiveAppliedEffects { get; private set; }
         public void AddActiveAppliedEffect(Card source, Effect effect) => ActiveAppliedEffects.Add(new(source, effect));
 
         public List<Effect> SelfEffects { get; private set; }
@@ -67,8 +67,16 @@ namespace SimCard.CardGame {
         }
 
         public void ApplyActiveEffects() {
-            foreach (EffectApplier effectApplier in ActiveAppliedEffects) {
-                effectApplier.ApplyEffect(this);
+            int effectIndex = 0;
+            while (effectIndex < ActiveAppliedEffects.Count) {
+                // Apply current effect, increment index
+                bool reachedEffectEnd = ActiveAppliedEffects[effectIndex++].ApplyEffect(this);
+
+                // If ended, go to previous index (pre-decrement) and remove
+                if (reachedEffectEnd) {
+                    Debug.Log("Going to remove an effect now");
+                    ActiveAppliedEffects.RemoveAt(--effectIndex);
+                }
             }
         }
     }
