@@ -21,7 +21,7 @@ namespace SimCard.CardGame {
                     break;
                 }
 
-                if (opponentDuelist.Currency >= card.Cost) {
+                if (opponentDuelist.IsCardSummonAllowed(card)) {
                     actions.Add(new PlayCardAction(card));
 
                     if (card.NonSelfEffects.Count > 0) {

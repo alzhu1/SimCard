@@ -6,7 +6,8 @@ namespace SimCard.CardGame {
     public enum PlayerCardAction {
         None,
         Preview,
-        Summon
+        Summon,
+        Fire
     }
 
     public class PlayerCardSelectedState : PlayerState {
@@ -24,8 +25,12 @@ namespace SimCard.CardGame {
             allowedActions = new List<PlayerCardAction> {
                 PlayerCardAction.Preview
             };
-            if (IsCardSummonAllowed()) {
+            if (playerDuelist.IsCardSummonAllowed(selectedCard)) {
                 allowedActions.Add(PlayerCardAction.Summon);
+            }
+
+            if (playerDuelist.Field == selectedCard.GetCurrentHolder()) {
+                allowedActions.Add(PlayerCardAction.Fire);
             }
 
             actionIndex = 0;
@@ -69,25 +74,16 @@ namespace SimCard.CardGame {
                                 nextState = new PlayerBaseState();
                             }
                             break;
+
+                        case PlayerCardAction.Fire:
+                            selectedCard.GetCurrentHolder().TransferTo(playerDuelist.Graveyard, selectedCard, false);
+                            nextState = new PlayerBaseState();
+                            break;
                     }
                 }
 
                 yield return null;
             }
-        }
-
-        bool IsCardSummonAllowed() {
-            // Duelist must have enough actions
-            if (!duelist.IsActionAllowed()) {
-                return false;
-            }
-
-            // Also, the card must be in the hand of player
-            if (duelist.Hand != selectedCard.GetCurrentHolder()) {
-                return false;
-            }
-
-            return duelist.Currency >= selectedCard.Cost;
         }
     }
 }

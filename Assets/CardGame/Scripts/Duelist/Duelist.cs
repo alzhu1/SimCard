@@ -7,6 +7,8 @@ using UnityEngine;
 
 namespace SimCard.CardGame {
     public abstract class Duelist : MonoBehaviour {
+        public static readonly int MAX_FIELD_CARDS = 6;
+
         // TODO: Would prefer not to serialize if possible...
         [SerializeField] private Duelist enemy;
         public Duelist Enemy => enemy;
@@ -137,6 +139,25 @@ namespace SimCard.CardGame {
         public void Discard(Card card) {
             CardHolder currentCardHolder = card.GetCurrentHolder();
             currentCardHolder.TransferTo(Graveyard, card, false);
+        }
+
+        public bool IsCardSummonAllowed(Card selectedCard) {
+            // Duelist must have enough actions
+            if (TurnActions <= 0) {
+                return false;
+            }
+
+            // The field can't be full
+            if (Field.Cards.Count >= MAX_FIELD_CARDS) {
+                return false;
+            }
+
+            // Also, the card must be in the hand
+            if (Hand != selectedCard.GetCurrentHolder()) {
+                return false;
+            }
+
+            return Currency >= selectedCard.Cost;
         }
 
         void OrganizeArea() {
