@@ -18,7 +18,15 @@ MonoBehaviour:
   flavorText: 
   income: 8
   turnLimit: 1
-  effects: []
+  effects:
+  - rid: 7715484837115068422
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 7715484837115068422
+      type: {class: GainEffect, ns: SimCard.Common, asm: Assembly-CSharp}
+      data:
+        selfEffect: 0
+        active: 0
+        duration: 0
+        gainAmount: 0

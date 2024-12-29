@@ -19,13 +19,14 @@ MonoBehaviour:
   income: 5
   turnLimit: 5
   effects:
-  - rid: 7715484402765529138
+  - rid: 7715484837115068425
   references:
     version: 2
     RefIds:
-    - rid: 7715484402765529138
+    - rid: 7715484837115068425
       type: {class: GainEffect, ns: SimCard.Common, asm: Assembly-CSharp}
       data:
         selfEffect: 0
-        active: 0
-        gainAmount: 10
+        active: 1
+        duration: 1
+        gainAmount: 0
