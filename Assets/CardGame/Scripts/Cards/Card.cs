@@ -5,10 +5,13 @@ using UnityEngine;
 using SimCard.Common;
 
 namespace SimCard.CardGame {
-    public class Card : MonoBehaviour {
+    public class Card : MonoBehaviour, CardGraphSelectable {
         [SerializeField]
         private CardSO cardSO;
         public CardSO CardSO => cardSO;
+
+        public string CardName => CardSO.cardName;
+        public string FlavorText => CardSO.flavorText;
 
         public int Cost => CardSO.cost;
         public int BaseIncome => CardSO.income;

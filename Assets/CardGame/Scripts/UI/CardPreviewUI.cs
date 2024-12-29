@@ -28,18 +28,18 @@ namespace SimCard.CardGame {
             cardGameManager.EventBus.OnPlayerCardPreview.Event -= UpdatePreview;
         }
 
-        void UpdatePreview(EventArgs<Card, List<PlayerCardAction>> args) {
-            Card card = args.arg1;
+        void UpdatePreview(EventArgs<CardGraphSelectable, List<PlayerCardAction>> args) {
+            CardGraphSelectable selectable = args.arg1;
 
-            if (card == null) {
+            if (selectable == null) {
                 canvasGroup.alpha = 0;
                 return;
             }
 
             canvasGroup.alpha = 1;
 
-            cardTitleText.text = card.CardSO.cardName;
-            cardFlavorText.text = card.CardSO.flavorText;
+            cardTitleText.text = selectable.CardName;
+            cardFlavorText.text = selectable.FlavorText;
         }
     }
 }

@@ -23,9 +23,8 @@ namespace SimCard.CardGame {
             cardGameManager.EventBus.OnPlayerCardHover.Event -= UpdateCardText;
         }
 
-        void UpdateCardText(EventArgs<Card, List<PlayerCardAction>> args) {
-            Card card = args.arg1;
-            cardTitleText.text = card.CardSO.cardName;
+        void UpdateCardText(EventArgs<CardGraphSelectable, List<PlayerCardAction>> args) {
+            cardTitleText.text = args.arg1.CardName;
         }
     }
 }

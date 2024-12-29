@@ -4,7 +4,10 @@ using SimCard.Common;
 using UnityEngine;
 
 namespace SimCard.CardGame {
-    public class Deck : CardHolder {
+    public class Deck : CardHolder, CardGraphSelectable {
+        public string CardName => "Deck";
+        public string FlavorText => "Deck flavor text";
+
         private SpriteRenderer deckSr;
 
         public Card NextCard => cards.Count > 0 ? cards[0] : null;

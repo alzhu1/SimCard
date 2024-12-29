@@ -33,13 +33,13 @@ namespace SimCard.CardGame {
             cursor.enabled = false;
         }
 
-        public Coroutine MoveCursorToCard(Card card, bool instant = false) {
-            return StartCoroutine(MoveCursor(card, instant));
+        public Coroutine MoveCursorTo(CardGraphSelectable selectable, bool instant = false) {
+            return StartCoroutine(MoveCursor(selectable, instant));
         }
 
-        IEnumerator MoveCursor(Card card, bool instant) {
+        IEnumerator MoveCursor(CardGraphSelectable selectable, bool instant) {
             Vector3 start = cursor.transform.position;
-            Vector3 dest = card.transform.position;
+            Vector3 dest = selectable.transform.position;
             float t = 0;
 
             if (!instant) {

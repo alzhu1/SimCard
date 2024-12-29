@@ -14,9 +14,9 @@ namespace SimCard.CardGame {
         public GameEvent<EventArgs<Duelist, Duelist>> OnGameEnd = new();
 
         // Card-specific
-        public GameEvent<EventArgs<Card, List<PlayerCardAction>>> OnPlayerCardHover = new();
-        public GameEvent<EventArgs<Card, List<PlayerCardAction>>> OnPlayerCardSelect = new();
-        public GameEvent<EventArgs<Card, List<PlayerCardAction>>> OnPlayerCardPreview = new();
+        public GameEvent<EventArgs<CardGraphSelectable, List<PlayerCardAction>>> OnPlayerCardHover = new();
+        public GameEvent<EventArgs<CardGraphSelectable, List<PlayerCardAction>>> OnPlayerCardSelect = new();
+        public GameEvent<EventArgs<CardGraphSelectable, List<PlayerCardAction>>> OnPlayerCardPreview = new();
 
         public GameEvent<EventArgs<PlayerCardAction>> OnCardActionHover = new();
 

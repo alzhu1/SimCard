@@ -4,15 +4,15 @@ using UnityEngine;
 
 namespace SimCard.CardGame {
     public class PlayerCardPreviewState : PlayerState {
-        private readonly Card previewedCard;
+        private readonly CardGraphSelectable previewedItem;
 
-        public PlayerCardPreviewState(Card previewedCard) {
-            this.previewedCard = previewedCard;
+        public PlayerCardPreviewState(CardGraphSelectable previewedItem) {
+            this.previewedItem = previewedItem;
         }
 
         protected override void Enter() {
             Debug.Log("Going to preview the card now");
-            playerDuelist.CardGameManager.EventBus.OnPlayerCardPreview.Raise(new(previewedCard, new()));
+            playerDuelist.CardGameManager.EventBus.OnPlayerCardPreview.Raise(new(previewedItem, new()));
         }
 
         protected override void Exit() {
@@ -23,7 +23,7 @@ namespace SimCard.CardGame {
             while (nextState == null) {
                 if (Input.GetKeyDown(KeyCode.Escape)) {
                     // Revert to base state, keeping the original card
-                    nextState = new PlayerCardSelectedState(previewedCard);
+                    nextState = new PlayerCardSelectedState(previewedItem);
                     break;
                 }
 

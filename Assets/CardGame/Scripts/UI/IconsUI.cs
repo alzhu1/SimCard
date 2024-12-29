@@ -30,7 +30,7 @@ namespace SimCard.CardGame {
 
         private Dictionary<PlayerCardAction, Image> iconMap;
 
-        private Card currCard;
+        private CardGraphSelectable currItem;
         private Image currIcon;
 
         void Awake() {
@@ -64,8 +64,8 @@ namespace SimCard.CardGame {
             }
         }
 
-        void DisplayIcons(EventArgs<Card, List<PlayerCardAction>> args) {
-            currCard = args.arg1;
+        void DisplayIcons(EventArgs<CardGraphSelectable, List<PlayerCardAction>> args) {
+            currItem = args.arg1;
             List<Image> icons = args.arg2.Select(action => {
                 Image icon = iconMap[action];
                 icon.enabled = true;
@@ -73,7 +73,7 @@ namespace SimCard.CardGame {
             })
             .ToList();
 
-            if (currCard == null) {
+            if (currItem == null) {
                 foreach (Image icon in iconMap.Values) {
                     if (icon != null) {
                         icon.enabled = false;
@@ -88,13 +88,13 @@ namespace SimCard.CardGame {
 
         void PositionIcons(List<Image> icons) {
             float offset = 1;
-            float leftEdgeX = ((1 - icons.Count) * offset / 2) + currCard.transform.position.x;
+            float leftEdgeX = ((1 - icons.Count) * offset / 2) + currItem.transform.position.x;
             for (int i = 0; i < icons.Count; i++) {
                 Image icon = icons[i];
                 Vector3 pos = Vector3.zero;
 
                 pos.x = (leftEdgeX + (offset * i)) / canvas.transform.localScale.x;
-                pos.y = (currCard.transform.position.y + 1) / canvas.transform.localScale.y;
+                pos.y = (currItem.transform.position.y + 1) / canvas.transform.localScale.y;
                 pos.z /= canvas.transform.localScale.z;
 
                 icon.rectTransform.anchoredPosition = pos;

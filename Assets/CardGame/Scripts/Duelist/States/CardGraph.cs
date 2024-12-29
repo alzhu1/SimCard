@@ -4,35 +4,48 @@ using System.Linq;
 using UnityEngine;
 
 namespace SimCard.CardGame {
-    public class CardGraph {
-        private CardNode currNode;
+    public interface CardGraphSelectable {
+        public Transform transform { get; }
 
-        public Card CurrCard => currNode.card;
+        public string CardName { get; }
+        public string FlavorText { get; }
+    }
 
-        // TODO: Graveyard - Field - Deck will be a row
-        // However, the hover should treat graveyard and deck as one thing
-        // Might need to add a "Card" attribute to the Graveyard or Deck
-        public CardGraph(List<CardHolder> cardHoldersByRow, Card startingCard) {
-            // First, iterate through all cards by row, replace with CardNode
+    public class CardGraph<T> where T : class, CardGraphSelectable {
+        // TODO: Need a way to connect custom rendering components for selectables
+        // This way UI doesn't need to know about things that won't exist (e.g. flavor text on graveyard)
+        public interface Selectable {
+            public Transform transform { get; }
+
+            public string CardName { get; }
+            public string FlavorText { get; }
+        }
+
+        private Node currNode;
+
+        public T CurrItem => currNode.item;
+
+        public CardGraph(List<List<T>> selectablesByRow, T startingItem) {
+            // First, iterate through all cards by row, replace with Node
             // Set left/right
 
-            List<List<CardNode>> nodesByRow = cardHoldersByRow
-                .Where(cardHolder => cardHolder.Cards.Count > 0)
-                .Select(cardHolder => cardHolder.Cards.Select(card => new CardNode(card)).ToList())
+            List<List<Node>> nodesByRow = selectablesByRow
+                .Where(row => row.Count > 0)
+                .Select(row => row.Select(card => new Node(card)).ToList())
                 .ToList();
             int rowCount = nodesByRow.Count;
 
             for (int i = 0; i < rowCount; i++) {
-                List<CardNode> row = nodesByRow[i];
+                List<Node> row = nodesByRow[i];
 
                 // Get prev/next row to set for up/down (should loop)
-                List<CardNode> prevRow = nodesByRow[(rowCount + i - 1) % rowCount];
-                List<CardNode> nextRow = nodesByRow[(i + 1) % rowCount];
+                List<Node> prevRow = nodesByRow[(rowCount + i - 1) % rowCount];
+                List<Node> nextRow = nodesByRow[(i + 1) % rowCount];
 
                 for (int j = 0; j < row.Count; j++) {
-                    CardNode node = row[j];
+                    Node node = row[j];
 
-                    if (node.card == startingCard) {
+                    if (node.item == startingItem) {
                         currNode = node;
                     }
 
@@ -55,10 +68,10 @@ namespace SimCard.CardGame {
             currNode = currNode.dir[direction];
         }
 
-        private sealed class CardNode {
-            public Card card;
+        private sealed class Node {
+            public T item;
 
-            public Dictionary<Vector2Int, CardNode> dir =
+            public Dictionary<Vector2Int, Node> dir =
                 new()
                 {
                     { Vector2Int.up, null },
@@ -67,28 +80,28 @@ namespace SimCard.CardGame {
                     { Vector2Int.left, null },
                 };
 
-            public CardNode Up {
+            public Node Up {
                 get { return dir[Vector2Int.up]; }
                 set { dir[Vector2Int.up] = value; }
             }
 
-            public CardNode Right {
+            public Node Right {
                 get { return dir[Vector2Int.right]; }
                 set { dir[Vector2Int.right] = value; }
             }
 
-            public CardNode Down {
+            public Node Down {
                 get { return dir[Vector2Int.down]; }
                 set { dir[Vector2Int.down] = value; }
             }
 
-            public CardNode Left {
+            public Node Left {
                 get { return dir[Vector2Int.left]; }
                 set { dir[Vector2Int.left] = value; }
             }
 
-            public CardNode(Card card) {
-                this.card = card;
+            public Node(T item) {
+                this.item = item;
             }
         }
     }

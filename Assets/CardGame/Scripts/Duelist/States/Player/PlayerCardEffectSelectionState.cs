@@ -8,22 +8,22 @@ namespace SimCard.CardGame {
     public class PlayerCardEffectSelectionState : PlayerState {
         private readonly Card playedCard;
 
-        private CardGraph cardEffectSelectionGraph;
+        private CardGraph<Card> cardEffectSelectionGraph;
 
         public PlayerCardEffectSelectionState(Card playedCard) {
             this.playedCard = playedCard;
         }
 
         protected override void Enter() {
-            cardEffectSelectionGraph = new CardGraph(new() {
-                playerDuelist.Enemy.Field,
-                playerDuelist.Field
+            cardEffectSelectionGraph = new CardGraph<Card>(new() {
+                playerDuelist.Enemy.Field.Cards,
+                playerDuelist.Field.Cards
             }, playedCard);
 
             // Set cursor position
             playerDuelist.ShowCursor();
-            playerDuelist.MoveCursorToCard(cardEffectSelectionGraph.CurrCard, true);
-            playerDuelist.CardGameManager.EventBus.OnPlayerCardHover.Raise(new(cardEffectSelectionGraph.CurrCard, new()));
+            playerDuelist.MoveCursorTo(cardEffectSelectionGraph.CurrItem, true);
+            playerDuelist.CardGameManager.EventBus.OnPlayerCardHover.Raise(new(cardEffectSelectionGraph.CurrItem, new()));
         }
 
         protected override void Exit() {
@@ -36,17 +36,17 @@ namespace SimCard.CardGame {
             while (nonSelfEffectIndex < playedCard.NonSelfEffects.Count) {
                 if (Input.GetKeyDown(KeyCode.Space)) {
                     Effect effect = playedCard.NonSelfEffects[nonSelfEffectIndex];
-                    playerDuelist.ApplyCardEffect(effect, playedCard, cardEffectSelectionGraph.CurrCard);
+                    playerDuelist.ApplyCardEffect(effect, playedCard, cardEffectSelectionGraph.CurrItem);
 
                     nonSelfEffectIndex++;
 
                     Debug.Log("Effect has been applied");
-                    cardEffectSelectionGraph = new CardGraph(new() {
-                        playerDuelist.Enemy.Field,
-                        playerDuelist.Field
+                    cardEffectSelectionGraph = new CardGraph<Card>(new() {
+                        playerDuelist.Enemy.Field.Cards,
+                        playerDuelist.Field.Cards
                     }, playedCard);
-                    playerDuelist.MoveCursorToCard(cardEffectSelectionGraph.CurrCard, true);
-                    playerDuelist.CardGameManager.EventBus.OnPlayerCardHover.Raise(new(cardEffectSelectionGraph.CurrCard, new()));
+                    playerDuelist.MoveCursorTo(cardEffectSelectionGraph.CurrItem, true);
+                    playerDuelist.CardGameManager.EventBus.OnPlayerCardHover.Raise(new(cardEffectSelectionGraph.CurrItem, new()));
 
                     break;
                 }
@@ -65,10 +65,8 @@ namespace SimCard.CardGame {
 
                 if (!move.Equals(Vector2Int.zero)) {
                     cardEffectSelectionGraph.MoveNode(move);
-                    Card toCard = cardEffectSelectionGraph.CurrCard;
-
-                    yield return playerDuelist.MoveCursorToCard(toCard);
-                    playerDuelist.CardGameManager.EventBus.OnPlayerCardHover.Raise(new(cardEffectSelectionGraph.CurrCard, new()));
+                    yield return playerDuelist.MoveCursorTo(cardEffectSelectionGraph.CurrItem);
+                    playerDuelist.CardGameManager.EventBus.OnPlayerCardHover.Raise(new(cardEffectSelectionGraph.CurrItem, new()));
                 }
 
                 yield return null;

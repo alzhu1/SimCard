@@ -4,30 +4,40 @@ using UnityEngine;
 
 namespace SimCard.CardGame {
     public class PlayerBaseState : PlayerState {
-        private readonly Card startingCard;
+        private readonly CardGraphSelectable startingCard;
 
-        private CardGraph cardGraph;
+        private CardGraph<CardGraphSelectable> cardGraph;
 
         public PlayerBaseState() { }
 
-        public PlayerBaseState(Card startingCard) {
+        public PlayerBaseState(CardGraphSelectable startingCard) {
             this.startingCard = startingCard;
         }
 
         protected override void Enter() {
             // Initialize list of cards
-            Card initCard = startingCard ?? playerDuelist.Hand.Cards[0];
+            CardGraphSelectable initItem = startingCard ?? playerDuelist.Hand.Cards[0];
 
-            cardGraph = new CardGraph(new() {
-                playerDuelist.Enemy.Field,
-                playerDuelist.Field,
-                playerDuelist.Hand
-            }, initCard);
+            List<CardGraphSelectable> enemyPlayField = new();
+            enemyPlayField.Add(playerDuelist.Enemy.Deck);
+            enemyPlayField.AddRange(playerDuelist.Enemy.Field.Cards);
+            enemyPlayField.Add(playerDuelist.Enemy.Graveyard);
+
+            List<CardGraphSelectable> playerPlayField = new();
+            playerPlayField.Add(playerDuelist.Graveyard);
+            playerPlayField.AddRange(playerDuelist.Field.Cards);
+            playerPlayField.Add(playerDuelist.Deck);
+
+            cardGraph = new CardGraph<CardGraphSelectable>(new() {
+                enemyPlayField,
+                playerPlayField,
+                new(playerDuelist.Hand.Cards)
+            }, initItem);
 
             // Set cursor position
             playerDuelist.ShowCursor();
-            playerDuelist.MoveCursorToCard(cardGraph.CurrCard, true);
-            playerDuelist.CardGameManager.EventBus.OnPlayerCardHover.Raise(new(cardGraph.CurrCard, new()));
+            playerDuelist.MoveCursorTo(cardGraph.CurrItem, true);
+            playerDuelist.CardGameManager.EventBus.OnPlayerCardHover.Raise(new(cardGraph.CurrItem, new()));
         }
 
         protected override void Exit() {
@@ -43,7 +53,7 @@ namespace SimCard.CardGame {
 
                 if (Input.GetKeyDown(KeyCode.Space)) {
                     // Move to a new state
-                    nextState = new PlayerCardSelectedState(cardGraph.CurrCard);
+                    nextState = new PlayerCardSelectedState(cardGraph.CurrItem);
                     break;
                 }
 
@@ -60,12 +70,9 @@ namespace SimCard.CardGame {
                 }
 
                 if (!move.Equals(Vector2Int.zero)) {
-                    // Card fromCard = cardGraph.CurrCard;
                     cardGraph.MoveNode(move);
-                    Card toCard = cardGraph.CurrCard;
-
-                    yield return playerDuelist.MoveCursorToCard(toCard);
-                    playerDuelist.CardGameManager.EventBus.OnPlayerCardHover.Raise(new(cardGraph.CurrCard, new()));
+                    yield return playerDuelist.MoveCursorTo(cardGraph.CurrItem);
+                    playerDuelist.CardGameManager.EventBus.OnPlayerCardHover.Raise(new(cardGraph.CurrItem, new()));
                 }
 
                 yield return null;
