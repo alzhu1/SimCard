@@ -47,6 +47,7 @@ namespace SimCard.CardGame {
         protected override IEnumerator Handle() {
             while (nextState == null) {
                 if (Input.GetKeyDown(KeyCode.Escape)) {
+                    playerDuelist.CardGameManager.EventBus.OnPlayerCardHover.Raise(new(null, null));
                     nextState = new EndState();
                     break;
                 }

@@ -16,6 +16,8 @@ namespace SimCard.CardGame {
         protected override DuelistState StartState => new DrawState<PlayerBaseState>();
 
         protected override void InitForGame(InitCardGameArgs args) {
+            AdjustCurrency(50);
+
             if (args != null) {
                 Deck.InitFromCardMetadata(args.playerDeck, CardGameManager);
             }

@@ -24,6 +24,7 @@ namespace SimCard.CardGame {
 
         public int Currency { get; private set; }
         public void AdjustCurrency(int delta) {
+            int beforeCurrency = Currency;
             Currency += delta;
 
             // Handle win/loss
@@ -35,6 +36,13 @@ namespace SimCard.CardGame {
             if (Currency > 200) {
                 // Win
                 CardGameManager.EventBus.OnGameEnd.Raise(new(this, Enemy));
+            }
+
+            // TODO: Would like to avoid a runtime type check like this
+            if (this is PlayerDuelist) {
+                CardGameManager.EventBus.OnPlayerCurrencyUpdate.Raise(new(beforeCurrency, Currency));
+            } else {
+                CardGameManager.EventBus.OnOpponentCurrencyUpdate.Raise(new(beforeCurrency, Currency));
             }
         }
 
@@ -56,7 +64,6 @@ namespace SimCard.CardGame {
             Field = GetComponentInChildren<Field>();
             Graveyard = GetComponentInChildren<Graveyard>();
 
-            Currency = 50;
             Taxes = 0;
         }
 

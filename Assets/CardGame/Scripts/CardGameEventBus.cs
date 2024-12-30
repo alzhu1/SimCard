@@ -20,6 +20,9 @@ namespace SimCard.CardGame {
 
         public GameEvent<EventArgs<PlayerCardAction>> OnCardActionHover = new();
 
+        public GameEvent<EventArgs<int, int>> OnPlayerCurrencyUpdate = new();
+        public GameEvent<EventArgs<int, int>> OnOpponentCurrencyUpdate = new();
+
         void Awake() {
             if (instance == null) {
                 instance = this;
