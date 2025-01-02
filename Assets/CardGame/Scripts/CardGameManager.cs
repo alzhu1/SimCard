@@ -34,6 +34,9 @@ namespace SimCard.CardGame {
 
         private int currTurn;
 
+        // Mediated UI
+        private CoinUI coinUI;
+
         void Awake() {
             if (instance == null) {
                 instance = this;
@@ -54,6 +57,8 @@ namespace SimCard.CardGame {
 
             duelistTurnOrder = new Duelist[2];
             currTurn = 0;
+
+            coinUI = GetComponentInChildren<CoinUI>();
         }
 
         void Start() {
@@ -92,7 +97,7 @@ namespace SimCard.CardGame {
             }
 
             float coinFlipValue = Random.Range(0f, 1f);
-            yield return new WaitForSeconds(2f);
+            yield return coinUI.FlipCoin(coinFlipValue);
 
             Debug.Log($"Coin flip occurred, value: {coinFlipValue}");
 
