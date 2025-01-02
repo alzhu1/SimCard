@@ -17,6 +17,9 @@ namespace SimCard.CardGame {
         private Image fireIcon;
 
         [SerializeField]
+        private Image surrenderIcon;
+
+        [SerializeField]
         private float iconSize = 25;
 
         [SerializeField]
@@ -42,7 +45,8 @@ namespace SimCard.CardGame {
                 { PlayerCardAction.None, null },
                 { PlayerCardAction.Preview, previewIcon },
                 { PlayerCardAction.Summon, summonIcon },
-                { PlayerCardAction.Fire, fireIcon }
+                { PlayerCardAction.Fire, fireIcon },
+                { PlayerCardAction.Surrender, surrenderIcon }
             };
         }
 

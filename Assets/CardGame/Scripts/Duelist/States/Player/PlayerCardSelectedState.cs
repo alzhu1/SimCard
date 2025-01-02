@@ -7,7 +7,8 @@ namespace SimCard.CardGame {
         None,
         Preview,
         Summon,
-        Fire
+        Fire,
+        Surrender
     }
 
     public class PlayerCardSelectedState : PlayerState {
@@ -26,8 +27,7 @@ namespace SimCard.CardGame {
                 PlayerCardAction.Preview
             };
 
-            if (selectedItem is Card) {
-                Card selectedCard = selectedItem as Card;
+            if (selectedItem is Card selectedCard) {
                 if (playerDuelist.IsCardSummonAllowed(selectedCard)) {
                     allowedActions.Add(PlayerCardAction.Summon);
                 }
@@ -35,6 +35,10 @@ namespace SimCard.CardGame {
                 if (playerDuelist.Field == selectedCard.GetCurrentHolder()) {
                     allowedActions.Add(PlayerCardAction.Fire);
                 }
+            }
+
+            if (selectedItem is Deck deck) {
+                allowedActions[0] = PlayerCardAction.Surrender;
             }
 
             actionIndex = 0;
@@ -85,6 +89,13 @@ namespace SimCard.CardGame {
                             Card selectedCard = selectedItem as Card;
                             selectedCard.GetCurrentHolder().TransferTo(playerDuelist.Graveyard, selectedCard, false);
                             nextState = new PlayerBaseState();
+                            break;
+                        }
+
+                        case PlayerCardAction.Surrender: {
+                            // TODO: Need to end the game
+                            Debug.Log("Surrender initiated");
+                            nextState = new EndState();
                             break;
                         }
                     }
