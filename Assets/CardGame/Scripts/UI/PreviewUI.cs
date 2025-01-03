@@ -5,6 +5,11 @@ using TMPro;
 using UnityEngine;
 
 namespace SimCard.CardGame {
+    public interface PreviewUIListener {
+        public CardGraphSelectable PreviewedItem { get; }
+        public int Index { get; }
+    }
+
     public class PreviewUI : MonoBehaviour {
         [Header("Card Renderer")]
         [SerializeField]
@@ -23,6 +28,8 @@ namespace SimCard.CardGame {
         private CanvasGroup canvasGroup;
         private CardGameManager cardGameManager;
 
+        private PreviewUIListener previewUIListener;
+
         void Awake() {
             canvasGroup = GetComponent<CanvasGroup>();
             cardGameManager = GetComponentInParent<CardGameManager>();
@@ -36,32 +43,31 @@ namespace SimCard.CardGame {
             cardGameManager.EventBus.OnPlayerCardPreview.Event -= UpdatePreview;
         }
 
-        void UpdatePreview(EventArgs<CardGraphSelectable, List<PlayerCardAction>> args) {
-            CardGraphSelectable selectable = args.arg1;
-
-            if (selectable == null) {
-                canvasGroup.alpha = 0;
+        void Update() {
+            if (previewUIListener != null && previewUIListener.PreviewedItem != null) {
                 cardRendererGroup.alpha = 0;
                 graveyardRendererGroup.alpha = 0;
-                return;
-            }
 
-            canvasGroup.alpha = 1;
+                switch (previewUIListener.PreviewedItem) {
+                    case Card card: {
+                        cardRendererGroup.alpha = 1;
+                        cardTitleText.text = card.CardName;
+                        cardFlavorText.text = card.FlavorText;
+                        break;
+                    }
 
-            switch (args.arg1) {
-                case Card card: {
-                    cardRendererGroup.alpha = 1;
-                    cardTitleText.text = selectable.CardName;
-                    cardFlavorText.text = selectable.FlavorText;
-                    break;
-                }
-
-                case Graveyard graveyard: {
-                    graveyardRendererGroup.alpha = 1;
-                    // TODO: Fill in rendering
-                    break;
+                    case Graveyard graveyard: {
+                        graveyardRendererGroup.alpha = 1;
+                        // TODO: Fill in rendering
+                        break;
+                    }
                 }
             }
+        }
+
+        void UpdatePreview(EventArgs<PreviewUIListener> args) {
+            previewUIListener = args.argument;
+            canvasGroup.alpha = previewUIListener == null ? 0 : 1;
         }
     }
 }

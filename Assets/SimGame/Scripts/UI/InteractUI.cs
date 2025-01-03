@@ -8,6 +8,13 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace SimCard.SimGame {
+    // Presenter interface for UI to work with
+    // This allows us to limit the methods it will work with
+    public interface InteractUIListener {
+        public Interaction CurrInteraction { get; }
+        public int MaxVisibleCharacters { get; }
+    }
+
     public class InteractUI : MonoBehaviour {
         [SerializeField]
         private Image interactArea;

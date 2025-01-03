@@ -7,6 +7,10 @@ using TMPro;
 using System.Linq;
 
 namespace SimCard.SimGame {
+    public interface OptionsUIListener {
+        public int OptionIndex { get; }
+    }
+
     public class OptionsUI : MonoBehaviour {
         [SerializeField] private Image optionCursor;
 

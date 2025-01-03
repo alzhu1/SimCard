@@ -16,7 +16,8 @@ namespace SimCard.CardGame {
         // Card-specific
         public GameEvent<EventArgs<CardGraphSelectable, List<PlayerCardAction>>> OnPlayerCardHover = new();
         public GameEvent<EventArgs<CardGraphSelectable, List<PlayerCardAction>>> OnPlayerCardSelect = new();
-        public GameEvent<EventArgs<CardGraphSelectable, List<PlayerCardAction>>> OnPlayerCardPreview = new();
+
+        public GameEvent<EventArgs<PreviewUIListener>> OnPlayerCardPreview = new();
 
         public GameEvent<EventArgs<PlayerCardAction>> OnCardActionHover = new();
 
