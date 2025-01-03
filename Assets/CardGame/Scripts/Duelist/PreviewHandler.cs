@@ -1,8 +1,15 @@
 using System.Collections.Generic;
 
 namespace SimCard.CardGame {
-    public class PreviewHandler: PreviewUIListener {
-        public CardGraphSelectable PreviewedItem { get { return selectableStack.Peek(); } }
+    public class PreviewHandler : PreviewUIListener {
+        public CardGraphSelectable PreviewedItem {
+            get {
+                if (selectableStack.TryPeek(out CardGraphSelectable item)) {
+                    return item;
+                }
+                return null;
+            }
+        }
         public int Index { get; private set; }
 
         private Stack<CardGraphSelectable> selectableStack;
