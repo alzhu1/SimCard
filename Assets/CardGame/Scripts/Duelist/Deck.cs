@@ -5,8 +5,7 @@ using UnityEngine;
 
 namespace SimCard.CardGame {
     public class Deck : CardHolder, CardGraphSelectable {
-        public string CardName => "Deck";
-        public string FlavorText => "Deck flavor text";
+        public string PreviewName => "Deck";
 
         private SpriteRenderer deckSr;
 

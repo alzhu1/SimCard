@@ -10,6 +10,9 @@ namespace SimCard.CardGame {
         private CardSO cardSO;
         public CardSO CardSO => cardSO;
 
+        // CardGraphSelectable
+        public string PreviewName => CardSO.cardName;
+
         public string CardName => CardSO.cardName;
         public string FlavorText => CardSO.flavorText;
 

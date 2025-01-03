@@ -39,12 +39,12 @@ namespace SimCard.CardGame {
 
             bottomBorderCanvasGroup.alpha = 1;
 
-            cardTitleText.text = args.arg1.CardName;
+            cardTitleText.text = args.arg1.PreviewName;
 
             // TODO: Figure out way to avoid casting
-            if (args.arg1 is Card) {
+            if (args.arg1 is Card card) {
                 cardCost.alpha = 1;
-                cardCostText.text = (args.arg1 as Card).Cost.ToString();
+                cardCostText.text = card.Cost.ToString();
             } else {
                 cardCost.alpha = 0;
             }

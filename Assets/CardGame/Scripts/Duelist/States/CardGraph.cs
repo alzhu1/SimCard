@@ -5,21 +5,14 @@ using UnityEngine;
 
 namespace SimCard.CardGame {
     public interface CardGraphSelectable {
+        // Unity components
         public Transform transform { get; }
 
-        public string CardName { get; }
-        public string FlavorText { get; }
+        // Properties
+        public string PreviewName { get; }
     }
 
     public class CardGraph<T> where T : class, CardGraphSelectable {
-        // TODO: Need a way to connect custom rendering components for selectables
-        // This way UI doesn't need to know about things that won't exist (e.g. flavor text on graveyard)
-        public interface Selectable {
-            public Transform transform { get; }
-
-            public string CardName { get; }
-            public string FlavorText { get; }
-        }
 
         private Node currNode;
 

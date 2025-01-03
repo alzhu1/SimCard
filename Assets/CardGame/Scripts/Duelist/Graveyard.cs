@@ -4,8 +4,7 @@ using UnityEngine;
 
 namespace SimCard.CardGame {
     public class Graveyard : CardHolder, CardGraphSelectable {
-        public string CardName => "Graveyard";
-        public string FlavorText => "Graveyard flavor text";
+        public string PreviewName => "Graveyard";
 
         public override void Spread() { }
     }
