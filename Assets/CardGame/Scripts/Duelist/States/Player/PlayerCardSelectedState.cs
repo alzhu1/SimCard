@@ -37,7 +37,7 @@ namespace SimCard.CardGame {
                 }
             }
 
-            if (selectedItem is Deck deck) {
+            if (selectedItem is Deck) {
                 allowedActions[0] = PlayerCardAction.Surrender;
             }
 
@@ -87,14 +87,13 @@ namespace SimCard.CardGame {
 
                         case PlayerCardAction.Fire: {
                             Card selectedCard = selectedItem as Card;
-                            selectedCard.GetCurrentHolder().TransferTo(playerDuelist.Graveyard, selectedCard, false);
+                            duelist.FireCard(selectedCard);
                             nextState = new PlayerBaseState();
                             break;
                         }
 
                         case PlayerCardAction.Surrender: {
-                            // TODO: Need to end the game
-                            Debug.Log("Surrender initiated");
+                            playerDuelist.CardGameManager.EventBus.OnGameEnd.Raise(new(playerDuelist.Enemy, playerDuelist));
                             nextState = new EndState();
                             break;
                         }

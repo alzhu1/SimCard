@@ -139,6 +139,11 @@ namespace SimCard.CardGame {
             }
         }
 
+        public void FireCard(Card card) {
+            TurnActions--;
+            card.GetCurrentHolder().TransferTo(Graveyard, card, false);
+        }
+
         public void ApplyCardEffect(Effect effect, Card source, Card target) {
             source.ApplyEffectTo(target, effect);
         }
@@ -165,6 +170,10 @@ namespace SimCard.CardGame {
             }
 
             return Currency >= selectedCard.Cost;
+        }
+
+        public bool IsCardFireAllowed() {
+            return TurnActions > 0;
         }
 
         void OrganizeArea() {
