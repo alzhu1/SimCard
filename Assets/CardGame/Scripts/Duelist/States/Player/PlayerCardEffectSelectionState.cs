@@ -7,11 +7,13 @@ using SimCard.Common;
 namespace SimCard.CardGame {
     public class PlayerCardEffectSelectionState : PlayerState {
         private readonly Card playedCard;
+        private int nonSelfEffectIndex;
 
         private CardGraph<Card> cardEffectSelectionGraph;
 
         public PlayerCardEffectSelectionState(Card playedCard) {
             this.playedCard = playedCard;
+            nonSelfEffectIndex = 0;
         }
 
         protected override void Enter() {
@@ -23,7 +25,7 @@ namespace SimCard.CardGame {
             // Set cursor position
             playerDuelist.ShowCursor();
             playerDuelist.MoveCursorTo(cardEffectSelectionGraph.CurrItem, true);
-            playerDuelist.CardGameManager.EventBus.OnPlayerCardHover.Raise(new(cardEffectSelectionGraph.CurrItem, new()));
+            playerDuelist.CardGameManager.EventBus.OnPlayerCardEffectHover.Raise(new(cardEffectSelectionGraph.CurrItem, playedCard.NonSelfEffects[nonSelfEffectIndex]));
         }
 
         protected override void Exit() {
@@ -32,7 +34,6 @@ namespace SimCard.CardGame {
 
         protected override IEnumerator Handle() {
             // TODO: Need to convey that the effect is being applied somewhere in UI
-            int nonSelfEffectIndex = 0;
             while (nonSelfEffectIndex < playedCard.NonSelfEffects.Count) {
                 if (Input.GetKeyDown(KeyCode.Space)) {
                     Effect effect = playedCard.NonSelfEffects[nonSelfEffectIndex];
@@ -46,9 +47,13 @@ namespace SimCard.CardGame {
                         playerDuelist.Field.Cards
                     }, playedCard);
                     playerDuelist.MoveCursorTo(cardEffectSelectionGraph.CurrItem, true);
-                    playerDuelist.CardGameManager.EventBus.OnPlayerCardHover.Raise(new(cardEffectSelectionGraph.CurrItem, new()));
 
-                    break;
+                    if (nonSelfEffectIndex < playedCard.NonSelfEffects.Count) {
+                        playerDuelist.CardGameManager.EventBus.OnPlayerCardEffectHover.Raise(new(cardEffectSelectionGraph.CurrItem, playedCard.NonSelfEffects[nonSelfEffectIndex]));
+                    }
+
+                    yield return null;
+                    continue;
                 }
 
                 Vector2Int move = Vector2Int.zero;
@@ -66,7 +71,7 @@ namespace SimCard.CardGame {
                 if (!move.Equals(Vector2Int.zero)) {
                     cardEffectSelectionGraph.MoveNode(move);
                     yield return playerDuelist.MoveCursorTo(cardEffectSelectionGraph.CurrItem);
-                    playerDuelist.CardGameManager.EventBus.OnPlayerCardHover.Raise(new(cardEffectSelectionGraph.CurrItem, new()));
+                    playerDuelist.CardGameManager.EventBus.OnPlayerCardEffectHover.Raise(new(cardEffectSelectionGraph.CurrItem, playedCard.NonSelfEffects[nonSelfEffectIndex]));
                 }
 
                 yield return null;

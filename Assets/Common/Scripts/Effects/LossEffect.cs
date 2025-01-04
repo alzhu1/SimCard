@@ -7,7 +7,7 @@ namespace SimCard.Common {
         [SerializeField] private int lossAmount;
 
         public override void Apply(Card source, Card target) {
-            Debug.Log($"Gain effect, amount: {lossAmount}");
+            Debug.Log($"Loss effect, amount: {lossAmount}");
             target.UpdateIncome(-lossAmount);
         }
     }

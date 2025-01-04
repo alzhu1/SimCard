@@ -26,6 +26,7 @@ MonoBehaviour:
     - rid: 7715484837115068425
       type: {class: GainEffect, ns: SimCard.Common, asm: Assembly-CSharp}
       data:
+        previewText: Increase income by 1
         selfEffect: 0
         active: 1
         duration: 1

@@ -3728,7 +3728,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bottomBorderCanvasGroup: {fileID: 1122833061}
-  cardTitleText: {fileID: 2129572623}
+  bottomBorderText: {fileID: 2129572623}
   cardCost: {fileID: 1899921767}
 --- !u!225 &1122833061
 CanvasGroup:
@@ -6579,7 +6579,7 @@ GameObject:
   - component: {fileID: 2129572624}
   - component: {fileID: 2129572623}
   m_Layer: 5
-  m_Name: Card Text
+  m_Name: Bottom Border Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6654,9 +6654,9 @@ MonoBehaviour:
   m_fontSize: 36
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 24
+  m_fontSizeMax: 36
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512

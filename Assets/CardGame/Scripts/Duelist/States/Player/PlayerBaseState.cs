@@ -37,7 +37,7 @@ namespace SimCard.CardGame {
             // Set cursor position
             playerDuelist.ShowCursor();
             playerDuelist.MoveCursorTo(cardGraph.CurrItem, true);
-            playerDuelist.CardGameManager.EventBus.OnPlayerCardHover.Raise(new(cardGraph.CurrItem, new()));
+            playerDuelist.CardGameManager.EventBus.OnPlayerBaseHover.Raise(new(cardGraph.CurrItem));
         }
 
         protected override void Exit() {
@@ -72,7 +72,7 @@ namespace SimCard.CardGame {
                 if (!move.Equals(Vector2Int.zero)) {
                     cardGraph.MoveNode(move);
                     yield return playerDuelist.MoveCursorTo(cardGraph.CurrItem);
-                    playerDuelist.CardGameManager.EventBus.OnPlayerCardHover.Raise(new(cardGraph.CurrItem, new()));
+                    playerDuelist.CardGameManager.EventBus.OnPlayerBaseHover.Raise(new(cardGraph.CurrItem));
                 }
 
                 yield return null;

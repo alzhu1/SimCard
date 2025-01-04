@@ -34,6 +34,9 @@ namespace SimCard.Common {
 
     [System.Serializable]
     public abstract class Effect {
+        // Preview text shown on the bottom border UI
+        public string previewText;
+
         // Self effect requires no selection for target
         public bool selfEffect;
 

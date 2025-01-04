@@ -10,7 +10,7 @@ namespace SimCard.CardGame {
         private CanvasGroup bottomBorderCanvasGroup;
 
         [SerializeField]
-        private TextMeshProUGUI cardTitleText;
+        private TextMeshProUGUI bottomBorderText;
 
         [SerializeField]
         private CanvasGroup cardCost;
@@ -24,30 +24,47 @@ namespace SimCard.CardGame {
         }
 
         void Start() {
-            cardGameManager.EventBus.OnPlayerCardHover.Event += HandleCardHover;
+            cardGameManager.EventBus.OnPlayerBaseHover.Event += HandleCardHover;
+            cardGameManager.EventBus.OnPlayerCardEffectHover.Event += HandleCardEffectHover;
         }
 
         void OnDestroy() {
-            cardGameManager.EventBus.OnPlayerCardHover.Event -= HandleCardHover;
+            cardGameManager.EventBus.OnPlayerBaseHover.Event -= HandleCardHover;
+            cardGameManager.EventBus.OnPlayerCardEffectHover.Event -= HandleCardEffectHover;
         }
 
-        void HandleCardHover(EventArgs<CardGraphSelectable, List<PlayerCardAction>> args) {
-            if (args.arg1 == null) {
+        void HandleCardHover(EventArgs<CardGraphSelectable> args) {
+            if (args.argument == null) {
+                bottomBorderCanvasGroup.alpha = 0;
+                cardCost.alpha = 0;
+                return;
+            }
+
+            bottomBorderCanvasGroup.alpha = 1;
+            bottomBorderText.text = args.argument.PreviewName;
+
+            if (args.argument is Card card) {
+                cardCost.alpha = 1;
+                cardCostText.text = card.Cost.ToString();
+            } else {
+                cardCost.alpha = 0;
+            }
+        }
+
+        void HandleCardEffectHover(EventArgs<Card, Effect> args) {
+            Card card = args.arg1;
+            Effect effect = args.arg2;
+            cardCost.alpha = 0;
+
+            if (card == null) {
                 bottomBorderCanvasGroup.alpha = 0;
                 return;
             }
 
             bottomBorderCanvasGroup.alpha = 1;
 
-            cardTitleText.text = args.arg1.PreviewName;
-
-            // TODO: Figure out way to avoid casting
-            if (args.arg1 is Card card) {
-                cardCost.alpha = 1;
-                cardCostText.text = card.Cost.ToString();
-            } else {
-                cardCost.alpha = 0;
-            }
+            string cardEffectText = effect.previewText.Length > 0 ? effect.previewText : effect.GetType().Name;
+            bottomBorderText.text = $"<color=blue>{cardEffectText}</color> -> {card.CardName}";
         }
     }
 }
