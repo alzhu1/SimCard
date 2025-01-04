@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace SimCard.CardGame {
     public class PreviewHandler : PreviewUIListener {
@@ -18,11 +19,13 @@ namespace SimCard.CardGame {
         public PreviewHandler(CardGraphSelectable previewedItem, int indexLength) {
             selectableStack = new Stack<CardGraphSelectable>();
             selectableStack.Push(previewedItem);
-            this.indexLength = indexLength;
+            this.indexLength = Mathf.Max(1, indexLength);
         }
 
         public void UpdateIndex(int delta) {
-            Index = (Index + delta + Index) % indexLength;
+            // MINOR: If in the future we need to allow looping, need to account for that
+            // Index = (Index + delta + Index) % indexLength;
+            Index = Mathf.Clamp(Index + delta, 0, indexLength - 1);
         }
 
         public void HandleSelection() {
