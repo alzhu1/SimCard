@@ -1613,6 +1613,9 @@ MonoBehaviour:
   deck:
   - cardSO: {fileID: 11400000, guid: 58d024a76cc894787abd01f571d1c82f, type: 2}
     count: 20
+  availableCards:
+  - cardSO: {fileID: 11400000, guid: 58d024a76cc894787abd01f571d1c82f, type: 2}
+    count: 40
 --- !u!61 &1741206561
 BoxCollider2D:
   m_ObjectHideFlags: 0

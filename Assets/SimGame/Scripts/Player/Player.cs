@@ -14,6 +14,9 @@ namespace SimCard.SimGame {
         [SerializeField]
         private List<CardMetadata> deck;
 
+        [SerializeField]
+        private List<CardMetadata> availableCards;
+
         public SimGameManager SimGameManager { get; private set; }
 
         private Rigidbody2D rb;
@@ -21,6 +24,7 @@ namespace SimCard.SimGame {
         private int energy = 100;
 
         public List<CardMetadata> Deck => deck;
+        public List<CardMetadata> AvailableCards => availableCards;
         public Transform FrontCheck => frontCheck;
         public float MoveSpeed => moveSpeed;
         public Rigidbody2D RB => rb;
@@ -84,6 +88,11 @@ namespace SimCard.SimGame {
 
         public void ConsumeEnergy(int energyUsed) {
             energy = Mathf.Max(0, energy - energyUsed);
+        }
+
+        public void UpdateDeckAfterEdit(List<CardMetadata> deck, List<CardMetadata> availableCards) {
+            this.deck = deck;
+            this.availableCards = availableCards;
         }
 
         void OnEnable() {

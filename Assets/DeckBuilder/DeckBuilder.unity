@@ -445,6 +445,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioListener: {fileID: 629495287}
   eventSystem: {fileID: 103994358}
+  testDeck:
+  - cardSO: {fileID: 11400000, guid: eb09dcdfd567a41028029172e83950ba, type: 2}
+    count: 3
+  - cardSO: {fileID: 11400000, guid: 58d024a76cc894787abd01f571d1c82f, type: 2}
+    count: 3
+  - cardSO: {fileID: 11400000, guid: 643af89b9f973416ea69544877944c98, type: 2}
+    count: 3
+  testAvailableCards:
+  - cardSO: {fileID: 11400000, guid: 643af89b9f973416ea69544877944c98, type: 2}
+    count: 6
+  - cardSO: {fileID: 11400000, guid: eb09dcdfd567a41028029172e83950ba, type: 2}
+    count: 22
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

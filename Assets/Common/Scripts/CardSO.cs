@@ -25,5 +25,7 @@ namespace SimCard.Common {
     public class CardMetadata {
         public CardSO cardSO;
         public int count;
+
+        public CardMetadata(CardSO cardSO, int count) => (this.cardSO, this.count) = (cardSO, count);
     }
 }

@@ -82,10 +82,9 @@ namespace SimCard.SimGame {
             StartCoroutine(EndCardGame());
         }
 
-        void HandleDeckBuilderEndEvent(EventArgs<List<CardMetadata>> args) {
-            foreach (var c in args.argument) {
-                Debug.Log($"Returned card {c.cardSO} with count {c.count}");
-            }
+        void HandleDeckBuilderEndEvent(EventArgs<List<CardMetadata>, List<CardMetadata>> args) {
+            Debug.Log("Returned from deck edit");
+            player.UpdateDeckAfterEdit(args.arg1, args.arg2);
             StartCoroutine(EndDeckBuilder());
         }
 
@@ -135,7 +134,7 @@ namespace SimCard.SimGame {
         IEnumerator StartDeckBuilder() {
             // FIXME: Need to switch to loading DeckBuild scene
             yield return StartCoroutine(LoadSubScene(2));
-            EventBus.OnDeckBuilderInit.Raise(new(player.Deck));
+            EventBus.OnDeckBuilderInit.Raise(new(player.Deck, player.AvailableCards));
         }
 
         IEnumerator EndDeckBuilder() {
