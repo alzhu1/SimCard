@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace SimCard.CardGame {
     public class OpponentDuelist : Duelist {
-        [SerializeField] private float generalWaitTime = 1f;
+        [SerializeField] private float generalWaitTime = 0.5f;
         public float GeneralWaitTime => generalWaitTime;
 
         [SerializeField]

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace SimCard.CardGame {
     public abstract class OpponentAI : ScriptableObject {
@@ -17,6 +18,13 @@ namespace SimCard.CardGame {
             actions.Clear();
             IEnumerator routine = discardMode ? ThinkDiscard() : Think();
             return opponentDuelist.StartCoroutine(routine);
+        }
+
+        public void EndBehavior() {
+            foreach (OpponentAction action in actions) {
+                Assert.IsTrue(action is not EndAction);
+            }
+            actions.Add(new EndAction());
         }
 
         // These methods should add on to the actions

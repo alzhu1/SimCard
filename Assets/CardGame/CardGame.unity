@@ -5168,7 +5168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 1814205500}
-  generalWaitTime: 1
+  generalWaitTime: 0.5
   opponentAI: {fileID: 11400000, guid: 38a2202181f734f8ab743e6f49d85d45, type: 2}
 --- !u!1 &1577876955
 GameObject:

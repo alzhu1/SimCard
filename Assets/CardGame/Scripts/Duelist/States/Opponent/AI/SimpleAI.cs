@@ -31,15 +31,7 @@ namespace SimCard.CardGame {
                         }
                     }
                 }
-
-                break;
             }
-
-            if (actions.Count == 0) {
-                actions.Add(new EndAction());
-            }
-
-            yield break;
         }
 
         protected override IEnumerator ThinkDiscard() {
@@ -49,8 +41,6 @@ namespace SimCard.CardGame {
             for (int i = 0; i >= opponentDuelist.Hand.Cards.Count - Duelist.MAX_HAND_CARDS; i++) {
                 actions.Add(new DiscardAction(opponentDuelist.Hand.Cards[i]));
             }
-
-            actions.Add(new EndAction());
         }
     }
 }

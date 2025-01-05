@@ -12,10 +12,8 @@ namespace SimCard.CardGame {
     [CreateAssetMenu(fileName = "DummyAI", menuName = "ScriptableObjects/AI/DummyAI")]
     public class DummyAI : OpponentAI {
         protected override IEnumerator Think() {
-            // The only action it should give is EndAction
+            // Should take no explicit actions
             yield return new WaitForSeconds(opponentDuelist.GeneralWaitTime);
-
-            actions.Add(new EndAction());
         }
 
         protected override IEnumerator ThinkDiscard() {
@@ -25,8 +23,6 @@ namespace SimCard.CardGame {
             for (int i = opponentDuelist.Hand.Cards.Count - 1; i >= Duelist.MAX_HAND_CARDS; i--) {
                 actions.Add(new DiscardAction(opponentDuelist.Hand.Cards[i]));
             }
-
-            actions.Add(new EndAction());
         }
     }
 }

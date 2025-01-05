@@ -12,6 +12,8 @@ namespace SimCard.CardGame {
 
         protected override IEnumerator Handle() {
             foreach (OpponentAction action in actions) {
+                yield return new WaitForSeconds(opponentDuelist.GeneralWaitTime);
+
                 switch (action) {
                     case PlayCardAction playCardAction:
                         Debug.Log("PlayCardAction");
