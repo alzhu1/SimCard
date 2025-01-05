@@ -23,9 +23,19 @@ namespace SimCard.CardGame {
                         opponentDuelist.ApplyCardEffect(applyEffectAction.Effect, applyEffectAction.Source, applyEffectAction.Target);
                         break;
 
+                    case DiscardAction discardAction:
+                        Debug.Log("DiscardAction");
+                        opponentDuelist.FireCard(discardAction.CardToDiscard);
+                        break;
+
                     case EndAction:
-                        Debug.Log("EndAction");
-                        nextState = new EndState();
+                        if (opponentDuelist.Hand.Cards.Count > Duelist.MAX_HAND_CARDS) {
+                            Debug.Log("Go back to think, for discard");
+                            nextState = new OpponentThinkState(true);
+                        } else {
+                            Debug.Log("EndAction");
+                            nextState = new EndState();
+                        }
                         break;
 
                     default:

@@ -17,5 +17,16 @@ namespace SimCard.CardGame {
 
             actions.Add(new EndAction());
         }
+
+        protected override IEnumerator ThinkDiscard() {
+            // For differences, let's always pick the last item in cards
+            yield return new WaitForSeconds(opponentDuelist.GeneralWaitTime);
+
+            for (int i = opponentDuelist.Hand.Cards.Count - 1; i >= Duelist.MAX_HAND_CARDS; i--) {
+                actions.Add(new DiscardAction(opponentDuelist.Hand.Cards[i]));
+            }
+
+            actions.Add(new EndAction());
+        }
     }
 }

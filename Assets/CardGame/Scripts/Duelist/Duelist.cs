@@ -8,6 +8,7 @@ using UnityEngine;
 namespace SimCard.CardGame {
     public abstract class Duelist : MonoBehaviour {
         public static readonly int MAX_FIELD_CARDS = 6;
+        public static readonly int MAX_HAND_CARDS = 6;
 
         // TODO: Would prefer not to serialize if possible...
         [SerializeField] private Duelist enemy;
@@ -142,6 +143,7 @@ namespace SimCard.CardGame {
         public void FireCard(Card card) {
             TurnActions--;
             card.GetCurrentHolder().TransferTo(Graveyard, card, false);
+            OrganizeArea();
         }
 
         public void ApplyCardEffect(Effect effect, Card source, Card target) {

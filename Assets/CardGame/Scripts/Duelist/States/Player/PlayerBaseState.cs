@@ -47,6 +47,7 @@ namespace SimCard.CardGame {
         protected override IEnumerator Handle() {
             while (nextState == null) {
                 if (Input.GetKeyDown(KeyCode.Escape)) {
+                    yield return FixHandSize();
                     nextState = new EndState();
                     break;
                 }
@@ -73,6 +74,49 @@ namespace SimCard.CardGame {
                     cardGraph.MoveNode(move);
                     yield return playerDuelist.MoveCursorTo(cardGraph.CurrItem);
                     playerDuelist.CardGameManager.EventBus.OnPlayerBaseHover.Raise(new(cardGraph.CurrItem));
+                }
+
+                yield return null;
+            }
+        }
+
+        IEnumerator FixHandSize() {
+            if (playerDuelist.Hand.Cards.Count <= Duelist.MAX_HAND_CARDS) {
+                yield break;
+            }
+
+            CardGraph<Card> discardCardGraph = new CardGraph<Card>(new() {
+                playerDuelist.Hand.Cards
+            }, playerDuelist.Hand.Cards[0]);
+            playerDuelist.CardGameManager.EventBus.OnPlayerBaseHover.Raise(new(discardCardGraph.CurrItem));
+
+            yield return null;
+
+            while (playerDuelist.Hand.Cards.Count > Duelist.MAX_HAND_CARDS) {
+                if (Input.GetKeyDown(KeyCode.Space)) {
+                    // Discard the selected card
+                    playerDuelist.FireCard(discardCardGraph.CurrItem);
+                    discardCardGraph = new CardGraph<Card>(new() {
+                        playerDuelist.Hand.Cards
+                    }, playerDuelist.Hand.Cards[0]);
+                }
+
+                Vector2Int move = Vector2Int.zero;
+
+                if (Input.GetKeyDown(KeyCode.LeftArrow)) {
+                    move = Vector2Int.left;
+                } else if (Input.GetKeyDown(KeyCode.RightArrow)) {
+                    move = Vector2Int.right;
+                } else if (Input.GetKeyDown(KeyCode.UpArrow)) {
+                    move = Vector2Int.up;
+                } else if (Input.GetKeyDown(KeyCode.DownArrow)) {
+                    move = Vector2Int.down;
+                }
+
+                if (!move.Equals(Vector2Int.zero)) {
+                    discardCardGraph.MoveNode(move);
+                    yield return playerDuelist.MoveCursorTo(discardCardGraph.CurrItem);
+                    playerDuelist.CardGameManager.EventBus.OnPlayerBaseHover.Raise(new(discardCardGraph.CurrItem));
                 }
 
                 yield return null;

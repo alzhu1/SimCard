@@ -41,5 +41,16 @@ namespace SimCard.CardGame {
 
             yield break;
         }
+
+        protected override IEnumerator ThinkDiscard() {
+            // Pick first couple of cards to discard
+            yield return new WaitForSeconds(opponentDuelist.GeneralWaitTime);
+
+            for (int i = 0; i >= opponentDuelist.Hand.Cards.Count - Duelist.MAX_HAND_CARDS; i++) {
+                actions.Add(new DiscardAction(opponentDuelist.Hand.Cards[i]));
+            }
+
+            actions.Add(new EndAction());
+        }
     }
 }

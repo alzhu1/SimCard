@@ -24,5 +24,11 @@ namespace SimCard.CardGame {
         }
     }
 
+    public struct DiscardAction : OpponentAction {
+        public Card CardToDiscard { get; private set; }
+
+        public DiscardAction(Card cardToDiscard) => CardToDiscard = cardToDiscard;
+    }
+
     public struct EndAction : OpponentAction { }
 }

@@ -13,13 +13,15 @@ namespace SimCard.CardGame {
             this.opponentDuelist = opponentDuelist;
         }
 
-        public Coroutine ExecuteBehavior() {
+        public Coroutine ExecuteBehavior(bool discardMode) {
             actions.Clear();
-            return opponentDuelist.StartCoroutine(Think());
+            IEnumerator routine = discardMode ? ThinkDiscard() : Think();
+            return opponentDuelist.StartCoroutine(routine);
         }
 
-        // This method should add on to the actions
+        // These methods should add on to the actions
         protected abstract IEnumerator Think();
+        protected abstract IEnumerator ThinkDiscard();
 
         // TODO: I don't really like how the effect selection works in this system
         // When opponent plays a card, they have to be able to select the effect right after
