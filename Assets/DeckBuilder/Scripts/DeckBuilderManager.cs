@@ -27,7 +27,7 @@ namespace SimCard.DeckBuilder {
 
         private SimGameManager simGameManager;
 
-        private Dictionary<CardSO, (int, int)> cardToCount;
+        private DeckBuilder deckBuilder;
 
         private bool running;
 
@@ -65,26 +65,24 @@ namespace SimCard.DeckBuilder {
                 return;
             }
 
-            if (Input.GetKeyDown(KeyCode.M)) {
-                Debug.Log("Increasing count of the first card");
+            // Up and down
+            if (Input.GetKeyDown(KeyCode.UpArrow)) {
+                deckBuilder.UpdateIndex(-1);
+            } else if (Input.GetKeyDown(KeyCode.DownArrow)) {
+                deckBuilder.UpdateIndex(1);
+            }
 
-                if (cardToCount.TryGetValue(cardToCount.First().Key, out (int, int) value)) {
-                    cardToCount[cardToCount.First().Key] = (value.Item1 + 1, value.Item2);
-                }
+            // Left and right
+            if (Input.GetKeyDown(KeyCode.LeftArrow)) {
+                deckBuilder.UpdateCardCount(-1);
+            } else if (Input.GetKeyDown(KeyCode.RightArrow)) {
+                deckBuilder.UpdateCardCount(1);
             }
 
             if (Input.GetKeyDown(KeyCode.P)) {
                 Debug.Log("Sending event back to sim game bus now");
 
-                List<CardMetadata> finalDeck = cardToCount
-                    .Where(x => x.Value.Item1 > 0)
-                    .Select(x => new CardMetadata(x.Key, x.Value.Item1))
-                    .ToList();
-                List<CardMetadata> finalAvailableCards = cardToCount
-                    .Where(x => x.Value.Item2 > x.Value.Item1)
-                    .Select(x => new CardMetadata(x.Key, x.Value.Item2 - x.Value.Item1))
-                    .ToList();
-
+                (List<CardMetadata> finalDeck, List<CardMetadata> finalAvailableCards) = deckBuilder.OutputDeckBuilder();
                 if (simGameManager != null) {
                     simGameManager.EventBus.OnDeckBuilderEnd.Raise(
                         new(finalDeck, finalAvailableCards)
@@ -109,26 +107,15 @@ namespace SimCard.DeckBuilder {
         }
 
         void StartDeckBuilder(List<CardMetadata> deck, List<CardMetadata> availableCards) {
-            cardToCount = new();
-
-            foreach (CardMetadata deckCard in deck) {
-                cardToCount.Add(deckCard.cardSO, (deckCard.count, deckCard.count));
-            }
-
-            foreach (CardMetadata availableCard in availableCards) {
-                if (cardToCount.TryGetValue(availableCard.cardSO, out (int, int) value)) {
-                    cardToCount[availableCard.cardSO] = (value.Item1, value.Item2 + availableCard.count);
-                } else {
-                    cardToCount.Add(availableCard.cardSO, (0, availableCard.count));
-                }
-            }
-
+            deckBuilder = new DeckBuilder(deck, availableCards);
             running = true;
         }
 
         void LogCardCount() {
             // TODO: Remove debug logs
-            foreach (var a in cardToCount) {
+            Debug.Log($"Deck Builder is on index {deckBuilder.Index}");
+
+            foreach (var a in deckBuilder.CardToCount) {
                 Debug.Log($"Card {a.Key} has pair count {a.Value}");
             }
         }

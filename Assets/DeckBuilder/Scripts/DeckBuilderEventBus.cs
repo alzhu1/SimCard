@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using SimCard.Common;
 using UnityEngine;
 
 namespace SimCard.DeckBuilder {
     public class DeckBuilderEventBus : MonoBehaviour {
         private static DeckBuilderEventBus instance = null;
+
+        public GameEvent<EventArgs<DeckBuilderUIListener>> OnDeckBuilderStart = new();
 
         void Awake() {
             if (instance == null) {
