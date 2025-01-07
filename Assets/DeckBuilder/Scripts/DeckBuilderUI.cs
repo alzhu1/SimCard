@@ -9,6 +9,7 @@ namespace SimCard.DeckBuilder {
         public List<CardSO> SelectableCards { get; }
         public Dictionary<CardSO, (int, int)> CardToCount { get; }
         public int Index { get; }
+        public int SubIndex { get; }
     }
 
     public class DeckBuilderUI : MonoBehaviour {
@@ -20,6 +21,9 @@ namespace SimCard.DeckBuilder {
 
         [SerializeField]
         private Image downArrow;
+
+        [SerializeField]
+        private Image[] options;
 
         private DeckBuilderManager deckBuilderManager;
         private int topIndex;
@@ -37,9 +41,13 @@ namespace SimCard.DeckBuilder {
             }
 
             // TODO: Add more options on top of screen (e.g. selecting/sorting options)
+            for (int i = 0; i < options.Length; i++) {
+                Image option = options[i];
+                option.color = DeckBuilderUIListener.Index == -1 && DeckBuilderUIListener.SubIndex == i ? Color.red : Color.white;
+            }
 
             // Handle top index update
-            topIndex = Mathf.Min(topIndex, DeckBuilderUIListener.Index);
+            topIndex = Mathf.Min(topIndex, Mathf.Max(DeckBuilderUIListener.Index, 0));
             topIndex =
                 Mathf.Max(topIndex + cardRows.Length - 1, DeckBuilderUIListener.Index)
                 - (cardRows.Length - 1);

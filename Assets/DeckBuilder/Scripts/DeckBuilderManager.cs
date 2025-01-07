@@ -75,9 +75,14 @@ namespace SimCard.DeckBuilder {
 
             // Left and right
             if (Input.GetKeyDown(KeyCode.LeftArrow)) {
-                deckBuilder.UpdateCardCount(-1);
+                deckBuilder.UpdateAtIndex(-1);
             } else if (Input.GetKeyDown(KeyCode.RightArrow)) {
-                deckBuilder.UpdateCardCount(1);
+                deckBuilder.UpdateAtIndex(1);
+            }
+
+            // Action
+            if (Input.GetKeyDown(KeyCode.Space)) {
+                deckBuilder.SelectAtIndex();
             }
 
             if (Input.GetKeyDown(KeyCode.P)) {
