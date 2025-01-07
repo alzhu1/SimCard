@@ -18,7 +18,10 @@ namespace SimCard.DeckBuilder {
 
             foreach (CardMetadata availableCard in availableCards) {
                 if (CardToCount.TryGetValue(availableCard.cardSO, out (int, int) value)) {
-                    CardToCount[availableCard.cardSO] = (value.Item1, value.Item2 + availableCard.count);
+                    CardToCount[availableCard.cardSO] = (
+                        value.Item1,
+                        value.Item2 + availableCard.count
+                    );
                 } else {
                     CardToCount.Add(availableCard.cardSO, (0, availableCard.count));
                 }

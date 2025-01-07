@@ -26,10 +26,9 @@ namespace SimCard.DeckBuilder {
         private List<CardMetadata> testAvailableCards;
 
         private SimGameManager simGameManager;
+        private DeckBuilderUI deckBuilderUI;
 
         private DeckBuilder deckBuilder;
-
-        private bool running;
 
         void Awake() {
             if (instance == null) {
@@ -39,17 +38,16 @@ namespace SimCard.DeckBuilder {
                 return;
             }
 
+            EventBus = GetComponent<DeckBuilderEventBus>();
+
             // If loaded additively by SimGame scene, set the SimGameManager here
             simGameManager = FindAnyObjectByType<SimGameManager>();
             if (simGameManager == null) {
                 audioListener.enabled = true;
                 eventSystem.enabled = true;
-
-                // Also initialize editable deck/cards if null (means scene started by self)
-                StartDeckBuilder(testDeck, testAvailableCards);
             }
 
-            EventBus = GetComponent<DeckBuilderEventBus>();
+            deckBuilderUI = GetComponentInChildren<DeckBuilderUI>();
         }
 
         void Start() {
@@ -57,11 +55,14 @@ namespace SimCard.DeckBuilder {
             if (simGameManager != null) {
                 simGameManager.EventBus.OnDeckBuilderInit.Event += InitDeckBuilder;
                 return;
+            } else {
+                // Also initialize editable deck/cards if null (means scene started by self)
+                StartDeckBuilder(testDeck, testAvailableCards);
             }
         }
 
         void Update() {
-            if (!running) {
+            if (deckBuilder == null) {
                 return;
             }
 
@@ -82,12 +83,13 @@ namespace SimCard.DeckBuilder {
             if (Input.GetKeyDown(KeyCode.P)) {
                 Debug.Log("Sending event back to sim game bus now");
 
-                (List<CardMetadata> finalDeck, List<CardMetadata> finalAvailableCards) = deckBuilder.OutputDeckBuilder();
+                (List<CardMetadata> finalDeck, List<CardMetadata> finalAvailableCards) =
+                    deckBuilder.OutputDeckBuilder();
                 if (simGameManager != null) {
                     simGameManager.EventBus.OnDeckBuilderEnd.Raise(
                         new(finalDeck, finalAvailableCards)
                     );
-                    running = false;
+                    deckBuilder = null;
                 } else {
                     // Continue running (test mode)
                     testDeck = finalDeck;
@@ -108,7 +110,7 @@ namespace SimCard.DeckBuilder {
 
         void StartDeckBuilder(List<CardMetadata> deck, List<CardMetadata> availableCards) {
             deckBuilder = new DeckBuilder(deck, availableCards);
-            running = true;
+            deckBuilderUI.DeckBuilderUIListener = deckBuilder;
         }
 
         void LogCardCount() {

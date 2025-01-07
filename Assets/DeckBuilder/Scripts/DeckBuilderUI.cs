@@ -11,33 +11,56 @@ namespace SimCard.DeckBuilder {
     }
 
     public class DeckBuilderUI : MonoBehaviour {
+        [SerializeField]
+        private DeckBuilderCardUI[] cardRows;
+
         private DeckBuilderManager deckBuilderManager;
-        private DeckBuilderUIListener deckBuilderUIListener;
+        private int topIndex;
+
+        public DeckBuilderUIListener DeckBuilderUIListener { get; set; }
 
         void Awake() {
             deckBuilderManager = GetComponentInParent<DeckBuilderManager>();
-        }
-
-        void Start() {
-            deckBuilderManager.EventBus.OnDeckBuilderStart.Event += HandleDeckBuilderStart;
-        }
-
-        void OnDestroy() {
-            deckBuilderManager.EventBus.OnDeckBuilderStart.Event -= HandleDeckBuilderStart;
+            topIndex = 0;
         }
 
         void Update() {
-            if (deckBuilderUIListener == null) {
+            if (DeckBuilderUIListener == null) {
                 return;
             }
 
-            // TODO: Handle stuff with UI listener here
+            // TODO: Add more options on top of screen (e.g. selecting/sorting options)
 
-            // TODO: Additionally, we want to give the player options on how to sort (e.g. by income, by name, by effects)
-        }
+            // Handle top index update
+            topIndex = Mathf.Min(topIndex, DeckBuilderUIListener.Index);
+            topIndex =
+                Mathf.Max(topIndex + cardRows.Length - 1, DeckBuilderUIListener.Index)
+                - (cardRows.Length - 1);
 
-        void HandleDeckBuilderStart(EventArgs<DeckBuilderUIListener> args) {
-            deckBuilderUIListener = args.argument;
+            for (int i = topIndex; i < topIndex + cardRows.Length; i++) {
+                int cardRowIndex = i - topIndex;
+                DeckBuilderCardUI cardRow = cardRows[cardRowIndex];
+
+                if (i < DeckBuilderUIListener.SelectableCards.Count) {
+                    cardRow.gameObject.SetActive(true);
+                    CardSO card = DeckBuilderUIListener.SelectableCards[i];
+
+                    // Set basic info
+                    cardRow.CardNameText.text = card.cardName;
+                    cardRow.CostText.text = card.cost.ToString();
+                    cardRow.IncomeText.text = card.income.ToString();
+
+                    // Update the deck count text
+                    (int deckCount, int totalCount) = DeckBuilderUIListener.CardToCount[card];
+                    cardRow.DeckCountText.text = $"{deckCount} / {totalCount}";
+
+                    // Red text if it's the current index
+                    cardRows[cardRowIndex]
+                        .SetTextColor(i == DeckBuilderUIListener.Index ? Color.red : Color.white);
+                } else {
+                    cardRow.gameObject.SetActive(false);
+                }
+            }
         }
     }
 }
