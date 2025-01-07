@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using SimCard.Common;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace SimCard.DeckBuilder {
     public interface DeckBuilderUIListener {
@@ -12,7 +13,13 @@ namespace SimCard.DeckBuilder {
 
     public class DeckBuilderUI : MonoBehaviour {
         [SerializeField]
+        private Image upArrow;
+
+        [SerializeField]
         private DeckBuilderCardUI[] cardRows;
+
+        [SerializeField]
+        private Image downArrow;
 
         private DeckBuilderManager deckBuilderManager;
         private int topIndex;
@@ -61,6 +68,9 @@ namespace SimCard.DeckBuilder {
                     cardRow.gameObject.SetActive(false);
                 }
             }
+
+            upArrow.enabled = topIndex != 0;
+            downArrow.enabled = topIndex + cardRows.Length < DeckBuilderUIListener.SelectableCards.Count;
         }
     }
 }
