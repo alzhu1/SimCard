@@ -16,6 +16,7 @@ namespace SimCard.DeckBuilder {
 
         public List<CardSO> SelectableCards { get; private set; }
         public Dictionary<CardSO, (int, int)> CardToCount { get; private set; }
+        public CardSO SelectedCard { get; private set; }
 
         // Index at -1 indicates picking a sort/metadata option
         // Index at 0+ indicates a card is selected
@@ -47,23 +48,28 @@ namespace SimCard.DeckBuilder {
         }
 
         public void UpdateIndex(int delta) {
-            Index = Mathf.Clamp(Index + delta, -1, SelectableCards.Count - 1);
+            if (SelectedCard == null) {
+                Index = Mathf.Clamp(Index + delta, -1, SelectableCards.Count - 1);
+            }
         }
 
         public void UpdateAtIndex(int delta) {
-            if (Index >= 0) {
-                CardSO currCard = SelectableCards[Index];
-                (int currValue, int totalValue) = CardToCount[currCard];
-                CardToCount[currCard] = (Mathf.Clamp(currValue + delta, 0, totalValue), totalValue);
-            } else {
-                // TODO: Fix the SubIndex mod, IDK how many options to add or where to store the true result
-                SubIndex = (SubIndex + delta + 6) % 6;
+            if (SelectedCard == null) {
+                if (Index >= 0) {
+                    CardSO currCard = SelectableCards[Index];
+                    (int currValue, int totalValue) = CardToCount[currCard];
+                    CardToCount[currCard] = (Mathf.Clamp(currValue + delta, 0, totalValue), totalValue);
+                } else {
+                    // TODO: Fix the SubIndex mod, IDK how many options to add or where to store the true result
+                    SubIndex = (SubIndex + delta + 6) % 6;
+                }
             }
         }
 
         public void SelectAtIndex() {
             if (Index >= 0) {
                 Debug.Log($"Card at index: {SelectableCards[Index]}");
+                SelectedCard = SelectableCards[Index];
             } else {
                 SortOptions currSortOption = (SortOptions)SubIndex;
                 Debug.Log($"Curr sort option: {currSortOption}, SubIndex: {SubIndex}");
@@ -90,6 +96,10 @@ namespace SimCard.DeckBuilder {
                     return 1;
                 });
             }
+        }
+
+        public void RevertSelection() {
+            SelectedCard = null;
         }
 
         public (List<CardMetadata>, List<CardMetadata>) OutputDeckBuilder() {

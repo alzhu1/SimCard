@@ -66,6 +66,11 @@ namespace SimCard.DeckBuilder {
                 return;
             }
 
+            // Revert action
+            if (Input.GetKeyDown(KeyCode.Escape)) {
+                deckBuilder.RevertSelection();
+            }
+
             // Up and down
             if (Input.GetKeyDown(KeyCode.UpArrow)) {
                 deckBuilder.UpdateIndex(-1);

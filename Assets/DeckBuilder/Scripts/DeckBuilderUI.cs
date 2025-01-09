@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using SimCard.Common;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,11 +9,16 @@ namespace SimCard.DeckBuilder {
     public interface DeckBuilderUIListener {
         public List<CardSO> SelectableCards { get; }
         public Dictionary<CardSO, (int, int)> CardToCount { get; }
+        public CardSO SelectedCard { get; }
         public int Index { get; }
         public int SubIndex { get; }
     }
 
     public class DeckBuilderUI : MonoBehaviour {
+        [Header("Card List View")]
+        [SerializeField]
+        private CanvasGroup cardListView;
+
         [SerializeField]
         private Image upArrow;
 
@@ -24,6 +30,22 @@ namespace SimCard.DeckBuilder {
 
         [SerializeField]
         private Image[] options;
+
+        [Header("Preview View")]
+        [SerializeField]
+        private CanvasGroup previewView;
+
+        [SerializeField]
+        private TextMeshProUGUI previewNameText;
+
+        [SerializeField]
+        private TextMeshProUGUI previewBodyText;
+
+        [SerializeField]
+        private TextMeshProUGUI previewCostText;
+
+        [SerializeField]
+        private TextMeshProUGUI previewIncomeText;
 
         private DeckBuilderManager deckBuilderManager;
         private int topIndex;
@@ -39,6 +61,20 @@ namespace SimCard.DeckBuilder {
             if (DeckBuilderUIListener == null) {
                 return;
             }
+
+            // Reset group canvas alphas
+            cardListView.alpha = 0;
+            previewView.alpha = 0;
+
+            if (DeckBuilderUIListener.SelectedCard != null) {
+                UpdatePreviewViewUI(DeckBuilderUIListener.SelectedCard);
+            } else {
+                UpdateCardListViewUI();
+            }
+        }
+
+        void UpdateCardListViewUI() {
+            cardListView.alpha = 1;
 
             // TODO: Add more options on top of screen (e.g. selecting/sorting options)
             for (int i = 0; i < options.Length; i++) {
@@ -79,6 +115,15 @@ namespace SimCard.DeckBuilder {
 
             upArrow.enabled = topIndex != 0;
             downArrow.enabled = topIndex + cardRows.Length < DeckBuilderUIListener.SelectableCards.Count;
+        }
+
+        void UpdatePreviewViewUI(CardSO previewCard) {
+            previewView.alpha = 1;
+
+            previewNameText.text = previewCard.cardName;
+            previewBodyText.text = previewCard.flavorText;
+            previewCostText.text = $"Cost: {previewCard.cost}";
+            previewIncomeText.text = $"Income: {previewCard.income}";
         }
     }
 }
