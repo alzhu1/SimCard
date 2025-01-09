@@ -66,6 +66,8 @@ namespace SimCard.DeckBuilder {
                 return;
             }
 
+            int modifier = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift) ? 5 : 1;
+
             // Revert action
             if (Input.GetKeyDown(KeyCode.Escape)) {
                 deckBuilder.RevertSelection();
@@ -73,16 +75,18 @@ namespace SimCard.DeckBuilder {
 
             // Up and down
             if (Input.GetKeyDown(KeyCode.UpArrow)) {
-                deckBuilder.UpdateIndex(-1);
+                // MINOR: This could jump past the top card and to the sort row
+                // Might want to clamp it
+                deckBuilder.UpdateIndex(-1 * modifier);
             } else if (Input.GetKeyDown(KeyCode.DownArrow)) {
-                deckBuilder.UpdateIndex(1);
+                deckBuilder.UpdateIndex(1 * modifier);
             }
 
             // Left and right
             if (Input.GetKeyDown(KeyCode.LeftArrow)) {
-                deckBuilder.UpdateAtIndex(-1);
+                deckBuilder.UpdateAtIndex(-1 * modifier);
             } else if (Input.GetKeyDown(KeyCode.RightArrow)) {
-                deckBuilder.UpdateAtIndex(1);
+                deckBuilder.UpdateAtIndex(1 * modifier);
             }
 
             // Action
