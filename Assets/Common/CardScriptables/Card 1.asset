@@ -15,7 +15,8 @@ MonoBehaviour:
   cardName: Card circle
   sprite: {fileID: -2413806693520163455, guid: daf79a9bfe87046568cb0e70981218dc, type: 3}
   cost: 10
-  flavorText: 
+  description: This is a circle description
+  flavorText: Circles?
   income: 5
   turnLimit: 5
   effects:

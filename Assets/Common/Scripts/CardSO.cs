@@ -9,6 +9,10 @@ namespace SimCard.Common {
         public string cardName;
         public Sprite sprite;
         public int cost;
+
+        [TextArea]
+        public string description;
+
         public string flavorText;
 
         // Income (resource gained per turn start)

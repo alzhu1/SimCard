@@ -39,7 +39,10 @@ namespace SimCard.DeckBuilder {
         private TextMeshProUGUI previewNameText;
 
         [SerializeField]
-        private TextMeshProUGUI previewBodyText;
+        private TextMeshProUGUI previewDescriptionText;
+
+        [SerializeField]
+        private TextMeshProUGUI previewFlavorText;
 
         [SerializeField]
         private TextMeshProUGUI previewCostText;
@@ -121,7 +124,8 @@ namespace SimCard.DeckBuilder {
             previewView.alpha = 1;
 
             previewNameText.text = previewCard.cardName;
-            previewBodyText.text = previewCard.flavorText;
+            previewDescriptionText.text = previewCard.description;
+            previewFlavorText.text = previewCard.flavorText;
             previewCostText.text = $"Cost: {previewCard.cost}";
             previewIncomeText.text = $"Income: {previewCard.income}";
         }

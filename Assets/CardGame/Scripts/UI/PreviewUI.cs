@@ -21,6 +21,9 @@ namespace SimCard.CardGame {
         private TextMeshProUGUI cardTitleText;
 
         [SerializeField]
+        private TextMeshProUGUI cardDescriptionText;
+
+        [SerializeField]
         private TextMeshProUGUI cardFlavorText;
 
         [Header("Graveyard Renderer")]
@@ -68,6 +71,7 @@ namespace SimCard.CardGame {
                     case Card card: {
                         cardRendererGroup.alpha = 1;
                         cardTitleText.text = card.CardName;
+                        cardDescriptionText.text = card.Description;
                         cardFlavorText.text = card.FlavorText;
                         break;
                     }

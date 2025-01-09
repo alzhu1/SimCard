@@ -14,6 +14,7 @@ namespace SimCard.CardGame {
         public string PreviewName => CardSO.cardName;
 
         public string CardName => CardSO.cardName;
+        public string Description => CardSO.description;
         public string FlavorText => CardSO.flavorText;
 
         public int Cost => CardSO.cost;

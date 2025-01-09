@@ -15,7 +15,8 @@ MonoBehaviour:
   cardName: Card square
   sprite: {fileID: 7482667652216324306, guid: 97867988a38784269a4dd3c3235ef3ae, type: 3}
   cost: 5
-  flavorText: 
+  description: This is a test description for square
+  flavorText: Squares! Squares!
   income: 2
   turnLimit: 3
   effects: []

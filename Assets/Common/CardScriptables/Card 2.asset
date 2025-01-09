@@ -15,7 +15,8 @@ MonoBehaviour:
   cardName: Card triangle
   sprite: {fileID: 7482667652216324306, guid: f13e034d061cb4b9e8fa91a17b46a79d, type: 3}
   cost: 20
-  flavorText: 
+  description: Test triangle description
+  flavorText: Triangles are fun
   income: 8
   turnLimit: 1
   effects:
@@ -26,6 +27,7 @@ MonoBehaviour:
     - rid: 7715484837115068422
       type: {class: GainEffect, ns: SimCard.Common, asm: Assembly-CSharp}
       data:
+        previewText: 
         selfEffect: 0
         active: 0
         duration: 0
