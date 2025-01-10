@@ -23,7 +23,7 @@ namespace SimCard.CardGame {
 
             foreach (Card card in duelist.Field.Cards) {
                 // We can increment card active turns at upkeep
-                card.IncrementActiveTurns();
+                card.DecrementActiveTurns();
 
                 // Check for turn limit reached
                 if (card.ReachedTurnLimit()) {

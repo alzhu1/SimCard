@@ -24,6 +24,9 @@ namespace SimCard.CardGame {
         private TextMeshProUGUI cardDescriptionText;
 
         [SerializeField]
+        private TextMeshProUGUI cardTurnsLeftText;
+
+        [SerializeField]
         private TextMeshProUGUI cardFlavorText;
 
         [Header("Graveyard Renderer")]
@@ -73,6 +76,9 @@ namespace SimCard.CardGame {
                         cardTitleText.text = card.CardName;
                         cardDescriptionText.text = card.Description;
                         cardFlavorText.text = card.FlavorText;
+
+                        // MINOR: This will be shown in graveyard subview too, would like a way to differentiate based on card holder
+                        cardTurnsLeftText.text = $"Turns Left: {card.ActiveTurns}";
                         break;
                     }
 

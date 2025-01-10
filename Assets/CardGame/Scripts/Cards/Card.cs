@@ -23,8 +23,8 @@ namespace SimCard.CardGame {
         public List<Effect> Effects => CardSO.effects;
 
         public int ActiveTurns { get; private set; }
-        public void IncrementActiveTurns() => ActiveTurns++;
-        public bool ReachedTurnLimit() => ActiveTurns >= TurnLimit;
+        public void DecrementActiveTurns() => ActiveTurns--;
+        public bool ReachedTurnLimit() => ActiveTurns <= 0;
 
         // For applied effects per turn
         public List<ActiveEffectApplier> ActiveAppliedEffects { get; private set; }
@@ -53,6 +53,8 @@ namespace SimCard.CardGame {
             NonSelfEffects = Effects.Where(effect => !effect.selfEffect).ToList();
 
             Income = BaseIncome;
+
+            ActiveTurns = TurnLimit;
         }
 
         public void InitCardSO(CardSO cardSO) {

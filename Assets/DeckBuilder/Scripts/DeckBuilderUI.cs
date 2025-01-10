@@ -50,6 +50,9 @@ namespace SimCard.DeckBuilder {
         [SerializeField]
         private TextMeshProUGUI previewIncomeText;
 
+        [SerializeField]
+        private TextMeshProUGUI previewLifetimeText;
+
         private DeckBuilderManager deckBuilderManager;
         private int topIndex;
 
@@ -103,6 +106,7 @@ namespace SimCard.DeckBuilder {
                     cardRow.CardNameText.text = card.cardName;
                     cardRow.CostText.text = card.cost.ToString();
                     cardRow.IncomeText.text = card.income.ToString();
+                    cardRow.LifetimeText.text = card.turnLimit.ToString();
 
                     // Update the deck count text
                     (int deckCount, int totalCount) = DeckBuilderUIListener.CardToCount[card];
@@ -128,6 +132,7 @@ namespace SimCard.DeckBuilder {
             previewFlavorText.text = previewCard.flavorText;
             previewCostText.text = $"Cost: {previewCard.cost}";
             previewIncomeText.text = $"Income: {previewCard.income}";
+            previewLifetimeText.text = $"Turn Limit: {previewCard.turnLimit}";
         }
     }
 }
