@@ -23,7 +23,7 @@ namespace SimCard.DeckBuilder {
         private Image upArrow;
 
         [SerializeField]
-        private DeckBuilderCardUI[] cardRows;
+        private DeckBuilderCardRowUI[] cardRows;
 
         [SerializeField]
         private Image downArrow;
@@ -96,7 +96,7 @@ namespace SimCard.DeckBuilder {
 
             for (int i = topIndex; i < topIndex + cardRows.Length; i++) {
                 int cardRowIndex = i - topIndex;
-                DeckBuilderCardUI cardRow = cardRows[cardRowIndex];
+                DeckBuilderCardRowUI cardRow = cardRows[cardRowIndex];
 
                 if (i < DeckBuilderUIListener.SelectableCards.Count) {
                     cardRow.gameObject.SetActive(true);

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace SimCard.DeckBuilder {
-    public class DeckBuilderCardUI : MonoBehaviour {
+    public class DeckBuilderCardRowUI : MonoBehaviour {
         [SerializeField]
         private TextMeshProUGUI cardNameText;
 

@@ -21,9 +21,11 @@ namespace SimCard.SimGame {
         public GameEvent<EventArgs<Interactable, string>> OnInteractionEvent = new();
 
         // Cross scene event
-        public GameEvent<InitCardGameArgs> OnCardGameInit = new();
+        public GameEvent<EventArgs> OnSubSceneLoaded = new();
+        public SubSceneInitGameEvent<InitCardGameArgs> OnCardGameInit;
+        public SubSceneInitGameEvent<EventArgs<List<CardMetadata>, List<CardMetadata>>> OnDeckBuilderInit;
+
         public GameEvent<CardGameResultArgs> OnCardGameEnd = new();
-        public GameEvent<EventArgs<List<CardMetadata>, List<CardMetadata>>> OnDeckBuilderInit = new();
         public GameEvent<EventArgs<List<CardMetadata>, List<CardMetadata>>> OnDeckBuilderEnd = new();
 
         void Awake() {
@@ -33,6 +35,9 @@ namespace SimCard.SimGame {
                 Destroy(gameObject);
                 return;
             }
+
+            OnCardGameInit = new(OnSubSceneLoaded);
+            OnDeckBuilderInit = new(OnSubSceneLoaded);
         }
     }
 }

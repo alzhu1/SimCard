@@ -103,14 +103,14 @@ namespace SimCard.DeckBuilder {
                     simGameManager.EventBus.OnDeckBuilderEnd.Raise(
                         new(finalDeck, finalAvailableCards)
                     );
+                    LogCardCount();
                     deckBuilder = null;
                 } else {
                     // Continue running (test mode)
                     testDeck = finalDeck;
                     testAvailableCards = finalAvailableCards;
+                    LogCardCount();
                 }
-
-                LogCardCount();
             }
 
             if (Input.GetKeyDown(KeyCode.D)) {

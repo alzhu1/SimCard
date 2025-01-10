@@ -19,6 +19,8 @@ namespace SimCard.SimGame {
 
         private Camera simGameCamera;
 
+        private bool loadingSubScene;
+
         private Player player;
         private InteractUI interactUI;
         private FadeUI fadeUI;
@@ -47,12 +49,14 @@ namespace SimCard.SimGame {
             EventBus.OnInteractionEvent.Event += HandleInteractionEvent;
             EventBus.OnCardGameEnd.Event += HandleCardGameEndEvent;
             EventBus.OnDeckBuilderEnd.Event += HandleDeckBuilderEndEvent;
+            EventBus.OnSubSceneLoaded.Event += HandleSubSceneLoadedEvent;
         }
 
         void OnDestroy() {
             EventBus.OnInteractionEvent.Event -= HandleInteractionEvent;
             EventBus.OnCardGameEnd.Event -= HandleCardGameEndEvent;
             EventBus.OnDeckBuilderEnd.Event -= HandleDeckBuilderEndEvent;
+            EventBus.OnSubSceneLoaded.Event -= HandleSubSceneLoadedEvent;
         }
 
         void HandleInteractionEvent(EventArgs<Interactable, string> args) {
@@ -87,6 +91,8 @@ namespace SimCard.SimGame {
             player.UpdateDeckAfterEdit(args.arg1, args.arg2);
             StartCoroutine(EndDeckBuilder());
         }
+
+        void HandleSubSceneLoadedEvent(EventArgs args) => loadingSubScene = false;
 
         IEnumerator GoToNextDay() {
             EventBus.OnPlayerPause.Raise(new(false));
@@ -123,8 +129,7 @@ namespace SimCard.SimGame {
         }
 
         IEnumerator StartCardGame(Interactable interactable) {
-            yield return StartCoroutine(LoadSubScene(1));
-            EventBus.OnCardGameInit.Raise(new(player.Deck, interactable.Deck));
+            yield return StartCoroutine(LoadSubScene(1, () => EventBus.OnCardGameInit.Raise(new(player.Deck, interactable.Deck))));
         }
 
         IEnumerator EndCardGame() {
@@ -132,9 +137,7 @@ namespace SimCard.SimGame {
         }
 
         IEnumerator StartDeckBuilder() {
-            // FIXME: Need to switch to loading DeckBuild scene
-            yield return StartCoroutine(LoadSubScene(2));
-            EventBus.OnDeckBuilderInit.Raise(new(player.Deck, player.AvailableCards));
+            yield return StartCoroutine(LoadSubScene(2, () => EventBus.OnDeckBuilderInit.Raise(new(player.Deck, player.AvailableCards))));
         }
 
         IEnumerator EndDeckBuilder() {
@@ -142,13 +145,15 @@ namespace SimCard.SimGame {
         }
 
         // Scene loading helpers
-        IEnumerator LoadSubScene(int sceneIndex) {
+        IEnumerator LoadSubScene(int sceneIndex, Action initAction) {
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneIndex, LoadSceneMode.Additive);
 
             asyncLoad.allowSceneActivation = false;
             // Disable player movement beforehand, keep sprite (will disable later)
             EventBus.OnPlayerPause.Raise(new(false));
             yield return fadeUI.FadeIn();
+
+            loadingSubScene = true;
 
             while (asyncLoad.progress < 0.9f) {
                 yield return null;
@@ -158,6 +163,11 @@ namespace SimCard.SimGame {
             EventBus.OnPlayerPause.Raise(new(true));
             environment.SetActive(false);
             asyncLoad.allowSceneActivation = true;
+
+            // Wait for sub scene to have loaded, then init
+            yield return new WaitUntil(() => loadingSubScene);
+            initAction.Invoke();
+            yield return null;
 
             // TODO: Maybe rely on fade out for card game scene load?
             yield return fadeUI.FadeOut();
