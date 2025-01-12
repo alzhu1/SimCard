@@ -1,0 +1,70 @@
+{
+    "init": {
+        "pathOptions": [
+            {
+                "nextPath": "TooManyTalks",
+                "conditions": {
+                    "PathTraversedCount": "DefaultNo >= 5"
+                }
+            }
+        ]
+    },
+    "paths": {
+        "Default": [
+            {
+                "text": "[111111 (Default)] Hello! This is me re-writing the test for interaction parsing, now with paths!",
+                "options": [],
+                "eventTriggers": []
+            },
+            {
+                "incomingConditions": {
+                    "Bool": false,
+                    "PathTraversedCount": "Default >= 0"
+                },
+                "text": "(This should not be displayed)",
+                "options": [],
+                "eventTriggers": []
+            },
+            {
+                "text": "Presenting you now with a choice",
+                "options": [
+                    {
+                        "optionText": "Yes",
+                        "nextPath": "DefaultYes",
+                        "conditions": {
+                            "Energy": 40
+                        }
+                    },
+                    {
+                        "optionText": "No",
+                        "nextPath": "DefaultNo"
+                    }
+                ]
+            }
+        ],
+
+        "DefaultYes": [
+            {
+                "text": "You pressed yes!"
+            }
+        ],
+
+        "DefaultNo": [
+            {
+                "text": "You pressed no..."
+            },
+            {
+                "incomingConditions": {
+                    "PathTraversedCount": "DefaultYes >= 1"
+                },
+                "text": "But you pressed yes before..."
+            }
+        ],
+
+        "TooManyTalks": [
+            {
+                "text": "I don't want to ask you anymore..."
+            }
+        ]
+    }
+}

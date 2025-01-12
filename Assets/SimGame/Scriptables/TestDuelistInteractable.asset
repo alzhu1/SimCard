@@ -18,9 +18,11 @@ MonoBehaviour:
     - option: Yes
       nextInteractionPath: DefaultYes
       fallbackInteractionPath: 
+      energyCost: 0
     - option: No
       nextInteractionPath: 
       fallbackInteractionPath: 
+      energyCost: 0
     tags: []
     eventTriggers: []
   interactionPaths:

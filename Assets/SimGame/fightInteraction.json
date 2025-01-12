@@ -1,0 +1,29 @@
+{
+    "init": {
+        "pathOptions": []
+    },
+    "paths": {
+        "Default": [
+            {
+                "text": "Wanna fight?",
+                "options": [
+                    {
+                        "optionText": "Yes",
+                        "nextPath": "DefaultYes"
+                    },
+                    {
+                        "optionText": "No"
+                    }
+                ]
+            }
+        ],
+        "DefaultYes": [
+            {
+                "text": "Let's fight!",
+                "eventTriggers": [
+                    "StartCardGame"
+                ]
+            }
+        ]
+    }
+}

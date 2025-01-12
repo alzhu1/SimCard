@@ -1,0 +1,29 @@
+{
+    "init": {
+        "pathOptions": []
+    },
+    "paths": {
+        "Default": [
+            {
+                "text": "Do you want to rest?",
+                "options": [
+                    {
+                        "optionText": "Yes",
+                        "nextPath": "DefaultYes"
+                    },
+                    {
+                        "optionText": "No"
+                    }
+                ]
+            }
+        ],
+        "DefaultYes": [
+            {
+                "text": "Go to sleep now...",
+                "eventTriggers": [
+                    "NextDay"
+                ]
+            }
+        ]
+    }
+}

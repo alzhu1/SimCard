@@ -7,15 +7,6 @@ using UnityEngine.UIElements;
 
 namespace SimCard.SimGame {
     [System.Serializable]
-    public class InteractionOption {
-        public string option;
-        public string nextInteractionPath;
-        public string fallbackInteractionPath;
-
-        public int energyCost = 0;
-    }
-
-    [System.Serializable]
     public class Interaction {
         // MINOR: Eventually, would be good to replace this ScriptableObject system with a scripting language.
         // Look into Jint (JS) to bring in a scriptable language that can process interactions on the fly.
@@ -28,6 +19,15 @@ namespace SimCard.SimGame {
         public List<InteractionTag> tags;
 
         public List<string> eventTriggers;
+    }
+
+    [System.Serializable]
+    public class InteractionOption {
+        public string option;
+        public string nextInteractionPath;
+        public string fallbackInteractionPath;
+
+        public int energyCost = 0;
     }
 
     [System.Serializable]
