@@ -10,7 +10,7 @@ using UnityEngine.UIElements;
 
 namespace SimCard.SimGame {
     public class InteractionEditor : EditorWindow {
-        private static List<TextAsset> INTERACTABLE_FILES;
+        private List<TextAsset> baseFiles;
 
         private List<TextAsset> filteredFiles;
 
@@ -19,17 +19,34 @@ namespace SimCard.SimGame {
 
         private ScrollView rightPane;
 
+        // JSON
+        private JsonSerializer serializer;
+
         // Store active json + asset
         private TextAsset currAsset;
         private InteractionJSON interactionJson;
 
         void OnEnable() {
-            INTERACTABLE_FILES = AssetDatabase
+            baseFiles = AssetDatabase
                 .FindAssets("l:Interactable")
                 .Select(guid =>
                     AssetDatabase.LoadAssetAtPath<TextAsset>(AssetDatabase.GUIDToAssetPath(guid))
                 )
                 .ToList();
+            filteredFiles = baseFiles;
+
+            serializer = JsonSerializer.Create(
+                new() {
+                    Formatting = Formatting.Indented,
+                    Converters = new List<JsonConverter>()
+                    {
+                        new Newtonsoft.Json.Converters.StringEnumConverter(),
+                    },
+                }
+            );
+
+            // Manually do a LINQ JSON parse to cache things on startup
+            JObject.Parse(baseFiles[0].text).ToObject<InteractionJSON>(serializer);
         }
 
         [MenuItem("Window/Interactions/Interaction Editor")]
@@ -47,7 +64,6 @@ namespace SimCard.SimGame {
                 TwoPaneSplitViewOrientation.Horizontal
             );
             rootVisualElement.Add(splitView);
-            filteredFiles = INTERACTABLE_FILES;
 
             // Create left side
             VisualElement leftPane = new VisualElement();
@@ -68,10 +84,12 @@ namespace SimCard.SimGame {
                 },
                 selectedIndex = fileIndex,
             };
+            listView.style.paddingLeft = 5;
+            listView.style.paddingRight = 5;
 
             // On search update, change both list view source and filtered files
             toolbarSearchField.RegisterValueChangedCallback(evt => {
-                filteredFiles = INTERACTABLE_FILES.Where(file => file.name.Contains(evt.newValue)).ToList();
+                filteredFiles = baseFiles.Where(file => file.name.Contains(evt.newValue)).ToList();
                 listView.itemsSource = filteredFiles;
 
                 // Update file index to prevent confusion (right view should still display old)
@@ -108,10 +126,11 @@ namespace SimCard.SimGame {
         }
 
         void OnFileSelection(IEnumerable<object> items) {
-            if (items.Count() == 0) return;
+            if (items.Count() == 0)
+                return;
 
             currAsset = items.First() as TextAsset;
-            interactionJson = JObject.Parse(currAsset.text).ToObject<InteractionJSON>();
+            interactionJson = JObject.Parse(currAsset.text).ToObject<InteractionJSON>(serializer);
 
             Debug.Log($"Json has been parsed for {currAsset.name}");
         }
@@ -119,7 +138,7 @@ namespace SimCard.SimGame {
         void Temp() {
             Debug.Log($"Name: {currAsset}");
 
-            interactionJson ??= JObject.Parse(currAsset.text).ToObject<InteractionJSON>();
+            interactionJson ??= JObject.Parse(currAsset.text).ToObject<InteractionJSON>(serializer);
 
             // TODO: Remove this line, include for testing for now
             interactionJson.Paths.Add("Fake Path", new());
@@ -136,15 +155,6 @@ namespace SimCard.SimGame {
                         jw.IndentChar = ' ';
                         jw.Indentation = 4;
 
-                        JsonSerializer serializer = JsonSerializer.Create(
-                            new() {
-                                Formatting = Formatting.Indented,
-                                Converters = new List<JsonConverter>()
-                                {
-                                    new Newtonsoft.Json.Converters.StringEnumConverter(),
-                                },
-                            }
-                        );
                         serializer.Serialize(jw, JObject.FromObject(interactionJson));
                     }
                 }
