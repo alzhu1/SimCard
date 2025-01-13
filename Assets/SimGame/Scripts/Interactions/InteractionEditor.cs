@@ -4,6 +4,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEditor;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -11,13 +12,15 @@ namespace SimCard.SimGame {
     public class InteractionEditor : EditorWindow {
         private static List<TextAsset> INTERACTABLE_FILES;
 
+        private List<TextAsset> filteredFiles;
+
         [SerializeField]
         private int fileIndex;
 
-        private ListView leftPane;
         private ScrollView rightPane;
 
-        // Store active json
+        // Store active json + asset
+        private TextAsset currAsset;
         private InteractionJSON interactionJson;
 
         void OnEnable() {
@@ -44,23 +47,55 @@ namespace SimCard.SimGame {
                 TwoPaneSplitViewOrientation.Horizontal
             );
             rootVisualElement.Add(splitView);
+            filteredFiles = INTERACTABLE_FILES;
 
-            leftPane = new ListView() {
+            // Create left side
+            VisualElement leftPane = new VisualElement();
+
+            // Toolbar with search field
+            Toolbar toolbar = new Toolbar();
+            ToolbarSearchField toolbarSearchField = new ToolbarSearchField();
+            toolbarSearchField.style.flexShrink = 1;
+            toolbar.Add(toolbarSearchField);
+
+            // List view containing filtered files
+            ListView listView = new ListView() {
                 selectionType = SelectionType.Single,
-                itemsSource = INTERACTABLE_FILES,
+                itemsSource = filteredFiles,
                 makeItem = () => new Label(),
                 bindItem = (item, index) => {
-                    (item as Label).text = INTERACTABLE_FILES[index].name;
+                    (item as Label).text = filteredFiles[index].name;
                 },
                 selectedIndex = fileIndex,
             };
+
+            // On search update, change both list view source and filtered files
+            toolbarSearchField.RegisterValueChangedCallback(evt => {
+                filteredFiles = INTERACTABLE_FILES.Where(file => file.name.Contains(evt.newValue)).ToList();
+                listView.itemsSource = filteredFiles;
+
+                // Update file index to prevent confusion (right view should still display old)
+                fileIndex = filteredFiles.IndexOf(currAsset);
+                listView.selectedIndex = fileIndex;
+
+                listView.RefreshItems();
+                Debug.Log($"File index is {fileIndex}");
+            });
+
+            // Run file selection on change (also update fileIndex for hot reload?)
+            listView.selectionChanged += (items) => {
+                fileIndex = listView.selectedIndex;
+                OnFileSelection(items);
+            };
+
+            // Add toolbar on top, then list view for left side
+            leftPane.Add(toolbar);
+            leftPane.Add(listView);
             splitView.Add(leftPane);
 
+            // Create right side scroll view
             rightPane = new ScrollView(ScrollViewMode.VerticalAndHorizontal);
             splitView.Add(rightPane);
-
-            leftPane.selectedIndex = fileIndex;
-            leftPane.selectionChanged += OnFileSelection;
 
             Button button = new() { text = "Update" };
             button.clicked += Temp;
@@ -73,24 +108,25 @@ namespace SimCard.SimGame {
         }
 
         void OnFileSelection(IEnumerable<object> items) {
-            fileIndex = leftPane.selectedIndex;
-            TextAsset asset = items.First() as TextAsset;
-            JObject contents = JObject.Parse(asset.text);
-            interactionJson = contents.ToObject<InteractionJSON>();
+            if (items.Count() == 0) return;
 
-            Debug.Log($"Json has been parsed for {asset.name}");
+            currAsset = items.First() as TextAsset;
+            interactionJson = JObject.Parse(currAsset.text).ToObject<InteractionJSON>();
+
+            Debug.Log($"Json has been parsed for {currAsset.name}");
         }
 
         void Temp() {
-            TextAsset file = INTERACTABLE_FILES[fileIndex];
-            Debug.Log($"Name: {file}");
+            Debug.Log($"Name: {currAsset}");
+
+            interactionJson ??= JObject.Parse(currAsset.text).ToObject<InteractionJSON>();
 
             // TODO: Remove this line, include for testing for now
             interactionJson.Paths.Add("Fake Path", new());
 
             using (
                 System.IO.FileStream fs = System.IO.File.Open(
-                    AssetDatabase.GetAssetPath(file),
+                    AssetDatabase.GetAssetPath(currAsset),
                     System.IO.FileMode.OpenOrCreate
                 )
             ) {
@@ -114,7 +150,7 @@ namespace SimCard.SimGame {
                 }
             }
 
-            EditorUtility.SetDirty(file);
+            EditorUtility.SetDirty(currAsset);
             AssetDatabase.Refresh();
         }
     }
