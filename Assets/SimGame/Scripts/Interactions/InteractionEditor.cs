@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -9,10 +11,14 @@ namespace SimCard.SimGame {
     public class InteractionEditor : EditorWindow {
         private static List<TextAsset> INTERACTABLE_FILES;
 
+        [SerializeField]
+        private int fileIndex;
+
         private ListView leftPane;
         private ScrollView rightPane;
 
-        private int fileIndex;
+        // Store active json
+        private InteractionJSON interactionJson;
 
         void OnEnable() {
             INTERACTABLE_FILES = AssetDatabase
@@ -53,31 +59,62 @@ namespace SimCard.SimGame {
             rightPane = new ScrollView(ScrollViewMode.VerticalAndHorizontal);
             splitView.Add(rightPane);
 
-            leftPane.selectedIndicesChanged += (items) => {
-                fileIndex = items.First();
-            };
+            leftPane.selectedIndex = fileIndex;
+            leftPane.selectionChanged += OnFileSelection;
 
             Button button = new() { text = "Update" };
             button.clicked += Temp;
             rightPane.Add(button);
 
             // TODO: Next steps:
-            //   1. Convert the JSON into something parseable (e.g. some kind of intermediate representation) (deserialization)
-            //   2. Add UI to make changes to these individual elements
-            //   3. Serialize the intermediate representation into JSON
-            //   4. Add support for serializing into a ScriptableObject too
+            //   1. Add UI to make changes to these individual elements
+            //   2. Serialize the intermediate representation into JSON
+            //   3. Add support for serializing into a ScriptableObject too
+        }
+
+        void OnFileSelection(IEnumerable<object> items) {
+            fileIndex = leftPane.selectedIndex;
+            TextAsset asset = items.First() as TextAsset;
+            JObject contents = JObject.Parse(asset.text);
+            interactionJson = contents.ToObject<InteractionJSON>();
+
+            Debug.Log($"Json has been parsed for {asset.name}");
         }
 
         void Temp() {
-            Debug.Log($"Name: {INTERACTABLE_FILES[fileIndex]}");
+            TextAsset file = INTERACTABLE_FILES[fileIndex];
+            Debug.Log($"Name: {file}");
 
-            string json = $"{{\"random\": {Random.Range(0, 1000)}}}";
+            // TODO: Remove this line, include for testing for now
+            interactionJson.Paths.Add("Fake Path", new());
 
-            System.IO.File.WriteAllText(
-                AssetDatabase.GetAssetPath(INTERACTABLE_FILES[fileIndex]),
-                json
-            );
-            EditorUtility.SetDirty(INTERACTABLE_FILES[fileIndex]);
+            using (
+                System.IO.FileStream fs = System.IO.File.Open(
+                    AssetDatabase.GetAssetPath(file),
+                    System.IO.FileMode.OpenOrCreate
+                )
+            ) {
+                using (System.IO.StreamWriter sw = new(fs)) {
+                    using (JsonTextWriter jw = new(sw)) {
+                        jw.Formatting = Formatting.Indented;
+                        jw.IndentChar = ' ';
+                        jw.Indentation = 4;
+
+                        JsonSerializer serializer = JsonSerializer.Create(
+                            new() {
+                                Formatting = Formatting.Indented,
+                                Converters = new List<JsonConverter>()
+                                {
+                                    new Newtonsoft.Json.Converters.StringEnumConverter(),
+                                },
+                            }
+                        );
+                        serializer.Serialize(jw, JObject.FromObject(interactionJson));
+                    }
+                }
+            }
+
+            EditorUtility.SetDirty(file);
             AssetDatabase.Refresh();
         }
     }

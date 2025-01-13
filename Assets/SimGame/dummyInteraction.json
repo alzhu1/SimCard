@@ -42,13 +42,11 @@
                 ]
             }
         ],
-
         "DefaultYes": [
             {
                 "text": "You pressed yes!"
             }
         ],
-
         "DefaultNo": [
             {
                 "text": "You pressed no..."
@@ -60,7 +58,6 @@
                 "text": "But you pressed yes before..."
             }
         ],
-
         "TooManyTalks": [
             {
                 "text": "I don't want to ask you anymore..."
