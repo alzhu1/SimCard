@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System.Collections.Generic;
 
 namespace SimCard.SimGame {
@@ -14,6 +15,7 @@ namespace SimCard.SimGame {
     }
 
     public class InitInteractionJSON {
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Populate)]
         public List<InitPathOptionsJSON> PathOptions { get; set; }
 
         public class InitPathOptionsJSON {
@@ -34,12 +36,4 @@ namespace SimCard.SimGame {
             public Dictionary<ConditionKeyJSON, string> Conditions { get; set; }
         }
     }
-
-    // struct InteractionCondition {
-    //     public static string Bool = "Bool";
-    //     public static string Quest = "Quest";
-    //     public static string PathTraversedCount = "PathTraversedCount";
-    // }
-
-
 }
