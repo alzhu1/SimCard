@@ -12,21 +12,24 @@
     "Paths": {
         "Default": [
             {
-                "Options": [],
-                "IncomingConditions": null,
+                "IncomingConditions": {},
                 "Text": "[111111 (Default)] Hello! This is me re-writing the test for interaction parsing, now with paths!",
-                "EventTriggers": []
+                "EventTriggers": [],
+                "Options": []
             },
             {
-                "Options": [],
                 "IncomingConditions": {
                     "Bool": "False",
                     "PathTraversedCount": "Default >= 0"
                 },
                 "Text": "(This should not be displayed)",
-                "EventTriggers": []
+                "EventTriggers": [],
+                "Options": []
             },
             {
+                "IncomingConditions": {},
+                "Text": "Presenting you now with a choice",
+                "EventTriggers": [],
                 "Options": [
                     {
                         "OptionText": "Yes",
@@ -38,44 +41,41 @@
                     {
                         "OptionText": "No",
                         "NextPath": "DefaultNo",
-                        "Conditions": null
+                        "Conditions": {}
                     }
-                ],
-                "IncomingConditions": null,
-                "Text": "Presenting you now with a choice",
-                "EventTriggers": null
+                ]
             }
         ],
         "DefaultYes": [
             {
-                "Options": null,
-                "IncomingConditions": null,
+                "IncomingConditions": {},
                 "Text": "You pressed yes!",
-                "EventTriggers": null
+                "EventTriggers": [],
+                "Options": []
             }
         ],
         "DefaultNo": [
             {
-                "Options": null,
-                "IncomingConditions": null,
+                "IncomingConditions": {},
                 "Text": "You pressed no...",
-                "EventTriggers": null
+                "EventTriggers": [],
+                "Options": []
             },
             {
-                "Options": null,
                 "IncomingConditions": {
                     "PathTraversedCount": "DefaultYes >= 1"
                 },
                 "Text": "But you pressed yes before...",
-                "EventTriggers": null
+                "EventTriggers": [],
+                "Options": []
             }
         ],
         "TooManyTalks": [
             {
-                "Options": null,
-                "IncomingConditions": null,
+                "IncomingConditions": {},
                 "Text": "I don't want to ask you anymore...",
-                "EventTriggers": null
+                "EventTriggers": [],
+                "Options": []
             }
         ],
         "Fake Path": []

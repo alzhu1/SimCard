@@ -1,26 +1,33 @@
 {
-    "init": {
-        "pathOptions": []
+    "Init": {
+        "PathOptions": []
     },
-    "paths": {
+    "Paths": {
         "Default": [
             {
-                "text": "Do you want to rest?",
-                "options": [
+                "Options": [
                     {
-                        "optionText": "Yes",
-                        "nextPath": "DefaultYes"
+                        "OptionText": "Yes",
+                        "NextPath": "DefaultYes",
+                        "Conditions": {}
                     },
                     {
-                        "optionText": "No"
+                        "OptionText": "No",
+                        "NextPath": null,
+                        "Conditions": {}
                     }
-                ]
+                ],
+                "IncomingConditions": {},
+                "Text": "Do you want to rest?",
+                "EventTriggers": null
             }
         ],
         "DefaultYes": [
             {
-                "text": "Go to sleep now...",
-                "eventTriggers": [
+                "Options": null,
+                "IncomingConditions": {},
+                "Text": "Go to sleep now...",
+                "EventTriggers": [
                     "NextDay"
                 ]
             }

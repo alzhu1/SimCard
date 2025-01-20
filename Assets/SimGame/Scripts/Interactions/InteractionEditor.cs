@@ -12,24 +12,20 @@ using ReorderableList = UnityEditorInternal.ReorderableList;
 namespace SimCard.SimGame {
     public class InteractionEditor : EditorWindow {
         private List<TextAsset> baseFiles;
-
         private List<TextAsset> filteredFiles;
 
         [SerializeField]
         private int fileIndex;
 
-        private VisualElement rightPane;
+        [SerializeField]
+        private int interactionPathIndex;
+
+        private VisualElement initOptionsPane;
+        private VisualElement interactionPathsPane;
+        private VisualElement interactionPathEditorPane;
 
         // JSON
         private JsonSerializer serializer;
-
-        // Store active json + asset
-        private TextAsset currAsset;
-        private InteractionJSON interactionJson;
-
-        // ReorderableLists for various reasons
-        private ReorderableList initPathOptionsList;
-        private ReorderableList initPathOptionConditionsList;
 
         void OnEnable() {
             baseFiles = AssetDatabase
@@ -70,74 +66,42 @@ namespace SimCard.SimGame {
             );
             rootVisualElement.Add(splitView);
 
-            // Create left side
-            VisualElement leftPane = new VisualElement();
-
-            // Toolbar with search field
-            Toolbar toolbar = new Toolbar();
-            ToolbarSearchField toolbarSearchField = new ToolbarSearchField();
-            toolbarSearchField.style.flexShrink = 1;
-            toolbar.Add(toolbarSearchField);
-
-            // List view containing filtered files
-            ListView listView = new ListView() {
-                selectionType = SelectionType.Single,
-                itemsSource = filteredFiles,
-                makeItem = () => new Label(),
-                bindItem = (item, index) => {
-                    (item as Label).text = filteredFiles[index].name;
-                },
-                selectedIndex = fileIndex,
-            };
-            listView.style.paddingLeft = 5;
-            listView.style.paddingRight = 5;
-
-            // On search update, change both list view source and filtered files
-            toolbarSearchField.RegisterValueChangedCallback(evt => {
-                filteredFiles = baseFiles.Where(file => file.name.Contains(evt.newValue)).ToList();
-                listView.itemsSource = filteredFiles;
-
-                // Update file index to prevent confusion (right view should still display old)
-                fileIndex = filteredFiles.IndexOf(currAsset);
-                listView.selectedIndex = fileIndex;
-
-                listView.RefreshItems();
-                Debug.Log($"File index is {fileIndex}");
-            });
-
-            // Run file selection on change (also update fileIndex for hot reload?)
-            listView.selectionChanged += (items) => {
-                fileIndex = listView.selectedIndex;
+            // Create file list view and add its parent
+            ListView fileListView = CreateListView(baseFiles, filteredFiles, (file) => file.name);
+            fileListView.selectedIndex = fileIndex;
+            fileListView.selectionChanged += (items) => {
+                fileIndex = fileListView.selectedIndex;
                 OnFileSelection(items);
             };
-
-            // Add toolbar on top, then list view for left side
-            leftPane.Add(toolbar);
-            leftPane.Add(listView);
-            splitView.Add(leftPane);
+            splitView.Add(fileListView.parent);
 
             // Create right side scroll view
-            rightPane = new VisualElement();
-            Label initText = new Label("Select an interactable to start editing.");
+            TwoPaneSplitView rightPane = new TwoPaneSplitView(0, 250, TwoPaneSplitViewOrientation.Vertical);
 
+            // On top, we have init options editor
+            initOptionsPane = new VisualElement();
             // MINOR: Better style (want to center it)
+            initOptionsPane.Add(new Label("Select an interactable to start editing."));
 
-            rightPane.Add(initText);
+            // No items yet, init as empty
+            interactionPathsPane = new TwoPaneSplitView(0, 250, TwoPaneSplitViewOrientation.Horizontal);
+            ListView interactionPathListView = CreateListView(new List<string>(), new List<string>(), (item) => item);
+            interactionPathsPane.Add(interactionPathListView.parent);
+            interactionPathsPane.Add(new VisualElement());
+
+            rightPane.Add(initOptionsPane);
+            rightPane.Add(interactionPathsPane);
+
             splitView.Add(rightPane);
-
-            // TODO: Next steps:
-            //   1. Add UI to make changes to these individual elements
-            //   2. Serialize the intermediate representation into JSON
-            //   3. Add support for serializing into a ScriptableObject too
         }
 
         void OnFileSelection(IEnumerable<object> items) {
             if (items.Count() == 0)
                 return;
 
-            currAsset = items.First() as TextAsset;
-            interactionJson = JObject.Parse(currAsset.text).ToObject<InteractionJSON>(serializer);
-            initPathOptionConditionsList = new(new List<string>(), typeof(string), false, false, false, false) {
+            TextAsset currAsset = items.First() as TextAsset;
+            InteractionJSON interactionJson = JObject.Parse(currAsset.text).ToObject<InteractionJSON>(serializer);
+            ReorderableList initPathOptionConditionsList = new(new List<string>(), typeof(string), false, false, false, false) {
                 drawNoneElementCallback = (Rect rect) => {
                     EditorGUI.LabelField(rect, "Select a path above to view conditions.");
                 },
@@ -145,23 +109,21 @@ namespace SimCard.SimGame {
 
             Debug.Log($"Json has been parsed for {currAsset.name}");
 
-            rightPane.Clear();
-            rightPane.Add(new Label(currAsset.name));
+            // On top, init options pane
+            initOptionsPane.Clear();
+            initOptionsPane.Add(new Label(currAsset.name));
 
             // Add button to update
-            Button updateButton = new Button(Temp) {
-                text = "Update Interactable"
+            Button updateButton = new Button() {
+                text = "Update Interactable",
             };
-            rightPane.Add(updateButton);
-
-            // Add foldout for editing the initial settings
-            Foldout initFoldout = new Foldout {
-                text = "Init Options",
-                value = false
+            updateButton.clicked += () => {
+                UpdateInteraction(currAsset, interactionJson);
             };
+            initOptionsPane.Add(updateButton);
 
             // Set up reorderable list
-            initPathOptionsList = new(interactionJson.Init.PathOptions, typeof(InitInteractionJSON.InitPathOptionsJSON), true, true, true, true) {
+            ReorderableList initPathOptionsList = new(interactionJson.Init.PathOptions, typeof(InitInteractionJSON.InitPathOptionsJSON), true, true, true, true) {
                 multiSelect = false,
                 drawHeaderCallback = (Rect rect) => {
                     EditorGUI.LabelField(rect, "Path Options");
@@ -178,22 +140,142 @@ namespace SimCard.SimGame {
                 }
             };
 
-            initFoldout.Add(new IMGUIContainer(() => {
+            initOptionsPane.Add(new IMGUIContainer(() => {
                 initPathOptionsList.DoLayoutList();
                 initPathOptionConditionsList.DoLayoutList();
             }));
 
-            rightPane.Add(initFoldout);
+            // On bottom, we have interactionPaths editor
+            List<string> interactionPathNames = interactionJson.Paths.Keys.ToList();
+
+            // Recreate the interaction paths pane to avoid glitchy dragging when updating children
+            VisualElement rightPane = interactionPathsPane.parent;
+            rightPane.RemoveAt(1);
+            interactionPathsPane = new TwoPaneSplitView(0, 250, TwoPaneSplitViewOrientation.Horizontal);
+
+            ListView interactionPathListView = CreateListView(interactionPathNames, interactionPathNames, (item) => item);
+            interactionPathListView.selectedIndex = interactionPathIndex;
+            interactionPathListView.selectionChanged += (items) => {
+                interactionPathIndex = interactionPathListView.selectedIndex;
+                OnInteractionPathSelection(items, interactionJson);
+            };
+            interactionPathsPane.Add(interactionPathListView.parent);
+
+            // TODO: Add content to the second pane for interaction paths
+            interactionPathEditorPane = new ScrollView(ScrollViewMode.Vertical);
+            interactionPathsPane.Add(interactionPathEditorPane);
+            rightPane.Add(interactionPathsPane);
         }
 
-        ReorderableList GetListForConditions(Dictionary<ConditionKeyJSON, string> dict) {
+        void OnInteractionPathSelection(IEnumerable<object> items, InteractionJSON interactionJson) {
+            if (items.Count() == 0)
+                return;
+
+            string currInteractionPath = items.First() as string;
+            int currInteractionNodeIndex = -1;
+
+            ReorderableList incomingConditionsList = null;
+            ReorderableList eventTriggersList = null;
+            ReorderableList optionsList = null;
+            ReorderableList optionConditionsList = null;
+
+            interactionPathEditorPane.Clear();
+            interactionPathEditorPane.Add(new Label(currInteractionPath));
+
+            ReorderableList interactionPathNodeList = new(interactionJson.Paths[currInteractionPath], typeof(InteractionNodeJSON), true, true, true, true) {
+                multiSelect = false,
+                drawHeaderCallback = (Rect rect) => {
+                    EditorGUI.LabelField(rect, "Interaction Path Nodes");
+                },
+                onSelectCallback = (ReorderableList l) => {
+                    InteractionNodeJSON element = l.list[l.index] as InteractionNodeJSON;
+                    currInteractionNodeIndex = l.index;
+
+                    incomingConditionsList = GetListForConditions(element.IncomingConditions, "Incoming Conditions");
+                    eventTriggersList = new(element.EventTriggers, typeof(string), true, true, true, true) {
+                        multiSelect = false,
+                        drawHeaderCallback = (Rect rect) => {
+                            EditorGUI.LabelField(rect, "Event Triggers");
+                        },
+                        drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) => {
+                            string eventTrigger = element.EventTriggers[index];
+                            rect.y += 2;
+                            element.EventTriggers[index] = EditorGUI.TextField(new Rect(rect.x, rect.y, rect.width, EditorGUIUtility.singleLineHeight), $"Trigger {index}", eventTrigger);
+                        }
+                    };
+
+                    optionsList = new(element.Options, typeof(InteractionNodeJSON.InteractionOptionJSON), true, true, true, true) {
+                        multiSelect = false,
+                        drawHeaderCallback = (Rect rect) => {
+                            EditorGUI.LabelField(rect, "Options");
+                        },
+                        onSelectCallback = (ReorderableList ll) => {
+                            optionConditionsList = GetListForConditions(element.Options[ll.index].Conditions);
+                        },
+                        drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) => {
+                            InteractionNodeJSON.InteractionOptionJSON option = element.Options[index];
+                            rect.y += 2;
+                            option.OptionText = EditorGUI.TextField(new Rect(rect.x, rect.y, rect.width, EditorGUIUtility.singleLineHeight * 2), $"Option Text {index}", option.OptionText);
+                            rect.y += 2;
+                            option.NextPath = EditorGUI.TextField(new Rect(rect.x, rect.y + EditorGUIUtility.singleLineHeight * 2, rect.width, EditorGUIUtility.singleLineHeight), "Next Path", option.NextPath);
+                        },
+                        elementHeight = EditorGUIUtility.singleLineHeight * 3 + 2
+                    };
+                    optionConditionsList = null;
+                },
+                drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) => {
+                    InteractionNodeJSON element = interactionJson.Paths[currInteractionPath][index];
+                    rect.y += 2;
+                    element.Text = EditorGUI.TextField(new Rect(rect.x, rect.y, rect.width, EditorGUIUtility.singleLineHeight * 2), $"Text {index}", element.Text);
+                },
+                elementHeight = EditorGUIUtility.singleLineHeight * 2
+            };
+
+            interactionPathEditorPane.Add(new IMGUIContainer(() => {
+                interactionPathNodeList.DoLayoutList();
+                if (currInteractionNodeIndex >= 0) {
+                    incomingConditionsList.DoLayoutList();
+                    eventTriggersList.DoLayoutList();
+                    optionsList.DoLayoutList();
+                    optionConditionsList?.DoLayoutList();
+                }
+            }));
+        }
+
+        void UpdateInteraction(TextAsset currAsset, InteractionJSON interactionJson) {
+            Debug.Log($"Name: {currAsset}");
+
+            using (
+                System.IO.FileStream fs = System.IO.File.Open(
+                    AssetDatabase.GetAssetPath(currAsset),
+                    System.IO.FileMode.OpenOrCreate
+                )
+            ) {
+                using (System.IO.StreamWriter sw = new(fs)) {
+                    using (JsonTextWriter jw = new(sw)) {
+                        jw.Formatting = Formatting.Indented;
+                        jw.IndentChar = ' ';
+                        jw.Indentation = 4;
+
+                        serializer.Serialize(jw, JObject.FromObject(interactionJson));
+                    }
+                }
+            }
+
+            EditorUtility.SetDirty(currAsset);
+            AssetDatabase.Refresh();
+        }
+
+        // Helpers
+
+        ReorderableList GetListForConditions(Dictionary<ConditionKeyJSON, string> dict, string headerLabel = "Conditions") {
             // Create a List from the dictionary, need this so that ReorderableList can wrap it/edit it
             List<(ConditionKeyJSON, string)> dictList = dict.Select(pair => (pair.Key, pair.Value)).ToList();
 
             return new(dictList, typeof((ConditionKeyJSON, string)), true, true, true, true) {
                 multiSelect = false,
                 drawHeaderCallback = (Rect rect) => {
-                    EditorGUI.LabelField(rect, "Conditions");
+                    EditorGUI.LabelField(rect, headerLabel);
                 },
                 onRemoveCallback = (ReorderableList l) => {
                     (ConditionKeyJSON key, string value) = ((ConditionKeyJSON, string))l.list[l.index];
@@ -235,30 +317,49 @@ namespace SimCard.SimGame {
             };
         }
 
-        void Temp() {
-            Debug.Log($"Name: {currAsset}");
+        ListView CreateListView<T>(List<T> baseItemSource, List<T> activeItemSource, System.Func<T, string> MapName) where T : class {
+            VisualElement parentPane = new VisualElement();
+            T currItem = null;
 
-            interactionJson ??= JObject.Parse(currAsset.text).ToObject<InteractionJSON>(serializer);
+            // Toolbar with search field
+            Toolbar toolbar = new Toolbar();
+            ToolbarSearchField toolbarSearchField = new ToolbarSearchField();
+            toolbarSearchField.style.flexShrink = 1;
+            toolbar.Add(toolbarSearchField);
 
-            using (
-                System.IO.FileStream fs = System.IO.File.Open(
-                    AssetDatabase.GetAssetPath(currAsset),
-                    System.IO.FileMode.OpenOrCreate
-                )
-            ) {
-                using (System.IO.StreamWriter sw = new(fs)) {
-                    using (JsonTextWriter jw = new(sw)) {
-                        jw.Formatting = Formatting.Indented;
-                        jw.IndentChar = ' ';
-                        jw.Indentation = 4;
-
-                        serializer.Serialize(jw, JObject.FromObject(interactionJson));
-                    }
+            ListView listView = new ListView() {
+                selectionType = SelectionType.Single,
+                itemsSource = activeItemSource,
+                makeItem = () => new Label(),
+                bindItem = (item, index) => {
+                    (item as Label).text = MapName(activeItemSource[index]);
                 }
-            }
+            };
+            listView.style.paddingLeft = 5;
+            listView.style.paddingRight = 5;
 
-            EditorUtility.SetDirty(currAsset);
-            AssetDatabase.Refresh();
+            // Update locally held variable to use later in searching
+            listView.selectionChanged += (items) => {
+                currItem = items.Count() == 0 ? null : (T)items.First();
+            };
+
+            // On search update, change both list view source and active item source
+            toolbarSearchField.RegisterValueChangedCallback(evt => {
+                activeItemSource = baseItemSource.Where(item => MapName(item).Contains(evt.newValue)).ToList();
+                listView.itemsSource = activeItemSource;
+
+                // Update index to prevent confusion (right view should still display old)
+                listView.selectedIndex = activeItemSource.IndexOf(currItem);
+
+                listView.RefreshItems();
+            });
+
+            // Add toolbar first, then list view
+            parentPane.Add(toolbar);
+            parentPane.Add(listView);
+
+            // Return the list view, we can reference the parent from it
+            return listView;
         }
     }
 }

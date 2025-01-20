@@ -1,66 +1,89 @@
 {
-    "init": {
-        "pathOptions": [
+    "Init": {
+        "PathOptions": [
             {
-                "nextPath": "TooManyTalks",
-                "conditions": {
-                    "PathTraversedCount": "DefaultNo >= 5"
+                "NextPath": "TooManyTalks",
+                "Conditions": {
+                    "PathTraversedCount": "DefaultNo >= 5",
+                    "Bool": "False"
+                }
+            },
+            {
+                "NextPath": "NotReal",
+                "Conditions": {
+                    "PathTraversedCount": "DefaultYes >= 5",
+                    "Bool": "True"
                 }
             }
         ]
     },
-    "paths": {
+    "Paths": {
         "Default": [
             {
-                "text": "[111111 (Default)] Hello! This is me re-writing the test for interaction parsing, now with paths!",
-                "options": [],
-                "eventTriggers": []
+                "Options": [],
+                "IncomingConditions": {},
+                "Text": "[111111 (Default)] Hello! This is me re-writing the test for interaction parsing, now with paths!",
+                "EventTriggers": []
             },
             {
-                "incomingConditions": {
-                    "Bool": false,
+                "Options": [],
+                "IncomingConditions": {
+                    "Bool": "False",
                     "PathTraversedCount": "Default >= 0"
                 },
-                "text": "(This should not be displayed)",
-                "options": [],
-                "eventTriggers": []
+                "Text": "(This should not be displayed)",
+                "EventTriggers": []
             },
             {
-                "text": "Presenting you now with a choice",
-                "options": [
+                "Options": [
                     {
-                        "optionText": "Yes",
-                        "nextPath": "DefaultYes",
-                        "conditions": {
-                            "Energy": 40
+                        "OptionText": "Yes",
+                        "NextPath": "DefaultYes",
+                        "Conditions": {
+                            "Energy": "40"
                         }
                     },
                     {
-                        "optionText": "No",
-                        "nextPath": "DefaultNo"
+                        "OptionText": "No",
+                        "NextPath": "DefaultNo",
+                        "Conditions": {}
                     }
-                ]
+                ],
+                "IncomingConditions": {},
+                "Text": "Presenting you now with a choice",
+                "EventTriggers": []
             }
         ],
         "DefaultYes": [
             {
-                "text": "You pressed yes!"
+                "Options": [],
+                "IncomingConditions": {},
+                "Text": "You pressed yes!",
+                "EventTriggers": []
             }
         ],
         "DefaultNo": [
             {
-                "text": "You pressed no..."
+                "Options": [],
+                "IncomingConditions": {},
+                "Text": "You pressed no...",
+                "EventTriggers": []
             },
             {
-                "incomingConditions": {
+                "Options": [],
+                "IncomingConditions": {
                     "PathTraversedCount": "DefaultYes >= 1"
                 },
-                "text": "But you pressed yes before..."
+                "Text": "But you pressed yes before...",
+                "EventTriggers": []
             }
         ],
         "TooManyTalks": [
             {
-                "text": "I don't want to ask you anymore..."
+                "Options": [],
+                "IncomingConditions": {},
+                "Text": "I don't want to ask you anymore...",
+                "EventTriggers": []
             }
         ]
     }
