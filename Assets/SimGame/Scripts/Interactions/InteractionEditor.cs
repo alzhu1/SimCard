@@ -101,7 +101,7 @@ namespace SimCard.SimGame {
 
             TextAsset currAsset = items.First() as TextAsset;
             InteractionJSON interactionJson = JObject.Parse(currAsset.text).ToObject<InteractionJSON>(serializer);
-            ReorderableList initPathOptionConditionsList = GetDefaultEmptyList("Select a path above to view conditions.");
+            ReorderableList initPathOptionConditionsList = InteractionEditorListBuilder.GetDefaultEmptyList("Select a path above to view conditions.");
 
             Debug.Log($"Json has been parsed for {currAsset.name}");
 
@@ -119,26 +119,25 @@ namespace SimCard.SimGame {
             initOptionsPane.Add(updateButton);
 
             // Set up reorderable list
-            ReorderableList initPathOptionsList = new(interactionJson.Init.PathOptions, typeof(InitInteractionJSON.InitPathOptionsJSON), true, true, true, true) {
-                multiSelect = false,
-                drawHeaderCallback = (Rect rect) => {
-                    EditorGUI.LabelField(rect, "Path Options");
-                },
-                onSelectCallback = (ReorderableList l) => {
-                    if (l.index >= l.list.Count) {
-                        initPathOptionConditionsList = GetDefaultEmptyList("Select a path above to view conditions.");
-                        return;
-                    }
-                    InitInteractionJSON.InitPathOptionsJSON element = interactionJson.Init.PathOptions[l.index];
-                    initPathOptionConditionsList = GetListForConditions(element.Conditions);
-                },
-                onChangedCallback = CallSelectOnChangeCallback,
-                drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) => {
-                    InitInteractionJSON.InitPathOptionsJSON element = interactionJson.Init.PathOptions[index];
-                    rect.y += 2;
-                    element.NextPath = EditorGUI.TextField(new Rect(rect.x, rect.y, rect.width, EditorGUIUtility.singleLineHeight), $"Path {index}", element.NextPath);
-                }
-            };
+            ReorderableList initPathOptionsList =
+                InteractionEditorListBuilder.NewBuilder(interactionJson.Init.PathOptions, "Path Options")
+                    .WithOnSelectCallback(
+                        (ReorderableList l) => {
+                            if (l.index >= l.list.Count) {
+                                initPathOptionConditionsList = InteractionEditorListBuilder.GetDefaultEmptyList("Select a path above to view conditions.");
+                                return;
+                            }
+                            initPathOptionConditionsList = GetListForConditions(interactionJson.Init.PathOptions[l.index].Conditions);
+                        }
+                    )
+                    .WithDrawElementCallback(
+                        (Rect rect, int index, bool isActive, bool isFocused) => {
+                            InitInteractionJSON.InitPathOptionsJSON element = interactionJson.Init.PathOptions[index];
+                            rect.y += 2;
+                            element.NextPath = EditorGUI.TextField(new Rect(rect.x, rect.y, rect.width, EditorGUIUtility.singleLineHeight), $"Path {index}", element.NextPath);
+                        }
+                    )
+                    .Build();
 
             initOptionsPane.Add(new IMGUIContainer(() => {
                 initPathOptionsList.DoLayoutList();
@@ -161,7 +160,6 @@ namespace SimCard.SimGame {
             };
             interactionPathsPane.Add(interactionPathListView.parent);
 
-            // TODO: Add content to the second pane for interaction paths
             interactionPathEditorPane = new ScrollView(ScrollViewMode.Vertical);
             interactionPathsPane.Add(interactionPathEditorPane);
             rightPane.Add(interactionPathsPane);
@@ -174,76 +172,68 @@ namespace SimCard.SimGame {
             string currInteractionPath = items.First() as string;
             int currInteractionNodeIndex = -1;
 
-            ReorderableList incomingConditionsList = GetDefaultEmptyList("Select an interaction to view incoming conditions.");
-            ReorderableList eventTriggersList = GetDefaultEmptyList("Select an interaction to view event triggers.");
-            ReorderableList optionsList = GetDefaultEmptyList("Select an interaction to view options.");
+            ReorderableList incomingConditionsList = InteractionEditorListBuilder.GetDefaultEmptyList("Select an interaction to view incoming conditions.");
+            ReorderableList eventTriggersList = InteractionEditorListBuilder.GetDefaultEmptyList("Select an interaction to view event triggers.");
+            ReorderableList optionsList = InteractionEditorListBuilder.GetDefaultEmptyList("Select an interaction to view options.");
             ReorderableList optionConditionsList = null;
 
             interactionPathEditorPane.Clear();
             interactionPathEditorPane.Add(new Label(currInteractionPath));
 
-            ReorderableList interactionPathNodeList = new(interactionJson.Paths[currInteractionPath], typeof(InteractionNodeJSON), true, true, true, true) {
-                multiSelect = false,
-                drawHeaderCallback = (Rect rect) => {
-                    EditorGUI.LabelField(rect, "Interaction Path Nodes");
-                },
-                onSelectCallback = (ReorderableList l) => {
-                    if (l.index >= l.list.Count) {
-                        incomingConditionsList = GetDefaultEmptyList("Select an interaction to view incoming conditions.");
-                        eventTriggersList = GetDefaultEmptyList("Select an interaction to view event triggers.");
-                        optionsList = GetDefaultEmptyList("Select an interaction to view options.");
-                        optionConditionsList = null;
-                        return;
-                    }
-
-                    InteractionNodeJSON element = interactionJson.Paths[currInteractionPath][l.index];
-                    currInteractionNodeIndex = l.index;
-
-                    incomingConditionsList = GetListForConditions(element.IncomingConditions, "Incoming Conditions");
-                    eventTriggersList = new(element.EventTriggers, typeof(string), true, true, true, true) {
-                        multiSelect = false,
-                        drawHeaderCallback = (Rect rect) => {
-                            EditorGUI.LabelField(rect, "Event Triggers");
-                        },
-                        drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) => {
-                            string eventTrigger = element.EventTriggers[index];
-                            rect.y += 2;
-                            element.EventTriggers[index] = EditorGUI.TextField(new Rect(rect.x, rect.y, rect.width, EditorGUIUtility.singleLineHeight), $"Trigger {index}", eventTrigger);
+            ReorderableList interactionPathNodeList =
+                InteractionEditorListBuilder.NewBuilder(interactionJson.Paths[currInteractionPath], "Interaction Path Nodes")
+                    .WithOnSelectCallback((ReorderableList l) => {
+                        if (l.index >= l.list.Count) {
+                            incomingConditionsList = InteractionEditorListBuilder.GetDefaultEmptyList("Select an interaction to view incoming conditions.");
+                            eventTriggersList = InteractionEditorListBuilder.GetDefaultEmptyList("Select an interaction to view event triggers.");
+                            optionsList = InteractionEditorListBuilder.GetDefaultEmptyList("Select an interaction to view options.");
+                            optionConditionsList = null;
+                            return;
                         }
-                    };
 
-                    optionsList = new(element.Options, typeof(InteractionNodeJSON.InteractionOptionJSON), true, true, true, true) {
-                        multiSelect = false,
-                        drawHeaderCallback = (Rect rect) => {
-                            EditorGUI.LabelField(rect, "Options");
-                        },
-                        onSelectCallback = (ReorderableList ll) => {
-                            if (ll.index >= ll.list.Count) {
-                                optionConditionsList = null;
-                                return;
-                            }
-                            optionConditionsList = GetListForConditions(element.Options[ll.index].Conditions);
-                        },
-                        onChangedCallback = CallSelectOnChangeCallback,
-                        drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) => {
-                            InteractionNodeJSON.InteractionOptionJSON option = element.Options[index];
-                            rect.y += 2;
-                            option.OptionText = EditorGUI.TextField(new Rect(rect.x, rect.y, rect.width, EditorGUIUtility.singleLineHeight * 2), $"Option Text {index}", option.OptionText);
-                            rect.y += 2;
-                            option.NextPath = EditorGUI.TextField(new Rect(rect.x, rect.y + EditorGUIUtility.singleLineHeight * 2, rect.width, EditorGUIUtility.singleLineHeight), "Next Path", option.NextPath);
-                        },
-                        elementHeight = EditorGUIUtility.singleLineHeight * 3 + 2
-                    };
-                    optionConditionsList = GetDefaultEmptyList("Select an option to view conditions.");
-                },
-                onChangedCallback = CallSelectOnChangeCallback,
-                drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) => {
-                    InteractionNodeJSON element = interactionJson.Paths[currInteractionPath][index];
-                    rect.y += 2;
-                    element.Text = EditorGUI.TextField(new Rect(rect.x, rect.y, rect.width, EditorGUIUtility.singleLineHeight * 2), $"Text {index}", element.Text);
-                },
-                elementHeight = EditorGUIUtility.singleLineHeight * 2
-            };
+                        InteractionNodeJSON element = interactionJson.Paths[currInteractionPath][l.index];
+                        currInteractionNodeIndex = l.index;
+
+                        incomingConditionsList = GetListForConditions(element.IncomingConditions, "Incoming Conditions");
+
+
+                        eventTriggersList =
+                            InteractionEditorListBuilder.NewBuilder(element.EventTriggers, "Event Triggers")
+                                .WithDrawElementCallback((Rect rect, int index, bool isActive, bool isFocused) => {
+                                    string eventTrigger = element.EventTriggers[index];
+                                    rect.y += 2;
+                                    element.EventTriggers[index] = EditorGUI.TextField(new Rect(rect.x, rect.y, rect.width, EditorGUIUtility.singleLineHeight), $"Trigger {index}", eventTrigger);
+                                })
+                                .Build();
+
+                        optionsList =
+                            InteractionEditorListBuilder.NewBuilder(element.Options, "Options")
+                                .WithOnSelectCallback((ReorderableList ll) => {
+                                    if (ll.index >= ll.list.Count) {
+                                        optionConditionsList = null;
+                                        return;
+                                    }
+                                    optionConditionsList = GetListForConditions(element.Options[ll.index].Conditions);
+                                })
+                                .WithDrawElementCallback((Rect rect, int index, bool isActive, bool isFocused) => {
+                                    InteractionNodeJSON.InteractionOptionJSON option = element.Options[index];
+                                    rect.y += 2;
+                                    option.OptionText = EditorGUI.TextField(new Rect(rect.x, rect.y, rect.width, EditorGUIUtility.singleLineHeight * 2), $"Option Text {index}", option.OptionText);
+                                    rect.y += 2;
+                                    option.NextPath = EditorGUI.TextField(new Rect(rect.x, rect.y + EditorGUIUtility.singleLineHeight * 2, rect.width, EditorGUIUtility.singleLineHeight), "Next Path", option.NextPath);
+                                })
+                                .WithElementHeight(EditorGUIUtility.singleLineHeight * 3 + 2)
+                                .Build();
+
+                        optionConditionsList = InteractionEditorListBuilder.GetDefaultEmptyList("Select an option to view conditions.");
+                    })
+                    .WithDrawElementCallback((Rect rect, int index, bool isActive, bool isFocused) => {
+                        InteractionNodeJSON element = interactionJson.Paths[currInteractionPath][index];
+                        rect.y += 2;
+                        element.Text = EditorGUI.TextField(new Rect(rect.x, rect.y, rect.width, EditorGUIUtility.singleLineHeight * 2), $"Text {index}", element.Text);
+                    })
+                    .WithElementHeight(EditorGUIUtility.singleLineHeight * 2)
+                    .Build();
 
             interactionPathEditorPane.Add(new IMGUIContainer(() => {
                 interactionPathNodeList.DoLayoutList();
@@ -280,63 +270,45 @@ namespace SimCard.SimGame {
 
         // Helpers
 
-        void CallSelectOnChangeCallback(ReorderableList l) => l.onSelectCallback.Invoke(l);
-
-        ReorderableList GetDefaultEmptyList(string noneLabel) {
-            return new(new List<string>(), typeof(string), false, false, false, false) {
-                drawNoneElementCallback = (Rect rect) => {
-                    EditorGUI.LabelField(rect, noneLabel);
-                },
-            };
-        }
-
         ReorderableList GetListForConditions(Dictionary<ConditionKeyJSON, string> dict, string headerLabel = "Conditions") {
             // Create a List from the dictionary, need this so that ReorderableList can wrap it/edit it
             List<(ConditionKeyJSON, string)> dictList = dict.Select(pair => (pair.Key, pair.Value)).ToList();
 
-            return new(dictList, typeof((ConditionKeyJSON, string)), true, true, true, true) {
-                multiSelect = false,
-                drawHeaderCallback = (Rect rect) => {
-                    EditorGUI.LabelField(rect, headerLabel);
-                },
-                onRemoveCallback = (ReorderableList l) => {
-                    (ConditionKeyJSON key, string value) = ((ConditionKeyJSON, string))l.list[l.index];
-                    dict.Remove(key);
-                    l.list.RemoveAt(l.index);
-                },
-                onAddDropdownCallback = (Rect rect, ReorderableList l) => {
-                    GenericMenu menu = new GenericMenu();
+            return InteractionEditorListBuilder.NewBuilder(dictList, headerLabel)
+                    .WithOnCanAddCallback((ReorderableList l) => {
+                        return l.count < System.Enum.GetValues(typeof(ConditionKeyJSON)).Length;
+                    })
+                    .WithOnAddDropdownCallback((Rect rect, ReorderableList l) => {
+                        GenericMenu menu = new GenericMenu();
 
-                    IEnumerable<ConditionKeyJSON> conditionKeysLeft = System.Enum.GetValues(typeof(ConditionKeyJSON)).Cast<ConditionKeyJSON>().Except(dict.Keys);
-                    foreach (ConditionKeyJSON conditionKey in conditionKeysLeft) {
-                        menu.AddItem(new GUIContent(conditionKey.ToString()), false, () => {
-                            dict.Add(conditionKey, "");
-                            l.list.Add((conditionKey, ""));
-                        });
-                    }
+                        IEnumerable<ConditionKeyJSON> conditionKeysLeft = System.Enum.GetValues(typeof(ConditionKeyJSON)).Cast<ConditionKeyJSON>().Except(dict.Keys);
+                        foreach (ConditionKeyJSON conditionKey in conditionKeysLeft) {
+                            menu.AddItem(new GUIContent(conditionKey.ToString()), false, () => {
+                                dict.Add(conditionKey, "");
+                                l.list.Add((conditionKey, ""));
+                            });
+                        }
 
-                    menu.ShowAsContext();
-                },
-                onCanAddCallback = (ReorderableList l) => {
-                    return l.count < System.Enum.GetValues(typeof(ConditionKeyJSON)).Length;
-                },
-                drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) => {
-                    (ConditionKeyJSON key, string value) element = dictList[index];
+                        menu.ShowAsContext();
+                    })
+                    .WIthOnRemoveCallback((ReorderableList l) => {
+                        (ConditionKeyJSON key, string value) = ((ConditionKeyJSON, string))l.list[l.index];
+                        dict.Remove(key);
+                        l.list.RemoveAt(l.index);
+                    })
+                    .WithDrawElementCallback((Rect rect, int index, bool isActive, bool isFocused) => {
+                        (ConditionKeyJSON key, string value) element = dictList[index];
 
-                    rect.y += 2;
-                    string previousValue = element.value;
-                    element.value = EditorGUI.TextField(new Rect(rect.x, rect.y, rect.width, EditorGUIUtility.singleLineHeight), element.key.ToString(), element.value);
+                        rect.y += 2;
+                        string previousValue = element.value;
+                        element.value = EditorGUI.TextField(new Rect(rect.x, rect.y, rect.width, EditorGUIUtility.singleLineHeight), element.key.ToString(), element.value);
 
-                    Debug.Log($"Prev value = {previousValue}, next value should be {element.value}");
-
-                    if (!element.value.Equals(previousValue)) {
-                        dict[element.key] = element.value;
-                        dictList[index] = element;
-
-                        Debug.Log($"Key: {element.key}, Value: {element.value}");
-                    }
-                }
-            };
+                        if (!element.value.Equals(previousValue)) {
+                            dict[element.key] = element.value;
+                            dictList[index] = element;
+                        }
+                    })
+                    .Build();
         }
 
         ListView CreateListView<T>(List<T> baseItemSource, List<T> activeItemSource, System.Func<T, string> MapName) where T : class {
@@ -382,6 +354,100 @@ namespace SimCard.SimGame {
 
             // Return the list view, we can reference the parent from it
             return listView;
+        }
+    }
+
+    public class InteractionEditorListBuilder {
+        public static InteractionEditorListBuilder<T> NewBuilder<T>(List<T> elements, string label) {
+            return new(elements, label);
+        }
+
+        public static ReorderableList GetDefaultEmptyList(string noneLabel) {
+            return NewBuilder(new List<string>(), "").WithDrawNoneElementCallback((Rect rect) => {
+                EditorGUI.LabelField(rect, noneLabel);
+            }).Build(false);
+        }
+    }
+
+    public class InteractionEditorListBuilder<T> {
+        // Must be provided at start
+        private List<T> elements;
+        private string label;
+
+        // Optionally added callbacks (type from ReorderableList), just a subset for what we need
+
+        // Visual callbacks/fields
+        private ReorderableList.DrawNoneElementCallback drawNoneElementCallback;
+        private ReorderableList.ElementCallbackDelegate drawElementCallback;
+        private float elementHeight = 21; // Default height of ReorderableList
+
+        // Selection callback
+        private ReorderableList.SelectCallbackDelegate onSelectCallback;
+
+        // Add/remove callbacks
+        private ReorderableList.CanAddCallbackDelegate onCanAddCallback;
+        private ReorderableList.AddDropdownCallbackDelegate onAddDropdownCallback;
+        private ReorderableList.RemoveCallbackDelegate onRemoveCallback;
+
+        public InteractionEditorListBuilder(List<T> elements, string label) {
+            this.elements = elements;
+            this.label = label;
+        }
+
+        public InteractionEditorListBuilder<T> WithDrawNoneElementCallback(ReorderableList.DrawNoneElementCallback drawNoneElementCallback) {
+            this.drawNoneElementCallback = drawNoneElementCallback;
+            return this;
+        }
+
+        public InteractionEditorListBuilder<T> WithDrawElementCallback(ReorderableList.ElementCallbackDelegate drawElementCallback) {
+            this.drawElementCallback = drawElementCallback;
+            return this;
+        }
+
+        public InteractionEditorListBuilder<T> WithElementHeight(float elementHeight) {
+            this.elementHeight = elementHeight;
+            return this;
+        }
+
+        public InteractionEditorListBuilder<T> WithOnSelectCallback(ReorderableList.SelectCallbackDelegate onSelectCallback) {
+            this.onSelectCallback = onSelectCallback;
+            return this;
+        }
+
+        public InteractionEditorListBuilder<T> WithOnCanAddCallback(ReorderableList.CanAddCallbackDelegate onCanAddCallback) {
+            this.onCanAddCallback = onCanAddCallback;
+            return this;
+        }
+
+        public InteractionEditorListBuilder<T> WithOnAddDropdownCallback(ReorderableList.AddDropdownCallbackDelegate onAddDropdownCallback) {
+            this.onAddDropdownCallback = onAddDropdownCallback;
+            return this;
+        }
+
+        public InteractionEditorListBuilder<T> WIthOnRemoveCallback(ReorderableList.RemoveCallbackDelegate onRemoveCallback) {
+            this.onRemoveCallback = onRemoveCallback;
+            return this;
+        }
+
+        public ReorderableList Build(bool interactable = true) {
+            return new ReorderableList(elements, typeof(T), interactable, interactable, interactable, interactable) {
+                multiSelect = false,
+                drawHeaderCallback = (Rect rect) => EditorGUI.LabelField(rect, label),
+
+                // Visual callbacks/fields
+                drawNoneElementCallback = drawNoneElementCallback,
+                drawElementCallback = drawElementCallback,
+                elementHeight = elementHeight,
+
+                // Seletion callback
+                onSelectCallback = onSelectCallback,
+                onChangedCallback = (ReorderableList l) => l.onSelectCallback?.Invoke(l), // Want this by default
+
+                // Add/remove callbacks
+                onCanAddCallback = onCanAddCallback,
+                onAddDropdownCallback = onAddDropdownCallback,
+                onRemoveCallback = onRemoveCallback
+            };
         }
     }
 }
