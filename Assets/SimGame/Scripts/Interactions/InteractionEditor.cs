@@ -79,7 +79,7 @@ namespace SimCard.SimGame {
             TwoPaneSplitView rightPane = new TwoPaneSplitView(0, 250, TwoPaneSplitViewOrientation.Vertical);
 
             // On top, we have init options editor
-            initOptionsPane = new VisualElement();
+            initOptionsPane = new ScrollView(ScrollViewMode.Vertical);
             // MINOR: Better style (want to center it)
             initOptionsPane.Add(new Label("Select an interactable to start editing."));
 
