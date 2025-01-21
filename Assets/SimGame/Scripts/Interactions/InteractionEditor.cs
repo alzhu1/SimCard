@@ -334,7 +334,7 @@ namespace SimCard.SimGame {
 
             // Update locally held variable to use later in searching
             listView.selectionChanged += (items) => {
-                currItem = items.Count() == 0 ? null : (T)items.First();
+                currItem = items.Count() == 0 ? null : items.First() as T;
             };
 
             // On search update, change both list view source and active item source
