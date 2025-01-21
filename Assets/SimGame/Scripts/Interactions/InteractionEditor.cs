@@ -101,11 +101,7 @@ namespace SimCard.SimGame {
 
             TextAsset currAsset = items.First() as TextAsset;
             InteractionJSON interactionJson = JObject.Parse(currAsset.text).ToObject<InteractionJSON>(serializer);
-            ReorderableList initPathOptionConditionsList = new(new List<string>(), typeof(string), false, false, false, false) {
-                drawNoneElementCallback = (Rect rect) => {
-                    EditorGUI.LabelField(rect, "Select a path above to view conditions.");
-                },
-            };
+            ReorderableList initPathOptionConditionsList = GetDefaultEmptyList("Select a path above to view conditions.");
 
             Debug.Log($"Json has been parsed for {currAsset.name}");
 
@@ -129,10 +125,14 @@ namespace SimCard.SimGame {
                     EditorGUI.LabelField(rect, "Path Options");
                 },
                 onSelectCallback = (ReorderableList l) => {
-                    InitInteractionJSON.InitPathOptionsJSON element = l.list[l.index] as InitInteractionJSON.InitPathOptionsJSON;
+                    if (l.index >= l.list.Count) {
+                        initPathOptionConditionsList = GetDefaultEmptyList("Select a path above to view conditions.");
+                        return;
+                    }
+                    InitInteractionJSON.InitPathOptionsJSON element = interactionJson.Init.PathOptions[l.index];
                     initPathOptionConditionsList = GetListForConditions(element.Conditions);
-                    Debug.Log($"next path: {element.NextPath}");
                 },
+                onChangedCallback = CallSelectOnChangeCallback,
                 drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) => {
                     InitInteractionJSON.InitPathOptionsJSON element = interactionJson.Init.PathOptions[index];
                     rect.y += 2;
@@ -174,9 +174,9 @@ namespace SimCard.SimGame {
             string currInteractionPath = items.First() as string;
             int currInteractionNodeIndex = -1;
 
-            ReorderableList incomingConditionsList = null;
-            ReorderableList eventTriggersList = null;
-            ReorderableList optionsList = null;
+            ReorderableList incomingConditionsList = GetDefaultEmptyList("Select an interaction to view incoming conditions.");
+            ReorderableList eventTriggersList = GetDefaultEmptyList("Select an interaction to view event triggers.");
+            ReorderableList optionsList = GetDefaultEmptyList("Select an interaction to view options.");
             ReorderableList optionConditionsList = null;
 
             interactionPathEditorPane.Clear();
@@ -188,7 +188,15 @@ namespace SimCard.SimGame {
                     EditorGUI.LabelField(rect, "Interaction Path Nodes");
                 },
                 onSelectCallback = (ReorderableList l) => {
-                    InteractionNodeJSON element = l.list[l.index] as InteractionNodeJSON;
+                    if (l.index >= l.list.Count) {
+                        incomingConditionsList = GetDefaultEmptyList("Select an interaction to view incoming conditions.");
+                        eventTriggersList = GetDefaultEmptyList("Select an interaction to view event triggers.");
+                        optionsList = GetDefaultEmptyList("Select an interaction to view options.");
+                        optionConditionsList = null;
+                        return;
+                    }
+
+                    InteractionNodeJSON element = interactionJson.Paths[currInteractionPath][l.index];
                     currInteractionNodeIndex = l.index;
 
                     incomingConditionsList = GetListForConditions(element.IncomingConditions, "Incoming Conditions");
@@ -210,8 +218,13 @@ namespace SimCard.SimGame {
                             EditorGUI.LabelField(rect, "Options");
                         },
                         onSelectCallback = (ReorderableList ll) => {
+                            if (ll.index >= ll.list.Count) {
+                                optionConditionsList = null;
+                                return;
+                            }
                             optionConditionsList = GetListForConditions(element.Options[ll.index].Conditions);
                         },
+                        onChangedCallback = CallSelectOnChangeCallback,
                         drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) => {
                             InteractionNodeJSON.InteractionOptionJSON option = element.Options[index];
                             rect.y += 2;
@@ -221,8 +234,9 @@ namespace SimCard.SimGame {
                         },
                         elementHeight = EditorGUIUtility.singleLineHeight * 3 + 2
                     };
-                    optionConditionsList = null;
+                    optionConditionsList = GetDefaultEmptyList("Select an option to view conditions.");
                 },
+                onChangedCallback = CallSelectOnChangeCallback,
                 drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) => {
                     InteractionNodeJSON element = interactionJson.Paths[currInteractionPath][index];
                     rect.y += 2;
@@ -233,12 +247,10 @@ namespace SimCard.SimGame {
 
             interactionPathEditorPane.Add(new IMGUIContainer(() => {
                 interactionPathNodeList.DoLayoutList();
-                if (currInteractionNodeIndex >= 0) {
-                    incomingConditionsList.DoLayoutList();
-                    eventTriggersList.DoLayoutList();
-                    optionsList.DoLayoutList();
-                    optionConditionsList?.DoLayoutList();
-                }
+                incomingConditionsList.DoLayoutList();
+                eventTriggersList.DoLayoutList();
+                optionsList.DoLayoutList();
+                optionConditionsList?.DoLayoutList();
             }));
         }
 
@@ -267,6 +279,16 @@ namespace SimCard.SimGame {
         }
 
         // Helpers
+
+        void CallSelectOnChangeCallback(ReorderableList l) => l.onSelectCallback.Invoke(l);
+
+        ReorderableList GetDefaultEmptyList(string noneLabel) {
+            return new(new List<string>(), typeof(string), false, false, false, false) {
+                drawNoneElementCallback = (Rect rect) => {
+                    EditorGUI.LabelField(rect, noneLabel);
+                },
+            };
+        }
 
         ReorderableList GetListForConditions(Dictionary<ConditionKeyJSON, string> dict, string headerLabel = "Conditions") {
             // Create a List from the dictionary, need this so that ReorderableList can wrap it/edit it
