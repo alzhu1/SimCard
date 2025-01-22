@@ -80,8 +80,10 @@ namespace SimCard.SimGame {
 
             // On top, we have init options editor
             initOptionsPane = new ScrollView(ScrollViewMode.Vertical);
-            // MINOR: Better style (want to center it)
-            initOptionsPane.Add(new Label("Select an interactable to start editing."));
+
+            Label emptyLabel = new Label("Select an interactable to start editing.");
+            emptyLabel.style.alignSelf = Align.Center;
+            initOptionsPane.Add(emptyLabel);
 
             // No items yet, init as empty
             interactionPathsPane = new TwoPaneSplitView(0, 250, TwoPaneSplitViewOrientation.Horizontal);
@@ -107,7 +109,11 @@ namespace SimCard.SimGame {
 
             // On top, init options pane
             initOptionsPane.Clear();
-            initOptionsPane.Add(new Label(currAsset.name));
+
+            Label interactionName = new Label(currAsset.name);
+            interactionName.style.alignSelf = Align.Center;
+            interactionName.style.fontSize = new Length(20, LengthUnit.Pixel);
+            initOptionsPane.Add(interactionName);
 
             // Add button to update
             Button updateButton = new Button() {
@@ -178,7 +184,11 @@ namespace SimCard.SimGame {
             ReorderableList optionConditionsList = null;
 
             interactionPathEditorPane.Clear();
-            interactionPathEditorPane.Add(new Label(currInteractionPath));
+
+            Label interactionPathLabel = new Label(currInteractionPath);
+            interactionPathLabel.style.alignSelf = Align.Center;
+            interactionPathLabel.style.fontSize = new Length(16, LengthUnit.Pixel);
+            interactionPathEditorPane.Add(interactionPathLabel);
 
             ReorderableList interactionPathNodeList =
                 InteractionEditorListBuilder.NewBuilder(interactionJson.Paths[currInteractionPath], "Interaction Path Nodes")
@@ -275,40 +285,40 @@ namespace SimCard.SimGame {
             List<(ConditionKeyJSON, string)> dictList = dict.Select(pair => (pair.Key, pair.Value)).ToList();
 
             return InteractionEditorListBuilder.NewBuilder(dictList, headerLabel)
-                    .WithOnCanAddCallback((ReorderableList l) => {
-                        return l.count < System.Enum.GetValues(typeof(ConditionKeyJSON)).Length;
-                    })
-                    .WithOnAddDropdownCallback((Rect rect, ReorderableList l) => {
-                        GenericMenu menu = new GenericMenu();
+                .WithOnCanAddCallback((ReorderableList l) => {
+                    return l.count < System.Enum.GetValues(typeof(ConditionKeyJSON)).Length;
+                })
+                .WithOnAddDropdownCallback((Rect rect, ReorderableList l) => {
+                    GenericMenu menu = new GenericMenu();
 
-                        IEnumerable<ConditionKeyJSON> conditionKeysLeft = System.Enum.GetValues(typeof(ConditionKeyJSON)).Cast<ConditionKeyJSON>().Except(dict.Keys);
-                        foreach (ConditionKeyJSON conditionKey in conditionKeysLeft) {
-                            menu.AddItem(new GUIContent(conditionKey.ToString()), false, () => {
-                                dict.Add(conditionKey, "");
-                                l.list.Add((conditionKey, ""));
-                            });
-                        }
+                    IEnumerable<ConditionKeyJSON> conditionKeysLeft = System.Enum.GetValues(typeof(ConditionKeyJSON)).Cast<ConditionKeyJSON>().Except(dict.Keys);
+                    foreach (ConditionKeyJSON conditionKey in conditionKeysLeft) {
+                        menu.AddItem(new GUIContent(conditionKey.ToString()), false, () => {
+                            dict.Add(conditionKey, "");
+                            l.list.Add((conditionKey, ""));
+                        });
+                    }
 
-                        menu.ShowAsContext();
-                    })
-                    .WIthOnRemoveCallback((ReorderableList l) => {
-                        (ConditionKeyJSON key, string value) = ((ConditionKeyJSON, string))l.list[l.index];
-                        dict.Remove(key);
-                        l.list.RemoveAt(l.index);
-                    })
-                    .WithDrawElementCallback((Rect rect, int index, bool isActive, bool isFocused) => {
-                        (ConditionKeyJSON key, string value) element = dictList[index];
+                    menu.ShowAsContext();
+                })
+                .WithOnRemoveCallback((ReorderableList l) => {
+                    (ConditionKeyJSON key, string value) = ((ConditionKeyJSON, string))l.list[l.index];
+                    dict.Remove(key);
+                    l.list.RemoveAt(l.index);
+                })
+                .WithDrawElementCallback((Rect rect, int index, bool isActive, bool isFocused) => {
+                    (ConditionKeyJSON key, string value) element = dictList[index];
 
-                        rect.y += 2;
-                        string previousValue = element.value;
-                        element.value = EditorGUI.TextField(new Rect(rect.x, rect.y, rect.width, EditorGUIUtility.singleLineHeight), element.key.ToString(), element.value);
+                    rect.y += 2;
+                    string previousValue = element.value;
+                    element.value = EditorGUI.TextField(new Rect(rect.x, rect.y, rect.width, EditorGUIUtility.singleLineHeight), element.key.ToString(), element.value);
 
-                        if (!element.value.Equals(previousValue)) {
-                            dict[element.key] = element.value;
-                            dictList[index] = element;
-                        }
-                    })
-                    .Build();
+                    if (!element.value.Equals(previousValue)) {
+                        dict[element.key] = element.value;
+                        dictList[index] = element;
+                    }
+                })
+                .Build();
         }
 
         ListView CreateListView<T>(List<T> baseItemSource, List<T> activeItemSource, System.Func<T, string> MapName) where T : class {
@@ -424,7 +434,7 @@ namespace SimCard.SimGame {
             return this;
         }
 
-        public InteractionEditorListBuilder<T> WIthOnRemoveCallback(ReorderableList.RemoveCallbackDelegate onRemoveCallback) {
+        public InteractionEditorListBuilder<T> WithOnRemoveCallback(ReorderableList.RemoveCallbackDelegate onRemoveCallback) {
             this.onRemoveCallback = onRemoveCallback;
             return this;
         }
