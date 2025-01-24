@@ -15,10 +15,10 @@ namespace SimCard.SimGame {
         private List<TextAsset> filteredFiles;
 
         [SerializeField]
-        private int fileIndex;
+        private int fileIndex = -1;
 
         [SerializeField]
-        private int interactionPathIndex;
+        private int interactionPathIndex = -1;
 
         private VisualElement initOptionsPane;
         private VisualElement interactionPathsPane;
@@ -86,7 +86,7 @@ namespace SimCard.SimGame {
             initOptionsPane.Add(emptyLabel);
 
             // No items yet, init as empty
-            interactionPathsPane = new TwoPaneSplitView(0, 250, TwoPaneSplitViewOrientation.Horizontal);
+            interactionPathsPane = new TwoPaneSplitView(0, 315, TwoPaneSplitViewOrientation.Horizontal);
             ListView interactionPathListView = CreateListView(new List<string>(), new List<string>(), (item) => item);
             interactionPathsPane.Add(interactionPathListView.parent);
             interactionPathsPane.Add(new VisualElement());
@@ -157,7 +157,7 @@ namespace SimCard.SimGame {
             // Recreate the interaction paths pane to avoid glitchy dragging when updating children
             VisualElement rightPane = interactionPathsPane.parent;
             rightPane.RemoveAt(1);
-            interactionPathsPane = new TwoPaneSplitView(0, 250, TwoPaneSplitViewOrientation.Horizontal);
+            interactionPathsPane = new TwoPaneSplitView(0, 365, TwoPaneSplitViewOrientation.Horizontal);
 
             ListView interactionPathListView = CreateListView(interactionPathNames, interactionPathNames, (item) => item, true);
             interactionPathListView.selectedIndex = interactionPathIndex;
