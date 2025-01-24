@@ -152,18 +152,42 @@ namespace SimCard.SimGame {
 
             // On bottom, we have interactionPaths editor
             List<string> interactionPathNames = interactionJson.Paths.Keys.ToList();
+            interactionPathIndex = -1;
 
             // Recreate the interaction paths pane to avoid glitchy dragging when updating children
             VisualElement rightPane = interactionPathsPane.parent;
             rightPane.RemoveAt(1);
             interactionPathsPane = new TwoPaneSplitView(0, 250, TwoPaneSplitViewOrientation.Horizontal);
 
-            ListView interactionPathListView = CreateListView(interactionPathNames, interactionPathNames, (item) => item);
+            ListView interactionPathListView = CreateListView(interactionPathNames, interactionPathNames, (item) => item, true);
             interactionPathListView.selectedIndex = interactionPathIndex;
             interactionPathListView.selectionChanged += (items) => {
                 interactionPathIndex = interactionPathListView.selectedIndex;
-                OnInteractionPathSelection(items, interactionJson);
+                OnInteractionPathSelection(items, interactionJson, interactionPathListView);
             };
+            interactionPathListView.itemsAdded += (IEnumerable<int> indices) => {
+                // New item added
+                int index = indices.First();
+                string nextKey = System.Guid.NewGuid().ToString();
+                interactionPathListView.itemsSource[index] = nextKey;
+                interactionJson.Paths.Add(nextKey, new());
+            };
+            interactionPathListView.itemsRemoved += (IEnumerable<int> indices) => {
+                int index = indices.First();
+
+                // Clear pane
+                interactionPathEditorPane.Clear();
+                if (index < interactionPathListView.itemsSource.Count - 1) {
+                    // Fake a "selection" since Unity auto refers to the next index
+                    interactionPathIndex = index + 1;
+                    object item = interactionPathListView.itemsSource[index + 1];
+                    List<object> items = new() {
+                        item
+                    };
+                    OnInteractionPathSelection(items, interactionJson, interactionPathListView);
+                }
+            };
+
             interactionPathsPane.Add(interactionPathListView.parent);
 
             interactionPathEditorPane = new ScrollView(ScrollViewMode.Vertical);
@@ -171,7 +195,7 @@ namespace SimCard.SimGame {
             rightPane.Add(interactionPathsPane);
         }
 
-        void OnInteractionPathSelection(IEnumerable<object> items, InteractionJSON interactionJson) {
+        void OnInteractionPathSelection(IEnumerable<object> items, InteractionJSON interactionJson, ListView interactionPathListView) {
             if (items.Count() == 0)
                 return;
 
@@ -185,10 +209,34 @@ namespace SimCard.SimGame {
 
             interactionPathEditorPane.Clear();
 
-            Label interactionPathLabel = new Label(currInteractionPath);
-            interactionPathLabel.style.alignSelf = Align.Center;
-            interactionPathLabel.style.fontSize = new Length(16, LengthUnit.Pixel);
-            interactionPathEditorPane.Add(interactionPathLabel);
+            // Create editable text field for changing the name
+            TextField interactionPathName = new TextField(100, false, false, ' ') {
+                value = currInteractionPath
+            };
+
+            // Callbacks
+            interactionPathName.RegisterValueChangedCallback(evt => {
+                Debug.Log(interactionPathName.text);
+            });
+            interactionPathName.RegisterCallback<NavigationSubmitEvent>((evt) => {
+                string newInteractionPath = interactionPathName.text;
+                if (interactionJson.Paths.ContainsKey(newInteractionPath)) {
+                    Debug.LogWarning($"Cannot add duplicate key {newInteractionPath}");
+                } else {
+                    // Replace the currentInteractionPath
+                    interactionJson.Paths.Add(newInteractionPath, interactionJson.Paths[currInteractionPath]);
+                    interactionJson.Paths.Remove(currInteractionPath);
+                    currInteractionPath = newInteractionPath;
+
+                    // Update in ListView item source
+                    interactionPathListView.itemsSource[interactionPathListView.selectedIndex] = newInteractionPath;
+                    interactionPathListView.RefreshItems();
+                }
+
+                evt.StopPropagation();
+            }, TrickleDown.TrickleDown);
+            interactionPathName.style.fontSize = new Length(16, LengthUnit.Pixel);
+            interactionPathEditorPane.Add(interactionPathName);
 
             ReorderableList interactionPathNodeList =
                 InteractionEditorListBuilder.NewBuilder(interactionJson.Paths[currInteractionPath], "Interaction Path Nodes")
@@ -205,7 +253,6 @@ namespace SimCard.SimGame {
                         currInteractionNodeIndex = l.index;
 
                         incomingConditionsList = GetListForConditions(element.IncomingConditions, "Incoming Conditions");
-
 
                         eventTriggersList =
                             InteractionEditorListBuilder.NewBuilder(element.EventTriggers, "Event Triggers")
@@ -321,16 +368,11 @@ namespace SimCard.SimGame {
                 .Build();
         }
 
-        ListView CreateListView<T>(List<T> baseItemSource, List<T> activeItemSource, System.Func<T, string> MapName) where T : class {
+        ListView CreateListView<T>(List<T> baseItemSource, List<T> activeItemSource, System.Func<T, string> MapName, bool showButtons = false) where T : class {
             VisualElement parentPane = new VisualElement();
             T currItem = null;
 
-            // Toolbar with search field
-            Toolbar toolbar = new Toolbar();
-            ToolbarSearchField toolbarSearchField = new ToolbarSearchField();
-            toolbarSearchField.style.flexShrink = 1;
-            toolbar.Add(toolbarSearchField);
-
+            // Create list view
             ListView listView = new ListView() {
                 selectionType = SelectionType.Single,
                 itemsSource = activeItemSource,
@@ -341,6 +383,34 @@ namespace SimCard.SimGame {
             };
             listView.style.paddingLeft = 5;
             listView.style.paddingRight = 5;
+
+            // Toolbar with search field
+            Toolbar toolbar = new Toolbar();
+
+            // Setup toolbar buttons
+            if (showButtons) {
+                ToolbarButton addButton = new ToolbarButton();
+                addButton.Add(new Image() {
+                    image = EditorGUIUtility.TrIconContent("Toolbar Plus", "Add to the list").image
+                });
+                addButton.clicked += () => {
+                    listView.viewController.AddItems(1);
+                };
+                toolbar.Add(addButton);
+                ToolbarButton removeButton = new ToolbarButton();
+                removeButton.Add(new Image() {
+                    image = EditorGUIUtility.TrIconContent("Toolbar Minus", "Remove selection from the list").image
+                });
+                removeButton.clicked += () => {
+                    listView.viewController.RemoveItem(listView.selectedIndex);
+                };
+                toolbar.Add(removeButton);
+            }
+
+            // Add search field
+            ToolbarSearchField toolbarSearchField = new ToolbarSearchField();
+            toolbarSearchField.style.flexShrink = 1;
+            toolbar.Add(toolbarSearchField);
 
             // Update locally held variable to use later in searching
             listView.selectionChanged += (items) => {
