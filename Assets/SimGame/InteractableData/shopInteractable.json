@@ -12,47 +12,37 @@
                 "Options": [
                     {
                         "OptionText": "Buy",
-                        "NextPath": "ShopBuy",
-                        "FallbackPath": null,
+                        "NextPath": "$ShopBuy",
+                        "FallbackPath": "",
                         "Conditions": {}
                     },
                     {
                         "OptionText": "Exit",
-                        "NextPath": null,
-                        "FallbackPath": null,
+                        "NextPath": "",
+                        "FallbackPath": "",
                         "Conditions": {}
                     }
                 ]
             }
         ],
-        "ShopBuy": [
+        "$ShopBuyPost": [
             {
                 "IncomingConditions": {},
-                "Text": "(need custom code to handle this, we don't show interactions)",
+                "Text": "Thanks for your purchase!",
                 "EventTriggers": [
                     "Buy"
                 ],
                 "EndingEventTriggers": [],
-                "Options": [
-                    {
-                        "OptionText": "Card A",
-                        "NextPath": "ShopBuy",
-                        "FallbackPath": null,
-                        "Conditions": {}
-                    },
-                    {
-                        "OptionText": "Card B",
-                        "NextPath": "ShopBuy",
-                        "FallbackPath": null,
-                        "Conditions": {}
-                    },
-                    {
-                        "OptionText": "Card C",
-                        "NextPath": "ShopBuy",
-                        "FallbackPath": null,
-                        "Conditions": {}
-                    }
-                ]
+                "Options": []
+            }
+        ],
+        "$ShopBuy": [
+            {
+                "IncomingConditions": {},
+                "Text": "What are you buying?",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": []
             }
         ]
     }

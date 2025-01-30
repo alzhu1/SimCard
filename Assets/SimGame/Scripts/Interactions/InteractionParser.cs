@@ -97,6 +97,12 @@ namespace SimCard.SimGame {
                 // e.g. MaxVisibleCharacters wouldn't change
                 // OptionIndex wouldn't change (maybe add handling in UpdateMaxVisibleCharacters)
 
+                // We could check for special paths names (starting with $) and add handling there
+                Debug.Log($"Chosen path name: {pathName}");
+                if (pathName.StartsWith("$ShopBuy")) {
+                    Debug.LogWarning("We are on a shop buy path");
+                }
+
                 return;
             }
 

@@ -61,6 +61,12 @@ namespace SimCard.SimGame {
                     };
                 }
 
+                case ConditionKey.Cost: {
+                    // This should always be a number
+                    int cardCost = int.Parse(parameter);
+                    return cardCost <= player.Currency;
+                }
+
                 default: {
                     return false;
                 }
@@ -74,6 +80,43 @@ namespace SimCard.SimGame {
                 if (pathOption.Conditions.All(kv => AssertCondition(kv.Key, kv.Value))) {
                     return pathOption.NextPath;
                 }
+            }
+
+            // Also init shop options if "$ShopBuy" exists
+            if (interactionJson.Paths.ContainsKey("$ShopBuy")) {
+                // Create card options
+                IEnumerable<InteractionNode.InteractionOption> cardOptions = deck.Select(card => new InteractionNode.InteractionOption() {
+                    OptionText = card.cardSO.cardName,
+                    NextPath = "$ShopBuyPost",
+                    FallbackPath = "$ShopBuyFail",
+                    Conditions = new() {
+                        { ConditionKey.Cost, $"{card.cardSO.cost}" }
+                    }
+                });
+
+                // Update the $ShopBuy path
+                InteractionNode shopBuyNode = interactionJson.Paths["$ShopBuy"][0];
+                shopBuyNode.Options.Clear();
+                shopBuyNode.Options.AddRange(cardOptions);
+
+                // Init $ShopBuyPost and $ShopBuyFail paths
+                if (!interactionJson.Paths.ContainsKey("$ShopBuyPost")) {
+                    interactionJson.Paths.Add("$ShopBuyPost", new() {
+                        new() { Text = "Thanks for your purchase!" }
+                    });
+                }
+                InteractionNode shopBuyPostNode = interactionJson.Paths["$ShopBuyPost"][0];
+                shopBuyPostNode.Options.Clear();
+                shopBuyPostNode.Options.AddRange(cardOptions);
+
+                if (!interactionJson.Paths.ContainsKey("$ShopBuyFail")) {
+                    interactionJson.Paths.Add("$ShopBuyFail", new() {
+                        new() { Text = "You don't have enough money." }
+                    });
+                }
+                InteractionNode shopBuyFailNode = interactionJson.Paths["$ShopBuyFail"][0];
+                shopBuyFailNode.Options.Clear();
+                shopBuyFailNode.Options.AddRange(cardOptions);
             }
 
             return "Default";

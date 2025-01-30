@@ -10,7 +10,8 @@ namespace SimCard.SimGame {
     public enum ConditionKey {
         Bool,
         Energy,
-        PathTraversedCount
+        PathTraversedCount,
+        Cost
     }
 
     public class InitInteraction {
@@ -24,15 +25,15 @@ namespace SimCard.SimGame {
 
     public class InteractionNode {
         public Dictionary<ConditionKey, string> IncomingConditions { get; set; } = new();
-        public string Text { get; set; }
+        public string Text { get; set; } = "";
         public List<string> EventTriggers { get; set; } = new();
         public List<string> EndingEventTriggers { get; set; } = new();
         public List<InteractionOption> Options { get; set; } = new();
 
         public class InteractionOption {
-            public string OptionText { get; set; }
-            public string NextPath { get; set; }
-            public string FallbackPath { get; set; }
+            public string OptionText { get; set; } = "";
+            public string NextPath { get; set; } = "";
+            public string FallbackPath { get; set; } = "";
             public Dictionary<ConditionKey, string> Conditions { get; set; } = new();
         }
     }

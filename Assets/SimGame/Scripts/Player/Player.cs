@@ -22,6 +22,7 @@ namespace SimCard.SimGame {
         private Rigidbody2D rb;
         private SpriteRenderer sr;
         private int energy = 100;
+        private int currency = 0;
 
         public List<CardMetadata> Deck => deck;
         public List<CardMetadata> AvailableCards => availableCards;
@@ -30,6 +31,7 @@ namespace SimCard.SimGame {
         public Rigidbody2D RB => rb;
         public SpriteRenderer SR => sr;
         public int Energy => energy;
+        public int Currency => currency;
 
         private SimPlayerState playerState;
 
