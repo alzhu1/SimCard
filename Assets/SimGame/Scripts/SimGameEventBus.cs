@@ -18,7 +18,7 @@ namespace SimCard.SimGame {
 
         // MINOR: This is currently the catch-all event for interaction triggered events
         // Would like a more dynamic solution via scripting, somehow
-        public GameEvent<EventArgs<Interactable, string>> OnInteractionEvent = new();
+        public GameEvent<EventArgs<string, Interactable, int>> OnInteractionEvent = new();
 
         // Cross scene event
         public GameEvent<EventArgs> OnSubSceneLoaded = new();

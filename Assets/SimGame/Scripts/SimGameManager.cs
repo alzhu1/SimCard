@@ -59,20 +59,27 @@ namespace SimCard.SimGame {
             EventBus.OnSubSceneLoaded.Event -= HandleSubSceneLoadedEvent;
         }
 
-        void HandleInteractionEvent(EventArgs<Interactable, string> args) {
-            switch (args.arg2) {
+        void HandleInteractionEvent(EventArgs<string, Interactable, int> args) {
+            Debug.Log($"Received event: {args.arg1}");
+
+            switch (args.arg1) {
                 case "NextDay": {
                     StartCoroutine(GoToNextDay());
                     break;
                 }
 
                 case "StartCardGame": {
-                    StartCoroutine(StartCardGame(args.arg1));
+                    StartCoroutine(StartCardGame(args.arg2));
                     break;
                 }
 
                 case "StartDeckBuild": {
                     StartCoroutine(StartDeckBuilder());
+                    break;
+                }
+
+                case "Buy": {
+                    Debug.Log($"Buying, the arg index is {args.arg3}, card in deck is {args.arg2.Deck[args.arg3].cardSO}");
                     break;
                 }
 

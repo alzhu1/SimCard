@@ -15,6 +15,14 @@ namespace SimCard.Common {
         public EventArgs(T arg1, U arg2) => (this.arg1, this.arg2) = (arg1, arg2);
     }
 
+    public class EventArgs<T, U, V> : EventArgs {
+        public T arg1;
+        public U arg2;
+        public V arg3;
+
+        public EventArgs(T arg1, U arg2, V arg3) => (this.arg1, this.arg2, this.arg3) = (arg1, arg2, arg3);
+    }
+
     public class InitCardGameArgs : EventArgs {
         public List<CardMetadata> playerDeck;
         public List<CardMetadata> opponentDeck;

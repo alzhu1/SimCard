@@ -98,7 +98,7 @@ namespace SimCard.SimGame {
         }
 
         public bool ProcessInteractionConditions(string pathName, int interactionIndex) {
-            InteractionNode currNode = interactionJson.Paths.GetValueOrDefault(pathName)?.ElementAtOrDefault(interactionIndex);
+            InteractionNode currNode = GetCurrentInteraction(pathName, interactionIndex);
             if (currNode == null) {
                 return true;
             }
@@ -110,9 +110,7 @@ namespace SimCard.SimGame {
             int interactionIndex,
             int optionIndex
         ) {
-
-            InteractionNode currNode = interactionJson.Paths.GetValueOrDefault(pathName)?.ElementAtOrDefault(interactionIndex);
-            InteractionNode.InteractionOption selectedOption = currNode.Options[optionIndex];
+            InteractionNode.InteractionOption selectedOption = GetCurrentInteraction(pathName, interactionIndex)?.Options?[optionIndex];
             return selectedOption.Conditions.All(kv => AssertCondition(kv.Key, kv.Value)) ? selectedOption.NextPath : selectedOption.FallbackPath;
         }
     }

@@ -34,7 +34,7 @@ namespace SimCard.SimGame {
 
                     switch (option) {
                         case Menu.MenuOption.Deck: {
-                            player.SimGameManager.EventBus.OnInteractionEvent.Raise(new(null, "StartDeckBuild"));
+                            player.SimGameManager.EventBus.OnInteractionEvent.Raise(new("StartDeckBuild", null, 0));
                             break;
                         }
 

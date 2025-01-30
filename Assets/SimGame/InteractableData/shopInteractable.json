@@ -1,0 +1,59 @@
+{
+    "Init": {
+        "PathOptions": []
+    },
+    "Paths": {
+        "Default": [
+            {
+                "IncomingConditions": {},
+                "Text": "Welcome!",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": [
+                    {
+                        "OptionText": "Buy",
+                        "NextPath": "ShopBuy",
+                        "FallbackPath": null,
+                        "Conditions": {}
+                    },
+                    {
+                        "OptionText": "Exit",
+                        "NextPath": null,
+                        "FallbackPath": null,
+                        "Conditions": {}
+                    }
+                ]
+            }
+        ],
+        "ShopBuy": [
+            {
+                "IncomingConditions": {},
+                "Text": "(need custom code to handle this, we don't show interactions)",
+                "EventTriggers": [
+                    "Buy"
+                ],
+                "EndingEventTriggers": [],
+                "Options": [
+                    {
+                        "OptionText": "Card A",
+                        "NextPath": "ShopBuy",
+                        "FallbackPath": null,
+                        "Conditions": {}
+                    },
+                    {
+                        "OptionText": "Card B",
+                        "NextPath": "ShopBuy",
+                        "FallbackPath": null,
+                        "Conditions": {}
+                    },
+                    {
+                        "OptionText": "Card C",
+                        "NextPath": "ShopBuy",
+                        "FallbackPath": null,
+                        "Conditions": {}
+                    }
+                ]
+            }
+        ]
+    }
+}
