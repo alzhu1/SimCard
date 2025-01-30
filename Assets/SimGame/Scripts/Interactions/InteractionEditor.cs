@@ -279,7 +279,7 @@ namespace SimCard.SimGame {
                                     rect.y += 2;
                                     option.NextPath = EditorGUI.TextField(new Rect(rect.x, rect.y + EditorGUIUtility.singleLineHeight * 2, rect.width, EditorGUIUtility.singleLineHeight), "Next Path", option.NextPath);
                                     rect.y += 2;
-                                    option.FallbackPath = EditorGUI.TextField(new Rect(rect.x, rect.y + EditorGUIUtility.singleLineHeight * 2, rect.width, EditorGUIUtility.singleLineHeight), "Fallback Path", option.FallbackPath);
+                                    option.FallbackPath = EditorGUI.TextField(new Rect(rect.x, rect.y + EditorGUIUtility.singleLineHeight * 3, rect.width, EditorGUIUtility.singleLineHeight), "Fallback Path", option.FallbackPath);
                                 })
                                 .WithElementHeight(EditorGUIUtility.singleLineHeight * 5 + 4)
                                 .Build();
