@@ -35,4 +35,13 @@ namespace SimCard.SimGame {
             public Dictionary<ConditionKey, string> Conditions { get; set; } = new();
         }
     }
+
+    public static class InteractionExtensions {
+        public static int GetEnergyCost(this Dictionary<ConditionKey, string> conditions) {
+            if (int.TryParse(conditions.GetValueOrDefault(ConditionKey.Energy), out int result)) {
+                return result;
+            }
+            return 0;
+        }
+    }
 }

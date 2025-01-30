@@ -22,6 +22,7 @@ namespace SimCard.SimGame {
 
         // Metadata
         private Dictionary<string, int> pathTraversedCount = new();
+        private Player player;
 
         void Awake() {
             interactionJson = JObject.Parse(data.text).ToObject<Interaction>();
@@ -34,13 +35,30 @@ namespace SimCard.SimGame {
                 }
 
                 case ConditionKey.Energy: {
-                    // TODO: Fix
-                    return false;
+                    // This should always be a number
+                    int energyCost = int.Parse(parameter);
+                    return player.Energy <= energyCost;
                 }
 
                 case ConditionKey.PathTraversedCount: {
-                    // TODO: Fix
-                    return false;
+                    // This should always be in the format "PathName Operator Number"
+                    string[] parts = parameter.Split(" ");
+                    string pathName = parts[0];
+                    string op = parts[1];
+
+                    // LHS + RHS
+                    int currentTraversedCount = pathTraversedCount.GetValueOrDefault(pathName);
+                    int requiredTraversedCount = int.Parse(parts[2]);
+
+                    return op switch {
+                        "<" => currentTraversedCount < requiredTraversedCount,
+                        "<=" => currentTraversedCount <= requiredTraversedCount,
+                        ">" => currentTraversedCount > requiredTraversedCount,
+                        ">=" => currentTraversedCount >= requiredTraversedCount,
+                        "==" => currentTraversedCount == requiredTraversedCount,
+                        "!=" => currentTraversedCount != requiredTraversedCount,
+                        _ => false
+                    };
                 }
 
                 default: {
@@ -49,7 +67,9 @@ namespace SimCard.SimGame {
             }
         }
 
-        public string InitInteraction() {
+        public string InitInteraction(Player player) {
+            this.player = player;
+
             foreach (InitInteraction.InitPathOptions pathOption in interactionJson.Init.PathOptions) {
                 if (pathOption.Conditions.All(kv => AssertCondition(kv.Key, kv.Value))) {
                     return pathOption.NextPath;
@@ -59,7 +79,9 @@ namespace SimCard.SimGame {
             return "Default";
         }
 
-        public void EndInteraction(HashSet<string> traversedPaths) {
+        public void EndInteraction(IEnumerable<string> traversedPaths) {
+            this.player = null;
+
             // Keep track of path counts
             foreach (string traversedPath in traversedPaths) {
                 int pathCount = pathTraversedCount.GetValueOrDefault(traversedPath);
@@ -68,6 +90,10 @@ namespace SimCard.SimGame {
         }
 
         public InteractionNode GetCurrentInteractionV2(string pathName, int interactionIndex) {
+            if (pathName == null) {
+                return null;
+            }
+
             return interactionJson.Paths.GetValueOrDefault(pathName)?.ElementAtOrDefault(interactionIndex);
         }
 

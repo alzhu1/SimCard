@@ -7,13 +7,6 @@
                     "PathTraversedCount": "DefaultNo >= 5",
                     "Bool": "False"
                 }
-            },
-            {
-                "NextPath": "NotReal",
-                "Conditions": {
-                    "PathTraversedCount": "DefaultYes >= 5",
-                    "Bool": "True"
-                }
             }
         ]
     },

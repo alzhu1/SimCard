@@ -42,7 +42,7 @@ namespace SimCard.SimGame {
 
             traversedPaths = new HashSet<string>();
             validOptionIndices = new List<int>();
-            pathName = this.interactable.InitInteraction();
+            pathName = this.interactable.InitInteraction(player);
             interactionIndex = 0;
             validOptionIndex = 0;
             traversedPaths.Add(pathName);
@@ -82,9 +82,7 @@ namespace SimCard.SimGame {
                 MaxVisibleCharacters = 0;
 
                 // Consume option's energy
-                // TODO: This is jank
-                // player.ConsumeEnergy(options[OptionIndex].energyCost);
-                player.ConsumeEnergy(int.Parse(options[OptionIndex].Conditions.GetValueOrDefault(ConditionKey.Energy) ?? "0"));
+                player.ConsumeEnergy(options[OptionIndex].Conditions.GetEnergyCost());
 
                 traversedPaths.Add(pathName);
 
@@ -119,7 +117,7 @@ namespace SimCard.SimGame {
             //     }
             // }
 
-            interactable.EndInteraction(traversedPaths);
+            interactable.EndInteraction(traversedPaths.Where(path => path != null));
         }
 
         // Update character value + associated events
@@ -130,7 +128,7 @@ namespace SimCard.SimGame {
                 // Display options
                 List<InteractionNode.InteractionOption> options = CurrInteractionNode.Options;
                 if (options?.Count > 0) {
-                    List<(string, bool)> optionsAllowed = options.Select(x => (x.OptionText, true)).ToList(); //x.energyCost <= player.Energy)).ToList();
+                    List<(string, bool)> optionsAllowed = options.Select(x => (x.OptionText, x.Conditions.GetEnergyCost() <= player.Energy)).ToList();
                     DisplayInteractionOptions.Raise(new(this, optionsAllowed));
 
                     validOptionIndices.Clear();
