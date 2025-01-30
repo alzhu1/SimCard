@@ -573,7 +573,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeTime: 0
   deck: []
-  <InteractableSO>k__BackingField: {fileID: 11400000, guid: e3fe884a02d954cf6a332c6285e3dd4a, type: 2}
+  data: {fileID: 4900000, guid: 2e980fa5332d749c580a3597e39762d8, type: 3}
 --- !u!1 &1304976545
 GameObject:
   m_ObjectHideFlags: 0
@@ -1482,7 +1482,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeTime: 0
   deck: []
-  <InteractableSO>k__BackingField: {fileID: 11400000, guid: 54f1b941595c441f88030618541500cb, type: 2}
+  data: {fileID: 4900000, guid: b0eb8f72148e0420d90d95bd12fb6493, type: 3}
 --- !u!1 &1658193424
 GameObject:
   m_ObjectHideFlags: 0
@@ -2124,7 +2124,7 @@ MonoBehaviour:
   deck:
   - cardSO: {fileID: 11400000, guid: 643af89b9f973416ea69544877944c98, type: 2}
     count: 10
-  <InteractableSO>k__BackingField: {fileID: 11400000, guid: 151a702af7542412da82d5f4178ded52, type: 2}
+  data: {fileID: 4900000, guid: 389ab43c867be48e38e275f980ac6196, type: 3}
 --- !u!58 &2027661460
 CircleCollider2D:
   m_ObjectHideFlags: 0

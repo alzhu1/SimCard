@@ -11,8 +11,10 @@ namespace SimCard.SimGame {
     // Presenter interface for UI to work with
     // This allows us to limit the methods it will work with
     public interface InteractUIListener {
-        public Interaction CurrInteraction { get; }
+        // public Interaction CurrInteraction { get; }
         public int MaxVisibleCharacters { get; }
+
+        public string CurrInteractionText { get; }
     }
 
     public class InteractUI : MonoBehaviour {
@@ -48,9 +50,9 @@ namespace SimCard.SimGame {
         }
 
         void Update() {
-            if (Parser != null && Parser.CurrInteraction != null) {
+            if (Parser != null && Parser.CurrInteractionText != null) {
                 // Non-null means we should update the dialogue text based on parser status
-                dialogueText.text = Parser.CurrInteraction.text;
+                dialogueText.text = Parser.CurrInteractionText;
                 dialogueText.maxVisibleCharacters = Parser.MaxVisibleCharacters;
             }
         }

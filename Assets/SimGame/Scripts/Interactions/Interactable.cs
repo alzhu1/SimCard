@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json.Linq;
 using SimCard.Common;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace SimCard.SimGame {
     public class Interactable : MonoBehaviour {
@@ -17,45 +17,46 @@ namespace SimCard.SimGame {
         private List<CardMetadata> deck;
         public List<CardMetadata> Deck => deck;
 
-        [field: SerializeField]
-        public InteractableSO InteractableSO { get; private set; }
-
-        private Dictionary<string, InteractionPath> interactionPaths = new();
+        [SerializeField] private TextAsset data;
+        private InteractionJSON interactionJson;
 
         // Metadata
         private Dictionary<string, int> pathTraversedCount = new();
 
         void Awake() {
-            interactionPaths = InteractableSO.interactionPaths.ToDictionary(x => x.name, x => x);
-            Assert.IsFalse(interactionPaths.ContainsKey("Default"));
-            interactionPaths.Add(
-                "Default",
-                InteractionPath.CreateDefaultPath(InteractableSO.defaultInteractions)
-            );
+            interactionJson = JObject.Parse(data.text).ToObject<InteractionJSON>();
+        }
 
-            // Ensure that all paths with positive starting priority is unique
-            IEnumerable<int> startingPriorities = interactionPaths
-                .Values.Where(x => x.startingPriority > 0)
-                .Select(x => x.startingPriority);
+        bool AssertCondition(ConditionKey condition, string parameter) {
+            switch (condition) {
+                case ConditionKey.Bool: {
+                    return bool.Parse(parameter);
+                }
 
-            int allStartingPriorityCounts = startingPriorities.Count();
-            int uniqueStartingPriorityCount = startingPriorities.ToHashSet().Count;
+                case ConditionKey.Energy: {
+                    // TODO: Fix
+                    return false;
+                }
 
-            Assert.AreEqual(uniqueStartingPriorityCount, allStartingPriorityCounts);
+                case ConditionKey.PathTraversedCount: {
+                    // TODO: Fix
+                    return false;
+                }
+
+                default: {
+                    return false;
+                }
+            }
         }
 
         public string InitInteraction() {
-            string startingPathName = "Default";
-            int priority = 0;
-
-            foreach (InteractionPath path in interactionPaths.Values) {
-                if (path.startingPriority > priority && ProcessTagsOn(path.pathTags)) {
-                    startingPathName = path.name;
-                    priority = path.startingPriority;
+            foreach (InitInteractionJSON.InitPathOptionsJSON pathOption in interactionJson.Init.PathOptions) {
+                if (pathOption.Conditions.All(kv => AssertCondition(kv.Key, kv.Value))) {
+                    return pathOption.NextPath;
                 }
             }
 
-            return startingPathName;
+            return "Default";
         }
 
         public void EndInteraction(HashSet<string> traversedPaths) {
@@ -66,22 +67,16 @@ namespace SimCard.SimGame {
             }
         }
 
-        public InteractionPath GetCurrentInteractionPath(string pathName) {
-            return interactionPaths.GetValueOrDefault(pathName);
+        public InteractionNodeJSON GetCurrentInteractionV2(string pathName, int interactionIndex) {
+            return interactionJson.Paths.GetValueOrDefault(pathName)?.ElementAtOrDefault(interactionIndex);
         }
 
-        public Interaction GetCurrentInteraction(string pathName, int interactionIndex) {
-            return GetCurrentInteractionPath(pathName)
-                ?.interactions.ElementAtOrDefault(interactionIndex);
-        }
-
-        public bool ProcessInteractionTags(string pathName, int interactionIndex) {
-            Interaction currentInteraction = GetCurrentInteraction(pathName, interactionIndex);
-            if (currentInteraction == null) {
+        public bool ProcessInteractionConditions(string pathName, int interactionIndex) {
+            InteractionNodeJSON currNode = interactionJson.Paths.GetValueOrDefault(pathName)?.ElementAtOrDefault(interactionIndex);
+            if (currNode == null) {
                 return true;
             }
-
-            return ProcessTagsOn(currentInteraction.tags);
+            return currNode.IncomingConditions.All(kv => AssertCondition(kv.Key, kv.Value));
         }
 
         public string ProcessInteractionOption(
@@ -89,51 +84,10 @@ namespace SimCard.SimGame {
             int interactionIndex,
             int optionIndex
         ) {
-            InteractionOption currOption = GetCurrentInteraction(pathName, interactionIndex)
-                ?.options[optionIndex];
-            Assert.IsNotNull(currOption);
 
-            // If the next path contains some conditional tags, go there only if conditions are met
-            // For now, just assume a singular fallback path
-            bool toNextPath = ProcessTagsOn(
-                interactionPaths.GetValueOrDefault(currOption.nextInteractionPath)?.pathTags
-            );
-            return toNextPath ? currOption.nextInteractionPath : currOption.fallbackInteractionPath;
-        }
-
-        bool ProcessTagsOn(List<InteractionTag> interactionTags) {
-            if (interactionTags == null) {
-                return true;
-            }
-
-            foreach (InteractionTag interactionTag in interactionTags) {
-                switch (interactionTag.tag) {
-                    case ScriptTag.Bool: {
-                        if (!interactionTag.boolArg) {
-                            return false;
-                        }
-                        break;
-                    }
-
-                    case ScriptTag.PathTraversedCount: {
-                        string pathName = interactionTag.strArg;
-                        int requiredTraversedCount = interactionTag.intArg;
-                        int currentTraversedCount = pathTraversedCount.GetValueOrDefault(pathName);
-
-                        if (
-                            !interactionTag.ApplyCondition(
-                                currentTraversedCount,
-                                requiredTraversedCount
-                            )
-                        ) {
-                            return false;
-                        }
-                        break;
-                    }
-                }
-            }
-
-            return true;
+            InteractionNodeJSON currNode = interactionJson.Paths.GetValueOrDefault(pathName)?.ElementAtOrDefault(interactionIndex);
+            InteractionNodeJSON.InteractionOptionJSON selectedOption = currNode.Options[optionIndex];
+            return selectedOption.Conditions.All(kv => AssertCondition(kv.Key, kv.Value)) ? selectedOption.NextPath : selectedOption.FallbackPath;
         }
     }
 }

@@ -19,16 +19,15 @@ namespace SimCard.SimGame {
         private GameEventAction<EventArgs<OptionsUIListener, List<(string, bool)>>> DisplayInteractionOptions;
         private GameEventAction<EventArgs<Interactable, string>> InteractionEvent;
 
+        private InteractionNodeJSON CurrInteractionNode => interactable.GetCurrentInteractionV2(pathName, interactionIndex);
+        private int InteractionTextLengthV2 => CurrInteractionText == null ? 0 : CurrInteractionText.Length;
+
         // Properties common to UI
-        public Interaction CurrInteraction =>
-            interactable.GetCurrentInteraction(pathName, interactionIndex);
+        public string CurrInteractionText => interactable.GetCurrentInteractionV2(pathName, interactionIndex)?.Text;
         public int MaxVisibleCharacters { get; private set; }
         public int OptionIndex { get; private set; }
 
         public bool Completed { get; private set; }
-
-        private int InteractionTextLength =>
-            CurrInteraction == null ? 0 : CurrInteraction.text.Length;
 
         public InteractionParser(
             Player player,
@@ -50,12 +49,12 @@ namespace SimCard.SimGame {
         }
 
         public YieldInstruction Tick() {
-            if (CurrInteraction == null) {
+            if (CurrInteractionText == null) {
                 Completed = true;
                 return null;
             }
 
-            if (MaxVisibleCharacters >= InteractionTextLength) {
+            if (MaxVisibleCharacters >= InteractionTextLengthV2) {
                 return null;
             }
 
@@ -64,13 +63,14 @@ namespace SimCard.SimGame {
         }
 
         public void HandleAdvance() {
-            if (MaxVisibleCharacters < InteractionTextLength) {
-                UpdateMaxVisibleCharacters(InteractionTextLength);
+            if (MaxVisibleCharacters < InteractionTextLengthV2) {
+                UpdateMaxVisibleCharacters(InteractionTextLengthV2);
                 return;
             }
 
             // HandleAdvance means we picked an option
-            List<InteractionOption> options = CurrInteraction.options;
+            List<InteractionNodeJSON.InteractionOptionJSON> options = CurrInteractionNode.Options;
+
             if (options.Count > 0) {
                 pathName = interactable.ProcessInteractionOption(
                     pathName,
@@ -82,7 +82,9 @@ namespace SimCard.SimGame {
                 MaxVisibleCharacters = 0;
 
                 // Consume option's energy
-                player.ConsumeEnergy(options[OptionIndex].energyCost);
+                // TODO: This is jank
+                // player.ConsumeEnergy(options[OptionIndex].energyCost);
+                player.ConsumeEnergy(int.Parse(options[OptionIndex].Conditions.GetValueOrDefault(ConditionKey.Energy) ?? "0"));
 
                 traversedPaths.Add(pathName);
 
@@ -94,13 +96,13 @@ namespace SimCard.SimGame {
             // If tags indicate that the interaction is not renderable, keep incrementing
             do {
                 interactionIndex++;
-            } while (!interactable.ProcessInteractionTags(pathName, interactionIndex));
+            } while (!interactable.ProcessInteractionConditions(pathName, interactionIndex));
 
             MaxVisibleCharacters = 0;
         }
 
         public void UpdateOptionIndex(int diff) {
-            if (MaxVisibleCharacters < InteractionTextLength) {
+            if (MaxVisibleCharacters < InteractionTextLengthV2) {
                 return;
             }
 
@@ -109,12 +111,13 @@ namespace SimCard.SimGame {
         }
 
         public void EndInteraction() {
-            InteractionPath interactionPath = interactable.GetCurrentInteractionPath(pathName);
-            if (interactionPath?.endingEventTriggers?.Count > 0) {
-                foreach (string eventTrigger in interactionPath.endingEventTriggers) {
-                    InteractionEvent.Raise(new(interactable, eventTrigger));
-                }
-            }
+            // TODO: Re-add end event triggers?
+            // InteractionPath interactionPath = interactable.GetCurrentInteractionPath(pathName);
+            // if (interactionPath?.endingEventTriggers?.Count > 0) {
+            //     foreach (string eventTrigger in interactionPath.endingEventTriggers) {
+            //         InteractionEvent.Raise(new(interactable, eventTrigger));
+            //     }
+            // }
 
             interactable.EndInteraction(traversedPaths);
         }
@@ -123,11 +126,11 @@ namespace SimCard.SimGame {
         void UpdateMaxVisibleCharacters(int value) {
             MaxVisibleCharacters = value;
 
-            if (MaxVisibleCharacters >= InteractionTextLength) {
+            if (MaxVisibleCharacters >= InteractionTextLengthV2) {
                 // Display options
-                List<InteractionOption> options = CurrInteraction.options;
-                if (options.Count > 0) {
-                    List<(string, bool)> optionsAllowed = options.Select(x => (x.option, x.energyCost <= player.Energy)).ToList();
+                List<InteractionNodeJSON.InteractionOptionJSON> options = CurrInteractionNode.Options;
+                if (options?.Count > 0) {
+                    List<(string, bool)> optionsAllowed = options.Select(x => (x.OptionText, true)).ToList(); //x.energyCost <= player.Energy)).ToList();
                     DisplayInteractionOptions.Raise(new(this, optionsAllowed));
 
                     validOptionIndices.Clear();
@@ -142,8 +145,8 @@ namespace SimCard.SimGame {
                 }
 
                 // Event triggers for interaction
-                if (CurrInteraction.eventTriggers.Count > 0) {
-                    foreach (string eventTrigger in CurrInteraction.eventTriggers) {
+                if (CurrInteractionNode?.EventTriggers?.Count > 0) {
+                    foreach (string eventTrigger in CurrInteractionNode.EventTriggers) {
                         InteractionEvent.Raise(new(interactable, eventTrigger));
                     }
                 }

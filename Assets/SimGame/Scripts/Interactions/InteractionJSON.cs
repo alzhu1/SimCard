@@ -7,7 +7,7 @@ namespace SimCard.SimGame {
     }
 
     // JSON stuff
-    public enum ConditionKeyJSON {
+    public enum ConditionKey {
         Bool,
         Energy,
         PathTraversedCount
@@ -18,12 +18,12 @@ namespace SimCard.SimGame {
 
         public class InitPathOptionsJSON {
             public string NextPath { get; set; }
-            public Dictionary<ConditionKeyJSON, string> Conditions { get; set; } = new();
+            public Dictionary<ConditionKey, string> Conditions { get; set; } = new();
         }
     }
 
     public class InteractionNodeJSON {
-        public Dictionary<ConditionKeyJSON, string> IncomingConditions { get; set; } = new();
+        public Dictionary<ConditionKey, string> IncomingConditions { get; set; } = new();
         public string Text { get; set; }
         public List<string> EventTriggers { get; set; } = new();
         public List<InteractionOptionJSON> Options { get; set; } = new();
@@ -31,7 +31,8 @@ namespace SimCard.SimGame {
         public class InteractionOptionJSON {
             public string OptionText { get; set; }
             public string NextPath { get; set; }
-            public Dictionary<ConditionKeyJSON, string> Conditions { get; set; } = new();
+            public string FallbackPath { get; set; }
+            public Dictionary<ConditionKey, string> Conditions { get; set; } = new();
         }
     }
 }

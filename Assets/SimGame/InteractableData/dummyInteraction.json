@@ -39,13 +39,15 @@
                     {
                         "OptionText": "Yes",
                         "NextPath": "DefaultYes",
+                        "FallbackPath": "DefaultNo",
                         "Conditions": {
-                            "Energy": "40"
+                            "Bool": "true"
                         }
                     },
                     {
                         "OptionText": "No",
                         "NextPath": "DefaultNo",
+                        "FallbackPath": "DefaultYes",
                         "Conditions": {}
                     }
                 ],

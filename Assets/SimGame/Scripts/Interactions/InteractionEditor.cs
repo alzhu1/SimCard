@@ -278,8 +278,10 @@ namespace SimCard.SimGame {
                                     option.OptionText = EditorGUI.TextField(new Rect(rect.x, rect.y, rect.width, EditorGUIUtility.singleLineHeight * 2), $"Option Text {index}", option.OptionText);
                                     rect.y += 2;
                                     option.NextPath = EditorGUI.TextField(new Rect(rect.x, rect.y + EditorGUIUtility.singleLineHeight * 2, rect.width, EditorGUIUtility.singleLineHeight), "Next Path", option.NextPath);
+                                    rect.y += 2;
+                                    option.FallbackPath = EditorGUI.TextField(new Rect(rect.x, rect.y + EditorGUIUtility.singleLineHeight * 2, rect.width, EditorGUIUtility.singleLineHeight), "Fallback Path", option.FallbackPath);
                                 })
-                                .WithElementHeight(EditorGUIUtility.singleLineHeight * 3 + 2)
+                                .WithElementHeight(EditorGUIUtility.singleLineHeight * 5 + 4)
                                 .Build();
 
                         optionConditionsList = InteractionEditorListBuilder.GetDefaultEmptyList("Select an option to view conditions.");
@@ -327,19 +329,19 @@ namespace SimCard.SimGame {
 
         // Helpers
 
-        ReorderableList GetListForConditions(Dictionary<ConditionKeyJSON, string> dict, string headerLabel = "Conditions") {
+        ReorderableList GetListForConditions(Dictionary<ConditionKey, string> dict, string headerLabel = "Conditions") {
             // Create a List from the dictionary, need this so that ReorderableList can wrap it/edit it
-            List<(ConditionKeyJSON, string)> dictList = dict.Select(pair => (pair.Key, pair.Value)).ToList();
+            List<(ConditionKey, string)> dictList = dict.Select(pair => (pair.Key, pair.Value)).ToList();
 
             return InteractionEditorListBuilder.NewBuilder(dictList, headerLabel)
                 .WithOnCanAddCallback((ReorderableList l) => {
-                    return l.count < System.Enum.GetValues(typeof(ConditionKeyJSON)).Length;
+                    return l.count < System.Enum.GetValues(typeof(ConditionKey)).Length;
                 })
                 .WithOnAddDropdownCallback((Rect rect, ReorderableList l) => {
                     GenericMenu menu = new GenericMenu();
 
-                    IEnumerable<ConditionKeyJSON> conditionKeysLeft = System.Enum.GetValues(typeof(ConditionKeyJSON)).Cast<ConditionKeyJSON>().Except(dict.Keys);
-                    foreach (ConditionKeyJSON conditionKey in conditionKeysLeft) {
+                    IEnumerable<ConditionKey> conditionKeysLeft = System.Enum.GetValues(typeof(ConditionKey)).Cast<ConditionKey>().Except(dict.Keys);
+                    foreach (ConditionKey conditionKey in conditionKeysLeft) {
                         menu.AddItem(new GUIContent(conditionKey.ToString()), false, () => {
                             dict.Add(conditionKey, "");
                             l.list.Add((conditionKey, ""));
@@ -349,12 +351,12 @@ namespace SimCard.SimGame {
                     menu.ShowAsContext();
                 })
                 .WithOnRemoveCallback((ReorderableList l) => {
-                    (ConditionKeyJSON key, string value) = ((ConditionKeyJSON, string))l.list[l.index];
+                    (ConditionKey key, string value) = ((ConditionKey, string))l.list[l.index];
                     dict.Remove(key);
                     l.list.RemoveAt(l.index);
                 })
                 .WithDrawElementCallback((Rect rect, int index, bool isActive, bool isFocused) => {
-                    (ConditionKeyJSON key, string value) element = dictList[index];
+                    (ConditionKey key, string value) element = dictList[index];
 
                     rect.y += 2;
                     string previousValue = element.value;
