@@ -89,7 +89,7 @@ namespace SimCard.SimGame {
             }
         }
 
-        public InteractionNode GetCurrentInteractionV2(string pathName, int interactionIndex) {
+        public InteractionNode GetCurrentInteraction(string pathName, int interactionIndex) {
             if (pathName == null) {
                 return null;
             }

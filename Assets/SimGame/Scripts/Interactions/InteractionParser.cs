@@ -19,11 +19,11 @@ namespace SimCard.SimGame {
         private GameEventAction<EventArgs<OptionsUIListener, List<(string, bool)>>> DisplayInteractionOptions;
         private GameEventAction<EventArgs<Interactable, string>> InteractionEvent;
 
-        private InteractionNode CurrInteractionNode => interactable.GetCurrentInteractionV2(pathName, interactionIndex);
-        private int InteractionTextLengthV2 => CurrInteractionText == null ? 0 : CurrInteractionText.Length;
+        private InteractionNode CurrInteractionNode => interactable.GetCurrentInteraction(pathName, interactionIndex);
+        private int InteractionTextLength => CurrInteractionText == null ? 0 : CurrInteractionText.Length;
 
         // Properties common to UI
-        public string CurrInteractionText => interactable.GetCurrentInteractionV2(pathName, interactionIndex)?.Text;
+        public string CurrInteractionText => interactable.GetCurrentInteraction(pathName, interactionIndex)?.Text;
         public int MaxVisibleCharacters { get; private set; }
         public int OptionIndex { get; private set; }
 
@@ -54,7 +54,7 @@ namespace SimCard.SimGame {
                 return null;
             }
 
-            if (MaxVisibleCharacters >= InteractionTextLengthV2) {
+            if (MaxVisibleCharacters >= InteractionTextLength) {
                 return null;
             }
 
@@ -63,8 +63,8 @@ namespace SimCard.SimGame {
         }
 
         public void HandleAdvance() {
-            if (MaxVisibleCharacters < InteractionTextLengthV2) {
-                UpdateMaxVisibleCharacters(InteractionTextLengthV2);
+            if (MaxVisibleCharacters < InteractionTextLength) {
+                UpdateMaxVisibleCharacters(InteractionTextLength);
                 return;
             }
 
@@ -100,7 +100,7 @@ namespace SimCard.SimGame {
         }
 
         public void UpdateOptionIndex(int diff) {
-            if (MaxVisibleCharacters < InteractionTextLengthV2) {
+            if (MaxVisibleCharacters < InteractionTextLength) {
                 return;
             }
 
@@ -124,7 +124,7 @@ namespace SimCard.SimGame {
         void UpdateMaxVisibleCharacters(int value) {
             MaxVisibleCharacters = value;
 
-            if (MaxVisibleCharacters >= InteractionTextLengthV2) {
+            if (MaxVisibleCharacters >= InteractionTextLength) {
                 // Display options
                 List<InteractionNode.InteractionOption> options = CurrInteractionNode.Options;
                 if (options?.Count > 0) {
