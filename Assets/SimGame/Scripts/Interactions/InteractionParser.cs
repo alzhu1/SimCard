@@ -19,7 +19,7 @@ namespace SimCard.SimGame {
         private GameEventAction<EventArgs<OptionsUIListener, List<(string, bool)>>> DisplayInteractionOptions;
         private GameEventAction<EventArgs<Interactable, string>> InteractionEvent;
 
-        private InteractionNodeJSON CurrInteractionNode => interactable.GetCurrentInteractionV2(pathName, interactionIndex);
+        private InteractionNode CurrInteractionNode => interactable.GetCurrentInteractionV2(pathName, interactionIndex);
         private int InteractionTextLengthV2 => CurrInteractionText == null ? 0 : CurrInteractionText.Length;
 
         // Properties common to UI
@@ -69,7 +69,7 @@ namespace SimCard.SimGame {
             }
 
             // HandleAdvance means we picked an option
-            List<InteractionNodeJSON.InteractionOptionJSON> options = CurrInteractionNode.Options;
+            List<InteractionNode.InteractionOption> options = CurrInteractionNode.Options;
 
             if (options.Count > 0) {
                 pathName = interactable.ProcessInteractionOption(
@@ -128,7 +128,7 @@ namespace SimCard.SimGame {
 
             if (MaxVisibleCharacters >= InteractionTextLengthV2) {
                 // Display options
-                List<InteractionNodeJSON.InteractionOptionJSON> options = CurrInteractionNode.Options;
+                List<InteractionNode.InteractionOption> options = CurrInteractionNode.Options;
                 if (options?.Count > 0) {
                     List<(string, bool)> optionsAllowed = options.Select(x => (x.OptionText, true)).ToList(); //x.energyCost <= player.Energy)).ToList();
                     DisplayInteractionOptions.Raise(new(this, optionsAllowed));

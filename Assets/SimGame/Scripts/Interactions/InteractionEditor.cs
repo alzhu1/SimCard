@@ -47,7 +47,7 @@ namespace SimCard.SimGame {
             );
 
             // Manually do a LINQ JSON parse to cache things on startup
-            JObject.Parse(baseFiles[0].text).ToObject<InteractionJSON>(serializer);
+            JObject.Parse(baseFiles[0].text).ToObject<Interaction>(serializer);
         }
 
         [MenuItem("Window/Interactions/Interaction Editor")]
@@ -102,7 +102,7 @@ namespace SimCard.SimGame {
                 return;
 
             TextAsset currAsset = items.First() as TextAsset;
-            InteractionJSON interactionJson = JObject.Parse(currAsset.text).ToObject<InteractionJSON>(serializer);
+            Interaction interactionJson = JObject.Parse(currAsset.text).ToObject<Interaction>(serializer);
             ReorderableList initPathOptionConditionsList = InteractionEditorListBuilder.GetDefaultEmptyList("Select a path above to view conditions.");
 
             Debug.Log($"Json has been parsed for {currAsset.name}");
@@ -138,7 +138,7 @@ namespace SimCard.SimGame {
                     )
                     .WithDrawElementCallback(
                         (Rect rect, int index, bool isActive, bool isFocused) => {
-                            InitInteractionJSON.InitPathOptionsJSON element = interactionJson.Init.PathOptions[index];
+                            InitInteraction.InitPathOptions element = interactionJson.Init.PathOptions[index];
                             rect.y += 2;
                             element.NextPath = EditorGUI.TextField(new Rect(rect.x, rect.y, rect.width, EditorGUIUtility.singleLineHeight), $"Path {index}", element.NextPath);
                         }
@@ -195,7 +195,7 @@ namespace SimCard.SimGame {
             rightPane.Add(interactionPathsPane);
         }
 
-        void OnInteractionPathSelection(IEnumerable<object> items, InteractionJSON interactionJson, ListView interactionPathListView) {
+        void OnInteractionPathSelection(IEnumerable<object> items, Interaction interactionJson, ListView interactionPathListView) {
             if (items.Count() == 0)
                 return;
 
@@ -249,7 +249,7 @@ namespace SimCard.SimGame {
                             return;
                         }
 
-                        InteractionNodeJSON element = interactionJson.Paths[currInteractionPath][l.index];
+                        InteractionNode element = interactionJson.Paths[currInteractionPath][l.index];
                         currInteractionNodeIndex = l.index;
 
                         incomingConditionsList = GetListForConditions(element.IncomingConditions, "Incoming Conditions");
@@ -273,7 +273,7 @@ namespace SimCard.SimGame {
                                     optionConditionsList = GetListForConditions(element.Options[ll.index].Conditions);
                                 })
                                 .WithDrawElementCallback((Rect rect, int index, bool isActive, bool isFocused) => {
-                                    InteractionNodeJSON.InteractionOptionJSON option = element.Options[index];
+                                    InteractionNode.InteractionOption option = element.Options[index];
                                     rect.y += 2;
                                     option.OptionText = EditorGUI.TextField(new Rect(rect.x, rect.y, rect.width, EditorGUIUtility.singleLineHeight * 2), $"Option Text {index}", option.OptionText);
                                     rect.y += 2;
@@ -287,7 +287,7 @@ namespace SimCard.SimGame {
                         optionConditionsList = InteractionEditorListBuilder.GetDefaultEmptyList("Select an option to view conditions.");
                     })
                     .WithDrawElementCallback((Rect rect, int index, bool isActive, bool isFocused) => {
-                        InteractionNodeJSON element = interactionJson.Paths[currInteractionPath][index];
+                        InteractionNode element = interactionJson.Paths[currInteractionPath][index];
                         rect.y += 2;
                         element.Text = EditorGUI.TextField(new Rect(rect.x, rect.y, rect.width, EditorGUIUtility.singleLineHeight * 2), $"Text {index}", element.Text);
                     })
@@ -303,7 +303,7 @@ namespace SimCard.SimGame {
             }));
         }
 
-        void UpdateInteraction(TextAsset currAsset, InteractionJSON interactionJson) {
+        void UpdateInteraction(TextAsset currAsset, Interaction interactionJson) {
             Debug.Log($"Name: {currAsset}");
 
             using (

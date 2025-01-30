@@ -18,13 +18,13 @@ namespace SimCard.SimGame {
         public List<CardMetadata> Deck => deck;
 
         [SerializeField] private TextAsset data;
-        private InteractionJSON interactionJson;
+        private Interaction interactionJson;
 
         // Metadata
         private Dictionary<string, int> pathTraversedCount = new();
 
         void Awake() {
-            interactionJson = JObject.Parse(data.text).ToObject<InteractionJSON>();
+            interactionJson = JObject.Parse(data.text).ToObject<Interaction>();
         }
 
         bool AssertCondition(ConditionKey condition, string parameter) {
@@ -50,7 +50,7 @@ namespace SimCard.SimGame {
         }
 
         public string InitInteraction() {
-            foreach (InitInteractionJSON.InitPathOptionsJSON pathOption in interactionJson.Init.PathOptions) {
+            foreach (InitInteraction.InitPathOptions pathOption in interactionJson.Init.PathOptions) {
                 if (pathOption.Conditions.All(kv => AssertCondition(kv.Key, kv.Value))) {
                     return pathOption.NextPath;
                 }
@@ -67,12 +67,12 @@ namespace SimCard.SimGame {
             }
         }
 
-        public InteractionNodeJSON GetCurrentInteractionV2(string pathName, int interactionIndex) {
+        public InteractionNode GetCurrentInteractionV2(string pathName, int interactionIndex) {
             return interactionJson.Paths.GetValueOrDefault(pathName)?.ElementAtOrDefault(interactionIndex);
         }
 
         public bool ProcessInteractionConditions(string pathName, int interactionIndex) {
-            InteractionNodeJSON currNode = interactionJson.Paths.GetValueOrDefault(pathName)?.ElementAtOrDefault(interactionIndex);
+            InteractionNode currNode = interactionJson.Paths.GetValueOrDefault(pathName)?.ElementAtOrDefault(interactionIndex);
             if (currNode == null) {
                 return true;
             }
@@ -85,8 +85,8 @@ namespace SimCard.SimGame {
             int optionIndex
         ) {
 
-            InteractionNodeJSON currNode = interactionJson.Paths.GetValueOrDefault(pathName)?.ElementAtOrDefault(interactionIndex);
-            InteractionNodeJSON.InteractionOptionJSON selectedOption = currNode.Options[optionIndex];
+            InteractionNode currNode = interactionJson.Paths.GetValueOrDefault(pathName)?.ElementAtOrDefault(interactionIndex);
+            InteractionNode.InteractionOption selectedOption = currNode.Options[optionIndex];
             return selectedOption.Conditions.All(kv => AssertCondition(kv.Key, kv.Value)) ? selectedOption.NextPath : selectedOption.FallbackPath;
         }
     }
