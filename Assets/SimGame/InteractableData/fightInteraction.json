@@ -5,31 +5,35 @@
     "Paths": {
         "Default": [
             {
+                "IncomingConditions": {},
+                "Text": "Wanna fight?",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
                 "Options": [
                     {
                         "OptionText": "Yes",
                         "NextPath": "DefaultYes",
+                        "FallbackPath": "",
                         "Conditions": {}
                     },
                     {
                         "OptionText": "No",
-                        "NextPath": null,
+                        "NextPath": "",
+                        "FallbackPath": "",
                         "Conditions": {}
                     }
-                ],
-                "IncomingConditions": {},
-                "Text": "Wanna fight?",
-                "EventTriggers": null
+                ]
             }
         ],
         "DefaultYes": [
             {
-                "Options": null,
                 "IncomingConditions": {},
                 "Text": "Let's fight!",
-                "EventTriggers": [
+                "EventTriggers": [],
+                "EndingEventTriggers": [
                     "StartCardGame"
-                ]
+                ],
+                "Options": []
             }
         ]
     }

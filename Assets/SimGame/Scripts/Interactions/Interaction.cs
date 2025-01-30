@@ -26,6 +26,7 @@ namespace SimCard.SimGame {
         public Dictionary<ConditionKey, string> IncomingConditions { get; set; } = new();
         public string Text { get; set; }
         public List<string> EventTriggers { get; set; } = new();
+        public List<string> EndingEventTriggers { get; set; } = new();
         public List<InteractionOption> Options { get; set; } = new();
 
         public class InteractionOption {

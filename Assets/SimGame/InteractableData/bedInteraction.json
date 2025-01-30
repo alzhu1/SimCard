@@ -5,31 +5,35 @@
     "Paths": {
         "Default": [
             {
+                "IncomingConditions": {},
+                "Text": "Do you want to rest?",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
                 "Options": [
                     {
                         "OptionText": "Yes",
                         "NextPath": "DefaultYes",
+                        "FallbackPath": "",
                         "Conditions": {}
                     },
                     {
                         "OptionText": "No",
-                        "NextPath": null,
+                        "NextPath": "",
+                        "FallbackPath": "",
                         "Conditions": {}
                     }
-                ],
-                "IncomingConditions": {},
-                "Text": "Do you want to rest?",
-                "EventTriggers": null
+                ]
             }
         ],
         "DefaultYes": [
             {
-                "Options": null,
                 "IncomingConditions": {},
                 "Text": "Go to sleep now...",
-                "EventTriggers": [
+                "EventTriggers": [],
+                "EndingEventTriggers": [
                     "NextDay"
-                ]
+                ],
+                "Options": []
             }
         ]
     }

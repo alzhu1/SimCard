@@ -204,6 +204,7 @@ namespace SimCard.SimGame {
 
             ReorderableList incomingConditionsList = InteractionEditorListBuilder.GetDefaultEmptyList("Select an interaction to view incoming conditions.");
             ReorderableList eventTriggersList = InteractionEditorListBuilder.GetDefaultEmptyList("Select an interaction to view event triggers.");
+            ReorderableList endingEventTriggersList = InteractionEditorListBuilder.GetDefaultEmptyList("Select an interaction to view ending event triggers.");
             ReorderableList optionsList = InteractionEditorListBuilder.GetDefaultEmptyList("Select an interaction to view options.");
             ReorderableList optionConditionsList = null;
 
@@ -244,6 +245,7 @@ namespace SimCard.SimGame {
                         if (l.index >= l.list.Count) {
                             incomingConditionsList = InteractionEditorListBuilder.GetDefaultEmptyList("Select an interaction to view incoming conditions.");
                             eventTriggersList = InteractionEditorListBuilder.GetDefaultEmptyList("Select an interaction to view event triggers.");
+                            endingEventTriggersList = InteractionEditorListBuilder.GetDefaultEmptyList("Select an interaction to view ending event triggers.");
                             optionsList = InteractionEditorListBuilder.GetDefaultEmptyList("Select an interaction to view options.");
                             optionConditionsList = null;
                             return;
@@ -260,6 +262,15 @@ namespace SimCard.SimGame {
                                     string eventTrigger = element.EventTriggers[index];
                                     rect.y += 2;
                                     element.EventTriggers[index] = EditorGUI.TextField(new Rect(rect.x, rect.y, rect.width, EditorGUIUtility.singleLineHeight), $"Trigger {index}", eventTrigger);
+                                })
+                                .Build();
+
+                        endingEventTriggersList =
+                            InteractionEditorListBuilder.NewBuilder(element.EndingEventTriggers, "Ending Event Triggers")
+                                .WithDrawElementCallback((Rect rect, int index, bool isActive, bool isFocused) => {
+                                    string eventTrigger = element.EndingEventTriggers[index];
+                                    rect.y += 2;
+                                    element.EndingEventTriggers[index] = EditorGUI.TextField(new Rect(rect.x, rect.y, rect.width, EditorGUIUtility.singleLineHeight), $"Trigger {index}", eventTrigger);
                                 })
                                 .Build();
 
@@ -298,6 +309,7 @@ namespace SimCard.SimGame {
                 interactionPathNodeList.DoLayoutList();
                 incomingConditionsList.DoLayoutList();
                 eventTriggersList.DoLayoutList();
+                endingEventTriggersList.DoLayoutList();
                 optionsList.DoLayoutList();
                 optionConditionsList?.DoLayoutList();
             }));

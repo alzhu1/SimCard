@@ -109,13 +109,13 @@ namespace SimCard.SimGame {
         }
 
         public void EndInteraction() {
-            // TODO: Re-add end event triggers?
-            // InteractionPath interactionPath = interactable.GetCurrentInteractionPath(pathName);
-            // if (interactionPath?.endingEventTriggers?.Count > 0) {
-            //     foreach (string eventTrigger in interactionPath.endingEventTriggers) {
-            //         InteractionEvent.Raise(new(interactable, eventTrigger));
-            //     }
-            // }
+            // Check the last value of the last path
+            InteractionNode lastNode = interactable.GetCurrentInteraction(pathName, interactionIndex - 1);
+            if (lastNode?.EndingEventTriggers.Count > 0) {
+                foreach (string eventTrigger in lastNode.EndingEventTriggers) {
+                    InteractionEvent.Raise(new(interactable, eventTrigger));
+                }
+            }
 
             interactable.EndInteraction(traversedPaths.Where(path => path != null));
         }
