@@ -4,8 +4,7 @@
             {
                 "NextPath": "TooManyTalks",
                 "Conditions": {
-                    "PathTraversedCount": "DefaultNo >= 5",
-                    "Bool": "False"
+                    "PathTraversedCount": "DefaultNo >= 5"
                 }
             }
         ]
@@ -21,8 +20,7 @@
             {
                 "Options": [],
                 "IncomingConditions": {
-                    "Bool": "False",
-                    "PathTraversedCount": "Default >= 0"
+                    "Bool": "False"
                 },
                 "Text": "(This should not be displayed)",
                 "EventTriggers": []
