@@ -43,7 +43,11 @@ namespace SimCard.SimGame {
         IEnumerator HandleInputs() {
             while (nextState == null) {
                 if (Input.GetKeyDown(KeyCode.Z)) {
-                    interactionParser.HandleAdvance();
+                    interactionParser.HandleAdvance(true);
+                }
+
+                if (Input.GetKeyDown(KeyCode.X)) {
+                    interactionParser.HandleAdvance(false);
                 }
 
                 if (Input.GetKeyDown(KeyCode.UpArrow)) {

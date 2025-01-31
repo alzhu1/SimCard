@@ -62,9 +62,20 @@ namespace SimCard.SimGame {
             return new WaitForSeconds(interactable.TypeTime);
         }
 
-        public void HandleAdvance() {
-            if (MaxVisibleCharacters < InteractionTextLength) {
+        public void HandleAdvance(bool active) {
+            if (active && MaxVisibleCharacters < InteractionTextLength) {
                 UpdateMaxVisibleCharacters(InteractionTextLength);
+                return;
+            }
+
+            if (!active) {
+                // Only support inactive ("close" button) input for shop buy
+                if (pathName.StartsWith("$ShopBuy")) {
+                    pathName = "Default";
+                    interactionIndex = 0;
+                    MaxVisibleCharacters = 0;
+                    DisplayInteractionOptions.Raise(null);
+                }
                 return;
             }
 
