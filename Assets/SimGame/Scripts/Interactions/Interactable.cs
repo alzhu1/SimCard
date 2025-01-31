@@ -108,6 +108,8 @@ namespace SimCard.SimGame {
                 InteractionNode shopBuyPostNode = interactionJson.Paths["$ShopBuyPost"][0];
                 shopBuyPostNode.Options.Clear();
                 shopBuyPostNode.Options.AddRange(cardOptions);
+                shopBuyPostNode.EventTriggers.Clear();
+                shopBuyPostNode.EventTriggers.Add("Buy");
 
                 if (!interactionJson.Paths.ContainsKey("$ShopBuyFail")) {
                     interactionJson.Paths.Add("$ShopBuyFail", new() {

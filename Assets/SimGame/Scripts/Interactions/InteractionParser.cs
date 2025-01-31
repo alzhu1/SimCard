@@ -165,14 +165,17 @@ namespace SimCard.SimGame {
                     DisplayInteractionOptions.Raise(new(this, optionsAllowed));
 
                     validOptionIndices.Clear();
-                    validOptionIndex = 0;
                     for (int i = 0; i < optionsAllowed.Count; i++) {
                         if (optionsAllowed[i].Item2) {
                             validOptionIndices.Add(i);
                         }
                     }
 
-                    OptionIndex = validOptionIndices[0];
+                    // For shop interactions, don't reset the index
+                    if (!pathName.StartsWith("$ShopBuy")) {
+                        validOptionIndex = 0;
+                        OptionIndex = validOptionIndices[validOptionIndex];
+                    }
                 }
             }
         }

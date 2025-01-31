@@ -17,12 +17,16 @@ namespace SimCard.SimGame {
         [SerializeField]
         private List<CardMetadata> availableCards;
 
+        [SerializeField]
+        private int energy = 100;
+
+        [SerializeField]
+        private int currency = 0;
+
         public SimGameManager SimGameManager { get; private set; }
 
         private Rigidbody2D rb;
         private SpriteRenderer sr;
-        private int energy = 100;
-        private int currency = 0;
 
         public List<CardMetadata> Deck => deck;
         public List<CardMetadata> AvailableCards => availableCards;
@@ -90,6 +94,10 @@ namespace SimCard.SimGame {
 
         public void ConsumeEnergy(int energyUsed) {
             energy = Mathf.Max(0, energy - energyUsed);
+        }
+
+        public void ConsumeCurrency(int currencyUsed) {
+            currency = Mathf.Max(0, currency - currencyUsed);
         }
 
         public void UpdateDeckAfterEdit(List<CardMetadata> deck, List<CardMetadata> availableCards) {
