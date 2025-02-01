@@ -21,7 +21,8 @@ namespace SimCard.SimGame {
         [SerializeField] private TextMeshProUGUI descriptionText;
         [SerializeField] private TextMeshProUGUI flavorText;
 
-        // Inventory count
+        // Player
+        [SerializeField] private TextMeshProUGUI currencyText;
         [SerializeField] private TextMeshProUGUI inventoryText;
 
         private SimGameManager simGameManager;
@@ -93,7 +94,8 @@ namespace SimCard.SimGame {
 
                 // Update inventory text
                 int cardCount = player.Deck.Find(cardMetadata => cardMetadata.cardSO.Equals(previewCard))?.count ?? 0;
-                inventoryText.text = $"Inventory: {cardCount}";
+                currencyText.text = $"Money: ${player.Currency}";
+                inventoryText.text = $"Card Count: {cardCount}";
             }
         }
 
