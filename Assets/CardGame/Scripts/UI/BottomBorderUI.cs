@@ -26,11 +26,13 @@ namespace SimCard.CardGame {
         void Start() {
             cardGameManager.EventBus.OnPlayerBaseHover.Event += HandleCardHover;
             cardGameManager.EventBus.OnPlayerCardEffectHover.Event += HandleCardEffectHover;
+            cardGameManager.EventBus.OnCardActionHover.Event += HandleActionHover;
         }
 
         void OnDestroy() {
             cardGameManager.EventBus.OnPlayerBaseHover.Event -= HandleCardHover;
             cardGameManager.EventBus.OnPlayerCardEffectHover.Event -= HandleCardEffectHover;
+            cardGameManager.EventBus.OnCardActionHover.Event -= HandleActionHover;
         }
 
         void HandleCardHover(EventArgs<CardGraphSelectable> args) {
@@ -65,6 +67,17 @@ namespace SimCard.CardGame {
 
             string cardEffectText = effect.previewText.Length > 0 ? effect.previewText : effect.GetType().Name;
             bottomBorderText.text = $"<color=blue>{cardEffectText}</color> -> {card.CardName}";
+        }
+
+        void HandleActionHover(EventArgs<PlayerCardAction> args) {
+            cardCost.alpha = 0;
+            bottomBorderText.text = args.argument switch {
+                PlayerCardAction.Preview => "Preview",
+                PlayerCardAction.Summon => "Summon",
+                PlayerCardAction.Fire => "Fire",
+                PlayerCardAction.Surrender => "Surrender",
+                _ => "None"
+            };
         }
     }
 }
