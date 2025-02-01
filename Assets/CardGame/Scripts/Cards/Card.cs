@@ -15,7 +15,13 @@ namespace SimCard.CardGame {
 
         [SerializeField]
         private bool hidden;
-        public bool Hidden {get { return hidden; } set { hidden = value; } }
+        public bool Hidden {
+            get { return hidden; }
+            set {
+                hidden = value;
+                sr.sprite = hidden ? backSprite : cardSO.sprite;
+            }
+        }
 
         // CardGraphSelectable
         public string PreviewName => CardSO.cardName;
