@@ -5,6 +5,8 @@ using UnityEngine;
 namespace SimCard.CardGame {
     // CardHolder should be owned by a duelist
     public class CardHolder : MonoBehaviour {
+        [SerializeField] private bool hidden;
+
         protected List<Card> cards;
         public List<Card> Cards {
             get { return cards; }
@@ -34,9 +36,13 @@ namespace SimCard.CardGame {
                 return false;
             }
 
+            // Move card locations
             Cards.Remove(card);
             ch.Cards.Add(card);
             card.transform.SetParent(ch.transform);
+
+            // Update activity/hidden status based on target holder
+            card.Hidden = ch.hidden;
             card.gameObject.SetActive(isCardActive);
             return true;
         }

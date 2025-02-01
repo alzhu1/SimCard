@@ -10,6 +10,13 @@ namespace SimCard.CardGame {
         private CardSO cardSO;
         public CardSO CardSO => cardSO;
 
+        [SerializeField]
+        private Sprite backSprite;
+
+        [SerializeField]
+        private bool hidden;
+        public bool Hidden {get { return hidden; } set { hidden = value; } }
+
         // CardGraphSelectable
         public string PreviewName => CardSO.cardName;
 
@@ -44,7 +51,6 @@ namespace SimCard.CardGame {
             }
 
             sr = GetComponent<SpriteRenderer>();
-            sr.sprite = cardSO.sprite;
             gameObject.SetActive(false);
 
             ActiveAppliedEffects = new();
@@ -55,6 +61,10 @@ namespace SimCard.CardGame {
             Income = BaseIncome;
 
             ActiveTurns = TurnLimit;
+        }
+
+        void Update() {
+            sr.sprite = hidden ? backSprite : cardSO.sprite;
         }
 
         public void InitCardSO(CardSO cardSO) {

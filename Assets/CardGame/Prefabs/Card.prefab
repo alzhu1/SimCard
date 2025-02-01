@@ -46,6 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardSO: {fileID: 0}
+  backSprite: {fileID: -9095717837082945937, guid: f85c015eb83c84ae0a9837bb56cf1eeb, type: 3}
+  hidden: 0
 --- !u!212 &3004103679405056757
 SpriteRenderer:
   m_ObjectHideFlags: 0
