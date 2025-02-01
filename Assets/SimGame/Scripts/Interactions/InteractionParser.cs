@@ -17,6 +17,7 @@ namespace SimCard.SimGame {
 
         // Events that the parser can call
         private GameEventAction<EventArgs<OptionsUIListener, List<(string, bool)>>> DisplayInteractionOptions;
+        private GameEventAction<EventArgs<OptionsUIListener, List<CardMetadata>, Player>> DisplayShopOptions;
         private GameEventAction<EventArgs<string, Interactable, int>> InteractionEvent;
 
         private InteractionNode CurrInteractionNode => interactable.GetCurrentInteraction(pathName, interactionIndex);
@@ -29,17 +30,16 @@ namespace SimCard.SimGame {
 
         public bool Completed { get; private set; }
 
-        public InteractionParser(
-            Player player,
-            Interactable interactable,
-            GameEventAction<EventArgs<OptionsUIListener, List<(string, bool)>>> DisplayInteractionOptions,
-            GameEventAction<EventArgs<string, Interactable, int>> InteractionEvent
-        ) {
+        public InteractionParser(Player player, Interactable interactable) {
             this.player = player;
             this.interactable = interactable;
-            this.DisplayInteractionOptions = DisplayInteractionOptions;
-            this.InteractionEvent = InteractionEvent;
 
+            // Initialize events
+            DisplayInteractionOptions = player.SimGameManager.EventBus.OnDisplayInteractOptions;
+            DisplayShopOptions = player.SimGameManager.EventBus.OnDisplayShopOptions;
+            InteractionEvent = player.SimGameManager.EventBus.OnInteractionEvent;
+
+            // Initialize other data
             traversedPaths = new HashSet<string>();
             validOptionIndices = new List<int>();
             pathName = this.interactable.InitInteraction(player);
@@ -75,6 +75,7 @@ namespace SimCard.SimGame {
                     interactionIndex = 0;
                     MaxVisibleCharacters = 0;
                     DisplayInteractionOptions.Raise(null);
+                    DisplayShopOptions.Raise(null);
                 }
                 return;
             }
@@ -112,6 +113,12 @@ namespace SimCard.SimGame {
                 Debug.Log($"Chosen path name: {pathName}");
                 if (pathName.StartsWith("$ShopBuy")) {
                     Debug.LogWarning("We are on a shop buy path");
+
+                    // Raise the shop buy event to immediately show the shop view
+                    DisplayShopOptions.Raise(new(this, interactable.Deck, player));
+
+                    // Immediately show all text, too
+                    UpdateMaxVisibleCharacters(InteractionTextLength);
                 }
 
                 return;
@@ -162,8 +169,6 @@ namespace SimCard.SimGame {
                 List<InteractionNode.InteractionOption> options = CurrInteractionNode.Options;
                 if (options?.Count > 0) {
                     List<(string, bool)> optionsAllowed = options.Select(x => (x.OptionText, x.Conditions.GetEnergyCost() <= player.Energy)).ToList();
-                    DisplayInteractionOptions.Raise(new(this, optionsAllowed));
-
                     validOptionIndices.Clear();
                     for (int i = 0; i < optionsAllowed.Count; i++) {
                         if (optionsAllowed[i].Item2) {
@@ -173,6 +178,7 @@ namespace SimCard.SimGame {
 
                     // For shop interactions, don't reset the index
                     if (!pathName.StartsWith("$ShopBuy")) {
+                        DisplayInteractionOptions.Raise(new(this, optionsAllowed));
                         validOptionIndex = 0;
                         OptionIndex = validOptionIndices[validOptionIndex];
                     }

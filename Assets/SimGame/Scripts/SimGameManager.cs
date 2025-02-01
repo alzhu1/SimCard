@@ -81,7 +81,8 @@ namespace SimCard.SimGame {
                 case "Buy": {
                     Debug.Log($"Buying, the arg index is {args.arg3}, card in deck is {args.arg2.Deck[args.arg3].cardSO}");
 
-                    CardSO cardToBuy = args.arg2.Deck[args.arg3].cardSO;
+                    CardMetadata cardMetadataToBuy = args.arg2.Deck[args.arg3];
+                    CardSO cardToBuy = cardMetadataToBuy.cardSO;
                     CardMetadata playerCardMetadata = player.Deck.Find(cardMetadata => cardMetadata.cardSO.Equals(cardToBuy));
                     if (playerCardMetadata != null) {
                         playerCardMetadata.count++;
@@ -89,7 +90,7 @@ namespace SimCard.SimGame {
                         player.Deck.Add(new CardMetadata(cardToBuy, 1));
                     }
 
-                    player.ConsumeCurrency(cardToBuy.cost);
+                    player.ConsumeCurrency(cardMetadataToBuy.count);
                     break;
                 }
 

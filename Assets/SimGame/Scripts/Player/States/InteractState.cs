@@ -12,12 +12,7 @@ namespace SimCard.SimGame {
 
         protected override void Enter() {
             base.Enter();
-            interactionParser = new InteractionParser(
-                player,
-                interactable,
-                player.SimGameManager.EventBus.OnDisplayInteractOptions,
-                player.SimGameManager.EventBus.OnInteractionEvent
-            );
+            interactionParser = new InteractionParser(player, interactable);
         }
 
         protected override void Exit() {
