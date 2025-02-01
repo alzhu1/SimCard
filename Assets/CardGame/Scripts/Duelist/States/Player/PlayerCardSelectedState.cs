@@ -37,7 +37,8 @@ namespace SimCard.CardGame {
                 }
             }
 
-            if (selectedItem is Deck) {
+            // Only show for player duelist deck
+            if (playerDuelist.Deck.Equals(selectedItem)) {
                 allowedActions[0] = PlayerCardAction.Surrender;
             }
 

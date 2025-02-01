@@ -19,7 +19,7 @@ namespace SimCard.CardGame {
             CardGraphSelectable initItem = startingCard ?? playerDuelist.Hand.Cards[0];
 
             List<CardGraphSelectable> enemyPlayField = new();
-            enemyPlayField.Add(playerDuelist.Enemy.Deck);
+            // enemyPlayField.Add(playerDuelist.Enemy.Deck);
             enemyPlayField.AddRange(playerDuelist.Enemy.Field.Cards);
             enemyPlayField.Add(playerDuelist.Enemy.Graveyard);
 
