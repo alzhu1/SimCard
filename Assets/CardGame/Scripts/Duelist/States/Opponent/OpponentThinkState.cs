@@ -14,7 +14,9 @@ namespace SimCard.CardGame {
             OpponentAI opponentAI = opponentDuelist.AI;
             yield return opponentAI.ExecuteBehavior(discardMode);
 
-            opponentAI.EndBehavior();
+            if (opponentAI.Actions.Count == 0) {
+                opponentAI.EndBehavior();
+            }
 
             // At this point, there should be some actions
             nextState = new OpponentDoState(opponentAI.Actions);

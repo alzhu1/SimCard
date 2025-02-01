@@ -14,13 +14,15 @@ namespace SimCard.CardGame {
     [CreateAssetMenu(fileName = "SimpleAI", menuName = "ScriptableObjects/AI/SimpleAI")]
     public class SimpleAI : OpponentAI {
         protected override IEnumerator Think() {
+            // If opponent cannot take more actions, immediately end it
+            if (actions.Count == opponentDuelist.TurnActions) {
+                yield break;
+            }
+
             yield return new WaitForSeconds(opponentDuelist.GeneralWaitTime);
 
+            // Set the very first card action + associated effects
             foreach (Card card in opponentDuelist.Hand.Cards) {
-                if (actions.Count == opponentDuelist.TurnActions) {
-                    break;
-                }
-
                 if (opponentDuelist.IsCardSummonAllowed(card)) {
                     actions.Add(new PlayCardAction(card));
 
@@ -30,6 +32,8 @@ namespace SimCard.CardGame {
                             actions.Add(new ApplyEffectAction(effect, card, card));
                         }
                     }
+
+                    break;
                 }
             }
         }
