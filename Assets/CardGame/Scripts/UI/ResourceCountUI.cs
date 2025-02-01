@@ -6,8 +6,13 @@ using TMPro;
 
 namespace SimCard.CardGame {
     public class ResourceCountUI : MonoBehaviour {
+        // Resource counter
         [SerializeField] private TextMeshProUGUI playerResourceCountText;
         [SerializeField] private TextMeshProUGUI opponentResourceCountText;
+
+        // Net change text
+        [SerializeField] private TextMeshProUGUI playerNetChangeText;
+        [SerializeField] private TextMeshProUGUI opponentNetChangeText;
 
         private CardGameManager cardGameManager;
 
@@ -25,12 +30,21 @@ namespace SimCard.CardGame {
             cardGameManager.EventBus.OnOpponentCurrencyUpdate.Event -= HandleOpponentCurrencyUpdate;
         }
 
-        void HandlePlayerCurrencyUpdate(EventArgs<int, int> args) => HandleCurrencyUpdate(playerResourceCountText, args.arg1, args.arg2);
-        void HandleOpponentCurrencyUpdate(EventArgs<int, int> args) => HandleCurrencyUpdate(opponentResourceCountText, args.arg1, args.arg2);
+        void HandlePlayerCurrencyUpdate(EventArgs<int, int> args) => HandleCurrencyUpdate(playerResourceCountText, playerNetChangeText, args.arg1, args.arg2);
+        void HandleOpponentCurrencyUpdate(EventArgs<int, int> args) => HandleCurrencyUpdate(opponentResourceCountText, opponentNetChangeText, args.arg1, args.arg2);
 
-        void HandleCurrencyUpdate(TextMeshProUGUI text, int beforeCurrency, int afterCurrency) {
+        void HandleCurrencyUpdate(TextMeshProUGUI resourceCountText, TextMeshProUGUI netChangeText, int beforeCurrency, int afterCurrency) {
             Debug.Log($"(UI) Before: {beforeCurrency}, after: {afterCurrency}");
-            text.text = afterCurrency.ToString();
+            resourceCountText.text = afterCurrency.ToString();
+
+            int netChange = afterCurrency - beforeCurrency;
+
+            if (netChange != 0) {
+                netChangeText.CrossFadeAlpha(1, 0f, true);
+                netChangeText.text = netChange.ToString("+#;-#;0");
+                netChangeText.color = netChange > 0 ? Color.green : Color.red;
+                netChangeText.CrossFadeAlpha(0, 1f, false);
+            }
         }
     }
 }
