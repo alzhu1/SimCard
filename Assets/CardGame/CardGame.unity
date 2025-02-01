@@ -3402,7 +3402,6 @@ GameObject:
   - component: {fileID: 1122833059}
   - component: {fileID: 1122833058}
   - component: {fileID: 1122833060}
-  - component: {fileID: 1122833061}
   m_Layer: 5
   m_Name: Bottom Border
   m_TagString: Untagged
@@ -3481,21 +3480,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a33c25df93104f46a777b150835b622, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bottomBorderCanvasGroup: {fileID: 1122833061}
   bottomBorderText: {fileID: 2129572623}
-  cardCost: {fileID: 1899921767}
---- !u!225 &1122833061
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1122833056}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
+  cardCostCanvasGroup: {fileID: 1899921767}
 --- !u!1 &1123205051
 GameObject:
   m_ObjectHideFlags: 0

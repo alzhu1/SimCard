@@ -13,15 +13,18 @@ namespace SimCard.CardGame {
         public GameEvent<EventArgs<Duelist>> OnTurnStart = new();
         public GameEvent<EventArgs<Duelist, Duelist>> OnGameEnd = new();
 
-        // Card-specific
+        // Player-specific
         public GameEvent<EventArgs<CardGraphSelectable>> OnPlayerBaseHover = new();
         public GameEvent<EventArgs<CardGraphSelectable, List<PlayerCardAction>>> OnPlayerCardSelect = new();
         public GameEvent<EventArgs<Card, Effect>> OnPlayerCardEffectHover = new();
-
+        public GameEvent<EventArgs<PlayerCardAction>> OnPlayerCardActionHover = new();
+        public GameEvent<EventArgs<Card>> OnPlayerCardDiscardHover = new();
         public GameEvent<EventArgs<PreviewUIListener>> OnPlayerCardPreview = new();
 
-        public GameEvent<EventArgs<PlayerCardAction>> OnCardActionHover = new();
+        // Opponent-specific
+        public GameEvent<EventArgs<Card>> OnOpponentCardSummon = new();
 
+        // Currency updates
         public GameEvent<EventArgs<int, int>> OnPlayerCurrencyUpdate = new();
         public GameEvent<EventArgs<int, int>> OnOpponentCurrencyUpdate = new();
 

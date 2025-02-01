@@ -52,12 +52,12 @@ namespace SimCard.CardGame {
 
         void Start() {
             cardGameManager.EventBus.OnPlayerCardSelect.Event += DisplayIcons;
-            cardGameManager.EventBus.OnCardActionHover.Event += SelectIcon;
+            cardGameManager.EventBus.OnPlayerCardActionHover.Event += SelectIcon;
         }
 
         void OnDestroy() {
             cardGameManager.EventBus.OnPlayerCardSelect.Event -= DisplayIcons;
-            cardGameManager.EventBus.OnCardActionHover.Event -= SelectIcon;
+            cardGameManager.EventBus.OnPlayerCardActionHover.Event -= SelectIcon;
         }
 
         void Update() {

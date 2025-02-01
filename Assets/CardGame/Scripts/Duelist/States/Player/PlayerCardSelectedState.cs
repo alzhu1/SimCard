@@ -44,12 +44,12 @@ namespace SimCard.CardGame {
 
             actionIndex = 0;
             playerDuelist.CardGameManager.EventBus.OnPlayerCardSelect.Raise(new(selectedItem, allowedActions));
-            playerDuelist.CardGameManager.EventBus.OnCardActionHover.Raise(new(allowedActions[actionIndex]));
+            playerDuelist.CardGameManager.EventBus.OnPlayerCardActionHover.Raise(new(allowedActions[actionIndex]));
         }
 
         protected override void Exit() {
             playerDuelist.CardGameManager.EventBus.OnPlayerCardSelect.Raise(new(null, new()));
-            playerDuelist.CardGameManager.EventBus.OnCardActionHover.Raise(new(PlayerCardAction.None));
+            playerDuelist.CardGameManager.EventBus.OnPlayerCardActionHover.Raise(new(PlayerCardAction.None));
         }
 
         protected override IEnumerator Handle() {
@@ -62,10 +62,10 @@ namespace SimCard.CardGame {
 
                 if (Input.GetKeyDown(KeyCode.LeftArrow)) {
                     actionIndex = (allowedActions.Count + actionIndex - 1) % allowedActions.Count;
-                    playerDuelist.CardGameManager.EventBus.OnCardActionHover.Raise(new(allowedActions[actionIndex]));
+                    playerDuelist.CardGameManager.EventBus.OnPlayerCardActionHover.Raise(new(allowedActions[actionIndex]));
                 } else if (Input.GetKeyDown(KeyCode.RightArrow)) {
                     actionIndex = (actionIndex + 1) % allowedActions.Count;
-                    playerDuelist.CardGameManager.EventBus.OnCardActionHover.Raise(new(allowedActions[actionIndex]));
+                    playerDuelist.CardGameManager.EventBus.OnPlayerCardActionHover.Raise(new(allowedActions[actionIndex]));
                 }
 
                 if (Input.GetKeyDown(KeyCode.Space)) {

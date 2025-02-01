@@ -18,6 +18,7 @@ namespace SimCard.CardGame {
                     case PlayCardAction playCardAction:
                         Debug.Log("PlayCardAction");
                         opponentDuelist.PlaySelectedCard(playCardAction.CardToSummon);
+                        opponentDuelist.CardGameManager.EventBus.OnOpponentCardSummon.Raise(new(playCardAction.CardToSummon));
                         break;
 
                     case ApplyEffectAction applyEffectAction:

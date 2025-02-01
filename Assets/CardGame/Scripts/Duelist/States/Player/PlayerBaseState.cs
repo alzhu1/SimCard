@@ -88,7 +88,7 @@ namespace SimCard.CardGame {
             CardGraph<Card> discardCardGraph = new CardGraph<Card>(new() {
                 playerDuelist.Hand.Cards
             }, playerDuelist.Hand.Cards[0]);
-            playerDuelist.CardGameManager.EventBus.OnPlayerBaseHover.Raise(new(discardCardGraph.CurrItem));
+            playerDuelist.CardGameManager.EventBus.OnPlayerCardDiscardHover.Raise(new(discardCardGraph.CurrItem));
 
             yield return null;
 
@@ -116,7 +116,7 @@ namespace SimCard.CardGame {
                 if (!move.Equals(Vector2Int.zero)) {
                     discardCardGraph.MoveNode(move);
                     yield return playerDuelist.MoveCursorTo(discardCardGraph.CurrItem);
-                    playerDuelist.CardGameManager.EventBus.OnPlayerBaseHover.Raise(new(discardCardGraph.CurrItem));
+                    playerDuelist.CardGameManager.EventBus.OnPlayerCardDiscardHover.Raise(new(discardCardGraph.CurrItem));
                 }
 
                 yield return null;

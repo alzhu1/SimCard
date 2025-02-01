@@ -18,7 +18,7 @@ MonoBehaviour:
   description: This is a test description for square
   flavorText: Squares! Squares!
   income: 2
-  turnLimit: 3
+  turnLimit: 5
   effects: []
   references:
     version: 2
