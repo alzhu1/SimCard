@@ -8,7 +8,10 @@ using System.Linq;
 
 namespace SimCard.SimGame {
     public class ShopUI : MonoBehaviour {
+        // Shop
         [SerializeField] private Image shopCursor;
+        [SerializeField] private Image upArrow;
+        [SerializeField] private Image downArrow;
 
         // Preview
         [SerializeField] private TextMeshProUGUI cardNameText;
@@ -25,6 +28,7 @@ namespace SimCard.SimGame {
 
         private CanvasGroup shopGroup;
         private List<ShopOptionUI> shopOptions;
+        private int topIndex;
 
         private List<CardMetadata> shopItemList;
         private Player player;
@@ -35,6 +39,7 @@ namespace SimCard.SimGame {
 
             shopGroup = GetComponent<CanvasGroup>();
             shopOptions = shopGroup.GetComponentsInChildren<ShopOptionUI>().ToList();
+            topIndex = 0;
         }
 
         void Start() {
@@ -47,12 +52,38 @@ namespace SimCard.SimGame {
 
         void Update() {
             if (optionsUIListener != null) {
-                Vector2 pos = shopCursor.rectTransform.anchoredPosition;
-                pos.y = shopOptions[optionsUIListener.OptionIndex].RectTransform.anchoredPosition.y;
-                shopCursor.rectTransform.anchoredPosition = pos;
+                int optionIndex = optionsUIListener.OptionIndex;
+
+                // Handle top index update (for display)
+                topIndex = Mathf.Min(topIndex, optionIndex);
+                topIndex = Mathf.Max(topIndex + shopOptions.Count - 1, optionIndex) - shopOptions.Count + 1;
+
+                for (int i = 0; i < shopOptions.Count; i++) {
+                    int itemIndex = topIndex + i;
+
+                    CardMetadata cardMetadata = shopItemList.ElementAtOrDefault(itemIndex);
+                    if (cardMetadata != null) {
+                        shopOptions[i].InitText(cardMetadata.cardSO.cardName, $"${cardMetadata.count}");
+                    } else {
+                        shopOptions[i].InitText("", "");
+                    }
+                }
+
+                // Display up/down arrows if more can be seen
+                upArrow.enabled = topIndex != 0;
+                downArrow.enabled = topIndex + shopOptions.Count < shopItemList.Count;
+
+                Debug.Log($"Top index: {topIndex}");
+
+                int uiOptionIndex = optionIndex - topIndex;
+                ShopOptionUI shopOption = shopOptions[uiOptionIndex];
+                shopCursor.rectTransform.anchoredPosition = new Vector2(
+                    shopCursor.rectTransform.anchoredPosition.x,
+                    shopOption.RectTransform.anchoredPosition.y
+                );
 
                 // Update preview texts
-                CardSO previewCard = shopItemList[optionsUIListener.OptionIndex].cardSO;
+                CardSO previewCard = shopItemList[optionIndex].cardSO;
                 cardNameText.text = previewCard.cardName;
                 costText.text = $"Cost: {previewCard.cost}";
                 incomeText.text = $"Income: {previewCard.income}";
@@ -80,18 +111,6 @@ namespace SimCard.SimGame {
             player = args.arg3;
 
             shopGroup.alpha = 1;
-            for (int i = 0; i < shopOptions.Count; i++) {
-                // TODO: Actually we don't want to disable things (?)
-                // Or at the very least, want to cap the amount of supported items shown
-                // UI might need to keep track of the CardSO list? Or a new UI listener for that
-                CardMetadata cardMetadata = shopItemList.ElementAtOrDefault(i);
-                if (cardMetadata != null) {
-                    shopOptions[i].gameObject.SetActive(true);
-                    shopOptions[i].InitText(cardMetadata.cardSO.cardName, $"${cardMetadata.count}");
-                } else {
-                    shopOptions[i].gameObject.SetActive(false);
-                }
-            }
         }
     }
 }
