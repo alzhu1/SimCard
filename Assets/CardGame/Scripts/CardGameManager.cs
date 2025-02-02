@@ -108,7 +108,8 @@ namespace SimCard.CardGame {
             duelistTurnOrder[1] = duelist2;
 
             // Second player advantage
-            duelistTurnOrder[1].AdjustCurrency(25);
+            duelistTurnOrder[0].AdjustCurrency(50);
+            duelistTurnOrder[1].AdjustCurrency(75);
         }
 
         void StartTurn() {

@@ -16,8 +16,6 @@ namespace SimCard.CardGame {
         protected override DuelistState StartState => new DrawState<OpponentThinkState>();
 
         protected override void InitForGame(InitCardGameArgs args) {
-            AdjustCurrency(50);
-
             opponentAI.InitOpponentDuelist(this);
 
             if (args != null) {
