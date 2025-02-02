@@ -10,9 +10,8 @@ namespace SimCard.CardGame {
         public static readonly int MAX_FIELD_CARDS = 6;
         public static readonly int MAX_HAND_CARDS = 6;
 
-        // TODO: Would prefer not to serialize if possible...
-        [SerializeField] private Duelist enemy;
-        public Duelist Enemy => enemy;
+        public Duelist Enemy { get; private set; }
+        public void SetEnemy(Duelist enemy) => Enemy = enemy;
 
         private DuelistState duelistState;
 

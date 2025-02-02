@@ -103,6 +103,9 @@ namespace SimCard.CardGame {
             Duelist duelist1 = coinFlipValue < 0.5 ? playerDuelist : opponentDuelist;
             Duelist duelist2 = duelist1 == playerDuelist ? opponentDuelist : playerDuelist;
 
+            duelist1.SetEnemy(duelist2);
+            duelist2.SetEnemy(duelist1);
+
             duelistTurnOrder[0] = duelist1;
             duelistTurnOrder[1] = duelist2;
 

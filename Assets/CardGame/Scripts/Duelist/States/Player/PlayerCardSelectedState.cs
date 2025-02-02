@@ -38,6 +38,7 @@ namespace SimCard.CardGame {
             }
 
             // Only show for player duelist deck
+            // FIXME: This action is hidden behind the currency icon
             if (playerDuelist.Deck.Equals(selectedItem)) {
                 allowedActions[0] = PlayerCardAction.Surrender;
             }

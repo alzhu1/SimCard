@@ -198,7 +198,6 @@ namespace SimCard.SimGame {
             initAction.Invoke();
             yield return null;
 
-            // TODO: Maybe rely on fade out for card game scene load?
             yield return fadeUI.FadeOut();
             canvasUI.SetActive(false);
             simGameCamera.gameObject.SetActive(false);
