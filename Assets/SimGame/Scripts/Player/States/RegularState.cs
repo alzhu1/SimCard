@@ -26,10 +26,12 @@ namespace SimCard.SimGame {
         }
 
         protected override IEnumerator Handle() {
-            // Do a quick front collider check, assuming we come from pause
-            player.FrontCheckCollider.enabled = false;
-            yield return null;
-            player.FrontCheckCollider.enabled = true;
+            // Do a quick front collider check (only if we have no interactable)
+            if (interactable == null) {
+                player.FrontCheckCollider.enabled = false;
+                yield return null;
+                player.FrontCheckCollider.enabled = true;
+            }
 
             while (nextState == null) {
                 if (interactable != null && Input.GetKeyDown(KeyCode.Z)) {
