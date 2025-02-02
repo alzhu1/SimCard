@@ -115,6 +115,8 @@ namespace SimCard.SimGame {
         IEnumerator GoToNextDay() {
             EventBus.OnPlayerPause.Raise(new(false));
 
+            // Hide the interact UI
+            interactUI.Hide();
             yield return fadeUI.FadeInOut();
             Debug.Log($"The day is {day}");
             day++;
@@ -165,6 +167,9 @@ namespace SimCard.SimGame {
         // Scene loading helpers
         IEnumerator LoadSubScene(int sceneIndex, Action initAction) {
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneIndex, LoadSceneMode.Additive);
+
+            // Hide the interact UI when loading
+            interactUI.Hide();
 
             asyncLoad.allowSceneActivation = false;
             // Disable player movement beforehand, keep sprite (will disable later)

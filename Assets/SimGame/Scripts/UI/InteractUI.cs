@@ -65,6 +65,10 @@ namespace SimCard.SimGame {
             dialogueText.enabled = false;
         }
 
+        public void Hide() {
+            interactPromptGroup.alpha = 0;
+        }
+
         public Coroutine StartInteraction() {
             return StartCoroutine(AnimateInteractionWindow(true));
         }
