@@ -26,6 +26,8 @@ namespace SimCard.CardGame {
             }
         }
 
+        protected override void SendCurrencyUpdateEvent(int beforeCurrency, int afterCurrency) => CardGameManager.EventBus.OnPlayerCurrencyUpdate.Raise(new(beforeCurrency, afterCurrency));
+
         public void ShowCursor() {
             cursor.enabled = true;
         }

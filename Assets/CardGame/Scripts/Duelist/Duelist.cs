@@ -38,12 +38,8 @@ namespace SimCard.CardGame {
                 CardGameManager.EventBus.OnGameEnd.Raise(new(this, Enemy));
             }
 
-            // TODO: Would like to avoid a runtime type check like this
-            if (this is PlayerDuelist) {
-                CardGameManager.EventBus.OnPlayerCurrencyUpdate.Raise(new(beforeCurrency, Currency));
-            } else {
-                CardGameManager.EventBus.OnOpponentCurrencyUpdate.Raise(new(beforeCurrency, Currency));
-            }
+            // Send corresponding event to update UI
+            SendCurrencyUpdateEvent(beforeCurrency, Currency);
         }
 
         public int Taxes { get; private set; }
@@ -113,8 +109,10 @@ namespace SimCard.CardGame {
             duelistState = null;
         }
 
-        protected abstract void InitForGame(EventArgs<List<CardMetadata>, List<CardMetadata>> args);
+        // These need to be overridden
         protected abstract DuelistState StartState { get; }
+        protected abstract void InitForGame(EventArgs<List<CardMetadata>, List<CardMetadata>> args);
+        protected abstract void SendCurrencyUpdateEvent(int beforeCurrency, int afterCurrency);
 
         // TODO: Thinking that for these card operations, they should be co-routines so that other states can wait on them
 

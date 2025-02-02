@@ -27,5 +27,7 @@ namespace SimCard.CardGame {
                 DrawCard();
             }
         }
+
+        protected override void SendCurrencyUpdateEvent(int beforeCurrency, int afterCurrency) => CardGameManager.EventBus.OnOpponentCurrencyUpdate.Raise(new(beforeCurrency, afterCurrency));
     }
 }
