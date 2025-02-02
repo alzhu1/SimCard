@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 namespace SimCard.CardGame {
     public class IconsUI : MonoBehaviour {
+        [Header("Icons")]
         [SerializeField]
         private Image previewIcon;
 
@@ -19,6 +20,7 @@ namespace SimCard.CardGame {
         [SerializeField]
         private Image surrenderIcon;
 
+        [Header("Icon Config")]
         [SerializeField]
         private float iconSize = 25;
 
@@ -27,6 +29,12 @@ namespace SimCard.CardGame {
 
         [SerializeField]
         private float iconAmplitude = 5;
+
+        [SerializeField]
+        private float iconSpreadOffset = 1;
+
+        [SerializeField]
+        private float iconHeight = 1;
 
         private Canvas canvas;
         private CardGameManager cardGameManager;
@@ -92,14 +100,13 @@ namespace SimCard.CardGame {
         }
 
         void PositionIcons(List<Image> icons) {
-            float offset = 1;
-            float leftEdgeX = ((1 - icons.Count) * offset / 2) + currItem.transform.position.x;
+            float leftEdgeX = ((1 - icons.Count) * iconSpreadOffset / 2) + currItem.transform.position.x;
             for (int i = 0; i < icons.Count; i++) {
                 Image icon = icons[i];
                 Vector3 pos = Vector3.zero;
 
-                pos.x = (leftEdgeX + (offset * i)) / canvas.transform.localScale.x;
-                pos.y = (currItem.transform.position.y + 1) / canvas.transform.localScale.y;
+                pos.x = (leftEdgeX + (iconSpreadOffset * i)) / canvas.transform.localScale.x;
+                pos.y = (currItem.transform.position.y + iconHeight) / canvas.transform.localScale.y;
                 pos.z /= canvas.transform.localScale.z;
 
                 icon.rectTransform.anchoredPosition = pos;

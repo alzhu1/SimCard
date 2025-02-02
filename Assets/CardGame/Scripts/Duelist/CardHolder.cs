@@ -5,6 +5,7 @@ using UnityEngine;
 namespace SimCard.CardGame {
     // CardHolder should be owned by a duelist
     public class CardHolder : MonoBehaviour {
+        [SerializeField] protected float spreadOffset = 1.5f;
         [SerializeField] private bool hidden;
 
         protected List<Card> cards;
@@ -18,15 +19,15 @@ namespace SimCard.CardGame {
             cards = new List<Card>(childrenCards ?? new Card[] { });
         }
 
+        // MINOR: Does this need to be virtual?
         public virtual void Spread() {
             // Default spread: space out cards horizontally
-            int offset = 2;
-            int leftEdgeX = (1 - cards.Count) * offset / 2;
+            float leftEdgeX = (1 - cards.Count) * spreadOffset / 2;
             for (int i = 0; i < cards.Count; i++) {
                 Card card = cards[i];
                 Vector3 pos = Vector3.zero;
 
-                pos.x = leftEdgeX + (offset * i);
+                pos.x = leftEdgeX + (spreadOffset * i);
                 card.transform.localPosition = pos;
             }
         }

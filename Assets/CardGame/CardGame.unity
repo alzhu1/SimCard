@@ -745,7 +745,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -380, y: 50}
+  m_AnchoredPosition: {x: -380, y: 30}
   m_SizeDelta: {x: 150, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &300558262
@@ -830,6 +830,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d0598eca2387457898831fe0f581f99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spreadOffset: 1.5
   hidden: 0
 --- !u!1001 &359222624
 PrefabInstance:
@@ -1113,7 +1114,7 @@ Transform:
   m_GameObject: {fileID: 422449932}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.5, y: 1, z: 0}
+  m_LocalPosition: {x: -6.5, y: 0.75, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1131,6 +1132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fdc2e372522b4f0fa43031dfc7cba72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spreadOffset: 1.5
   hidden: 0
 --- !u!212 &422449935
 SpriteRenderer:
@@ -1936,6 +1938,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85cfabc9fa0d24e0a89c89c2238a1411, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spreadOffset: 1.5
   hidden: 0
 --- !u!1 &588110130
 GameObject:
@@ -1964,7 +1967,7 @@ Transform:
   m_GameObject: {fileID: 588110130}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.5, y: -1, z: 0}
+  m_LocalPosition: {x: -6.5, y: -0.75, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1994,6 +1997,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6116f2583a90488ea6711bdee82338e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spreadOffset: 1.5
   hidden: 0
 --- !u!212 &588110133
 SpriteRenderer:
@@ -2713,7 +2717,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 380, y: -50}
+  m_AnchoredPosition: {x: 380, y: -30}
   m_SizeDelta: {x: 150, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &871515536
@@ -3518,8 +3522,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 150}
-  m_SizeDelta: {x: 0, y: -300}
+  m_AnchoredPosition: {x: 25, y: 150}
+  m_SizeDelta: {x: -50, y: -300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1123205053
 MonoBehaviour:
@@ -3575,7 +3579,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -4194,6 +4198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d0598eca2387457898831fe0f581f99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spreadOffset: 1.5
   hidden: 1
 --- !u!1001 &1285073748
 PrefabInstance:
@@ -4288,7 +4293,7 @@ Transform:
   m_GameObject: {fileID: 1312772816}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.5, y: -1, z: 0}
+  m_LocalPosition: {x: 6.5, y: -0.75, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4306,6 +4311,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fdc2e372522b4f0fa43031dfc7cba72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spreadOffset: 1.5
   hidden: 0
 --- !u!212 &1312772819
 SpriteRenderer:
@@ -4484,6 +4490,8 @@ MonoBehaviour:
   iconSize: 25
   iconPulseSpeed: 10
   iconAmplitude: 7
+  iconSpreadOffset: 0.75
+  iconHeight: 1
 --- !u!1 &1369111948
 GameObject:
   m_ObjectHideFlags: 0
@@ -4528,6 +4536,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3de5e64d4de54d69aeaf53c39444c95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spreadOffset: 1.5
   hidden: 0
   cardPrefab: {fileID: 2157011654814909134, guid: 23d03b8627b614cd7a07fddc95e220b2, type: 3}
   cardPoolSize: 100
@@ -4558,7 +4567,7 @@ Transform:
   m_GameObject: {fileID: 1414146265}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.5, y: 1, z: 0}
+  m_LocalPosition: {x: 6.5, y: 0.75, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4588,6 +4597,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6116f2583a90488ea6711bdee82338e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spreadOffset: 1.5
   hidden: 0
 --- !u!212 &1414146268
 SpriteRenderer:
@@ -4955,7 +4965,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de01795390bdd42f3ab843a7e3443e8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 1814205500}
   generalWaitTime: 0.5
   opponentAI: {fileID: 11400000, guid: 38a2202181f734f8ab743e6f49d85d45, type: 2}
 --- !u!1 &1577876955
@@ -5416,7 +5425,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43bff4cdd1fe349b0b31a30bec9de4ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 1559012902}
   cursor: {fileID: 730406812}
   cursorMoveTime: 0.08
 --- !u!1 &1818488069
@@ -5463,6 +5471,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85cfabc9fa0d24e0a89c89c2238a1411, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spreadOffset: 1.5
   hidden: 0
 --- !u!1 &1899921765
 GameObject:

@@ -70,7 +70,7 @@ namespace SimCard.CardGame {
                 PlayerCardAction.Summon => "Summon",
                 PlayerCardAction.Fire => "Fire",
                 PlayerCardAction.Surrender => "Surrender",
-                _ => "None"
+                _ => ""
             };
         }
 

@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace SimCard.CardGame {
     public abstract class Duelist : MonoBehaviour {
-        public static readonly int MAX_FIELD_CARDS = 6;
+        public static readonly int MAX_FIELD_CARDS = 5;
         public static readonly int MAX_HAND_CARDS = 6;
 
         public Duelist Enemy { get; private set; }
