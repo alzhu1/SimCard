@@ -69,8 +69,9 @@ namespace SimCard.CardGame {
         }
 
         void DisplayIcons(EventArgs<CardGraphSelectable, List<PlayerCardAction>> args) {
-            currItem = args.arg1;
-            List<Image> icons = args.arg2.Select(action => {
+            (CardGraphSelectable selectable, List<PlayerCardAction> actions) = args;
+            currItem = selectable;
+            List<Image> icons = actions.Select(action => {
                 Image icon = iconMap[action];
                 icon.enabled = true;
                 return icon;

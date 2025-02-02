@@ -19,7 +19,7 @@ namespace SimCard.CardGame {
             opponentAI.InitOpponentDuelist(this);
 
             if (args != null) {
-                List<CardMetadata> opponentDeck = args.arg2;
+                (List<CardMetadata> _, List<CardMetadata> opponentDeck) = args;
                 Deck.InitFromCardMetadata(opponentDeck, CardGameManager);
             }
 

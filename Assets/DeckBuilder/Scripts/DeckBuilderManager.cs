@@ -113,7 +113,8 @@ namespace SimCard.DeckBuilder {
         }
 
         void InitDeckBuilder(EventArgs<List<CardMetadata>, List<CardMetadata>> args) {
-            StartDeckBuilder(args.arg1, args.arg2);
+            (List<CardMetadata> deck, List<CardMetadata> availableCards) = args;
+            StartDeckBuilder(deck, availableCards);
         }
 
         void StartDeckBuilder(List<CardMetadata> deck, List<CardMetadata> availableCards) {

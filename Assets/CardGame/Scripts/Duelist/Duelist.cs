@@ -108,7 +108,7 @@ namespace SimCard.CardGame {
             CardGameManager.EndTurn();
         }
 
-        void StopDuelist(EventArgs<Duelist, Duelist> _args) {
+        void StopDuelist(EventArgs<Duelist, Duelist> _) {
             Debug.Log("Stop the duelist");
             duelistState?.Stop();
             duelistState = null;

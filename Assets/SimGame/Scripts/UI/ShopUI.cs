@@ -108,9 +108,8 @@ namespace SimCard.SimGame {
                 return;
             }
 
-            optionsUIListener = args.arg1;
-            shopItemList = args.arg2;
-            player = args.arg3;
+            // Initialize via deconstruction
+            (optionsUIListener, shopItemList, player) = args;
 
             shopGroup.alpha = 1;
         }

@@ -17,7 +17,7 @@ namespace SimCard.CardGame {
 
         protected override void InitForGame(EventArgs<List<CardMetadata>, List<CardMetadata>> args) {
             if (args != null) {
-                List<CardMetadata> playerDeck = args.arg1;
+                (List<CardMetadata> playerDeck, List<CardMetadata> _) = args;
                 Deck.InitFromCardMetadata(playerDeck, CardGameManager);
             }
 

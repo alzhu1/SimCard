@@ -52,8 +52,8 @@ namespace SimCard.SimGame {
                 return;
             }
 
-            optionsUIListener = args.arg1;
-            List<(string, bool)> options = args.arg2;
+            (OptionsUIListener listener, List<(string, bool)> options) = args;
+            optionsUIListener = listener;
             optionsGroup.alpha = 1;
             for (int i = 0; i < optionTexts.Count; i++) {
                 (string option, bool allowed) = options.ElementAtOrDefault(i);

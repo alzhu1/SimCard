@@ -133,9 +133,7 @@ namespace SimCard.CardGame {
         }
 
         void HandleGameEnd(EventArgs<Duelist, Duelist> args) {
-            Duelist winner = args.arg1;
-            Duelist loser = args.arg2;
-
+            (Duelist winner, Duelist loser) = args;
             StartCoroutine(EndCardGame(winner == playerDuelist));
         }
 

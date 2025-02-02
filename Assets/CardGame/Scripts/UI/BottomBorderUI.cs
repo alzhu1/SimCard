@@ -45,9 +45,10 @@ namespace SimCard.CardGame {
         }
 
         void HandleCardHover(EventArgs<CardGraphSelectable> args) {
-            bottomBorderText.text = args.argument.PreviewName;
+            CardGraphSelectable selectable = args.argument;
+            bottomBorderText.text = selectable.PreviewName;
 
-            if (args.argument is Card card) {
+            if (selectable is Card card) {
                 cardCostCanvasGroup.alpha = 1;
                 cardCostText.text = card.Cost.ToString();
             } else {
@@ -56,8 +57,7 @@ namespace SimCard.CardGame {
         }
 
         void HandleCardEffectHover(EventArgs<Card, Effect> args) {
-            Card card = args.arg1;
-            Effect effect = args.arg2;
+            (Card card, Effect effect) = args;
             cardCostCanvasGroup.alpha = 0;
             string cardEffectText = effect.previewText.Length > 0 ? effect.previewText : effect.GetType().Name;
             bottomBorderText.text = $"<color=blue>{cardEffectText}</color> -> {card.CardName}";

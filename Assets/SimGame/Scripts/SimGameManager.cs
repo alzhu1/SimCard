@@ -60,16 +60,18 @@ namespace SimCard.SimGame {
         }
 
         void HandleInteractionEvent(EventArgs<string, Interactable, int> args) {
-            Debug.Log($"Received event: {args.arg1}");
+            (string eventName, Interactable interactable, int index) = args;
 
-            switch (args.arg1) {
+            Debug.Log($"Received event: {eventName}");
+
+            switch (eventName) {
                 case "NextDay": {
                     StartCoroutine(GoToNextDay());
                     break;
                 }
 
                 case "StartCardGame": {
-                    StartCoroutine(StartCardGame(args.arg2));
+                    StartCoroutine(StartCardGame(interactable));
                     break;
                 }
 
@@ -79,9 +81,9 @@ namespace SimCard.SimGame {
                 }
 
                 case "Buy": {
-                    Debug.Log($"Buying, the arg index is {args.arg3}, card in deck is {args.arg2.Deck[args.arg3].cardSO}");
+                    Debug.Log($"Buying, the arg index is {index}, card in deck is {interactable.Deck[index].cardSO}");
 
-                    CardMetadata cardMetadataToBuy = args.arg2.Deck[args.arg3];
+                    CardMetadata cardMetadataToBuy = interactable.Deck[index];
                     CardSO cardToBuy = cardMetadataToBuy.cardSO;
                     CardMetadata playerCardMetadata = player.Deck.Find(cardMetadata => cardMetadata.cardSO.Equals(cardToBuy));
                     if (playerCardMetadata != null) {
@@ -100,19 +102,21 @@ namespace SimCard.SimGame {
         }
 
         void HandleCardGameEndEvent(EventArgs<bool, int> args) {
-            Debug.Log($"Result: {args.arg1}, gold won: {args.arg2}");
-            player.IncreaseCurrency(args.arg2);
+            (bool result, int goldWon) = args;
+            Debug.Log($"Result: {result}, gold won: {goldWon}");
+            player.IncreaseCurrency(goldWon);
 
             StartCoroutine(EndCardGame());
         }
 
         void HandleDeckBuilderEndEvent(EventArgs<List<CardMetadata>, List<CardMetadata>> args) {
             Debug.Log("Returned from deck edit");
-            player.UpdateDeckAfterEdit(args.arg1, args.arg2);
+            (List<CardMetadata> deck, List<CardMetadata> availableCards) = args;
+            player.UpdateDeckAfterEdit(deck, availableCards);
             StartCoroutine(EndDeckBuilder());
         }
 
-        void HandleSubSceneLoadedEvent(EventArgs args) => loadingSubScene = false;
+        void HandleSubSceneLoadedEvent(EventArgs _) => loadingSubScene = false;
 
         IEnumerator GoToNextDay() {
             EventBus.OnPlayerPause.Raise(new(false));
