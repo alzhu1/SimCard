@@ -80,7 +80,7 @@ namespace SimCard.CardGame {
             }
         }
 
-        IEnumerator StartCardGame(InitCardGameArgs args) {
+        IEnumerator StartCardGame(EventArgs<List<CardMetadata>, List<CardMetadata>> args) {
             // yield return new WaitForSeconds(1f);
             yield return StartCoroutine(DetermineTurnOrder());
             EventBus.OnGameStart.Raise(args);
@@ -146,13 +146,13 @@ namespace SimCard.CardGame {
             }
 
             if (simGameManager != null) {
-                simGameManager.EventBus.OnCardGameEnd.Raise(new(playerWon));
+                simGameManager.EventBus.OnCardGameEnd.Raise(new(playerWon, 50));
             } else {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
 
-        void InitCardGame(InitCardGameArgs args) {
+        void InitCardGame(EventArgs<List<CardMetadata>, List<CardMetadata>> args) {
             StartCoroutine(StartCardGame(args));
             // StartCoroutine(EndCardGame(true));
         }

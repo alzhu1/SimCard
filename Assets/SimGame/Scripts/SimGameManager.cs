@@ -99,8 +99,10 @@ namespace SimCard.SimGame {
             }
         }
 
-        void HandleCardGameEndEvent(CardGameResultArgs args) {
-            Debug.Log($"Result: {args.won}, gold won: {args.goldWon}");
+        void HandleCardGameEndEvent(EventArgs<bool, int> args) {
+            Debug.Log($"Result: {args.arg1}, gold won: {args.arg2}");
+            player.IncreaseCurrency(args.arg2);
+
             StartCoroutine(EndCardGame());
         }
 

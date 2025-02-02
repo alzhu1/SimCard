@@ -114,7 +114,7 @@ namespace SimCard.CardGame {
             duelistState = null;
         }
 
-        protected abstract void InitForGame(InitCardGameArgs args);
+        protected abstract void InitForGame(EventArgs<List<CardMetadata>, List<CardMetadata>> args);
         protected abstract DuelistState StartState { get; }
 
         // TODO: Thinking that for these card operations, they should be co-routines so that other states can wait on them

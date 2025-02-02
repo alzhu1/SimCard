@@ -25,10 +25,15 @@ namespace SimCard.SimGame {
         [SerializeField]
         private int energy = 100;
         public int Energy => energy;
+        public void RefreshEnergy() => energy = 100;
+        public void ConsumeEnergy(int energyUsed) => energy = Mathf.Max(0, energy - energyUsed);
+
 
         [SerializeField]
         private int currency = 0;
         public int Currency => currency;
+        public void IncreaseCurrency(int currencyGained) => currency += currencyGained;
+        public void ConsumeCurrency(int currencyUsed) => currency = Mathf.Max(0, currency - currencyUsed);
 
         private Rigidbody2D rb;
         public Rigidbody2D RB => rb;
@@ -82,18 +87,6 @@ namespace SimCard.SimGame {
             if (collider.TryGetComponent(out Interactable _)) {
                 SimGameManager.EventBus.OnCanInteract.Raise(new(null));
             }
-        }
-
-        public void RefreshEnergy() {
-            energy = 100;
-        }
-
-        public void ConsumeEnergy(int energyUsed) {
-            energy = Mathf.Max(0, energy - energyUsed);
-        }
-
-        public void ConsumeCurrency(int currencyUsed) {
-            currency = Mathf.Max(0, currency - currencyUsed);
         }
 
         public void UpdateDeckAfterEdit(List<CardMetadata> deck, List<CardMetadata> availableCards) {
