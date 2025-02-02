@@ -10,6 +10,7 @@ namespace SimCard.CardGame {
     public interface PreviewUIListener {
         public CardGraphSelectable PreviewedItem { get; }
         public int Index { get; }
+        public string PreviewHeader { get; }
     }
 
     public class PreviewUI : MonoBehaviour {
@@ -21,13 +22,19 @@ namespace SimCard.CardGame {
         private TextMeshProUGUI cardTitleText;
 
         [SerializeField]
-        private TextMeshProUGUI cardDescriptionText;
+        private TextMeshProUGUI cardIncomeText;
 
         [SerializeField]
         private TextMeshProUGUI cardTurnsLeftText;
 
         [SerializeField]
+        private TextMeshProUGUI cardDescriptionText;
+
+        [SerializeField]
         private TextMeshProUGUI cardFlavorText;
+
+        [SerializeField]
+        private TextMeshProUGUI cardEffectText;
 
         [Header("Graveyard Renderer")]
         [SerializeField]
@@ -35,6 +42,9 @@ namespace SimCard.CardGame {
 
         [SerializeField]
         private Image upArrow;
+
+        [SerializeField]
+        private TextMeshProUGUI graveyardTitleText;
 
         [SerializeField]
         private TextMeshProUGUI[] cardTexts;
@@ -73,17 +83,21 @@ namespace SimCard.CardGame {
                 switch (previewUIListener.PreviewedItem) {
                     case Card card: {
                         cardRendererGroup.alpha = 1;
-                        cardTitleText.text = card.CardName;
+                        cardTitleText.text = previewUIListener.PreviewHeader;
+                        cardIncomeText.text = $"Income: {card.Income}";
+                        cardTurnsLeftText.text = card.ActiveTurns > 0 ? $"Turns Left: {card.ActiveTurns}" : "<color=red>RETIRED</color>";
                         cardDescriptionText.text = card.Description;
                         cardFlavorText.text = card.FlavorText;
 
-                        // MINOR: This will be shown in graveyard subview too, would like a way to differentiate based on card holder
-                        cardTurnsLeftText.text = $"Turns Left: {card.ActiveTurns}";
+                        // TODO: Figure out Effect Text (likely just a list of applied effects)
+                        // cardEffectText.text =
+
                         break;
                     }
 
                     case Graveyard graveyard: {
                         graveyardRendererGroup.alpha = 1;
+                        graveyardTitleText.text = previewUIListener.PreviewHeader;
 
                         // Handle top index update
                         graveyardTopTextIndex = Mathf.Min(graveyardTopTextIndex, previewUIListener.Index);
@@ -114,6 +128,9 @@ namespace SimCard.CardGame {
             previewUIListener = args.argument;
             canvasGroup.alpha = previewUIListener == null ? 0 : 1;
             graveyardTopTextIndex = 0;
+
+            // Run Update once to initialize UI immediately
+            Update();
         }
     }
 }

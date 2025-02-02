@@ -141,8 +141,7 @@ namespace SimCard.CardGame {
 
         public void FireCard(Card card) {
             TurnActions--;
-            card.GetCurrentHolder().TransferTo(Graveyard, card, false);
-            OrganizeArea();
+            Discard(card);
         }
 
         public void ApplyCardEffect(Effect effect, Card source, Card target) {
@@ -152,6 +151,8 @@ namespace SimCard.CardGame {
         public void Discard(Card card) {
             CardHolder currentCardHolder = card.GetCurrentHolder();
             currentCardHolder.TransferTo(Graveyard, card, false);
+            card.ClearActiveTurns();
+            OrganizeArea();
         }
 
         public bool IsCardSummonAllowed(Card selectedCard) {

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace SimCard.CardGame {
@@ -12,13 +13,14 @@ namespace SimCard.CardGame {
             }
         }
         public int Index { get; private set; }
+        public string PreviewHeader { get; private set; }
 
         private Stack<CardGraphSelectable> selectableStack;
         private int indexLength;
 
         public PreviewHandler(CardGraphSelectable previewedItem, int indexLength) {
             selectableStack = new Stack<CardGraphSelectable>();
-            selectableStack.Push(previewedItem);
+            PushOnStack(previewedItem);
             this.indexLength = Mathf.Max(1, indexLength);
         }
 
@@ -33,7 +35,7 @@ namespace SimCard.CardGame {
                 // Only handle for graveyard
                 case Graveyard graveyard: {
                     Card subCard = graveyard.Cards[Index];
-                    selectableStack.Push(subCard);
+                    PushOnStack(subCard);
                     break;
                 }
             }
@@ -41,7 +43,13 @@ namespace SimCard.CardGame {
 
         public bool HandleEscape() {
             selectableStack.Pop();
+            PreviewHeader = string.Join(" > ", selectableStack.Select(selectable => selectable.PreviewName).Reverse());
             return selectableStack.Count == 0;
+        }
+
+        void PushOnStack(CardGraphSelectable selectable) {
+            selectableStack.Push(selectable);
+            PreviewHeader = string.Join(" > ", selectableStack.Select(selectable => selectable.PreviewName).Reverse());
         }
     }
 }

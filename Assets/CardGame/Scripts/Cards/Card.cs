@@ -37,6 +37,7 @@ namespace SimCard.CardGame {
 
         public int ActiveTurns { get; private set; }
         public void DecrementActiveTurns() => ActiveTurns--;
+        public void ClearActiveTurns() => ActiveTurns = 0;
         public bool ReachedTurnLimit() => ActiveTurns <= 0;
 
         // For applied effects per turn
