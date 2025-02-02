@@ -80,10 +80,6 @@ namespace SimCard.SimGame {
                 return;
             }
 
-            // TODO: Need to specially handle input for the ShopBuy path. (Default path is a regular option interaction)
-            // Basically, any choice made here shouldn't change the underlying interaction or UI imo. Option Index should also not change
-            // i.e. it's kind of a no-op. The interaction node stays on the same one, without progressing. Only way to progress is to hit "Cancel" button (need to add keystroke)
-
             // HandleAdvance means we picked an option
             List<InteractionNode.InteractionOption> options = CurrInteractionNode.Options;
 
@@ -104,10 +100,6 @@ namespace SimCard.SimGame {
 
                 // Hide the options UI once an option is picked
                 DisplayInteractionOptions.Raise(null);
-
-                // TODO: Maybe somewhere here, we can check if we're going to ShopBuy. If so, we need to make sure to show different UI
-                // e.g. MaxVisibleCharacters wouldn't change
-                // OptionIndex wouldn't change (maybe add handling in UpdateMaxVisibleCharacters)
 
                 // We could check for special paths names (starting with $) and add handling there
                 Debug.Log($"Chosen path name: {pathName}");

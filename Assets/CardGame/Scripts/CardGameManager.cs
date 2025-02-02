@@ -90,7 +90,6 @@ namespace SimCard.CardGame {
         }
 
         IEnumerator DetermineTurnOrder() {
-            // TODO: Add the UI
             while (!Input.GetKeyDown(KeyCode.Space)) {
                 Debug.Log("Space to start coin flip");
                 yield return null;

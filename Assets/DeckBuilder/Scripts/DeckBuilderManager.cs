@@ -103,18 +103,12 @@ namespace SimCard.DeckBuilder {
                     simGameManager.EventBus.OnDeckBuilderEnd.Raise(
                         new(finalDeck, finalAvailableCards)
                     );
-                    LogCardCount();
                     deckBuilder = null;
                 } else {
                     // Continue running (test mode)
                     testDeck = finalDeck;
                     testAvailableCards = finalAvailableCards;
-                    LogCardCount();
                 }
-            }
-
-            if (Input.GetKeyDown(KeyCode.D)) {
-                LogCardCount();
             }
         }
 
@@ -125,15 +119,6 @@ namespace SimCard.DeckBuilder {
         void StartDeckBuilder(List<CardMetadata> deck, List<CardMetadata> availableCards) {
             deckBuilder = new DeckBuilder(deck, availableCards);
             deckBuilderUI.DeckBuilderUIListener = deckBuilder;
-        }
-
-        void LogCardCount() {
-            // TODO: Remove debug logs
-            Debug.Log($"Deck Builder is on index {deckBuilder.Index}");
-
-            foreach (var a in deckBuilder.CardToCount) {
-                Debug.Log($"Card {a.Key} has pair count {a.Value}");
-            }
         }
     }
 }

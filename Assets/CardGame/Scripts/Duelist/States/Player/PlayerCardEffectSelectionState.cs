@@ -33,7 +33,6 @@ namespace SimCard.CardGame {
         }
 
         protected override IEnumerator Handle() {
-            // TODO: Need to convey that the effect is being applied somewhere in UI
             while (nonSelfEffectIndex < playedCard.NonSelfEffects.Count) {
                 if (Input.GetKeyDown(KeyCode.Space)) {
                     Effect effect = playedCard.NonSelfEffects[nonSelfEffectIndex];
