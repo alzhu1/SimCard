@@ -53,13 +53,11 @@ namespace SimCard.DeckBuilder {
         [SerializeField]
         private TextMeshProUGUI previewLifetimeText;
 
-        private DeckBuilderManager deckBuilderManager;
         private int topIndex;
 
         public DeckBuilderUIListener DeckBuilderUIListener { get; set; }
 
         void Awake() {
-            deckBuilderManager = GetComponentInParent<DeckBuilderManager>();
             topIndex = 0;
         }
 

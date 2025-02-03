@@ -11,8 +11,6 @@ namespace SimCard.DeckBuilder {
         // Singleton is private to avoid multiple instantiations (if it somehow happened)
         private static DeckBuilderManager instance = null;
 
-        public DeckBuilderEventBus EventBus { get; private set; }
-
         [SerializeField]
         private AudioListener audioListener;
 
@@ -38,8 +36,6 @@ namespace SimCard.DeckBuilder {
                 return;
             }
 
-            EventBus = GetComponent<DeckBuilderEventBus>();
-
             // If loaded additively by SimGame scene, set the SimGameManager here
             simGameManager = FindAnyObjectByType<SimGameManager>();
             if (simGameManager == null) {
@@ -58,6 +54,12 @@ namespace SimCard.DeckBuilder {
             } else {
                 // Also initialize editable deck/cards if null (means scene started by self)
                 StartDeckBuilder(testDeck, testAvailableCards);
+            }
+        }
+
+        void OnDestroy() {
+            if (simGameManager != null) {
+                simGameManager.EventBus.OnDeckBuilderInit.Event -= InitDeckBuilder;
             }
         }
 

@@ -2545,7 +2545,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1717142880}
   - component: {fileID: 1717142882}
-  - component: {fileID: 1717142881}
   m_Layer: 0
   m_Name: Deck Builder Manager
   m_TagString: Untagged
@@ -2570,18 +2569,6 @@ Transform:
   - {fileID: 103994359}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1717142881
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1717142879}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 617734d575172478aad772aaf302fd9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1717142882
 MonoBehaviour:
   m_ObjectHideFlags: 0
