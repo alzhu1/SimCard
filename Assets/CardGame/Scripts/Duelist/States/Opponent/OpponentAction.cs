@@ -4,15 +4,20 @@ using SimCard.Common;
 using UnityEngine;
 
 namespace SimCard.CardGame {
-    public interface OpponentAction { }
+    // Separate based on main vs secondary
+    public interface OpponentMainAction { }
 
-    public struct PlayCardAction : OpponentAction {
+    public interface OpponentSecondaryAction { }
+
+    /* Main Actions */
+    public struct PlayCardAction : OpponentMainAction {
         public Card CardToSummon { get; private set; }
 
         public PlayCardAction(Card cardToSummon) => CardToSummon = cardToSummon;
     }
 
-    public struct ApplyEffectAction : OpponentAction {
+    /* Secondary Actions */
+    public struct ApplyEffectAction : OpponentSecondaryAction {
         public Effect Effect { get; private set; }
         public Card Source { get; private set; }
         public Card Target { get; private set; }
@@ -24,11 +29,9 @@ namespace SimCard.CardGame {
         }
     }
 
-    public struct DiscardAction : OpponentAction {
+    public struct DiscardAction : OpponentSecondaryAction {
         public Card CardToDiscard { get; private set; }
 
         public DiscardAction(Card cardToDiscard) => CardToDiscard = cardToDiscard;
     }
-
-    public struct EndAction : OpponentAction { }
 }

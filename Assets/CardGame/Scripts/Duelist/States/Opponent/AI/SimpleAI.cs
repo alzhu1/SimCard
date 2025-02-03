@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using SimCard.Common;
+using UnityEngine;
 
 namespace SimCard.CardGame {
     /// <summary>
@@ -15,7 +15,7 @@ namespace SimCard.CardGame {
     public class SimpleAI : OpponentAI {
         protected override IEnumerator Think() {
             // If opponent cannot take more actions, immediately end it
-            if (actions.Count == opponentDuelist.TurnActions) {
+            if (opponentDuelist.TurnActions == 0) {
                 yield break;
             }
 
@@ -24,17 +24,18 @@ namespace SimCard.CardGame {
             // Set the very first card action + associated effects
             foreach (Card card in opponentDuelist.Hand.Cards) {
                 if (opponentDuelist.IsCardSummonAllowed(card)) {
-                    actions.Add(new PlayCardAction(card));
-
-                    if (card.NonSelfEffects.Count > 0) {
-                        // For now just apply any non-self effects to self
-                        foreach (Effect effect in card.NonSelfEffects) {
-                            actions.Add(new ApplyEffectAction(effect, card, card));
-                        }
-                    }
-
+                    mainAction = new PlayCardAction(card);
                     break;
                 }
+            }
+        }
+
+        protected override IEnumerator ThinkCardEffect(Card card) {
+            yield return null;
+
+            // For now just apply any non-self effects to self
+            foreach (Effect effect in card.NonSelfEffects) {
+                secondaryActions.Add(new ApplyEffectAction(effect, card, card));
             }
         }
 
@@ -43,7 +44,7 @@ namespace SimCard.CardGame {
             yield return new WaitForSeconds(opponentDuelist.GeneralWaitTime);
 
             for (int i = 0; i >= opponentDuelist.Hand.Cards.Count - Duelist.MAX_HAND_CARDS; i++) {
-                actions.Add(new DiscardAction(opponentDuelist.Hand.Cards[i]));
+                secondaryActions.Add(new DiscardAction(opponentDuelist.Hand.Cards[i]));
             }
         }
     }

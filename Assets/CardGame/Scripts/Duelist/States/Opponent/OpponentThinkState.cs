@@ -3,23 +3,20 @@ using System.Collections.Generic;
 
 namespace SimCard.CardGame {
     public class OpponentThinkState : OpponentState {
-        public bool discardMode;
-
-        public OpponentThinkState() => this.discardMode = false;
-        public OpponentThinkState(bool discardMode) => this.discardMode = discardMode;
-
-        protected override void Enter() { }
+        protected override void Enter() {
+            // Reset actions upon starting state
+            opponentDuelist.AI.ResetActions();
+        }
 
         protected override IEnumerator Handle() {
             OpponentAI opponentAI = opponentDuelist.AI;
-            yield return opponentAI.ExecuteBehavior(discardMode);
 
-            if (opponentAI.Actions.Count == 0) {
-                opponentAI.EndBehavior();
-            }
+            // Generate main action, then secondary actions based on main
+            yield return opponentAI.DetermineMainAction();
+            yield return opponentAI.DetermineSecondaryActions();
 
-            // At this point, there should be some actions
-            nextState = new OpponentDoState(opponentAI.Actions);
+            // At this point, we can hand it off to the doer state
+            nextState = new OpponentDoState(opponentAI.MainAction, opponentAI.SecondaryActions);
         }
 
         protected override void Exit() { }

@@ -16,12 +16,17 @@ namespace SimCard.CardGame {
             yield return new WaitForSeconds(opponentDuelist.GeneralWaitTime);
         }
 
+        protected override IEnumerator ThinkCardEffect(Card card) {
+            // Never selects cards, leave it alone
+            yield break;
+        }
+
         protected override IEnumerator ThinkDiscard() {
             // For differences, let's always pick the last item in cards
             yield return new WaitForSeconds(opponentDuelist.GeneralWaitTime);
 
             for (int i = opponentDuelist.Hand.Cards.Count - 1; i >= Duelist.MAX_HAND_CARDS; i--) {
-                actions.Add(new DiscardAction(opponentDuelist.Hand.Cards[i]));
+                secondaryActions.Add(new DiscardAction(opponentDuelist.Hand.Cards[i]));
             }
         }
     }
