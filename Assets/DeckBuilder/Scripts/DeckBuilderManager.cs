@@ -77,8 +77,6 @@ namespace SimCard.DeckBuilder {
 
             // Up and down
             if (Input.GetKeyDown(KeyCode.UpArrow)) {
-                // MINOR: This could jump past the top card and to the sort row
-                // Might want to clamp it
                 deckBuilder.UpdateIndex(-1 * modifier);
             } else if (Input.GetKeyDown(KeyCode.DownArrow)) {
                 deckBuilder.UpdateIndex(1 * modifier);

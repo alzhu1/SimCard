@@ -80,7 +80,6 @@ namespace SimCard.DeckBuilder {
         void UpdateCardListViewUI() {
             cardListView.alpha = 1;
 
-            // TODO: Add more options on top of screen (e.g. selecting/sorting options)
             for (int i = 0; i < options.Length; i++) {
                 Image option = options[i];
                 option.color = DeckBuilderUIListener.Index == -1 && DeckBuilderUIListener.SubIndex == i ? Color.red : Color.white;

@@ -24,6 +24,8 @@ namespace SimCard.DeckBuilder {
 
         public int SubIndex { get; private set; }
 
+        private int sortOptionCount;
+
         public DeckBuilder(List<CardMetadata> deck, List<CardMetadata> availableCards) {
             CardToCount = new();
 
@@ -45,10 +47,22 @@ namespace SimCard.DeckBuilder {
             SelectableCards = CardToCount.Select(x => x.Key).ToList();
             Index = 0;
             SubIndex = 0;
+
+            sortOptionCount = System.Enum.GetValues(typeof(SortOptions)).Length;
         }
 
         public void UpdateIndex(int delta) {
             if (SelectedCard == null) {
+                // If in sort row, only move at most to first card
+                if (Index == -1) {
+                    delta = Mathf.Clamp(delta, -1, 1);
+                }
+
+                // If we would go to the sort row from card index, clamp delta to get to 0 index instead
+                if (Index > 0 && Index + delta < 0) {
+                    delta = -Index;
+                }
+
                 Index = Mathf.Clamp(Index + delta, -1, SelectableCards.Count - 1);
             }
         }
@@ -60,8 +74,7 @@ namespace SimCard.DeckBuilder {
                     (int currValue, int totalValue) = CardToCount[currCard];
                     CardToCount[currCard] = (Mathf.Clamp(currValue + delta, 0, totalValue), totalValue);
                 } else {
-                    // TODO: Fix the SubIndex mod, IDK how many options to add or where to store the true result
-                    SubIndex = (SubIndex + delta + 6) % 6;
+                    SubIndex = (SubIndex + delta + sortOptionCount) % sortOptionCount;
                 }
             }
         }
