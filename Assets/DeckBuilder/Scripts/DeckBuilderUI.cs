@@ -7,8 +7,8 @@ using UnityEngine.UI;
 
 namespace SimCard.DeckBuilder {
     public interface DeckBuilderUIListener {
-        public List<CardSO> SelectableCards { get; }
         public Dictionary<CardSO, (int, int)> CardToCount { get; }
+        public List<CardSO> SelectableCards { get; }
         public CardSO SelectedCard { get; }
         public int Index { get; }
         public int SubIndex { get; }
@@ -55,7 +55,8 @@ namespace SimCard.DeckBuilder {
 
         private int topIndex;
 
-        public DeckBuilderUIListener DeckBuilderUIListener { get; set; }
+        public DeckBuilderUIListener DeckBuilderUIListener { get; private set; }
+        public void InitUIListener(DeckBuilderUIListener listener) => DeckBuilderUIListener = listener;
 
         void Awake() {
             topIndex = 0;
@@ -81,8 +82,7 @@ namespace SimCard.DeckBuilder {
             cardListView.alpha = 1;
 
             for (int i = 0; i < options.Length; i++) {
-                Image option = options[i];
-                option.color = DeckBuilderUIListener.Index == -1 && DeckBuilderUIListener.SubIndex == i ? Color.red : Color.white;
+                options[i].color = DeckBuilderUIListener.Index == -1 && DeckBuilderUIListener.SubIndex == i ? Color.red : Color.white;
             }
 
             // Handle top index update

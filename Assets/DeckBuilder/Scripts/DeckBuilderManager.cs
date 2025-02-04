@@ -7,7 +7,16 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace SimCard.DeckBuilder {
-    public class DeckBuilderManager : MonoBehaviour {
+    public class DeckBuilderManager : MonoBehaviour, DeckBuilderUIListener {
+        public enum SortOptions {
+            NameDescending = 0,
+            NameAscending = 1,
+            CostAscending = 2,
+            CostDescending = 3,
+            IncomeAscending = 4,
+            IncomeDescending = 5
+        }
+
         // Singleton is private to avoid multiple instantiations (if it somehow happened)
         private static DeckBuilderManager instance = null;
 
@@ -26,7 +35,18 @@ namespace SimCard.DeckBuilder {
         private SimGameManager simGameManager;
         private DeckBuilderUI deckBuilderUI;
 
-        private DeckBuilder deckBuilder;
+        private bool running;
+        private int sortOptionCount;
+
+        // UI Listener fields
+        public Dictionary<CardSO, (int, int)> CardToCount { get; private set; }
+        public List<CardSO> SelectableCards { get; private set; }
+        public CardSO SelectedCard { get; private set; }
+
+        // Index at -1 indicates picking a sort/metadata option
+        // Index at 0+ indicates a card is selected
+        public int Index { get; private set; }
+        public int SubIndex { get; private set; }
 
         void Awake() {
             if (instance == null) {
@@ -44,6 +64,8 @@ namespace SimCard.DeckBuilder {
             }
 
             deckBuilderUI = GetComponentInChildren<DeckBuilderUI>();
+
+            CardToCount = new();
         }
 
         void Start() {
@@ -63,63 +85,133 @@ namespace SimCard.DeckBuilder {
             }
         }
 
-        void Update() {
-            if (deckBuilder == null) {
-                return;
-            }
-
-            int modifier = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift) ? 5 : 1;
-
-            // Revert action
-            if (Input.GetKeyDown(KeyCode.Escape)) {
-                deckBuilder.RevertSelection();
-            }
-
-            // Up and down
-            if (Input.GetKeyDown(KeyCode.UpArrow)) {
-                deckBuilder.UpdateIndex(-1 * modifier);
-            } else if (Input.GetKeyDown(KeyCode.DownArrow)) {
-                deckBuilder.UpdateIndex(1 * modifier);
-            }
-
-            // Left and right
-            if (Input.GetKeyDown(KeyCode.LeftArrow)) {
-                deckBuilder.UpdateAtIndex(-1 * modifier);
-            } else if (Input.GetKeyDown(KeyCode.RightArrow)) {
-                deckBuilder.UpdateAtIndex(1 * modifier);
-            }
-
-            // Action
-            if (Input.GetKeyDown(KeyCode.Space)) {
-                deckBuilder.SelectAtIndex();
-            }
-
-            if (Input.GetKeyDown(KeyCode.P)) {
-                Debug.Log("Sending event back to sim game bus now");
-
-                (List<CardMetadata> finalDeck, List<CardMetadata> finalAvailableCards) =
-                    deckBuilder.OutputDeckBuilder();
-                if (simGameManager != null) {
-                    simGameManager.EventBus.OnDeckBuilderEnd.Raise(
-                        new(finalDeck, finalAvailableCards)
-                    );
-                    deckBuilder = null;
-                } else {
-                    // Continue running (test mode)
-                    testDeck = finalDeck;
-                    testAvailableCards = finalAvailableCards;
-                }
-            }
-        }
-
         void InitDeckBuilder(EventArgs<List<CardMetadata>, List<CardMetadata>> args) {
             (List<CardMetadata> deck, List<CardMetadata> availableCards) = args;
             StartDeckBuilder(deck, availableCards);
         }
 
         void StartDeckBuilder(List<CardMetadata> deck, List<CardMetadata> availableCards) {
-            deckBuilder = new DeckBuilder(deck, availableCards);
-            deckBuilderUI.DeckBuilderUIListener = deckBuilder;
+            // First, initialize dict with cards already in the deck. Value = num / num
+            foreach (CardMetadata deckCardMetadata in deck) {
+                CardToCount.Add(deckCardMetadata.cardSO, (deckCardMetadata.count, deckCardMetadata.count));
+            }
+
+            // Then add the available card counts to the deck. Value = numDeck / (numDeck + numAvailable)
+            foreach (CardMetadata availableCardMetadata in availableCards) {
+                if (CardToCount.TryGetValue(availableCardMetadata.cardSO, out (int, int) value)) {
+                    CardToCount[availableCardMetadata.cardSO] = (
+                        value.Item1,
+                        value.Item2 + availableCardMetadata.count
+                    );
+                } else {
+                    CardToCount.Add(availableCardMetadata.cardSO, (0, availableCardMetadata.count));
+                }
+            }
+
+            // Generate a list of selectable cards for the UI to render
+            SelectableCards = CardToCount.Select(x => x.Key).ToList();
+            sortOptionCount = System.Enum.GetValues(typeof(SortOptions)).Length;
+
+            // Initialize the UI listener after this
+            deckBuilderUI.InitUIListener(this);
+            running = true;
+        }
+
+        void Update() {
+            if (!running) {
+                return;
+            }
+
+            /* Actions */
+
+            // Revert
+            if (Input.GetKeyDown(KeyCode.Escape)) {
+                SelectedCard = null;
+            }
+
+            // Selection
+            if (Input.GetKeyDown(KeyCode.Space)) {
+                if (Index == -1) {
+                    SortOptions currSortOption = (SortOptions)SubIndex;
+                    Debug.Log($"Curr sort option: {currSortOption}, SubIndex: {SubIndex}");
+                    SelectableCards.Sort((a, b) => {
+                        return currSortOption switch {
+                            SortOptions.NameDescending => a.cardName.CompareTo(b.cardName),
+                            SortOptions.NameAscending => b.cardName.CompareTo(a.cardName),
+                            SortOptions.CostAscending => a.cost - b.cost,
+                            SortOptions.CostDescending => b.cost - a.cost,
+                            SortOptions.IncomeAscending => a.income - b.income,
+                            SortOptions.IncomeDescending => b.income - a.income,
+                            // Default to name comparison
+                            _ => a.cardName.CompareTo(b.cardName),
+                        };
+                    });
+                } else {
+                    Debug.Log($"Card at index: {SelectableCards[Index]}");
+                    SelectedCard = SelectableCards[Index];
+                }
+            }
+
+            // Set deck
+            if (Input.GetKeyDown(KeyCode.P)) {
+                Debug.Log("Sending event back to sim game bus now");
+
+                // Final deck is every card item that has a non-zero first int count
+                List<CardMetadata> finalDeck = CardToCount
+                    .Where(x => x.Value.Item1 > 0)
+                    .Select(x => new CardMetadata(x.Key, x.Value.Item1))
+                    .ToList();
+
+                // Final available cards should be the remained (2nd int - 1st int)
+                List<CardMetadata> finalAvailableCards = CardToCount
+                    .Where(x => x.Value.Item2 > x.Value.Item1)
+                    .Select(x => new CardMetadata(x.Key, x.Value.Item2 - x.Value.Item1))
+                    .ToList();
+
+                if (simGameManager != null) {
+                    simGameManager.EventBus.OnDeckBuilderEnd.Raise(
+                        new(finalDeck, finalAvailableCards)
+                    );
+                    running = false;
+                } else {
+                    // Continue running (test mode)
+                    testDeck = finalDeck;
+                    testAvailableCards = finalAvailableCards;
+                }
+            }
+
+            /* Movement (allowed if no card selected) */
+
+            if (SelectedCard == null) {
+                int modifier = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift) ? 5 : 1;
+
+                // Up and down
+                int verticalDelta = 0;
+                if (Input.GetKeyDown(KeyCode.UpArrow)) {
+                    // If we would go to the sort row from card index, clamp delta to get to 0 index instead
+                    verticalDelta = (Index > 0 && Index - modifier < 0) ? -Index : -modifier;
+                } else if (Input.GetKeyDown(KeyCode.DownArrow)) {
+                    // Clamp positive movement so that large jumps don't happen from sort row
+                    verticalDelta = Index == -1 ? 1 : modifier;
+                }
+                Index = Mathf.Clamp(Index + verticalDelta, -1, SelectableCards.Count - 1);
+
+                // Left and right
+                int horizontalDelta = 0;
+                if (Input.GetKeyDown(KeyCode.LeftArrow)) {
+                    horizontalDelta = -modifier;
+                } else if (Input.GetKeyDown(KeyCode.RightArrow)) {
+                    horizontalDelta = modifier;
+                }
+
+                if (Index == -1) {
+                    SubIndex = (SubIndex + horizontalDelta + sortOptionCount) % sortOptionCount;
+                } else {
+                    CardSO currCard = SelectableCards[Index];
+                    (int currValue, int totalValue) = CardToCount[currCard];
+                    CardToCount[currCard] = (Mathf.Clamp(currValue + horizontalDelta, 0, totalValue), totalValue);
+                }
+            }
         }
     }
 }
