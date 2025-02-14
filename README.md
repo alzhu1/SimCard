@@ -1,3 +1,4 @@
 # Untitled Simulation/Card Game
 
-TBD
+Sprite Credits:
+* Characters + Animals: https://the-pixel-nook.itch.io/gb-studio-overworld-tiles-plus
