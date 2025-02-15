@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace SimCard.SimGame {
     public class Interactable : MonoBehaviour {
-        private static float GlobalTypeTime => 0.08f;
+        private static float GlobalTypeTime => 0.04f;
 
         [SerializeField]
         private float typeTime;

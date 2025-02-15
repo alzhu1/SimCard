@@ -27,6 +27,8 @@ namespace SimCard.SimGame {
         [SerializeField]
         private TextMeshProUGUI dialogueText;
 
+        [SerializeField] private float windowTransitionTime = 1f;
+
         public InteractUIListener Parser { get; set; }
 
         private CanvasGroup interactPromptGroup;
@@ -89,11 +91,11 @@ namespace SimCard.SimGame {
             Vector2 endOffsetMax = start ? maximizedOffset : borderMinimizedOffset;
 
             float t = 0;
-            while (t < 1) {
+            while (t < windowTransitionTime) {
                 interactArea.rectTransform.offsetMax = Vector2.Lerp(
                     startOffsetMax,
                     endOffsetMax,
-                    t
+                    t / windowTransitionTime
                 );
                 yield return null;
                 t += Time.deltaTime;

@@ -5257,6 +5257,7 @@ MonoBehaviour:
   interactArea: {fileID: 1830215170}
   interactText: {fileID: 1957808310}
   dialogueText: {fileID: 2099376399}
+  windowTransitionTime: 0.5
 --- !u!225 &1830215173
 CanvasGroup:
   m_ObjectHideFlags: 0
