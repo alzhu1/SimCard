@@ -44,10 +44,31 @@ namespace SimCard.SimGame {
                     break;
                 }
 
+                Vector2 prevMove = move;
+
                 move = new Vector2(
                     Input.GetAxisRaw("Horizontal"),
                     Input.GetAxisRaw("Vertical")
                 ).normalized;
+
+                if (!prevMove.Equals(Vector2.zero) && move.Equals(Vector2.zero)) {
+                    Vector3 direction = player.FrontCheck.localPosition;
+
+                    if (direction.x < 0) {
+                        player.SR.flipX = true;
+                        player.Animator.Play("Character_Idle_Side");
+                    } else {
+                        player.SR.flipX = false;
+
+                        if (direction.x > 0) {
+                            player.Animator.Play("Character_Idle_Side");
+                        } else if (direction.y < 0) {
+                            player.Animator.Play("Character_Idle_Down");
+                        } else if (direction.y > 0) {
+                            player.Animator.Play("Character_Idle_Up");
+                        }
+                    }
+                }
 
                 SetDirection(move);
                 yield return null;
@@ -81,6 +102,21 @@ namespace SimCard.SimGame {
                     Vector3 v when v.y < 0 => Vector3Int.down,
                     _ => direction,
                 };
+            }
+
+            if (direction.x < 0) {
+                player.SR.flipX = true;
+                player.Animator.Play("Character_Walk_Side");
+            } else {
+                player.SR.flipX = false;
+
+                if (direction.x > 0) {
+                    player.Animator.Play("Character_Walk_Side");
+                } else if (direction.y < 0) {
+                    player.Animator.Play("Character_Walk_Down");
+                } else if (direction.y > 0) {
+                    player.Animator.Play("Character_Walk_Up");
+                }
             }
 
             player.FrontCheck.localPosition = direction;

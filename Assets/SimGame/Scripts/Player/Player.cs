@@ -28,18 +28,15 @@ namespace SimCard.SimGame {
         public void RefreshEnergy() => energy = 100;
         public void ConsumeEnergy(int energyUsed) => energy = Mathf.Max(0, energy - energyUsed);
 
-
         [SerializeField]
         private int currency = 0;
         public int Currency => currency;
         public void IncreaseCurrency(int currencyGained) => currency += currencyGained;
         public void ConsumeCurrency(int currencyUsed) => currency = Mathf.Max(0, currency - currencyUsed);
 
-        private Rigidbody2D rb;
-        public Rigidbody2D RB => rb;
-
-        private SpriteRenderer sr;
-        public SpriteRenderer SR => sr;
+        public Rigidbody2D RB { get; private set; }
+        public SpriteRenderer SR { get; private set; }
+        public Animator Animator { get; private set; }
 
         public SimGameManager SimGameManager { get; private set; }
         private SimPlayerState playerState;
@@ -47,8 +44,9 @@ namespace SimCard.SimGame {
         void Awake() {
             SimGameManager = GetComponentInParent<SimGameManager>();
 
-            rb = GetComponent<Rigidbody2D>();
-            sr = GetComponent<SpriteRenderer>();
+            RB = GetComponent<Rigidbody2D>();
+            SR = GetComponent<SpriteRenderer>();
+            Animator = GetComponent<Animator>();
         }
 
         void Start() {
@@ -70,7 +68,7 @@ namespace SimCard.SimGame {
         }
 
         void FixedUpdate() {
-            rb.velocity = playerState.RBVelocity;
+            RB.velocity = playerState.RBVelocity;
         }
 
         void OnTriggerEnter2D(Collider2D collider) {
