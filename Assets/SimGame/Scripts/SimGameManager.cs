@@ -25,9 +25,6 @@ namespace SimCard.SimGame {
         private InteractUI interactUI;
         private FadeUI fadeUI;
 
-        // MINOR: Should we move game-level properties to another object?
-        private int day = 0;
-
         void Awake() {
             if (instance == null) {
                 instance = this;
@@ -65,11 +62,6 @@ namespace SimCard.SimGame {
             Debug.Log($"Received event: {eventName}");
 
             switch (eventName) {
-                case "NextDay": {
-                    StartCoroutine(GoToNextDay());
-                    break;
-                }
-
                 case "StartCardGame": {
                     StartCoroutine(StartCardGame(interactable));
                     break;
@@ -117,20 +109,6 @@ namespace SimCard.SimGame {
         }
 
         void HandleSubSceneLoadedEvent(EventArgs _) => loadingSubScene = false;
-
-        IEnumerator GoToNextDay() {
-            EventBus.OnPlayerPause.Raise(new(false));
-
-            // Hide the interact UI
-            interactUI.Hide();
-            yield return fadeUI.FadeInOut();
-            Debug.Log($"The day is {day}");
-            day++;
-
-            player.RefreshEnergy();
-
-            EventBus.OnPlayerUnpause.Raise(new());
-        }
 
         // Interaction mediator methods
         public Coroutine StartInteractionCoroutine(InteractionParser parser) {

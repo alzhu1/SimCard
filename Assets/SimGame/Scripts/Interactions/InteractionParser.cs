@@ -10,13 +10,11 @@ namespace SimCard.SimGame {
         private Player player;
         private Interactable interactable;
         private HashSet<string> traversedPaths;
-        private List<int> validOptionIndices;
         private string pathName;
         private int interactionIndex;
-        private int validOptionIndex;
 
         // Events that the parser can call
-        private GameEventAction<EventArgs<OptionsUIListener, List<(string, bool)>>> DisplayInteractionOptions;
+        private GameEventAction<EventArgs<OptionsUIListener, List<string>>> DisplayInteractionOptions;
         private GameEventAction<EventArgs<OptionsUIListener, List<CardMetadata>, Player>> DisplayShopOptions;
         private GameEventAction<EventArgs<string, Interactable, int>> InteractionEvent;
 
@@ -41,10 +39,8 @@ namespace SimCard.SimGame {
 
             // Initialize other data
             traversedPaths = new HashSet<string>();
-            validOptionIndices = new List<int>();
             pathName = this.interactable.InitInteraction(player);
             interactionIndex = 0;
-            validOptionIndex = 0;
             traversedPaths.Add(pathName);
         }
 
@@ -93,9 +89,6 @@ namespace SimCard.SimGame {
                 interactionIndex = 0;
                 MaxVisibleCharacters = 0;
 
-                // Consume option's energy
-                player.ConsumeEnergy(options[OptionIndex].Conditions.GetEnergyCost());
-
                 traversedPaths.Add(pathName);
 
                 // Hide the options UI once an option is picked
@@ -129,8 +122,8 @@ namespace SimCard.SimGame {
                 return;
             }
 
-            validOptionIndex = (validOptionIndices.Count + validOptionIndex + diff) % validOptionIndices.Count;
-            OptionIndex = validOptionIndices[validOptionIndex];
+            int optionCount = CurrInteractionNode.Options.Count;
+            OptionIndex = (optionCount + OptionIndex + diff) % optionCount;
         }
 
         public void EndInteraction() {
@@ -160,19 +153,10 @@ namespace SimCard.SimGame {
                 // Display options
                 List<InteractionNode.InteractionOption> options = CurrInteractionNode.Options;
                 if (options?.Count > 0) {
-                    List<(string, bool)> optionsAllowed = options.Select(x => (x.OptionText, x.Conditions.GetEnergyCost() <= player.Energy)).ToList();
-                    validOptionIndices.Clear();
-                    for (int i = 0; i < optionsAllowed.Count; i++) {
-                        if (optionsAllowed[i].Item2) {
-                            validOptionIndices.Add(i);
-                        }
-                    }
-
                     // For shop interactions, don't reset the index
                     if (!pathName.StartsWith("$ShopBuy")) {
-                        DisplayInteractionOptions.Raise(new(this, optionsAllowed));
-                        validOptionIndex = 0;
-                        OptionIndex = validOptionIndices[validOptionIndex];
+                        DisplayInteractionOptions.Raise(new(this, options.Select(x => x.OptionText).ToList()));
+                        OptionIndex = 0;
                     }
                 }
             }

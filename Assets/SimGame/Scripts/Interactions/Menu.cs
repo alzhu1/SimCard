@@ -15,19 +15,19 @@ namespace SimCard.SimGame {
 
         public int OptionIndex { get; private set; }
 
-        public string SelectedOption => menuOptions[OptionIndex].Item1;
+        public string SelectedOption => menuOptions[OptionIndex];
 
-        private GameEventAction<EventArgs<OptionsUIListener, List<(string, bool)>>> DisplayInteractionOptions;
-        private List<(string, bool)> menuOptions;
+        private GameEventAction<EventArgs<OptionsUIListener, List<string>>> DisplayInteractionOptions;
+        private List<string> menuOptions;
 
         public Menu(
-            GameEventAction<EventArgs<OptionsUIListener, List<(string, bool)>>> DisplayInteractionOptions
+            GameEventAction<EventArgs<OptionsUIListener, List<string>>> DisplayInteractionOptions
         ) {
             this.DisplayInteractionOptions = DisplayInteractionOptions;
 
-            menuOptions = new List<(string, bool)>{
-                (MenuOption.Deck, true),
-                (MenuOption.Exit, true)
+            menuOptions = new List<string>{
+                MenuOption.Deck,
+                MenuOption.Exit
             };
             OptionIndex = 0;
         }

@@ -24,12 +24,6 @@ namespace SimCard.SimGame {
         public List<CardMetadata> AvailableCards => availableCards;
 
         [SerializeField]
-        private int energy = 100;
-        public int Energy => energy;
-        public void RefreshEnergy() => energy = 100;
-        public void ConsumeEnergy(int energyUsed) => energy = Mathf.Max(0, energy - energyUsed);
-
-        [SerializeField]
         private int currency = 0;
         public int Currency => currency;
         public void IncreaseCurrency(int currencyGained) => currency += currencyGained;

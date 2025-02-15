@@ -40,12 +40,6 @@ namespace SimCard.SimGame {
                     return bool.Parse(parameter);
                 }
 
-                case ConditionKey.Energy: {
-                    // This should always be a number
-                    int energyCost = int.Parse(parameter);
-                    return player.Energy <= energyCost;
-                }
-
                 case ConditionKey.PathTraversedCount: {
                     // This should always be in the format "PathName Operator Number"
                     string[] parts = parameter.Split(" ");

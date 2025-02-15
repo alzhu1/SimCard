@@ -44,7 +44,7 @@ namespace SimCard.SimGame {
             }
         }
 
-        void DisplayInteractOptions(EventArgs<OptionsUIListener, List<(string, bool)>> args) {
+        void DisplayInteractOptions(EventArgs<OptionsUIListener, List<string>> args) {
             // Reset if args are null
             if (args == null) {
                 optionsUIListener = null;
@@ -52,15 +52,14 @@ namespace SimCard.SimGame {
                 return;
             }
 
-            (OptionsUIListener listener, List<(string, bool)> options) = args;
+            (OptionsUIListener listener, List<string> options) = args;
             optionsUIListener = listener;
             optionsGroup.alpha = 1;
             for (int i = 0; i < optionTexts.Count; i++) {
-                (string option, bool allowed) = options.ElementAtOrDefault(i);
+                string option = options.ElementAtOrDefault(i);
                 if (option != null) {
                     optionTexts[i].gameObject.SetActive(true);
                     optionTexts[i].text = option;
-                    optionTexts[i].color = allowed ? Color.white : Color.gray;
                 } else {
                     optionTexts[i].gameObject.SetActive(false);
                 }

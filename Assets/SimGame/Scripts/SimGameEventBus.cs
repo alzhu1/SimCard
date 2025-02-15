@@ -10,7 +10,7 @@ namespace SimCard.SimGame {
 
         // Interaction events
         public GameEvent<EventArgs<Interactable>> OnCanInteract = new();
-        public GameEvent<EventArgs<OptionsUIListener, List<(string, bool)>>> OnDisplayInteractOptions = new();
+        public GameEvent<EventArgs<OptionsUIListener, List<string>>> OnDisplayInteractOptions = new();
         public GameEvent<EventArgs<OptionsUIListener, List<CardMetadata>, Player>> OnDisplayShopOptions = new();
 
         // Player lifecycle events

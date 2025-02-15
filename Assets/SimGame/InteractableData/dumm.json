@@ -38,9 +38,7 @@
                         "OptionText": "Yes",
                         "NextPath": "DefaultYes",
                         "FallbackPath": null,
-                        "Conditions": {
-                            "Energy": "40"
-                        }
+                        "Conditions": {}
                     },
                     {
                         "OptionText": "No",
