@@ -52,7 +52,7 @@ namespace SimCard.SimGame {
                 ).normalized;
 
                 if (!prevMove.Equals(Vector2.zero) && move.Equals(Vector2.zero)) {
-                    Vector3 direction = player.FrontCheck.localPosition;
+                    Vector3 direction = player.PlayerDirection;
 
                     if (direction.x < 0) {
                         player.SR.flipX = true;
@@ -80,7 +80,7 @@ namespace SimCard.SimGame {
                 return;
             }
 
-            Vector3 direction = player.FrontCheck.localPosition;
+            Vector3 direction = player.PlayerDirection;
 
             // Dot product should tell us what effect to use
             // Negative means moving in opposite direction of primary dir

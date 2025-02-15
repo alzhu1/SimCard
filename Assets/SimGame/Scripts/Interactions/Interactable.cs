@@ -18,7 +18,9 @@ namespace SimCard.SimGame {
         public List<CardMetadata> Deck => deck;
 
         [SerializeField] private TextAsset data;
+
         private Interaction interactionJson;
+        private InteractableCharacterAnimator characterAnimator;
 
         // Metadata
         private Dictionary<string, int> pathTraversedCount = new();
@@ -26,6 +28,10 @@ namespace SimCard.SimGame {
 
         void Awake() {
             interactionJson = JObject.Parse(data.text).ToObject<Interaction>();
+
+            if (TryGetComponent(out InteractableCharacterAnimator animator)) {
+                characterAnimator = animator;
+            }
         }
 
         bool AssertCondition(ConditionKey condition, string parameter) {
@@ -75,6 +81,11 @@ namespace SimCard.SimGame {
 
         public string InitInteraction(Player player) {
             this.player = player;
+
+            // Change interactable sprite direction if doable. Negate player direction to get appropriate face
+            if (characterAnimator != null) {
+                characterAnimator.HandleDirectionChange(-player.PlayerDirection);
+            }
 
             foreach (InitInteraction.InitPathOptions pathOption in interactionJson.Init.PathOptions) {
                 if (pathOption.Conditions.All(kv => AssertCondition(kv.Key, kv.Value))) {

@@ -7,8 +7,9 @@ namespace SimCard.SimGame {
     public class Player : MonoBehaviour {
         [SerializeField]
         private Collider2D frontCheckCollider;
-        public Transform FrontCheck => frontCheckCollider.transform;
         public Collider2D FrontCheckCollider => frontCheckCollider;
+        public Transform FrontCheck => frontCheckCollider.transform;
+        public Vector3 PlayerDirection => frontCheckCollider.transform.localPosition;
 
         [SerializeField]
         private float moveSpeed = 1f;
