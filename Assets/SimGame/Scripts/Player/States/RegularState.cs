@@ -51,23 +51,12 @@ namespace SimCard.SimGame {
                     Input.GetAxisRaw("Vertical")
                 ).normalized;
 
-                if (!prevMove.Equals(Vector2.zero) && move.Equals(Vector2.zero)) {
-                    Vector3 direction = player.PlayerDirection;
+                bool isPrevMoveStopped = prevMove.Equals(Vector2.zero);
+                bool isCurrMoveStopped = move.Equals(Vector2.zero);
 
-                    if (direction.x < 0) {
-                        player.SR.flipX = true;
-                        player.Animator.Play("Character_Idle_Side");
-                    } else {
-                        player.SR.flipX = false;
-
-                        if (direction.x > 0) {
-                            player.Animator.Play("Character_Idle_Side");
-                        } else if (direction.y < 0) {
-                            player.Animator.Play("Character_Idle_Down");
-                        } else if (direction.y > 0) {
-                            player.Animator.Play("Character_Idle_Up");
-                        }
-                    }
+                // i.e. (came to a stop) OR (started moving from idle position)
+                if ((!isPrevMoveStopped && isCurrMoveStopped) || (isPrevMoveStopped && !isCurrMoveStopped)) {
+                    HandleAnimator(player.PlayerDirection);
                 }
 
                 SetDirection(move);
@@ -104,22 +93,29 @@ namespace SimCard.SimGame {
                 };
             }
 
+            // Handles directional change, not stop->start change
+            HandleAnimator(direction);
+
+            player.FrontCheck.localPosition = direction;
+        }
+
+        void HandleAnimator(Vector3 direction) {
+            string prefix = RBVelocity.magnitude > 0 ? "Character_Walk" : "Character_Idle";
+
             if (direction.x < 0) {
                 player.SR.flipX = true;
-                player.Animator.Play("Character_Walk_Side");
+                player.Animator.Play($"{prefix}_Side");
             } else {
                 player.SR.flipX = false;
 
                 if (direction.x > 0) {
-                    player.Animator.Play("Character_Walk_Side");
+                    player.Animator.Play($"{prefix}_Side");
                 } else if (direction.y < 0) {
-                    player.Animator.Play("Character_Walk_Down");
+                    player.Animator.Play($"{prefix}_Down");
                 } else if (direction.y > 0) {
-                    player.Animator.Play("Character_Walk_Up");
+                    player.Animator.Play($"{prefix}_Up");
                 }
             }
-
-            player.FrontCheck.localPosition = direction;
         }
 
         void EnableInteraction(EventArgs<Interactable> args) {
