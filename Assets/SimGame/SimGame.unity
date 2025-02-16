@@ -4820,7 +4820,6 @@ MonoBehaviour:
   availableCards:
   - cardSO: {fileID: 11400000, guid: 58d024a76cc894787abd01f571d1c82f, type: 2}
     count: 40
-  energy: 100
   currency: 0
 --- !u!61 &1741206561
 BoxCollider2D:
