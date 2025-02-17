@@ -95,7 +95,7 @@ ScriptedImporter:
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
-  platformSettingsDirtyTick: 638753023972037040
+  platformSettingsDirtyTick: 638753179122398260
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -142,7 +142,7 @@ ScriptedImporter:
   spriteSheetImportData:
   - name: Overworld_Final_0
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -162,7 +162,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_1
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -182,7 +182,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_2
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -202,7 +202,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_3
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -222,7 +222,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_4
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -242,7 +242,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_5
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -262,7 +262,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_6
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -282,7 +282,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_7
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -302,7 +302,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_8
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -322,7 +322,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_9
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -342,7 +342,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_10
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -362,7 +362,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_11
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -382,7 +382,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_12
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -402,7 +402,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_13
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -422,7 +422,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_14
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -442,7 +442,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_15
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -462,7 +462,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_16
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -482,7 +482,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_17
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -502,7 +502,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_18
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -522,7 +522,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_19
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -542,7 +542,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_20
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -562,7 +562,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_21
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -582,7 +582,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_22
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -602,7 +602,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_23
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -622,7 +622,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_24
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -642,7 +642,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_25
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -662,7 +662,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_26
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -682,7 +682,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_27
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -702,7 +702,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_28
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -722,7 +722,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_29
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -742,7 +742,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_30
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -762,7 +762,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_31
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -782,7 +782,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_32
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -802,7 +802,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_33
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -822,7 +822,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_34
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -842,7 +842,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_35
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -862,7 +862,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_36
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -882,7 +882,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_37
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -902,7 +902,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_38
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -922,7 +922,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_39
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -942,7 +942,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_40
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -962,7 +962,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_41
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -982,7 +982,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_42
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1002,7 +1002,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_43
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1022,7 +1022,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_44
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1042,7 +1042,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_45
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1062,7 +1062,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_46
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1082,7 +1082,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_47
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1102,7 +1102,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_48
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1122,7 +1122,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_49
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1142,7 +1142,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_50
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1162,7 +1162,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_51
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1182,7 +1182,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_52
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1202,7 +1202,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_53
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1222,7 +1222,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_54
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1242,7 +1242,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_55
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1262,7 +1262,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_56
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1282,7 +1282,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_57
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1302,7 +1302,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_58
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1322,7 +1322,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_59
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1342,7 +1342,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_60
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1362,7 +1362,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_61
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1382,7 +1382,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_62
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1402,7 +1402,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_63
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1422,7 +1422,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_64
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1442,7 +1442,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_65
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1462,7 +1462,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_66
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1482,7 +1482,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_67
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1502,7 +1502,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_68
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1522,7 +1522,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_69
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1542,7 +1542,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_70
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1562,7 +1562,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_71
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1582,7 +1582,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_72
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1602,7 +1602,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_73
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1622,7 +1622,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_74
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1642,7 +1642,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_75
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1662,7 +1662,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_76
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1682,7 +1682,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_77
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1702,7 +1702,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_78
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1722,7 +1722,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_79
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1742,7 +1742,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_80
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1762,7 +1762,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_81
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1782,7 +1782,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_82
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1802,7 +1802,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_83
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1822,7 +1822,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_84
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1842,7 +1842,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_85
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1862,7 +1862,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_86
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1882,7 +1882,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_87
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1902,7 +1902,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_88
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1922,7 +1922,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_89
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1942,7 +1942,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_90
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1962,7 +1962,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_91
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -1982,7 +1982,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_92
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2002,7 +2002,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_93
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2022,7 +2022,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_94
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2042,7 +2042,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_95
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2062,7 +2062,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_96
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2082,7 +2082,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_97
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2102,7 +2102,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_98
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2122,7 +2122,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_99
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2142,7 +2142,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_100
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2162,7 +2162,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_101
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2182,7 +2182,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_102
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2202,7 +2202,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_103
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2222,7 +2222,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_104
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2242,7 +2242,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_105
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2262,7 +2262,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_106
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2282,7 +2282,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_107
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2302,7 +2302,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_108
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2322,7 +2322,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_109
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2342,7 +2342,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_110
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2362,7 +2362,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_111
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2382,7 +2382,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_112
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2402,7 +2402,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_113
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2422,7 +2422,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_114
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2442,7 +2442,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_115
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2462,7 +2462,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_116
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2482,7 +2482,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_117
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2502,7 +2502,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_118
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2522,7 +2522,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_119
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2542,7 +2542,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_120
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2562,7 +2562,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_121
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2582,7 +2582,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_122
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2602,7 +2602,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_123
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2622,7 +2622,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_124
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2642,7 +2642,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_125
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2662,7 +2662,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_126
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2682,7 +2682,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_127
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2702,7 +2702,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_128
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2722,7 +2722,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_129
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2742,7 +2742,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_130
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2762,7 +2762,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_131
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2782,7 +2782,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_132
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2802,7 +2802,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_133
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2822,7 +2822,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_134
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2842,7 +2842,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_135
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2862,7 +2862,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_136
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2882,7 +2882,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_137
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2902,7 +2902,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_138
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2922,7 +2922,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_139
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2942,7 +2942,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_140
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2962,7 +2962,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_141
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -2982,7 +2982,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_142
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -3002,7 +3002,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_143
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -3022,7 +3022,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_144
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -3042,7 +3042,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_145
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -3062,7 +3062,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_146
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -3082,7 +3082,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_147
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -3102,7 +3102,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_148
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -3122,7 +3122,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_149
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -3142,13 +3142,13 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_150
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 148
-      y: 52
+      x: 4
+      y: 36
       width: 16
       height: 16
     spriteID: 1982f219d95ab403cbb5c8eb159b7011
@@ -3162,13 +3162,13 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_151
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 164
-      y: 52
+      x: 20
+      y: 36
       width: 16
       height: 16
     spriteID: 798d4762059294c8ca96ad2fd2fa72fa
@@ -3182,13 +3182,13 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_152
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 180
-      y: 52
+      x: 36
+      y: 36
       width: 16
       height: 16
     spriteID: 30367f75ec9104fbc9fce906db3b8d10
@@ -3202,12 +3202,12 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_153
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 4
+      x: 52
       y: 36
       width: 16
       height: 16
@@ -3222,12 +3222,12 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_154
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 20
+      x: 84
       y: 36
       width: 16
       height: 16
@@ -3242,12 +3242,12 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_155
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 36
+      x: 100
       y: 36
       width: 16
       height: 16
@@ -3262,12 +3262,12 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_156
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 52
+      x: 116
       y: 36
       width: 16
       height: 16
@@ -3282,13 +3282,13 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_157
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 84
-      y: 36
+      x: 4
+      y: 20
       width: 16
       height: 16
     spriteID: 47240c404e4d24ca1bef0a5d5b969403
@@ -3302,13 +3302,13 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_158
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 100
-      y: 36
+      x: 20
+      y: 20
       width: 16
       height: 16
     spriteID: 4845090c0925546c88610a2c7428ee60
@@ -3322,13 +3322,13 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_159
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 116
-      y: 36
+      x: 36
+      y: 20
       width: 16
       height: 16
     spriteID: 4c3d8b96da7884eb6ae896f8f823e89e
@@ -3342,13 +3342,13 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_160
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 148
-      y: 36
+      x: 52
+      y: 20
       width: 16
       height: 16
     spriteID: 7e675024c5f3442cc81f6e1c560dca91
@@ -3362,13 +3362,13 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_161
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 164
-      y: 36
+      x: 84
+      y: 20
       width: 16
       height: 16
     spriteID: 7465a9464d34945eeb8c7b9db7831aa7
@@ -3382,13 +3382,13 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_162
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 180
-      y: 36
+      x: 100
+      y: 20
       width: 16
       height: 16
     spriteID: a43588d2cb8e4496d8ee1a699b2ea1fc
@@ -3402,12 +3402,12 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_163
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 4
+      x: 116
       y: 20
       width: 16
       height: 16
@@ -3422,13 +3422,13 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_164
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 20
-      y: 20
+      x: 4
+      y: 4
       width: 16
       height: 16
     spriteID: f6bf2a10408d74818b2670409cb37ded
@@ -3442,13 +3442,13 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_165
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 36
-      y: 20
+      x: 20
+      y: 4
       width: 16
       height: 16
     spriteID: 4f0c475309eb94aae959d6edb4440267
@@ -3462,13 +3462,13 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_166
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 52
-      y: 20
+      x: 36
+      y: 4
       width: 16
       height: 16
     spriteID: 6d3d263c92f57423d9be38bdc555217b
@@ -3482,13 +3482,13 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_167
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 84
-      y: 20
+      x: 52
+      y: 4
       width: 16
       height: 16
     spriteID: cafb6671753b14d2ab797d383c172595
@@ -3502,13 +3502,13 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_168
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 100
-      y: 20
+      x: 84
+      y: 4
       width: 16
       height: 16
     spriteID: 08c050d6b1113447b82a160434138f56
@@ -3522,13 +3522,13 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_169
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 116
-      y: 20
+      x: 100
+      y: 4
       width: 16
       height: 16
     spriteID: dd59ec83518d440a88464abf34b03821
@@ -3542,187 +3542,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Overworld_Final_170
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 148
-      y: 20
-      width: 16
-      height: 16
-    spriteID: d1f4aec32231444e19b64dc3ff3aac60
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 0, y: 0}
-  - name: Overworld_Final_171
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 164
-      y: 20
-      width: 16
-      height: 16
-    spriteID: b989fdf0b50804938badc0c76276c4fc
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 0, y: 0}
-  - name: Overworld_Final_172
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 180
-      y: 20
-      width: 16
-      height: 16
-    spriteID: 708adcced5c7c4f2fb2a6c2235899e08
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 0, y: 0}
-  - name: Overworld_Final_173
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 4
-      y: 4
-      width: 16
-      height: 16
-    spriteID: ccfcd07fbc7274818a11bf3167dee291
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 0, y: 0}
-  - name: Overworld_Final_174
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 20
-      y: 4
-      width: 16
-      height: 16
-    spriteID: 5a61b43df14bb4c688cf2ddc8db16777
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 0, y: 0}
-  - name: Overworld_Final_175
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 36
-      y: 4
-      width: 16
-      height: 16
-    spriteID: 7f4737e50672b4c2aa1096ef4b27ef01
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 0, y: 0}
-  - name: Overworld_Final_176
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 52
-      y: 4
-      width: 16
-      height: 16
-    spriteID: 5d9b145c35da345a4a73e203ecad6366
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 0, y: 0}
-  - name: Overworld_Final_177
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 84
-      y: 4
-      width: 16
-      height: 16
-    spriteID: 801f85b979b44470f8ab4c856f182e21
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 0, y: 0}
-  - name: Overworld_Final_178
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 100
-      y: 4
-      width: 16
-      height: 16
-    spriteID: 0aaaf90871a124e3a9d6ac3924ca4f1e
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 0, y: 0}
-  - name: Overworld_Final_179
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -3731,7 +3551,7 @@ ScriptedImporter:
       y: 4
       width: 16
       height: 16
-    spriteID: f91d387bd031d4beea9749130b9a0fe1
+    spriteID: d1f4aec32231444e19b64dc3ff3aac60
     spriteBone: []
     spriteOutline: []
     vertices: []
