@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Cinemachine;
 using SimCard.Common;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -16,8 +17,10 @@ namespace SimCard.SimGame {
 
         [SerializeField] private GameObject environment;
         [SerializeField] private GameObject canvasUI;
+        [SerializeField] private CinemachineVirtualCamera vCam;
 
         private Camera simGameCamera;
+        private CinemachineFramingTransposer transposer;
 
         private bool loadingSubScene;
 
@@ -36,6 +39,7 @@ namespace SimCard.SimGame {
             EventBus = GetComponent<SimGameEventBus>();
 
             simGameCamera = Camera.main;
+            transposer = vCam.GetCinemachineComponent<CinemachineFramingTransposer>();
 
             player = GetComponentInChildren<Player>();
             interactUI = canvasUI.GetComponentInChildren<InteractUI>();
@@ -44,6 +48,7 @@ namespace SimCard.SimGame {
 
         void Start() {
             EventBus.OnInteractionEvent.Event += HandleInteractionEvent;
+            EventBus.OnPlayerTeleport.Event += HandleTeleport;
             EventBus.OnCardGameEnd.Event += HandleCardGameEndEvent;
             EventBus.OnDeckBuilderEnd.Event += HandleDeckBuilderEndEvent;
             EventBus.OnSubSceneLoaded.Event += HandleSubSceneLoadedEvent;
@@ -51,6 +56,7 @@ namespace SimCard.SimGame {
 
         void OnDestroy() {
             EventBus.OnInteractionEvent.Event -= HandleInteractionEvent;
+            EventBus.OnPlayerTeleport.Event -= HandleTeleport;
             EventBus.OnCardGameEnd.Event -= HandleCardGameEndEvent;
             EventBus.OnDeckBuilderEnd.Event -= HandleDeckBuilderEndEvent;
             EventBus.OnSubSceneLoaded.Event -= HandleSubSceneLoadedEvent;
@@ -93,6 +99,10 @@ namespace SimCard.SimGame {
             }
         }
 
+        void HandleTeleport(EventArgs<Vector3> args) {
+            StartCoroutine(Teleport(args.argument));
+        }
+
         void HandleCardGameEndEvent(EventArgs<bool, int> args) {
             (bool result, int goldWon) = args;
             Debug.Log($"Result: {result}, gold won: {goldWon}");
@@ -130,6 +140,49 @@ namespace SimCard.SimGame {
             interactUI.Parser = null;
             yield return interactUI.EndInteraction();
             parser.EndInteraction();
+        }
+
+        IEnumerator Teleport(Vector3 destination) {
+            EventBus.OnPlayerPause.Raise(new(false));
+
+            interactUI.Hide();
+            yield return fadeUI.FadeIn(0.5f);
+
+            // Save values
+            Vector3 damping = new Vector3(
+                transposer.m_XDamping,
+                transposer.m_YDamping,
+                transposer.m_ZDamping
+            );
+            Vector3 deadZone = new Vector3(
+                transposer.m_DeadZoneWidth,
+                transposer.m_DeadZoneHeight,
+                transposer.m_DeadZoneDepth
+            );
+
+            // Set all these to 0
+            transposer.m_XDamping = transposer.m_YDamping = transposer.m_ZDamping = 0;
+            transposer.m_DeadZoneWidth = transposer.m_DeadZoneHeight = transposer.m_DeadZoneDepth = 0;
+
+            // Directly disable vCam, then wait a frame to force an instant camera update (instead of smooth transition)
+            vCam.enabled = false;
+            yield return null;
+
+            player.transform.position = destination;
+            vCam.enabled = true;
+
+            yield return fadeUI.FadeOut(0.5f);
+
+            // Restore vCam values
+            transposer.m_XDamping = damping.x;
+            transposer.m_YDamping = damping.y;
+            transposer.m_ZDamping = damping.z;
+
+            transposer.m_DeadZoneWidth = deadZone.x;
+            transposer.m_DeadZoneHeight = deadZone.y;
+            transposer.m_DeadZoneDepth = deadZone.z;
+
+            EventBus.OnPlayerUnpause.Raise(new());
         }
 
         IEnumerator StartCardGame(Interactable interactable) {

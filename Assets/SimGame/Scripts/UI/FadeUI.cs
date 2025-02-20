@@ -10,32 +10,32 @@ public class FadeUI : MonoBehaviour {
         fadeGroup = GetComponent<CanvasGroup>();
     }
 
-    public IEnumerator FadeIn() {
+    public IEnumerator FadeIn(float fadeTime = 1f) {
         float t = 0;
 
-        while (t < 1) {
-            fadeGroup.alpha = Mathf.Lerp(0, 1, t);
+        while (t < fadeTime) {
+            fadeGroup.alpha = Mathf.Lerp(0, 1, t / fadeTime);
             yield return null;
             t += Time.deltaTime;
         }
         fadeGroup.alpha = 1;
     }
 
-    public IEnumerator FadeOut() {
+    public IEnumerator FadeOut(float fadeTime = 1f) {
         float t = 0;
-        while (t < 1) {
-            fadeGroup.alpha = Mathf.Lerp(1, 0, t);
+        while (t < fadeTime) {
+            fadeGroup.alpha = Mathf.Lerp(1, 0, t / fadeTime);
             yield return null;
             t += Time.deltaTime;
         }
         fadeGroup.alpha = 0;
     }
 
-    public IEnumerator FadeInOut() {
-        yield return StartCoroutine(FadeIn());
+    public IEnumerator FadeInOut(float fadeInTime = 1f, float fadeOutTime = 1f) {
+        yield return StartCoroutine(FadeIn(fadeInTime));
 
         yield return new WaitForSeconds(1f);
 
-        yield return StartCoroutine(FadeOut());
+        yield return StartCoroutine(FadeOut(fadeOutTime));
     }
 }

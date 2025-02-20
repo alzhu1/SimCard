@@ -16,6 +16,7 @@ namespace SimCard.SimGame {
         // Player lifecycle events
         public GameEvent<EventArgs<bool>> OnPlayerPause = new();
         public GameEvent<EventArgs> OnPlayerUnpause = new();
+        public GameEvent<EventArgs<Vector3>> OnPlayerTeleport = new();
 
         // MINOR: This is currently the catch-all event for interaction triggered events
         // Would like a more dynamic solution via scripting, somehow

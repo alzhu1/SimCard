@@ -82,13 +82,13 @@ namespace SimCard.SimGame {
             }
         }
 
+        void OnEnable() {
+            playerState?.Restart();
+        }
+
         public void UpdateDeckAfterEdit(List<CardMetadata> deck, List<CardMetadata> availableCards) {
             this.deck = deck;
             this.availableCards = availableCards;
-        }
-
-        void OnEnable() {
-            playerState?.Restart();
         }
     }
 }
