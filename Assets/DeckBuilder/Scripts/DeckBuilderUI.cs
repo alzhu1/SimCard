@@ -20,7 +20,16 @@ namespace SimCard.DeckBuilder {
         private CanvasGroup cardListView;
 
         [SerializeField]
+        private Image cardCursor;
+
+        [SerializeField]
         private Image upArrow;
+
+        [SerializeField]
+        private Image leftCountArrow;
+
+        [SerializeField]
+        private Image rightCountArrow;
 
         [SerializeField]
         private DeckBuilderCardRowUI[] cardRows;
@@ -30,6 +39,9 @@ namespace SimCard.DeckBuilder {
 
         [SerializeField]
         private Image[] options;
+
+        [SerializeField]
+        private Image optionCursor;
 
         [Header("Preview View")]
         [SerializeField]
@@ -81,8 +93,19 @@ namespace SimCard.DeckBuilder {
         void UpdateCardListViewUI() {
             cardListView.alpha = 1;
 
-            for (int i = 0; i < options.Length; i++) {
-                options[i].color = DeckBuilderUIListener.Index == -1 && DeckBuilderUIListener.SubIndex == i ? Color.red : Color.white;
+            // Handle options update
+            bool isOptionSelect = DeckBuilderUIListener.Index == -1;
+            cardCursor.enabled = !isOptionSelect;
+            leftCountArrow.enabled = !isOptionSelect;
+            rightCountArrow.enabled = !isOptionSelect;
+
+            optionCursor.enabled = isOptionSelect;
+
+            if (isOptionSelect) {
+                optionCursor.rectTransform.anchoredPosition = new Vector2(
+                    options[DeckBuilderUIListener.SubIndex].rectTransform.anchoredPosition.x,
+                    optionCursor.rectTransform.anchoredPosition.y
+                );
             }
 
             // Handle top index update
@@ -108,13 +131,17 @@ namespace SimCard.DeckBuilder {
                     // Update the deck count text
                     (int deckCount, int totalCount) = DeckBuilderUIListener.CardToCount[card];
                     cardRow.DeckCountText.text = $"{deckCount} / {totalCount}";
-
-                    // Red text if it's the current index
-                    cardRows[cardRowIndex]
-                        .SetTextColor(i == DeckBuilderUIListener.Index ? Color.red : Color.white);
                 } else {
                     cardRow.gameObject.SetActive(false);
                 }
+            }
+
+            // Update cursor position
+            if (!isOptionSelect) {
+                cardCursor.rectTransform.anchoredPosition = new Vector2(
+                    cardCursor.rectTransform.anchoredPosition.x,
+                    cardRows[DeckBuilderUIListener.Index].rectTransform.anchoredPosition.y + 3 // offset
+                );
             }
 
             upArrow.enabled = topIndex != 0;

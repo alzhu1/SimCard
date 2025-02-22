@@ -21,18 +21,12 @@ namespace SimCard.DeckBuilder {
         [SerializeField]
         private TextMeshProUGUI deckCountText;
 
+        public RectTransform rectTransform => transform as RectTransform;
+
         public TextMeshProUGUI CardNameText => cardNameText;
         public TextMeshProUGUI CostText => costText;
         public TextMeshProUGUI IncomeText => incomeText;
         public TextMeshProUGUI LifetimeText => lifetimeText;
         public TextMeshProUGUI DeckCountText => deckCountText;
-
-        public void SetTextColor(Color color) {
-            cardNameText.color = color;
-            costText.color = color;
-            incomeText.color = color;
-            lifetimeText.color = color;
-            deckCountText.color = color;
-        }
     }
 }
