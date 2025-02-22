@@ -23,13 +23,13 @@ namespace SimCard.SimGame {
 
         protected override IEnumerator Handle() {
             while (nextState == null) {
-                if (Input.GetKeyDown(KeyCode.P)) {
+                if (Input.GetKeyDown(KeyCode.Escape)) {
                     nextState = new RegularState();
                     break;
                 }
 
                 // Menu inputs
-                if (Input.GetKeyDown(KeyCode.Z)) {
+                if (Input.GetKeyDown(KeyCode.Space)) {
                     string option = menu.SelectedOption;
 
                     switch (option) {

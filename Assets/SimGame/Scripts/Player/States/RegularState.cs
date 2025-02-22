@@ -34,12 +34,12 @@ namespace SimCard.SimGame {
             }
 
             while (nextState == null) {
-                if (interactable != null && Input.GetKeyDown(KeyCode.Z)) {
+                if (interactable != null && Input.GetKeyDown(KeyCode.Space)) {
                     nextState = new InteractState(interactable);
                     break;
                 }
 
-                if (Input.GetKeyDown(KeyCode.P)) {
+                if (Input.GetKeyDown(KeyCode.Escape)) {
                     nextState = new MenuState();
                     break;
                 }

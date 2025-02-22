@@ -153,7 +153,7 @@ namespace SimCard.DeckBuilder {
             }
 
             // Set deck
-            if (Input.GetKeyDown(KeyCode.P)) {
+            if (Input.GetKeyDown(KeyCode.Escape)) {
                 Debug.Log("Sending event back to sim game bus now");
 
                 // Final deck is every card item that has a non-zero first int count

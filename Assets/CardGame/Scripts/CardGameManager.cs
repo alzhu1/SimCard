@@ -141,6 +141,7 @@ namespace SimCard.CardGame {
         }
 
         IEnumerator EndCardGame(bool playerWon) {
+            // TODO: Fix this, don't want to use return
             while (!Input.GetKeyDown(KeyCode.Return)) {
                 Debug.Log("KeyDown return please");
                 yield return null;
