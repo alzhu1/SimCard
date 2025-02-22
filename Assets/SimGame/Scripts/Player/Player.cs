@@ -70,6 +70,7 @@ namespace SimCard.SimGame {
             Debug.Log($"Collider: {collider}");
 
             if (collider.TryGetComponent(out Interactable interactable)) {
+                interactable.HandlePopupVisibility(true);
                 SimGameManager.EventBus.OnCanInteract.Raise(new(interactable));
             }
         }
@@ -77,7 +78,8 @@ namespace SimCard.SimGame {
         void OnTriggerExit2D(Collider2D collider) {
             Debug.Log($"Collider (exit): {collider}");
 
-            if (collider.TryGetComponent(out Interactable _)) {
+            if (collider.TryGetComponent(out Interactable interactable)) {
+                interactable.HandlePopupVisibility(false);
                 SimGameManager.EventBus.OnCanInteract.Raise(new(null));
             }
         }

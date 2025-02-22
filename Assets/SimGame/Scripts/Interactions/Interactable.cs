@@ -19,6 +19,8 @@ namespace SimCard.SimGame {
 
         [SerializeField] private TextAsset data;
 
+        [SerializeField] private SpriteRenderer interactPopup;
+
         private Interaction interactionJson;
         private InteractableCharacterAnimator characterAnimator;
 
@@ -75,6 +77,7 @@ namespace SimCard.SimGame {
 
         public string InitInteraction(Player player) {
             this.player = player;
+            HandlePopupVisibility(false);
 
             // Change interactable sprite direction if doable. Negate player direction to get appropriate face
             if (characterAnimator != null) {
@@ -162,6 +165,10 @@ namespace SimCard.SimGame {
         ) {
             InteractionNode.InteractionOption selectedOption = GetCurrentInteraction(pathName, interactionIndex)?.Options?[optionIndex];
             return selectedOption.Conditions.All(kv => AssertCondition(kv.Key, kv.Value)) ? selectedOption.NextPath : selectedOption.FallbackPath;
+        }
+
+        public void HandlePopupVisibility(bool showPopup) {
+            interactPopup.enabled = showPopup;
         }
     }
 }

@@ -7,3 +7,4 @@ Sprite Credits:
   * https://the-pixel-nook.itch.io/gb-studio-overworld-tiles-plus
   * https://the-pixel-nook.itch.io/gb-studio-buildings
   * https://the-pixel-nook.itch.io/gb-studio-viking-tiles
+* Emotes: https://github.com/DeerTears/GB-Studio-Community-Assets

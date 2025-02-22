@@ -11,7 +11,10 @@ namespace SimCard.SimGame {
 
         public RegularState() { }
 
-        public RegularState(Interactable interactable) => this.interactable = interactable;
+        public RegularState(Interactable interactable) {
+            this.interactable = interactable;
+            interactable.HandlePopupVisibility(true);
+        }
 
         public override Vector2 RBVelocity => player.MoveSpeed * Time.fixedDeltaTime * move;
 
@@ -40,6 +43,7 @@ namespace SimCard.SimGame {
                 }
 
                 if (Input.GetKeyDown(KeyCode.Escape)) {
+                    interactable?.HandlePopupVisibility(false);
                     nextState = new MenuState();
                     break;
                 }
