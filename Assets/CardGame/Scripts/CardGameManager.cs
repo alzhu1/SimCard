@@ -27,6 +27,10 @@ namespace SimCard.CardGame {
         [SerializeField]
         private Duelist opponentDuelist;
 
+        [SerializeField]
+        private int winCurrency = 200;
+        public int WinCurrency => winCurrency;
+
         // From scene load
         private SimGameManager simGameManager;
 

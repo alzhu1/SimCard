@@ -33,7 +33,7 @@ namespace SimCard.CardGame {
                 CardGameManager.EventBus.OnGameEnd.Raise(new(Enemy, this));
             }
 
-            if (Currency > 200) {
+            if (Currency >= CardGameManager.WinCurrency) {
                 // Win
                 CardGameManager.EventBus.OnGameEnd.Raise(new(this, Enemy));
             }

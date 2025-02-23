@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using SimCard.Common;
 using TMPro;
+using UnityEngine.UI;
 
 namespace SimCard.CardGame {
     public class ResourceCountUI : MonoBehaviour {
@@ -14,10 +15,17 @@ namespace SimCard.CardGame {
         [SerializeField] private TextMeshProUGUI playerNetChangeText;
         [SerializeField] private TextMeshProUGUI opponentNetChangeText;
 
+        // Resource slider
+        [SerializeField] private Slider playerSlider;
+        [SerializeField] private Slider opponentSlider;
+
         private CardGameManager cardGameManager;
 
         void Awake() {
             cardGameManager = GetComponentInParent<CardGameManager>();
+
+            playerSlider.maxValue = cardGameManager.WinCurrency;
+            opponentSlider.maxValue = cardGameManager.WinCurrency;
         }
 
         void Start() {
@@ -30,12 +38,13 @@ namespace SimCard.CardGame {
             cardGameManager.EventBus.OnOpponentCurrencyUpdate.Event -= HandleOpponentCurrencyUpdate;
         }
 
-        void HandlePlayerCurrencyUpdate(EventArgs<int, int> args) => HandleCurrencyUpdate(playerResourceCountText, playerNetChangeText, args.arg1, args.arg2);
-        void HandleOpponentCurrencyUpdate(EventArgs<int, int> args) => HandleCurrencyUpdate(opponentResourceCountText, opponentNetChangeText, args.arg1, args.arg2);
+        void HandlePlayerCurrencyUpdate(EventArgs<int, int> args) => HandleCurrencyUpdate(playerResourceCountText, playerNetChangeText, playerSlider, args.arg1, args.arg2);
+        void HandleOpponentCurrencyUpdate(EventArgs<int, int> args) => HandleCurrencyUpdate(opponentResourceCountText, opponentNetChangeText, opponentSlider, args.arg1, args.arg2);
 
-        void HandleCurrencyUpdate(TextMeshProUGUI resourceCountText, TextMeshProUGUI netChangeText, int beforeCurrency, int afterCurrency) {
+        void HandleCurrencyUpdate(TextMeshProUGUI resourceCountText, TextMeshProUGUI netChangeText, Slider slider, int beforeCurrency, int afterCurrency) {
             Debug.Log($"(UI) Before: {beforeCurrency}, after: {afterCurrency}");
-            resourceCountText.text = afterCurrency.ToString();
+            resourceCountText.text = $"${afterCurrency}";
+            slider.value = afterCurrency;
 
             int netChange = afterCurrency - beforeCurrency;
 
