@@ -41,6 +41,9 @@ namespace SimCard.CardGame {
         private CanvasGroup graveyardRendererGroup;
 
         [SerializeField]
+        private Image graveyardCursor;
+
+        [SerializeField]
         private Image upArrow;
 
         [SerializeField]
@@ -64,7 +67,7 @@ namespace SimCard.CardGame {
             canvasGroup = GetComponent<CanvasGroup>();
             cardGameManager = GetComponentInParent<CardGameManager>();
 
-            Assert.AreEqual(cardTexts.Length, 4);
+            Assert.AreEqual(cardTexts.Length, 5);
         }
 
         void Start() {
@@ -101,7 +104,7 @@ namespace SimCard.CardGame {
 
                         // Handle top index update
                         graveyardTopTextIndex = Mathf.Min(graveyardTopTextIndex, previewUIListener.Index);
-                        graveyardTopTextIndex = Mathf.Max(graveyardTopTextIndex + 3, previewUIListener.Index) - 3;
+                        graveyardTopTextIndex = Mathf.Max(graveyardTopTextIndex + cardTexts.Length - 1, previewUIListener.Index) - (cardTexts.Length - 1);
 
                         for (int i = 0; i < cardTexts.Length; i++) {
                             int cardIndex = graveyardTopTextIndex + i;
@@ -110,13 +113,17 @@ namespace SimCard.CardGame {
                             } else {
                                 cardTexts[i].enabled = true;
                                 cardTexts[i].text = graveyard.Cards[graveyardTopTextIndex + i].CardName;
-                                cardTexts[i].color = cardIndex == previewUIListener.Index ? Color.red : Color.white;
                             }
                         }
 
+                        graveyardCursor.rectTransform.anchoredPosition = new Vector2(
+                            graveyardCursor.rectTransform.anchoredPosition.x,
+                            cardTexts[previewUIListener.Index - graveyardTopTextIndex].rectTransform.anchoredPosition.y + 3 // offset
+                        );
+
                         // Display up/down arrows if more can be seen
                         upArrow.enabled = graveyardTopTextIndex != 0;
-                        downArrow.enabled = graveyardTopTextIndex + 4 < graveyard.Cards.Count;
+                        downArrow.enabled = graveyardTopTextIndex + cardTexts.Length < graveyard.Cards.Count;
 
                         break;
                     }
