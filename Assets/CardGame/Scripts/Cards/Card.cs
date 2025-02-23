@@ -11,6 +11,9 @@ namespace SimCard.CardGame {
         public CardSO CardSO => cardSO;
 
         [SerializeField]
+        private Sprite frontSprite;
+
+        [SerializeField]
         private Sprite backSprite;
 
         [SerializeField]
@@ -19,7 +22,7 @@ namespace SimCard.CardGame {
             get { return hidden; }
             set {
                 hidden = value;
-                sr.sprite = hidden ? backSprite : cardSO.sprite;
+                sr.sprite = hidden ? backSprite : frontSprite;
             }
         }
 
@@ -58,7 +61,7 @@ namespace SimCard.CardGame {
             }
 
             sr = GetComponent<SpriteRenderer>();
-            gameObject.SetActive(false);
+            // gameObject.SetActive(false);
 
             ActiveAppliedEffects = new();
 
@@ -71,7 +74,10 @@ namespace SimCard.CardGame {
         }
 
         void Update() {
-            sr.sprite = hidden ? backSprite : cardSO.sprite;
+            sr.sprite = hidden ? backSprite : frontSprite;
+
+            // FIXME: Need to somehow affix cardSO.sprite to the front sprite
+            // i.e. display a 8x8 image inside this section of the card
         }
 
         public void InitCardSO(CardSO cardSO) {

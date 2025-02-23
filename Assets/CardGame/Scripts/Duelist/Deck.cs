@@ -41,7 +41,7 @@ namespace SimCard.CardGame {
                 for (int i = 0; i < count; i++) {
                     Card cardFromPool = cardGameManager.CardPool.GetPooledCard();
                     cardFromPool.InitCardSO(cardSO);
-                    cardGameManager.CardPool.TransferTo(this, cardFromPool, false);
+                    cardGameManager.CardPool.TransferTo(this, cardFromPool, true);
                 }
             }
         }

@@ -50,7 +50,7 @@ namespace SimCard.CardGame {
 
             if (selectable is Card card) {
                 cardCostCanvasGroup.alpha = 1;
-                cardCostText.text = card.Cost.ToString();
+                cardCostText.text = $"${card.Cost}";
             } else {
                 cardCostCanvasGroup.alpha = 0;
             }
