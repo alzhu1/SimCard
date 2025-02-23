@@ -9,12 +9,14 @@ using UnityEngine.EventSystems;
 namespace SimCard.DeckBuilder {
     public class DeckBuilderManager : MonoBehaviour, DeckBuilderUIListener {
         public enum SortOptions {
-            NameDescending = 0,
-            NameAscending = 1,
-            CostAscending = 2,
-            CostDescending = 3,
-            IncomeAscending = 4,
-            IncomeDescending = 5
+            NameAtoZ = 0,
+            NameZtoA = 1,
+            CostDescending = 2,
+            CostAscending = 3,
+            IncomeDescending = 4,
+            IncomeAscending = 5,
+            LifetimeDescending = 6,
+            LifetimeAscending = 7
         }
 
         // Singleton is private to avoid multiple instantiations (if it somehow happened)
@@ -136,12 +138,14 @@ namespace SimCard.DeckBuilder {
                     Debug.Log($"Curr sort option: {currSortOption}, SubIndex: {SubIndex}");
                     SelectableCards.Sort((a, b) => {
                         return currSortOption switch {
-                            SortOptions.NameDescending => a.cardName.CompareTo(b.cardName),
-                            SortOptions.NameAscending => b.cardName.CompareTo(a.cardName),
-                            SortOptions.CostAscending => a.cost - b.cost,
+                            SortOptions.NameAtoZ => a.cardName.CompareTo(b.cardName),
+                            SortOptions.NameZtoA => b.cardName.CompareTo(a.cardName),
                             SortOptions.CostDescending => b.cost - a.cost,
-                            SortOptions.IncomeAscending => a.income - b.income,
+                            SortOptions.CostAscending => a.cost - b.cost,
                             SortOptions.IncomeDescending => b.income - a.income,
+                            SortOptions.IncomeAscending => a.income - b.income,
+                            SortOptions.LifetimeDescending => b.turnLimit - a.turnLimit,
+                            SortOptions.LifetimeAscending => a.turnLimit - b.turnLimit,
                             // Default to name comparison
                             _ => a.cardName.CompareTo(b.cardName),
                         };
