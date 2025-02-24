@@ -7626,6 +7626,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54d90ea61d0bb46fea558dc20b33996c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  headsSprite: {fileID: -2413806693520163455, guid: daf79a9bfe87046568cb0e70981218dc, type: 3}
+  tailsSprite: {fileID: 7482667652216324306, guid: f13e034d061cb4b9e8fa91a17b46a79d, type: 3}
+  coinBounceHeight: 200
+  bounceTime: 0.8
+  resultWaitTime: 0.5
+  fadeTime: 1
 --- !u!1 &2068916417
 GameObject:
   m_ObjectHideFlags: 0
