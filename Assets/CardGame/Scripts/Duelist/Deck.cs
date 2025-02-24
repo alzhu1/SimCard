@@ -16,7 +16,12 @@ namespace SimCard.CardGame {
             deckSr = GetComponent<SpriteRenderer>();
         }
 
-        public override void Spread() { }
+        public override void Organize() {
+            foreach (Card card in cards) {
+                card.transform.position = transform.position;
+                card.Hidden = hidden;
+            }
+        }
 
         public void TryHideDeck() {
             if (cards.Count == 0) {

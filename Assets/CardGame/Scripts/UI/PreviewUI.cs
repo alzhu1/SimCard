@@ -101,6 +101,7 @@ namespace SimCard.CardGame {
                     case Graveyard graveyard: {
                         graveyardRendererGroup.alpha = 1;
                         graveyardTitleText.text = previewUIListener.PreviewHeader;
+                        graveyardCursor.enabled = graveyard.Cards.Count > 0;
 
                         // Handle top index update
                         graveyardTopTextIndex = Mathf.Min(graveyardTopTextIndex, previewUIListener.Index);

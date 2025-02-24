@@ -6,7 +6,7 @@ namespace SimCard.CardGame {
     // CardHolder should be owned by a duelist
     public class CardHolder : MonoBehaviour {
         [SerializeField] protected float spreadOffset = 1.5f;
-        [SerializeField] private bool hidden;
+        [SerializeField] protected bool hidden;
 
         protected List<Card> cards;
         public List<Card> Cards {
@@ -19,8 +19,7 @@ namespace SimCard.CardGame {
             cards = new List<Card>(childrenCards ?? new Card[] { });
         }
 
-        // MINOR: Does this need to be virtual?
-        public virtual void Spread() {
+        public virtual void Organize() {
             // Default spread: space out cards horizontally
             float leftEdgeX = (1 - cards.Count) * spreadOffset / 2;
             for (int i = 0; i < cards.Count; i++) {

@@ -148,7 +148,7 @@ namespace SimCard.CardGame {
 
         public void Discard(Card card) {
             CardHolder currentCardHolder = card.GetCurrentHolder();
-            currentCardHolder.TransferTo(Graveyard, card, false);
+            currentCardHolder.TransferTo(Graveyard, card, true);
             card.ClearActiveTurns();
             OrganizeArea();
         }
@@ -178,8 +178,10 @@ namespace SimCard.CardGame {
 
         void OrganizeArea() {
             // This is called whenever a card based operation occurs
-            Field.Spread();
-            Hand.Spread();
+            Field.Organize();
+            Hand.Organize();
+            Deck.Organize();
+            Graveyard.Organize();
         }
     }
 }
