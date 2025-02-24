@@ -13,6 +13,9 @@ namespace SimCard.CardGame {
         [SerializeField]
         private float cursorMoveTime = 1f;
 
+        [SerializeField]
+        private Vector3 cursorOffset;
+
         protected override DuelistState StartState => new DrawState<PlayerBaseState>();
 
         protected override void InitForGame(EventArgs<List<CardMetadata>, List<CardMetadata>> args) {
@@ -42,7 +45,7 @@ namespace SimCard.CardGame {
 
         IEnumerator MoveCursor(CardGraphSelectable selectable, bool instant) {
             Vector3 start = cursor.transform.position;
-            Vector3 dest = selectable.transform.position;
+            Vector3 dest = selectable.transform.position + cursorOffset;
             float t = 0;
 
             if (!instant) {
