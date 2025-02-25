@@ -7,28 +7,45 @@ public class CoinUI : MonoBehaviour {
     [SerializeField] private Sprite headsSprite;
     [SerializeField] private Sprite tailsSprite;
 
+    [SerializeField] private Sprite[] coinSprites;
+
+    [SerializeField] private float animationFrameTime;
+
     [SerializeField] private float coinBounceHeight = 1f;
     [SerializeField] private float bounceTime = 1f;
     [SerializeField] private float resultWaitTime = 1f;
     [SerializeField] private float fadeTime = 1f;
 
     private Image coinImage;
-    private Animator animator;
+
+    private Sprite targetSprite;
+    private int spriteIndex;
 
     void Awake() {
         coinImage = GetComponent<Image>();
-        animator = GetComponent<Animator>();
+        spriteIndex = 0;
     }
 
-    void Update() {
+    void Start() {
+        StartCoroutine(Animate());
+    }
 
+    IEnumerator Animate() {
+        while (true) {
+            coinImage.sprite = coinSprites[spriteIndex];
+
+            if (coinImage.sprite == targetSprite) {
+                break;
+            }
+
+            yield return new WaitForSeconds(animationFrameTime);
+
+            spriteIndex = (coinSprites.Length + spriteIndex + 1) % coinSprites.Length;
+        }
     }
 
     public IEnumerator FlipCoin(float value) {
-        animator.enabled = false;
-        Sprite coinSprite = value < 0.5f ? headsSprite : tailsSprite;
-        coinImage.sprite = coinSprite;
-
+        // animator.enabled = false;
         float baseHeight = coinImage.rectTransform.anchoredPosition.y;
 
         // First value of t that returns 1 from EaseOutBounce
@@ -40,6 +57,12 @@ public class CoinUI : MonoBehaviour {
             );
             yield return null;
             t += Time.deltaTime;
+
+            // Pick a target sprite during flipping so that once it lands, it should be close to target
+            // Not super accurate but works
+            if (targetSprite == null && t >= bounceTime / 2) {
+                targetSprite = value < 0.5f ? headsSprite : tailsSprite;
+            }
         }
         coinImage.rectTransform.anchoredPosition = new Vector2(
             coinImage.rectTransform.anchoredPosition.x,

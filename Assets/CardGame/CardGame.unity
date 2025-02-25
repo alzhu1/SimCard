@@ -7527,7 +7527,6 @@ GameObject:
   - component: {fileID: 2061910315}
   - component: {fileID: 2061910318}
   - component: {fileID: 2061910317}
-  - component: {fileID: 2061910316}
   - component: {fileID: 2061910319}
   m_Layer: 5
   m_Name: Coin
@@ -7555,27 +7554,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!95 &2061910316
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2061910314}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 1ea4ed0dce58941eb815eaf9b2e7012d, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &2061910317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7596,7 +7574,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -2413806693520163455, guid: daf79a9bfe87046568cb0e70981218dc, type: 3}
+  m_Sprite: {fileID: 5258584496025476208, guid: 006991bcc156e4d3b8512424029bd2e8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7626,8 +7604,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54d90ea61d0bb46fea558dc20b33996c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  headsSprite: {fileID: -2413806693520163455, guid: daf79a9bfe87046568cb0e70981218dc, type: 3}
-  tailsSprite: {fileID: 7482667652216324306, guid: f13e034d061cb4b9e8fa91a17b46a79d, type: 3}
+  headsSprite: {fileID: 5258584496025476208, guid: 006991bcc156e4d3b8512424029bd2e8, type: 3}
+  tailsSprite: {fileID: -1657656894447955191, guid: 006991bcc156e4d3b8512424029bd2e8, type: 3}
+  coinSprites:
+  - {fileID: 5258584496025476208, guid: 006991bcc156e4d3b8512424029bd2e8, type: 3}
+  - {fileID: 7428251806852254317, guid: 006991bcc156e4d3b8512424029bd2e8, type: 3}
+  - {fileID: 4704922249976279657, guid: 006991bcc156e4d3b8512424029bd2e8, type: 3}
+  - {fileID: -3581064570484714081, guid: 006991bcc156e4d3b8512424029bd2e8, type: 3}
+  - {fileID: -1657656894447955191, guid: 006991bcc156e4d3b8512424029bd2e8, type: 3}
+  - {fileID: -8808924372587321544, guid: 006991bcc156e4d3b8512424029bd2e8, type: 3}
+  - {fileID: -883579610867112058, guid: 006991bcc156e4d3b8512424029bd2e8, type: 3}
+  - {fileID: -1303325249213413395, guid: 006991bcc156e4d3b8512424029bd2e8, type: 3}
+  animationFrameTime: 0.1
   coinBounceHeight: 200
   bounceTime: 0.8
   resultWaitTime: 0.5
