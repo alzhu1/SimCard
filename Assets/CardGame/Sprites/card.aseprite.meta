@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2e8d4db9ca3fe4ac9923b9f9dcfb1761
+guid: 2608d22dcedcf43fca040f0e6d51bbd4
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -95,7 +95,7 @@ ScriptedImporter:
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
-  platformSettingsDirtyTick: 638759024584116680
+  platformSettingsDirtyTick: 638761197018115950
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -119,18 +119,18 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: card_action_icons
+  - name: card
     originalName: 
-    pivot: {x: 0.5, y: -0.071428575}
+    pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 62
-      height: 14
-    spriteID: 4d03faef18a4847a79d6c43d22b4a52c
+      width: 24
+      height: 32
+    spriteID: a03895dcc816d4fcf96ab46102345730
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -140,18 +140,18 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 4, y: 4}
   spriteSheetImportData:
-  - name: card_action_icons_0
+  - name: card_0
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 3
-      y: 3
+      y: 4
       width: 16
       height: 16
-    spriteID: 517a22fa3a431411a90e3e13b40154f4
+    spriteID: 19b7cee78735448c1babf7e5154fd228
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -160,7 +160,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
-  - name: card_action_icons_1
+  - name: card_1
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -168,50 +168,10 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 19
-      y: 3
+      y: 4
       width: 16
       height: 16
-    spriteID: 3690a76750c344eb3a28e5e547a27041
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 0, y: 0}
-  - name: card_action_icons_2
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 35
-      y: 3
-      width: 16
-      height: 16
-    spriteID: b664fefc912e94ed99f4a180c910661b
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 0, y: 0}
-  - name: card_action_icons_3
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 51
-      y: 3
-      width: 16
-      height: 16
-    spriteID: 5b5cf051686cd4da8bd42f9b059a4459
+    spriteID: 843f9c739915e42f4a83c1003b5b3610
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -222,20 +182,20 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   asepriteLayers:
   - layerIndex: 0
-    guid: -453693606
-    name: card_action_icons
+    guid: 1919857284
+    name: card
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: card_action_icons
+    - name: card
       frameIndex: 0
       cellRect:
         x: 1
-        y: 1
-        width: 62
-        height: 14
-      spriteId: 4d03faef18a4847a79d6c43d22b4a52c
+        y: 0
+        width: 30
+        height: 16
+      spriteId: a03895dcc816d4fcf96ab46102345730
     linkedCells: []
     parentIndex: -1
   platformSettings:
@@ -289,4 +249,4 @@ ScriptedImporter:
     androidETC2FallbackOverride: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 64, y: 16}
+  canvasSize: {x: 32, y: 16}
