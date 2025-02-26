@@ -7,7 +7,6 @@ namespace SimCard.Common {
     public class CardSO : ScriptableObject {
         // Native properties
         public string cardName;
-        public Sprite sprite;
         public int cost;
 
         [TextArea]
@@ -20,6 +19,9 @@ namespace SimCard.Common {
 
         // Limit (number of owner turns a card will last for)
         public int turnLimit;
+
+        public Sprite cardPreviewSprite;
+        public Sprite fullSprite;
 
         // Effects
         [SerializeReference] public List<Effect> effects;

@@ -65,6 +65,9 @@ namespace SimCard.DeckBuilder {
         [SerializeField]
         private TextMeshProUGUI previewLifetimeText;
 
+        [SerializeField]
+        private Image previewCardImage;
+
         private int topIndex;
 
         public DeckBuilderUIListener DeckBuilderUIListener { get; private set; }
@@ -157,6 +160,7 @@ namespace SimCard.DeckBuilder {
             previewCostText.text = $"Cost: {previewCard.cost}";
             previewIncomeText.text = $"Income: {previewCard.income}";
             previewLifetimeText.text = $"Turn Limit: {previewCard.turnLimit}";
+            previewCardImage.sprite = previewCard.cardPreviewSprite;
         }
     }
 }

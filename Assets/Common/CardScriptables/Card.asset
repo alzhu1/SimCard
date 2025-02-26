@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: Card
   m_EditorClassIdentifier: 
   cardName: Card square
-  sprite: {fileID: 7482667652216324306, guid: 97867988a38784269a4dd3c3235ef3ae, type: 3}
   cost: 5
   description: This is a test description for square
   flavorText: Squares! Squares!
   income: 2
   turnLimit: 5
+  cardPreviewSprite: {fileID: -4537675313477714779, guid: c3686a2b6a0884b50965c462c254b909, type: 3}
+  fullSprite: {fileID: 6665510844306600762, guid: c3686a2b6a0884b50965c462c254b909, type: 3}
   effects: []
   references:
     version: 2
