@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace SimCard.Common {
+    [ExecuteInEditMode]
     public class SpriteSorter : MonoBehaviour {
         [SerializeField] private float centerToBottomDistance = 1f;
 
