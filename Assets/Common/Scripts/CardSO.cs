@@ -20,8 +20,8 @@ namespace SimCard.Common {
         // Limit (number of owner turns a card will last for)
         public int turnLimit;
 
-        public Sprite cardPreviewSprite;
-        public Sprite fullSprite;
+        public Sprite smallSprite; // Use this in card game for preview
+        public Sprite fullSprite;  // Use this for previewed images
 
         // Effects
         [SerializeReference] public List<Effect> effects;

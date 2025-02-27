@@ -38,6 +38,9 @@ namespace SimCard.CardGame {
         public int TurnLimit => CardSO.turnLimit;
         public List<Effect> Effects => CardSO.effects;
 
+        public Sprite SmallSprite => CardSO.smallSprite;
+        public Sprite FullSprite => CardSO.fullSprite;
+
         public int ActiveTurns { get; private set; }
         public void DecrementActiveTurns() => ActiveTurns--;
         public void ClearActiveTurns() => ActiveTurns = 0;

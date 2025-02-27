@@ -92,7 +92,7 @@ namespace SimCard.SimGame {
                 lifetimeText.text = $"Turn Limit: {previewCard.turnLimit}";
                 descriptionText.text = previewCard.description;
                 flavorText.text = previewCard.flavorText;
-                previewCardImage.sprite = previewCard.cardPreviewSprite;
+                previewCardImage.sprite = previewCard.fullSprite;
 
                 // Update inventory text
                 int cardCount = player.Deck.Find(cardMetadata => cardMetadata.cardSO.Equals(previewCard))?.count ?? 0;

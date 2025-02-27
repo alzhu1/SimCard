@@ -160,7 +160,7 @@ namespace SimCard.DeckBuilder {
             previewCostText.text = $"Cost: {previewCard.cost}";
             previewIncomeText.text = $"Income: {previewCard.income}";
             previewLifetimeText.text = $"Turn Limit: {previewCard.turnLimit}";
-            previewCardImage.sprite = previewCard.cardPreviewSprite;
+            previewCardImage.sprite = previewCard.fullSprite;
         }
     }
 }

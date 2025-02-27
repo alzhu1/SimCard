@@ -18,7 +18,7 @@ MonoBehaviour:
   flavorText: Squares! Squares!
   income: 2
   turnLimit: 5
-  cardPreviewSprite: {fileID: -4537675313477714779, guid: c3686a2b6a0884b50965c462c254b909, type: 3}
+  smallSprite: {fileID: -4537675313477714779, guid: c3686a2b6a0884b50965c462c254b909, type: 3}
   fullSprite: {fileID: 6665510844306600762, guid: c3686a2b6a0884b50965c462c254b909, type: 3}
   effects: []
   references:

@@ -36,6 +36,9 @@ namespace SimCard.CardGame {
         [SerializeField]
         private TextMeshProUGUI cardEffectText;
 
+        [SerializeField]
+        private Image cardSpriteImage;
+
         [Header("Graveyard Renderer")]
         [SerializeField]
         private CanvasGroup graveyardRendererGroup;
@@ -91,6 +94,7 @@ namespace SimCard.CardGame {
                         cardTurnsLeftText.text = card.ActiveTurns > 0 ? $"Turns Left: {card.ActiveTurns}" : "<color=red>RETIRED</color>";
                         cardDescriptionText.text = card.Description;
                         cardFlavorText.text = card.FlavorText;
+                        cardSpriteImage.sprite = card.FullSprite;
 
                         // TODO: Figure out Effect Text (likely just a list of applied effects)
                         // cardEffectText.text =
