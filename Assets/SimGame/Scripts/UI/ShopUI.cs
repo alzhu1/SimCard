@@ -20,6 +20,7 @@ namespace SimCard.SimGame {
         [SerializeField] private TextMeshProUGUI lifetimeText;
         [SerializeField] private TextMeshProUGUI descriptionText;
         [SerializeField] private TextMeshProUGUI flavorText;
+        [SerializeField] private Image previewCardImage;
 
         // Player
         [SerializeField] private TextMeshProUGUI currencyText;
@@ -83,7 +84,7 @@ namespace SimCard.SimGame {
                     shopOption.RectTransform.anchoredPosition.y
                 );
 
-                // Update preview texts
+                // Update preview params
                 CardSO previewCard = shopItemList[optionIndex].cardSO;
                 cardNameText.text = previewCard.cardName;
                 costText.text = $"Cost: {previewCard.cost}";
@@ -91,6 +92,7 @@ namespace SimCard.SimGame {
                 lifetimeText.text = $"Turn Limit: {previewCard.turnLimit}";
                 descriptionText.text = previewCard.description;
                 flavorText.text = previewCard.flavorText;
+                previewCardImage.sprite = previewCard.cardPreviewSprite;
 
                 // Update inventory text
                 int cardCount = player.Deck.Find(cardMetadata => cardMetadata.cardSO.Equals(previewCard))?.count ?? 0;
