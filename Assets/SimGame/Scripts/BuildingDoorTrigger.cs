@@ -12,33 +12,46 @@ namespace SimCard.SimGame {
         [SerializeField] private float frameTime = 0.25f;
 
         private SpriteRenderer buildingSr;
+        private int spriteIndex;
+
+        private Coroutine doorAnimatorCoroutine;
 
         void Awake() {
             buildingSr = GetComponentInParent<SpriteRenderer>();
+            spriteIndex = 0;
+
             openDoorParentCollider.enabled = doorEnabled;
             closedDoorParentCollider.enabled = !doorEnabled;
         }
 
         void OnTriggerEnter2D(Collider2D collider) {
             if (doorEnabled && collider.TryGetComponent(out Player player)) {
-                StartCoroutine(ChangeDoorState(true));
+                StartDoorAnimation(true);
             }
         }
 
         void OnTriggerExit2D(Collider2D collider) {
             if (doorEnabled && collider.TryGetComponent(out Player player)) {
-                StartCoroutine(ChangeDoorState(false));
+                StartDoorAnimation(false);
             }
         }
 
+        void StartDoorAnimation(bool toOpen) {
+            if (doorAnimatorCoroutine != null) {
+                StopCoroutine(doorAnimatorCoroutine);
+            }
+
+            spriteIndex = Mathf.Clamp(spriteIndex, 0, buildingSprites.Length - 1);
+            doorAnimatorCoroutine = StartCoroutine(ChangeDoorState(toOpen));
+        }
+
         IEnumerator ChangeDoorState(bool toOpen) {
-            int index = toOpen ? 0 : buildingSprites.Length - 1;
             int delta = toOpen ? 1 : -1;
 
-            while (index >= 0 && index < buildingSprites.Length) {
-                buildingSr.sprite = buildingSprites[index];
+            while (spriteIndex >= 0 && spriteIndex < buildingSprites.Length) {
+                buildingSr.sprite = buildingSprites[spriteIndex];
                 yield return new WaitForSeconds(frameTime);
-                index += delta;
+                spriteIndex += delta;
             }
         }
     }
