@@ -21,6 +21,8 @@ namespace SimCard.SimGame {
 
         private Camera simGameCamera;
         private CinemachineFramingTransposer transposer;
+        private CinemachineConfiner2D confiner;
+        private int boundsLayer;
 
         private bool loadingSubScene;
 
@@ -40,6 +42,8 @@ namespace SimCard.SimGame {
 
             simGameCamera = Camera.main;
             transposer = vCam.GetCinemachineComponent<CinemachineFramingTransposer>();
+            confiner = vCam.GetComponent<CinemachineConfiner2D>();
+            boundsLayer = LayerMask.NameToLayer("Bounds");
 
             player = GetComponentInChildren<Player>();
             interactUI = canvasUI.GetComponentInChildren<InteractUI>();
@@ -164,11 +168,17 @@ namespace SimCard.SimGame {
             transposer.m_XDamping = transposer.m_YDamping = transposer.m_ZDamping = 0;
             transposer.m_DeadZoneWidth = transposer.m_DeadZoneHeight = transposer.m_DeadZoneDepth = 0;
 
+            // Unset confiner
+            confiner.m_BoundingShape2D = null;
+
             // Directly disable vCam, then wait a frame to force an instant camera update (instead of smooth transition)
             vCam.enabled = false;
             yield return null;
 
             player.transform.position = destination;
+
+            // Set the confiner to the enclosing bound (this assumes no overlapping bounds)
+            confiner.m_BoundingShape2D = Physics2D.OverlapCircle(destination, 0.01f, 1 << boundsLayer);
             vCam.enabled = true;
 
             yield return fadeUI.FadeOut(0.5f);
