@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be053ee430cd04118b563ea55e2111eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doorEnabled: 1
+  doorEnabled: 0
   openDoorParentCollider: {fileID: 6496833411125945459}
   closedDoorParentCollider: {fileID: 7009786009038057345}
   buildingSprites:
@@ -175,7 +175,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 380
+  m_SortingOrder: 350
   m_Sprite: {fileID: 9009070337450332238, guid: fa327ea44450145a98bda821a03ca05a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

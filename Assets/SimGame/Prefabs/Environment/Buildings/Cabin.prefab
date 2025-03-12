@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be053ee430cd04118b563ea55e2111eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doorEnabled: 1
+  doorEnabled: 0
   openDoorParentCollider: {fileID: 6496833411125945459}
   closedDoorParentCollider: {fileID: 4670388475698343890}
   buildingSprites:

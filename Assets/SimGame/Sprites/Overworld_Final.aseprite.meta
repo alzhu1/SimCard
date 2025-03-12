@@ -95,7 +95,7 @@ ScriptedImporter:
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
-  platformSettingsDirtyTick: 638764472606206370
+  platformSettingsDirtyTick: 638770517271221880
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -347,7 +347,7 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 228
+      x: 260
       y: 244
       width: 16
       height: 16
@@ -747,7 +747,7 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 212
+      x: 228
       y: 228
       width: 16
       height: 16
@@ -767,7 +767,7 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 228
+      x: 244
       y: 228
       width: 16
       height: 16
