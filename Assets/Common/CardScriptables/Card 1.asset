@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: Card 1
   m_EditorClassIdentifier: 
   cardName: Card circle
-  sprite: {fileID: -2413806693520163455, guid: daf79a9bfe87046568cb0e70981218dc, type: 3}
-  cost: 10
+  cost: 3
   description: This is a circle description
   flavorText: Circles?
-  income: 5
-  turnLimit: 5
+  income: 3
+  turnLimit: 4
+  smallSprite: {fileID: 0}
+  fullSprite: {fileID: 0}
   effects:
   - rid: 7715484837115068425
   - rid: 4876766289580261376

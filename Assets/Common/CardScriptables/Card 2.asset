@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: Card 2
   m_EditorClassIdentifier: 
   cardName: Card triangle
-  sprite: {fileID: 7482667652216324306, guid: f13e034d061cb4b9e8fa91a17b46a79d, type: 3}
-  cost: 20
+  cost: 5
   description: Test triangle description
   flavorText: Triangles are fun
   income: 8
   turnLimit: 1
+  smallSprite: {fileID: 0}
+  fullSprite: {fileID: 0}
   effects:
   - rid: 7715484837115068422
   references:

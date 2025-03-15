@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Card
   m_EditorClassIdentifier: 
   cardName: Card square
-  cost: 5
+  cost: 2
   description: This is a test description for square
   flavorText: Squares! Squares!
   income: 2
-  turnLimit: 5
+  turnLimit: 3
   smallSprite: {fileID: -4537675313477714779, guid: c3686a2b6a0884b50965c462c254b909, type: 3}
   fullSprite: {fileID: 6665510844306600762, guid: c3686a2b6a0884b50965c462c254b909, type: 3}
   effects: []

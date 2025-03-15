@@ -10,14 +10,18 @@ namespace SimCard.CardGame {
         private TextMeshProUGUI bottomBorderText;
 
         [SerializeField]
-        private CanvasGroup cardCostCanvasGroup;
+        private CanvasGroup cardPropertiesCanvasGroup;
+
+        [SerializeField]
+        private TextMeshProUGUI incomeTurnText;
+
+        [SerializeField]
+        private TextMeshProUGUI cardCostText;
 
         private CardGameManager cardGameManager;
-        private TextMeshProUGUI cardCostText;
 
         void Awake() {
             cardGameManager = GetComponentInParent<CardGameManager>();
-            cardCostText = cardCostCanvasGroup.GetComponentInChildren<TextMeshProUGUI>();
         }
 
         void Start() {
@@ -40,7 +44,7 @@ namespace SimCard.CardGame {
         }
 
         void HandleTurnStart(System.EventArgs args) {
-            cardCostCanvasGroup.alpha = 0;
+            cardPropertiesCanvasGroup.alpha = 0;
             bottomBorderText.text = "";
         }
 
@@ -49,22 +53,23 @@ namespace SimCard.CardGame {
             bottomBorderText.text = selectable.PreviewName;
 
             if (selectable is Card card) {
-                cardCostCanvasGroup.alpha = 1;
+                cardPropertiesCanvasGroup.alpha = 1;
                 cardCostText.text = $"${card.Cost}";
+                incomeTurnText.text = $"${card.Income}||T:{card.ActiveTurns}";
             } else {
-                cardCostCanvasGroup.alpha = 0;
+                cardPropertiesCanvasGroup.alpha = 0;
             }
         }
 
         void HandleCardEffectHover(EventArgs<Card, Effect> args) {
             (Card card, Effect effect) = args;
-            cardCostCanvasGroup.alpha = 0;
+            cardPropertiesCanvasGroup.alpha = 0;
             string cardEffectText = effect.previewText.Length > 0 ? effect.previewText : effect.GetType().Name;
             bottomBorderText.text = $"<color=blue>{cardEffectText}</color> -> {card.CardName}";
         }
 
         void HandleActionHover(EventArgs<PlayerCardAction> args) {
-            cardCostCanvasGroup.alpha = 0;
+            cardPropertiesCanvasGroup.alpha = 0;
             bottomBorderText.text = args.argument switch {
                 PlayerCardAction.Preview => "Preview",
                 PlayerCardAction.Summon => "Summon",
@@ -75,12 +80,12 @@ namespace SimCard.CardGame {
         }
 
         void HandleCardDiscardHover(EventArgs<Card> args) {
-            cardCostCanvasGroup.alpha = 0;
+            cardPropertiesCanvasGroup.alpha = 0;
             bottomBorderText.text = $"Discard {args.argument.PreviewName}?";
         }
 
         void HandleOpponentCardSummon(EventArgs<Card> args) {
-            cardCostCanvasGroup.alpha = 0;
+            cardPropertiesCanvasGroup.alpha = 0;
             bottomBorderText.text = args.argument.PreviewName;
         }
     }

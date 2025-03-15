@@ -31,6 +31,9 @@ namespace SimCard.CardGame {
         private int winCurrency = 200;
         public int WinCurrency => winCurrency;
 
+        [SerializeField] private int startingIncome = 50;
+        [SerializeField] private int laterStartingIncome = 75;
+
         // From scene load
         private SimGameManager simGameManager;
 
@@ -114,8 +117,8 @@ namespace SimCard.CardGame {
             duelistTurnOrder[1] = duelist2;
 
             // Second player advantage
-            duelistTurnOrder[0].AdjustCurrency(50);
-            duelistTurnOrder[1].AdjustCurrency(75);
+            duelistTurnOrder[0].AdjustCurrency(startingIncome);
+            duelistTurnOrder[1].AdjustCurrency(laterStartingIncome);
         }
 
         void StartTurn() {
