@@ -26,5 +26,10 @@ namespace SimCard.SimGame {
         void OnTriggerExit2D(Collider2D collider) {
             endpointActive = true;
         }
+
+        void OnDrawGizmos() {
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(transform.position, otherEndpoint.transform.position);
+        }
     }
 }
