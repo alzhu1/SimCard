@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2c79d4a37b05a400faf3ee71e768c002, type: 3}
-  m_Name: Card 2
+  m_Name: _Card 2
   m_EditorClassIdentifier: 
   cardName: Card triangle
   cost: 5

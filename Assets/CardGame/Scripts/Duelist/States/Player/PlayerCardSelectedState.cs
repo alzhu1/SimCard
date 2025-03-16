@@ -32,7 +32,7 @@ namespace SimCard.CardGame {
                     allowedActions.Add(PlayerCardAction.Summon);
                 }
 
-                if (playerDuelist.Field == selectedCard.GetCurrentHolder()) {
+                if (playerDuelist.IsCardFireAllowed(selectedCard)) {
                     allowedActions.Add(PlayerCardAction.Fire);
                 }
             }

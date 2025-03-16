@@ -172,6 +172,25 @@ namespace SimCard.CardGame {
             return Currency >= selectedCard.Cost;
         }
 
+        public bool IsCardFireAllowed(Card selectedCard) {
+            // Duelist must have enough actions
+            if (TurnActions <= 0) {
+                return false;
+            }
+
+            // Net loss income is not fireable
+            if (selectedCard.Income <= 0) {
+                return false;
+            }
+
+            // Card must be on the field
+            if (Field != selectedCard.GetCurrentHolder()) {
+                return false;
+            }
+
+            return true;
+        }
+
         public bool IsCardFireAllowed() {
             return TurnActions > 0;
         }

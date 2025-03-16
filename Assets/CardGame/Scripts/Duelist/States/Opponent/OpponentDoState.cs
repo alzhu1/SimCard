@@ -49,7 +49,7 @@ namespace SimCard.CardGame {
 
                     case DiscardAction discardAction:
                         Debug.Log("DiscardAction");
-                        opponentDuelist.FireCard(discardAction.CardToDiscard);
+                        opponentDuelist.Discard(discardAction.CardToDiscard);
                         break;
 
                     default:

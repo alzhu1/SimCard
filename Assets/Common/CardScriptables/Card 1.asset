@@ -12,33 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c79d4a37b05a400faf3ee71e768c002, type: 3}
   m_Name: Card 1
   m_EditorClassIdentifier: 
-  cardName: Card circle
-  cost: 3
-  description: This is a circle description
-  flavorText: Circles?
-  income: 3
-  turnLimit: 4
+  cardName: 
+  cost: 0
+  description: 
+  flavorText: 
+  income: 0
+  turnLimit: 0
   smallSprite: {fileID: 0}
   fullSprite: {fileID: 0}
-  effects:
-  - rid: 8957235610051149826
-  - rid: 8957235610051149827
+  effects: []
   references:
     version: 2
-    RefIds:
-    - rid: 8957235610051149826
-      type: {class: AdjustIncomeEffect, ns: SimCard.Common, asm: Assembly-CSharp}
-      data:
-        previewText: Increase income by 1
-        selfEffect: 0
-        active: 0
-        duration: 0
-        delta: 1
-    - rid: 8957235610051149827
-      type: {class: AdjustIncomeEffect, ns: SimCard.Common, asm: Assembly-CSharp}
-      data:
-        previewText: Decrease income by 1
-        selfEffect: 0
-        active: 0
-        duration: 0
-        delta: -1
+    RefIds: []

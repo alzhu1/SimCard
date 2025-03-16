@@ -42,6 +42,7 @@ namespace SimCard.CardGame {
         public Sprite FullSprite => CardSO.fullSprite;
 
         public int ActiveTurns { get; private set; }
+        public void UpdateActiveTurns(int delta) => ActiveTurns += delta;
         public void DecrementActiveTurns() => ActiveTurns--;
         public void ClearActiveTurns() => ActiveTurns = 0;
         public bool ReachedTurnLimit() => ActiveTurns <= 0;
