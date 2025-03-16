@@ -16,7 +16,10 @@ namespace SimCard.CardGame {
 
         protected override void Enter() {
             // Initialize list of cards
-            CardGraphSelectable initItem = startingCard ?? playerDuelist.Hand.Cards[0];
+            CardGraphSelectable initItem = startingCard;
+            if (initItem == null) {
+                initItem = playerDuelist.Hand.Cards.Count > 0 ? playerDuelist.Hand.Cards[0] : playerDuelist.Graveyard;
+            }
 
             List<CardGraphSelectable> enemyPlayField = new();
             // enemyPlayField.Add(playerDuelist.Enemy.Deck);
