@@ -21,6 +21,8 @@ namespace SimCard.CardGame {
             if (args != null) {
                 (List<CardMetadata> _, List<CardMetadata> opponentDeck) = args;
                 Deck.InitFromCardMetadata(opponentDeck, CardGameManager);
+            } else {
+                Deck.InitBaseDeck(CardGameManager);
             }
 
             for (int i = 0; i < FirstDrawAmount; i++) {

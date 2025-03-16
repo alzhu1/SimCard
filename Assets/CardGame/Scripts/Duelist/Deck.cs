@@ -6,6 +6,8 @@ using UnityEngine;
 
 namespace SimCard.CardGame {
     public class Deck : CardHolder, CardGraphSelectable {
+        [SerializeField] private List<CardMetadata> baseDeck;
+
         public string PreviewName => "Deck";
 
         private SpriteRenderer deckSr;
@@ -35,6 +37,10 @@ namespace SimCard.CardGame {
                 Destroy(card.gameObject);
             }
             cards.Clear();
+        }
+
+        public void InitBaseDeck(CardGameManager cardGameManager) {
+            InitFromCardMetadata(baseDeck, cardGameManager);
         }
 
         public void InitFromCardMetadata(List<CardMetadata> initData, CardGameManager cardGameManager) {
