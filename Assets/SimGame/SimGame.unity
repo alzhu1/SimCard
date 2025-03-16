@@ -96279,6 +96279,8 @@ MonoBehaviour:
   deck:
   - cardSO: {fileID: 11400000, guid: 58d024a76cc894787abd01f571d1c82f, type: 2}
     count: 20
+  - cardSO: {fileID: 11400000, guid: eb09dcdfd567a41028029172e83950ba, type: 2}
+    count: 2
   availableCards:
   - cardSO: {fileID: 11400000, guid: 58d024a76cc894787abd01f571d1c82f, type: 2}
     count: 40
