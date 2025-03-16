@@ -8,12 +8,17 @@ namespace SimCard.CardGame {
         [SerializeField] protected float spreadOffset = 1.5f;
         [SerializeField] protected bool hidden;
 
+        protected Duelist holdingDuelist;
+        public Duelist HoldingDuelist => holdingDuelist;
+
         protected List<Card> cards;
         public List<Card> Cards {
             get { return cards; }
         }
 
         protected virtual void Awake() {
+            holdingDuelist = GetComponentInParent<Duelist>();
+
             // Initialize any cards that should be children of the card holder
             Card[] childrenCards = GetComponentsInChildren<Card>(true);
             cards = new List<Card>(childrenCards ?? new Card[] { });

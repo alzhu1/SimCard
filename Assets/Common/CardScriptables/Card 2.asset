@@ -16,20 +16,19 @@ MonoBehaviour:
   cost: 5
   description: Test triangle description
   flavorText: Triangles are fun
-  income: 8
+  income: 0
   turnLimit: 1
   smallSprite: {fileID: 0}
   fullSprite: {fileID: 0}
   effects:
-  - rid: 7715484837115068422
+  - rid: 8957235610051149824
   references:
     version: 2
     RefIds:
-    - rid: 7715484837115068422
-      type: {class: GainEffect, ns: SimCard.Common, asm: Assembly-CSharp}
+    - rid: 8957235610051149824
+      type: {class: FireEffect, ns: SimCard.Common, asm: Assembly-CSharp}
       data:
-        previewText: 
+        previewText: Fire card
         selfEffect: 0
         active: 0
         duration: 0
-        gainAmount: 0
