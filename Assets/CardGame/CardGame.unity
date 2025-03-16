@@ -5576,7 +5576,7 @@ MonoBehaviour:
   spreadOffset: 1.5
   hidden: 0
   cardPrefab: {fileID: 2157011654814909134, guid: 23d03b8627b614cd7a07fddc95e220b2, type: 3}
-  cardPoolSize: 100
+  cardPoolSize: 1000
 --- !u!1 &1394801435
 GameObject:
   m_ObjectHideFlags: 0
@@ -8105,8 +8105,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -140, y: 0}
-  m_SizeDelta: {x: -320, y: 0}
+  m_AnchoredPosition: {x: 10, y: 0}
+  m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2129572623
 MonoBehaviour:

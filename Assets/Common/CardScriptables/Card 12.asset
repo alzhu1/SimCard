@@ -10,17 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2c79d4a37b05a400faf3ee71e768c002, type: 3}
-  m_Name: Card 1
+  m_Name: Card 12
   m_EditorClassIdentifier: 
-  cardName: 111
-  cost: 1
+  cardName: 121212
+  cost: 3
   description: 
   flavorText: 
-  income: 1
-  turnLimit: 3
+  income: 0
+  turnLimit: 2
   smallSprite: {fileID: 0}
   fullSprite: {fileID: 0}
-  effects: []
+  effects:
+  - rid: 8957235610051149831
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 8957235610051149831
+      type: {class: FireEffect, ns: SimCard.Common, asm: Assembly-CSharp}
+      data:
+        previewText: Fire card
+        selfEffect: 0
+        active: 0
+        duration: 0
