@@ -27,7 +27,7 @@ namespace SimCard.SimGame {
         public SubSceneInitGameEvent<EventArgs<List<CardMetadata>, List<CardMetadata>>> OnCardGameInit;
         public SubSceneInitGameEvent<EventArgs<List<CardMetadata>, List<CardMetadata>>> OnDeckBuilderInit;
 
-        public GameEvent<EventArgs<bool, int>> OnCardGameEnd = new();
+        public GameEvent<EventArgs<int, List<CardMetadata>>> OnCardGameEnd = new();
         public GameEvent<EventArgs<List<CardMetadata>, List<CardMetadata>>> OnDeckBuilderEnd = new();
 
         void Awake() {

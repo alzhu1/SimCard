@@ -34,4 +34,10 @@ namespace SimCard.Common {
 
         public CardMetadata(CardSO cardSO, int count) => (this.cardSO, this.count) = (cardSO, count);
     }
+
+    [System.Serializable]
+    public class CardPrizePool {
+        public List<CardSO> cardPrizes;
+        public int factor;
+    }
 }

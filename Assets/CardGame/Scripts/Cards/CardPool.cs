@@ -10,7 +10,7 @@ namespace SimCard.CardGame {
 
         protected override void Awake() {
             base.Awake();
-            for (int i = 0; i < cardPoolSize; i++) {
+            for (int i = 0; i < cards.Count - cardPoolSize; i++) {
                 GameObject card = Instantiate(cardPrefab, Vector3.zero, Quaternion.identity, transform);
                 card.SetActive(false);
                 cards.Add(card.GetComponent<Card>());

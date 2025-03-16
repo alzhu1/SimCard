@@ -107,10 +107,10 @@ namespace SimCard.SimGame {
             StartCoroutine(Teleport(args.argument));
         }
 
-        void HandleCardGameEndEvent(EventArgs<bool, int> args) {
-            (bool result, int goldWon) = args;
-            Debug.Log($"Result: {result}, gold won: {goldWon}");
+        void HandleCardGameEndEvent(EventArgs<int, List<CardMetadata>> args) {
+            (int goldWon, List<CardMetadata> pack) = args;
             player.IncreaseCurrency(goldWon);
+            player.AddToAvailableCards(pack);
 
             StartCoroutine(EndCardGame());
         }

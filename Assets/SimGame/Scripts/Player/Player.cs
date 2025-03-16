@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using SimCard.Common;
 using UnityEngine;
 
@@ -91,6 +92,20 @@ namespace SimCard.SimGame {
         public void UpdateDeckAfterEdit(List<CardMetadata> deck, List<CardMetadata> availableCards) {
             this.deck = deck;
             this.availableCards = availableCards;
+        }
+
+        public void AddToAvailableCards(List<CardMetadata> cardsToAdd) {
+            // MINOR: This is dumb but should work
+            if (cardsToAdd != null) {
+                Dictionary<CardSO, int> cardMap = availableCards.ToDictionary(x => x.cardSO, x => x.count);
+                foreach (CardMetadata card in cardsToAdd) {
+                    if (!cardMap.ContainsKey(card.cardSO)) {
+                        cardMap.Add(card.cardSO, 0);
+                    }
+                    cardMap[card.cardSO] += card.count;
+                }
+                availableCards = cardMap.Select(x => new CardMetadata(x.Key, x.Value)).ToList();
+            }
         }
     }
 }

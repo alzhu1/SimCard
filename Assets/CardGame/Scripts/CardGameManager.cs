@@ -34,6 +34,9 @@ namespace SimCard.CardGame {
         [SerializeField] private int startingIncome = 50;
         [SerializeField] private int laterStartingIncome = 75;
 
+        [SerializeField]
+        private List<CardPrizePool> cardPrizePools;
+
         // From scene load
         private SimGameManager simGameManager;
 
@@ -66,6 +69,9 @@ namespace SimCard.CardGame {
             currTurn = 0;
 
             coinUI = GetComponentInChildren<CoinUI>();
+
+            // Make sure the values in prize pool add up to 100
+            Assert.AreEqual(100, cardPrizePools.Select(x => x.factor).Sum());
         }
 
         void Start() {
@@ -147,6 +153,26 @@ namespace SimCard.CardGame {
             StartCoroutine(EndCardGame(winner == playerDuelist));
         }
 
+        List<CardMetadata> GenerateBoosterPack() {
+            List<CardMetadata> pack = new();
+
+            for (int i = 0; i < 5; i++) {
+                int roll = Random.Range(0, 100);
+                int cardPrizePoolIndex = -1;
+                while (roll >= 0) {
+                    cardPrizePoolIndex++;
+                    roll -= cardPrizePools[cardPrizePoolIndex].factor;
+                }
+
+                List<CardSO> cardPrizes = cardPrizePools[cardPrizePoolIndex].cardPrizes;
+                int cardIndex = Random.Range(0, cardPrizes.Count);
+
+                pack.Add(new CardMetadata(cardPrizes[cardIndex], 1));
+            }
+
+            return pack;
+        }
+
         IEnumerator EndCardGame(bool playerWon) {
             // TODO: Fix this, don't want to use return
             while (!Input.GetKeyDown(KeyCode.Return)) {
@@ -155,7 +181,10 @@ namespace SimCard.CardGame {
             }
 
             if (simGameManager != null) {
-                simGameManager.EventBus.OnCardGameEnd.Raise(new(playerWon, 50));
+                int goldWon = playerWon ? 50 : 0;
+                List<CardMetadata> pack = playerWon ? GenerateBoosterPack() : null;
+
+                simGameManager.EventBus.OnCardGameEnd.Raise(new(goldWon, pack));
             } else {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
