@@ -115,5 +115,8 @@ namespace SimCard.CardGame {
                 }
             }
         }
+
+        public void SetHighlight() => sr.material.SetInt("_Outlined", 1);
+        public void UnsetHighlight() => sr.material.SetInt("_Outlined", 0);
     }
 }

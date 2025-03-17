@@ -95,7 +95,7 @@ ScriptedImporter:
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
-  platformSettingsDirtyTick: 638761197018115950
+  platformSettingsDirtyTick: 638777392764805920
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -142,15 +142,15 @@ ScriptedImporter:
   spriteSheetImportData:
   - name: card_0
     originalName: 
-    pivot: {x: 0, y: 0}
+    pivot: {x: 0.5, y: 0.5}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 3
-      y: 4
+      y: 3
       width: 16
-      height: 16
+      height: 18
     spriteID: 19b7cee78735448c1babf7e5154fd228
     spriteBone: []
     spriteOutline: []
@@ -168,9 +168,9 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 19
-      y: 4
+      y: 3
       width: 16
-      height: 16
+      height: 18
     spriteID: 843f9c739915e42f4a83c1003b5b3610
     spriteBone: []
     spriteOutline: []

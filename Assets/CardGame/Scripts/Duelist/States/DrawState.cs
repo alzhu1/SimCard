@@ -22,23 +22,27 @@ namespace SimCard.CardGame {
             List<Card> cardsToDiscard = new();
 
             foreach (Card card in duelist.Field.Cards) {
+                card.SetHighlight();
+
                 // We can increment card active turns at upkeep
                 card.DecrementActiveTurns();
 
                 // Check for turn limit reached
                 if (card.ReachedTurnLimit()) {
                     cardsToDiscard.Add(card);
-                    continue;
+                    Debug.Log($"Adding {card} to discard list");
+                } else {
+                    // Apply active effects
+                    card.ApplyActiveEffects();
+
+                    // Check for currency
+                    int preCurrency = duelist.Currency;
+                    Debug.Log($"Currency ({preCurrency}) + income ({card.Income}) = {duelist.Currency}");
+                    duelist.AdjustCurrency(card.Income);
                 }
 
-                // Apply active effects
-                card.ApplyActiveEffects();
-
-                // Check for currency
-                int preCurrency = duelist.Currency;
-                duelist.AdjustCurrency(card.Income);
-                Debug.Log($"Currency ({preCurrency}) + income ({card.Income}) = {duelist.Currency}");
                 yield return new WaitForSeconds(0.5f);
+                card.UnsetHighlight();
             }
 
             // Keep separate, can't modify the card holder itself during loop
