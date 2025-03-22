@@ -26,6 +26,9 @@ namespace SimCard.CardGame {
             }
         }
 
+        [SerializeField]
+        private SpriteRenderer previewRenderer;
+
         // CardGraphSelectable
         public string PreviewName => CardSO.cardName;
 
@@ -80,8 +83,13 @@ namespace SimCard.CardGame {
         void Update() {
             sr.sprite = hidden ? backSprite : frontSprite;
 
-            // FIXME: Need to somehow affix cardSO.sprite to the front sprite
-            // i.e. display a 8x8 image inside this section of the card
+            if (hidden) {
+                sr.sprite = backSprite;
+                previewRenderer.enabled = false;
+            } else {
+                sr.sprite = frontSprite;
+                previewRenderer.sprite = SmallSprite;
+            }
         }
 
         public void InitCardSO(CardSO cardSO) {
