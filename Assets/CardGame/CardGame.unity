@@ -11121,8 +11121,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 536b6167d90314b0f8331399c3340281, type: 2}
     - {fileID: 11400000, guid: 5803264e786ea402098ddbdfa04d760e, type: 2}
     - {fileID: 11400000, guid: 7d9ecc299e8bc49788f5feecac641aff, type: 2}
-    - {fileID: 11400000, guid: edf8ae211bb8e482dab3b6dd7865fb8d, type: 2}
-    - {fileID: 11400000, guid: 2327f656d514e4588b6f3ccc3394e29f, type: 2}
     - {fileID: 11400000, guid: a4fdd8fbacd5f4fe9878240320c2e0c7, type: 2}
     factor: 100
 --- !u!4 &247781713

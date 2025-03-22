@@ -18,8 +18,8 @@ MonoBehaviour:
   flavorText: 
   income: 4
   turnLimit: 6
-  smallSprite: {fileID: 0}
-  fullSprite: {fileID: 0}
+  smallSprite: {fileID: 4590025505738369457, guid: 4d3c929ebd9e64474aa5edfbe60a2181, type: 3}
+  fullSprite: {fileID: -7451807071041520592, guid: 4d3c929ebd9e64474aa5edfbe60a2181, type: 3}
   effects: []
   references:
     version: 2
