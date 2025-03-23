@@ -159,7 +159,7 @@ namespace SimCard.SimGame {
             rightPane.RemoveAt(1);
             interactionPathsPane = new TwoPaneSplitView(0, 365, TwoPaneSplitViewOrientation.Horizontal);
 
-            ListView interactionPathListView = CreateListView(interactionPathNames, interactionPathNames, (item) => item, true);
+            ListView interactionPathListView = CreateListView(interactionPathNames, interactionPathNames, (item) => item, (item) => interactionJson.Paths.Remove(item));
             interactionPathListView.selectedIndex = interactionPathIndex;
             interactionPathListView.selectionChanged += (items) => {
                 interactionPathIndex = interactionPathListView.selectedIndex;
@@ -321,7 +321,7 @@ namespace SimCard.SimGame {
             using (
                 System.IO.FileStream fs = System.IO.File.Open(
                     AssetDatabase.GetAssetPath(currAsset),
-                    System.IO.FileMode.OpenOrCreate
+                    System.IO.FileMode.Create
                 )
             ) {
                 using (System.IO.StreamWriter sw = new(fs)) {
@@ -382,7 +382,7 @@ namespace SimCard.SimGame {
                 .Build();
         }
 
-        ListView CreateListView<T>(List<T> baseItemSource, List<T> activeItemSource, System.Func<T, string> MapName, bool showButtons = false) where T : class {
+        ListView CreateListView<T>(List<T> baseItemSource, List<T> activeItemSource, System.Func<T, string> MapName, System.Action<T> RemoveItem = null) where T : class {
             VisualElement parentPane = new VisualElement();
             T currItem = null;
 
@@ -402,7 +402,7 @@ namespace SimCard.SimGame {
             Toolbar toolbar = new Toolbar();
 
             // Setup toolbar buttons
-            if (showButtons) {
+            if (RemoveItem != null) {
                 ToolbarButton addButton = new ToolbarButton();
                 addButton.Add(new Image() {
                     image = EditorGUIUtility.TrIconContent("Toolbar Plus", "Add to the list").image
@@ -416,6 +416,8 @@ namespace SimCard.SimGame {
                     image = EditorGUIUtility.TrIconContent("Toolbar Minus", "Remove selection from the list").image
                 });
                 removeButton.clicked += () => {
+                    T item = listView.itemsSource[listView.selectedIndex] as T;
+                    RemoveItem(item);
                     listView.viewController.RemoveItem(listView.selectedIndex);
                 };
                 toolbar.Add(removeButton);
@@ -434,6 +436,7 @@ namespace SimCard.SimGame {
             // On search update, change both list view source and active item source
             toolbarSearchField.RegisterValueChangedCallback(evt => {
                 activeItemSource = baseItemSource.Where(item => MapName(item).Contains(evt.newValue)).ToList();
+                activeItemSource.Sort((x, y) => MapName(x).CompareTo(MapName(y)));
                 listView.itemsSource = activeItemSource;
 
                 // Update index to prevent confusion (right view should still display old)
