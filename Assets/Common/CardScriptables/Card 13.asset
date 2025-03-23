@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c79d4a37b05a400faf3ee71e768c002, type: 3}
   m_Name: Card 13
   m_EditorClassIdentifier: 
-  cardName: 131313
+  cardName: Layoffs
   cost: 6
-  description: 
-  flavorText: 
+  description: We're gonna need to lay off a couple more folks; if I could just ask
+    you to identify 2 people that need to leave the area...
+  flavorText: It's time to downsize, you know the drill...
   income: 0
   turnLimit: 3
   smallSprite: {fileID: 5369659320328863459, guid: 8a6111354807c4b0fb47965a187b16ed, type: 3}

@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c79d4a37b05a400faf3ee71e768c002, type: 3}
   m_Name: Card 4
   m_EditorClassIdentifier: 
-  cardName: 444
+  cardName: Officer
   cost: 2
-  description: 
-  flavorText: 
+  description: An enforcer of the law. They try to keep order in society (don't worry,
+    this one doesn't have a gun)
+  flavorText: In the name of the law, I'm asking you to stop.
   income: 2
   turnLimit: 3
   smallSprite: {fileID: -7313378251750257361, guid: a1065e9cefbaf4301b04a6f02459c5a3, type: 3}

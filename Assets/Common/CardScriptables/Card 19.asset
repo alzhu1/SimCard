@@ -12,9 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c79d4a37b05a400faf3ee71e768c002, type: 3}
   m_Name: Card 19
   m_EditorClassIdentifier: 
-  cardName: 191919
+  cardName: Stocks
   cost: 4
-  description: 
+  description: 'You have to start small, but over time those stocks you invest in
+    should be worth way more. Don''t worry, this doesn''t include any downturns.
+
+
+    Gains
+    2 income every turn.'
   flavorText: 
   income: -1
   turnLimit: 4

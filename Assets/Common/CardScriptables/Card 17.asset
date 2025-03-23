@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c79d4a37b05a400faf3ee71e768c002, type: 3}
   m_Name: Card 17
   m_EditorClassIdentifier: 
-  cardName: 171717
+  cardName: Wad of Cash
   cost: 4
-  description: 
-  flavorText: 
+  description: Wow, $8 whole dollars! Just for me? That's so nice of you, thank you!
+  flavorText: Ya like bills?
   income: 0
   turnLimit: 3
   smallSprite: {fileID: -4652408112167950227, guid: 919c2b18cbc3c4df1aca9e47832bcf38, type: 3}

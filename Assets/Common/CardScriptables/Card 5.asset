@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c79d4a37b05a400faf3ee71e768c002, type: 3}
   m_Name: Card 5
   m_EditorClassIdentifier: 
-  cardName: 555
+  cardName: Computer
   cost: 5
-  description: 
-  flavorText: 
+  description: The wealth of information coming from the Internet should be enough
+    to drive value in today's society. Just don't use it for dumb stuff.
+  flavorText: Welcome to the Internet, have a look around...
   income: 3
   turnLimit: 5
   smallSprite: {fileID: 3693914502930222328, guid: 55414173640dd40e998b671237f527c1, type: 3}

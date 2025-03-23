@@ -12,10 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c79d4a37b05a400faf3ee71e768c002, type: 3}
   m_Name: Card 9
   m_EditorClassIdentifier: 
-  cardName: 999
+  cardName: Hammer
   cost: 2
-  description: 
-  flavorText: 
+  description: 'It''s a useful tool. Handy to have around in case something needs
+    to get repaired, whether that be the fence or someone''s head.
+
+
+    Raises the
+    income of another card by 1.'
+  flavorText: The hammer strikes again!
   income: 0
   turnLimit: 2
   smallSprite: {fileID: 4280952058573577844, guid: ea79c27b410864a5895615f2d0d040f0, type: 3}

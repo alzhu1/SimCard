@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c79d4a37b05a400faf3ee71e768c002, type: 3}
   m_Name: Card 12
   m_EditorClassIdentifier: 
-  cardName: 121212
+  cardName: Fired
   cost: 3
-  description: 
-  flavorText: 
+  description: Someone's getting fired today; doesn't matter the reason, we just
+    need it to happen. Don't take it too personally, it's not the end of the world.
+  flavorText: It's usually better to fire people on a Friday...
   income: 0
   turnLimit: 2
   smallSprite: {fileID: -6624510589608369694, guid: c6b55e87a45a943ffbb93a12f7ea736e, type: 3}

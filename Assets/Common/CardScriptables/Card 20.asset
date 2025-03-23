@@ -12,10 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c79d4a37b05a400faf3ee71e768c002, type: 3}
   m_Name: Card 20
   m_EditorClassIdentifier: 
-  cardName: 202020
+  cardName: Lawyer
   cost: 7
-  description: 
-  flavorText: 
+  description: 'If you get into trouble, better pay up for a lawyer. They''ll defend
+    you and make bank while doing so.
+
+
+    Raises the income of another card by
+    1.
+
+    Decreases own income by 1 per turn.'
+  flavorText: If there's something weird and it don't look good, who you gonna call?
   income: 2
   turnLimit: 4
   smallSprite: {fileID: -5543921052045482221, guid: 6cc608a634ad048119df6dbf693f6867, type: 3}

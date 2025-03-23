@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c79d4a37b05a400faf3ee71e768c002, type: 3}
   m_Name: Card 22
   m_EditorClassIdentifier: 
-  cardName: 222222
+  cardName: Draw 2 Cards
   cost: 12
-  description: 
-  flavorText: 
+  description: Literally just draw 2 cards, I can't even begin to be more meta than
+    this one. It's a bit silly that we have a description for this in the first place!
+  flavorText: 2 more cards, ready to go!
   income: 0
   turnLimit: 4
   smallSprite: {fileID: -4212212343254999513, guid: 33d3741ad36ce4ad6831dbc96ace51e0, type: 3}

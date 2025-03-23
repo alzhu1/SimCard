@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c79d4a37b05a400faf3ee71e768c002, type: 3}
   m_Name: Card 1
   m_EditorClassIdentifier: 
-  cardName: 111
+  cardName: Laborer
   cost: 1
-  description: 
-  flavorText: 
+  description: A humble laborer doing their best to make ends meet. Works hard to
+    handle tough tasks.
+  flavorText: It can be tough at times, but what isn't?
   income: 1
   turnLimit: 3
   smallSprite: {fileID: -9039409925746245759, guid: 88385ae72f89449b69e57a4fdfa0a829, type: 3}

@@ -12,10 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c79d4a37b05a400faf3ee71e768c002, type: 3}
   m_Name: Card 15
   m_EditorClassIdentifier: 
-  cardName: 151515
+  cardName: Stamina Training
   cost: 2
-  description: 
-  flavorText: 
+  description: 'Get stronger! Grow more! Train your stamina so you can keep on working!
+    Let''s go!!
+
+
+    Increases turns left of a card by 1.'
+  flavorText: Gains bro, gains
   income: 0
   turnLimit: 2
   smallSprite: {fileID: -3139840285463294179, guid: 93dd0b51f0b524fd580e682df478a711, type: 3}

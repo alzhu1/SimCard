@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c79d4a37b05a400faf3ee71e768c002, type: 3}
   m_Name: Card 3
   m_EditorClassIdentifier: 
-  cardName: 333
+  cardName: Bonds
   cost: 2
-  description: 
-  flavorText: 
+  description: Pretty safe way to take some of your money and invest it slowly. The
+    returns aren't crazy, but stability can be valuable itself.
+  flavorText: Buy your bonds today!
   income: 1
   turnLimit: 6
   smallSprite: {fileID: -433679233042454851, guid: 2e98b7ff58f0d4b54a3e71b4c6065f20, type: 3}

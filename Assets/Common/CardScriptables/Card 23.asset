@@ -12,33 +12,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c79d4a37b05a400faf3ee71e768c002, type: 3}
   m_Name: Card 23
   m_EditorClassIdentifier: 
-  cardName: 252525
-  cost: 50
-  description: 
+  cardName: LOL
+  cost: 25
+  description: 'The name should be appropriate because you''ll basically just win
+    once this is in play for a few turns. It''s an accumulator, that''s for sure.
+
+
+    Raises
+    own income by 2 per turn.'
   flavorText: 
   income: 0
-  turnLimit: 10
+  turnLimit: 1000
   smallSprite: {fileID: 1922321200547134795, guid: 7be49b5e47cd44f439b713452923c875, type: 3}
   fullSprite: {fileID: 340323313002273620, guid: 7be49b5e47cd44f439b713452923c875, type: 3}
   effects:
-  - rid: 8957235610051149847
   - rid: 8957235610051149848
   references:
     version: 2
     RefIds:
-    - rid: 8957235610051149847
-      type: {class: AdjustTurnEffect, ns: SimCard.Common, asm: Assembly-CSharp}
-      data:
-        previewText: Increase active turns by 1
-        selfEffect: 1
-        active: 1
-        duration: 100000
-        delta: 1
     - rid: 8957235610051149848
       type: {class: AdjustIncomeEffect, ns: SimCard.Common, asm: Assembly-CSharp}
       data:
-        previewText: Increase income by 5
+        previewText: Increase income by 2
         selfEffect: 1
         active: 1
         duration: 100000
-        delta: 5
+        delta: 2

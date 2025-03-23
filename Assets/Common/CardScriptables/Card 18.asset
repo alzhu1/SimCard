@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c79d4a37b05a400faf3ee71e768c002, type: 3}
   m_Name: Card 18
   m_EditorClassIdentifier: 
-  cardName: 181818
+  cardName: Draw Card
   cost: 6
-  description: 
-  flavorText: 
+  description: I literally don't know how to write a description for this without
+    getting particularly meta. Literally just draw a card.
+  flavorText: Go and draw a card!
   income: 0
   turnLimit: 3
   smallSprite: {fileID: -7658501684922616460, guid: 8d1600a5d9d1841868250edd352fa7be, type: 3}

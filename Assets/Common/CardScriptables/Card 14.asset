@@ -12,10 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c79d4a37b05a400faf3ee71e768c002, type: 3}
   m_Name: Card 14
   m_EditorClassIdentifier: 
-  cardName: 141414
+  cardName: Demoted
   cost: 3
-  description: 
-  flavorText: 
+  description: 'Things are fine at first; you''re making decent salary. But then
+    over time you start to do worse and worse... tough times.
+
+
+    Income decreases
+    by 2 per turn.'
+  flavorText: I liked it here at first, but it just got so boring...
   income: 3
   turnLimit: 3
   smallSprite: {fileID: -7612480941518411972, guid: c68fc314e7e18404e844dcd2e7170e42, type: 3}

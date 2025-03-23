@@ -12,10 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c79d4a37b05a400faf3ee71e768c002, type: 3}
   m_Name: Card 16
   m_EditorClassIdentifier: 
-  cardName: 161616
+  cardName: Overeating
   cost: 2
-  description: 
-  flavorText: 
+  description: 'You''ve had too much to eat today, so you might want to go home earlier.
+    It''d be bad if you kept feeling sick.
+
+
+    Decreases turns left of a card by
+    1.'
+  flavorText: Oof, feeling bloated right now...
   income: 0
   turnLimit: 2
   smallSprite: {fileID: -6002616614141397812, guid: 47995bdcf9147432297cc92b7050b15a, type: 3}

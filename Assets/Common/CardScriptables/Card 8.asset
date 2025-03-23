@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c79d4a37b05a400faf3ee71e768c002, type: 3}
   m_Name: Card 8
   m_EditorClassIdentifier: 
-  cardName: 888
+  cardName: CEO
   cost: 8
-  description: 
-  flavorText: 
+  description: Leading a big company isn't a glamorous job, but strong leadership
+    will ensure profits keep coming in. The paycheck isn't bad, too.
+  flavorText: Our earnings this quarter have been phenomenal! I love the smell of
+    money...
   income: 8
   turnLimit: 3
   smallSprite: {fileID: -518550128730484470, guid: be99f063cf57c44adadf1fbd0fb16ecd, type: 3}

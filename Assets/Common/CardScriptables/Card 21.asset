@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c79d4a37b05a400faf3ee71e768c002, type: 3}
   m_Name: Card 21
   m_EditorClassIdentifier: 
-  cardName: 212121
+  cardName: Money Bag
   cost: 2
-  description: 
-  flavorText: 
+  description: You know, it's great receiving $12 like this, but kind of random that
+    it's in a bag like this... wait, you're saying I have to pay up in order to turn
+    in this money?
+  flavorText: Teller fees are no joke...
   income: -1
   turnLimit: 5
   smallSprite: {fileID: 5229822382208662650, guid: 7e25a7bb22c034a0781bb98d90ba925d, type: 3}

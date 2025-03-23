@@ -9,7 +9,7 @@ namespace SimCard.Common {
         public string cardName;
         public int cost;
 
-        [TextArea]
+        [TextArea(4, 5)]
         public string description;
 
         public string flavorText;

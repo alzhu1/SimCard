@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c79d4a37b05a400faf3ee71e768c002, type: 3}
   m_Name: Card 6
   m_EditorClassIdentifier: 
-  cardName: 666
+  cardName: Businessman
   cost: 5
-  description: 
-  flavorText: 
+  description: A regular white collar worker. The work isn't glamorous, but it pays
+    the bills and gets the job done.
+  flavorText: I hate the morning commute...
   income: 4
   turnLimit: 3
   smallSprite: {fileID: 4408299406202391633, guid: 3ec62f101033243169da6238b136c414, type: 3}

@@ -12,10 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c79d4a37b05a400faf3ee71e768c002, type: 3}
   m_Name: Card 10
   m_EditorClassIdentifier: 
-  cardName: 101010
+  cardName: Sleeping In
   cost: 2
-  description: 
-  flavorText: 
+  description: 'Sometimes, you have to have a break and sleep in to rest and recuperate.
+    It just sucks that your boss docks your pay even for that...
+
+
+    Lowers the
+    income of another card by 1.'
+  flavorText: Don't wake me, I plan on sleeping in...
   income: 0
   turnLimit: 2
   smallSprite: {fileID: 1720391667987236739, guid: ff542a965f3db4b05a0189d16485a741, type: 3}

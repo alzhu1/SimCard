@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c79d4a37b05a400faf3ee71e768c002, type: 3}
   m_Name: Card 7
   m_EditorClassIdentifier: 
-  cardName: 777
+  cardName: Sports Star
   cost: 8
-  description: 
-  flavorText: 
+  description: Of all the basketball players, this one's the cream of the crop. Generational
+    talents like these don't come cheap, but the endorsement money makes up for it.
+  flavorText: And the first round, first pick of the draft is...
   income: 4
   turnLimit: 6
   smallSprite: {fileID: 4590025505738369457, guid: 4d3c929ebd9e64474aa5edfbe60a2181, type: 3}

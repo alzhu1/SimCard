@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c79d4a37b05a400faf3ee71e768c002, type: 3}
   m_Name: Card 2
   m_EditorClassIdentifier: 
-  cardName: 222
+  cardName: Busker
   cost: 1
-  description: 
-  flavorText: 
+  description: A singer-songwriter trying to make it big, but needs to start small
+    first. Often performs outside of busy parks or subways during rush hour.
+  flavorText: This next one's called Freebird II!
   income: 2
   turnLimit: 1
   smallSprite: {fileID: -4657933932458997030, guid: 0bff8f0eac9ad4a09ad5254d0903eebf, type: 3}
