@@ -42,9 +42,6 @@ namespace SimCard.CardGame {
             SendCurrencyUpdateEvent(beforeCurrency, Currency);
         }
 
-        public int Taxes { get; private set; }
-        public void AdjustTaxes(int delta) => Taxes += delta;
-
         public int TurnActions { get; private set; }
         public bool IsActionAllowed() => TurnActions > 0;
 
@@ -59,8 +56,6 @@ namespace SimCard.CardGame {
             Deck = GetComponentInChildren<Deck>();
             Field = GetComponentInChildren<Field>();
             Graveyard = GetComponentInChildren<Graveyard>();
-
-            Taxes = 0;
         }
 
         void Start() {

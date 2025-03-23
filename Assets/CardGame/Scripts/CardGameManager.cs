@@ -138,13 +138,6 @@ namespace SimCard.CardGame {
             Debug.Log($"End turn for {currDuelist}");
 
             currTurn++;
-
-            if (currTurn % 4 == 0) {
-                foreach (Duelist duelist in duelistTurnOrder) {
-                    duelist.AdjustTaxes(1);
-                }
-            }
-
             StartTurn();
         }
 
