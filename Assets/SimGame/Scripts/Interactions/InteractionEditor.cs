@@ -26,6 +26,8 @@ namespace SimCard.SimGame {
 
         // JSON
         private JsonSerializer serializer;
+        private TextAsset currAsset;
+        private Interaction interactionJson;
 
         void OnEnable() {
             baseFiles = AssetDatabase
@@ -71,7 +73,14 @@ namespace SimCard.SimGame {
             fileListView.selectedIndex = fileIndex;
             fileListView.selectionChanged += (items) => {
                 fileIndex = fileListView.selectedIndex;
-                OnFileSelection(items);
+                if (items.Count() > 0) {
+                    // Save current asset on file selection
+                    if (currAsset != null && interactionJson != null) {
+                        UpdateInteraction(currAsset, interactionJson);
+                    }
+
+                    OnFileSelection(items, fileListView);
+                }
             };
             splitView.Add(fileListView.parent);
 
@@ -97,12 +106,12 @@ namespace SimCard.SimGame {
             splitView.Add(rightPane);
         }
 
-        void OnFileSelection(IEnumerable<object> items) {
+        void OnFileSelection(IEnumerable<object> items, ListView fileListView) {
             if (items.Count() == 0)
                 return;
 
-            TextAsset currAsset = items.First() as TextAsset;
-            Interaction interactionJson = JObject.Parse(currAsset.text).ToObject<Interaction>(serializer);
+            currAsset = items.First() as TextAsset;
+            interactionJson = JObject.Parse(currAsset.text).ToObject<Interaction>(serializer);
             ReorderableList initPathOptionConditionsList = InteractionEditorListBuilder.GetDefaultEmptyList("Select a path above to view conditions.");
 
             Debug.Log($"Json has been parsed for {currAsset.name}");
@@ -110,8 +119,27 @@ namespace SimCard.SimGame {
             // On top, init options pane
             initOptionsPane.Clear();
 
-            Label interactionName = new Label(currAsset.name);
-            interactionName.style.alignSelf = Align.Center;
+            // Create editable text field for changing the name
+            TextField interactionName = new TextField(100, false, false, ' ') {
+                value = currAsset.name
+            };
+
+            // Callbacks
+            interactionName.RegisterValueChangedCallback(evt => {
+                Debug.Log(interactionName.text);
+            });
+            interactionName.RegisterCallback<NavigationSubmitEvent>((evt) => {
+                // Rename the text asset
+                AssetDatabase.RenameAsset(
+                    AssetDatabase.GetAssetPath(currAsset),
+                    interactionName.text
+                );
+
+                // Refresh items to pick up new name
+                fileListView.RefreshItems();
+
+                evt.StopPropagation();
+            }, TrickleDown.TrickleDown);
             interactionName.style.fontSize = new Length(20, LengthUnit.Pixel);
             initOptionsPane.Add(interactionName);
 
