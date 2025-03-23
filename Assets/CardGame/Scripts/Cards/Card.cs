@@ -88,6 +88,7 @@ namespace SimCard.CardGame {
                 previewRenderer.enabled = false;
             } else {
                 sr.sprite = frontSprite;
+                previewRenderer.enabled = true;
                 previewRenderer.sprite = SmallSprite;
             }
         }
