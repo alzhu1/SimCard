@@ -20,7 +20,7 @@ MonoBehaviour:
 
     Gains
     2 income every turn.'
-  flavorText: 
+  flavorText: Make sure to hold on to these, they're going to the moon!
   income: -1
   turnLimit: 4
   smallSprite: {fileID: 3017055436999581571, guid: 3c36c555e303a46b58faaa0efb313cfb, type: 3}
