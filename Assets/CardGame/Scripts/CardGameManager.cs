@@ -71,7 +71,7 @@ namespace SimCard.CardGame {
             coinUI = GetComponentInChildren<CoinUI>();
 
             // Make sure the values in prize pool add up to 100
-            Assert.AreEqual(100, cardPrizePools.Select(x => x.factor).Sum());
+            Assert.AreApproximatelyEqual(100, cardPrizePools.Select(x => x.factor).Sum());
         }
 
         void Start() {
@@ -150,7 +150,7 @@ namespace SimCard.CardGame {
             List<CardMetadata> pack = new();
 
             for (int i = 0; i < 5; i++) {
-                int roll = Random.Range(0, 100);
+                float roll = Random.Range(0, 100);
                 int cardPrizePoolIndex = -1;
                 while (roll >= 0) {
                     cardPrizePoolIndex++;

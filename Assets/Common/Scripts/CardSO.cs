@@ -38,6 +38,6 @@ namespace SimCard.Common {
     [System.Serializable]
     public class CardPrizePool {
         public List<CardSO> cardPrizes;
-        public int factor;
+        public float factor;
     }
 }
