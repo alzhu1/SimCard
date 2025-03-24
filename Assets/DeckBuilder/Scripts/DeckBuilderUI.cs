@@ -143,7 +143,7 @@ namespace SimCard.DeckBuilder {
             if (!isOptionSelect) {
                 cardCursor.rectTransform.anchoredPosition = new Vector2(
                     cardCursor.rectTransform.anchoredPosition.x,
-                    cardRows[DeckBuilderUIListener.Index].rectTransform.anchoredPosition.y + 3 // offset
+                    cardRows[DeckBuilderUIListener.Index - topIndex].rectTransform.anchoredPosition.y + 3 // offset
                 );
             }
 
