@@ -127,8 +127,8 @@ namespace SimCard.DeckBuilder {
 
                     // Set basic info
                     cardRow.CardNameText.text = card.cardName;
-                    cardRow.CostText.text = card.cost.ToString();
-                    cardRow.IncomeText.text = card.income.ToString();
+                    cardRow.CostText.text = $"${card.cost.ToString()}";
+                    cardRow.IncomeText.text = $"${card.income.ToString()}";
                     cardRow.LifetimeText.text = card.turnLimit.ToString();
 
                     // Update the deck count text
@@ -157,8 +157,8 @@ namespace SimCard.DeckBuilder {
             previewNameText.text = previewCard.cardName;
             previewDescriptionText.text = previewCard.description;
             previewFlavorText.text = previewCard.flavorText;
-            previewCostText.text = $"Cost: {previewCard.cost}";
-            previewIncomeText.text = $"Income: {previewCard.income}";
+            previewCostText.text = $"Cost: ${previewCard.cost}";
+            previewIncomeText.text = $"Income: ${previewCard.income}";
             previewLifetimeText.text = $"Turn Limit: {previewCard.turnLimit}";
             previewCardImage.sprite = previewCard.fullSprite;
         }

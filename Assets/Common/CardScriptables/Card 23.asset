@@ -20,7 +20,7 @@ MonoBehaviour:
 
     Raises
     own income by 2 per turn.'
-  flavorText: 
+  flavorText: LOLOLOLOLOLOLOLOLOLOLOLOLOL
   income: 0
   turnLimit: 1000
   smallSprite: {fileID: 1922321200547134795, guid: 7be49b5e47cd44f439b713452923c875, type: 3}

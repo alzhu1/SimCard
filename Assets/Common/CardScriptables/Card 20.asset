@@ -14,12 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Lawyer
   cost: 7
-  description: 'If you get into trouble, better pay up for a lawyer. They''ll defend
-    you and make bank while doing so.
+  description: 'This lawyer will defend you and make bank while doing so.
 
 
-    Raises the income of another card by
-    1.
+    Raises
+    the income of another card by 1.
 
     Decreases own income by 1 per turn.'
   flavorText: If there's something weird and it don't look good, who you gonna call?

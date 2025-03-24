@@ -655,9 +655,9 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 2
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -1223,7 +1223,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -286.5, y: -225}
+  m_AnchoredPosition: {x: -286.5, y: -237.5}
   m_SizeDelta: {x: -573, y: -450}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &292353825
@@ -1357,7 +1357,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -225}
+  m_AnchoredPosition: {x: 0, y: -237.5}
   m_SizeDelta: {x: -574, y: -450}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &420705971
@@ -1535,7 +1535,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 286.5, y: -225}
+  m_AnchoredPosition: {x: 286.5, y: -237.5}
   m_SizeDelta: {x: -573, y: -450}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &580706204
@@ -2312,7 +2312,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -137.5, y: 12.5}
+  m_AnchoredPosition: {x: -137.5, y: 37.5}
   m_SizeDelta: {x: -275, y: -225}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1093262691
@@ -3049,17 +3049,53 @@ MonoBehaviour:
   audioListener: {fileID: 629495287}
   eventSystem: {fileID: 103994358}
   testDeck:
-  - cardSO: {fileID: 11400000, guid: eb09dcdfd567a41028029172e83950ba, type: 2}
-    count: 3
-  - cardSO: {fileID: 11400000, guid: 58d024a76cc894787abd01f571d1c82f, type: 2}
-    count: 3
-  - cardSO: {fileID: 11400000, guid: 643af89b9f973416ea69544877944c98, type: 2}
-    count: 3
-  testAvailableCards:
-  - cardSO: {fileID: 11400000, guid: 643af89b9f973416ea69544877944c98, type: 2}
-    count: 6
-  - cardSO: {fileID: 11400000, guid: eb09dcdfd567a41028029172e83950ba, type: 2}
-    count: 22
+  - cardSO: {fileID: 11400000, guid: 1fbbb885f46ac4494a008e9e1ee6acdd, type: 2}
+    count: 30
+  - cardSO: {fileID: 11400000, guid: 306a6e4ed79c94a9fa72e10218f35245, type: 2}
+    count: 30
+  - cardSO: {fileID: 11400000, guid: a961b2591e2834807a201396ba90a196, type: 2}
+    count: 30
+  - cardSO: {fileID: 11400000, guid: 6983b6a94ef514fb6bcbc836eb4634c3, type: 2}
+    count: 30
+  - cardSO: {fileID: 11400000, guid: 98c61d6d4a3bb446c964d2c2dcc6f2f5, type: 2}
+    count: 30
+  - cardSO: {fileID: 11400000, guid: d4021d90f8a8a4e6085d385f7ae4a0d8, type: 2}
+    count: 30
+  - cardSO: {fileID: 11400000, guid: 6f2815b71d964406d88d8c1f0628895d, type: 2}
+    count: 30
+  - cardSO: {fileID: 11400000, guid: 9219022d3c0df446c89d2b42ee20bca0, type: 2}
+    count: 30
+  - cardSO: {fileID: 11400000, guid: aa07d3a22b7a84115b3aaca4da4051dc, type: 2}
+    count: 30
+  - cardSO: {fileID: 11400000, guid: f1ad0eb1cf4734454a4e137d81d5be14, type: 2}
+    count: 30
+  - cardSO: {fileID: 11400000, guid: 5ce2d4c54122c4202baecb04cc562b4b, type: 2}
+    count: 30
+  - cardSO: {fileID: 11400000, guid: 40d3be202b0714934b94de80e0fcbfa0, type: 2}
+    count: 30
+  - cardSO: {fileID: 11400000, guid: 08d2aebb0c8904d668d65866fb1c96f5, type: 2}
+    count: 30
+  - cardSO: {fileID: 11400000, guid: dbef4cfebf75c468687add7df6594e92, type: 2}
+    count: 30
+  - cardSO: {fileID: 11400000, guid: 39ecef5b3a80b4b1db8f7df5c33c5fed, type: 2}
+    count: 30
+  - cardSO: {fileID: 11400000, guid: 5228b422c111d434498a6b865e6f52af, type: 2}
+    count: 30
+  - cardSO: {fileID: 11400000, guid: 3c15a2e04b11b453591cf8814ad9942c, type: 2}
+    count: 30
+  - cardSO: {fileID: 11400000, guid: 33e62ecf4450c41a39eca4db647ae351, type: 2}
+    count: 30
+  - cardSO: {fileID: 11400000, guid: dd4863669ca754b7dae202f8558e8768, type: 2}
+    count: 30
+  - cardSO: {fileID: 11400000, guid: 536b6167d90314b0f8331399c3340281, type: 2}
+    count: 30
+  - cardSO: {fileID: 11400000, guid: 5803264e786ea402098ddbdfa04d760e, type: 2}
+    count: 30
+  - cardSO: {fileID: 11400000, guid: 7d9ecc299e8bc49788f5feecac641aff, type: 2}
+    count: 30
+  - cardSO: {fileID: 11400000, guid: a4fdd8fbacd5f4fe9878240320c2e0c7, type: 2}
+    count: 30
+  testAvailableCards: []
 --- !u!1 &1777304319
 GameObject:
   m_ObjectHideFlags: 0
@@ -3527,7 +3563,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 292.5, y: 12.5}
+  m_AnchoredPosition: {x: 292.5, y: 37.5}
   m_SizeDelta: {x: 275, y: 275}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2097610314

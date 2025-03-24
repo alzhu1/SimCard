@@ -87,8 +87,8 @@ namespace SimCard.SimGame {
                 // Update preview params
                 CardSO previewCard = shopItemList[optionIndex].cardSO;
                 cardNameText.text = previewCard.cardName;
-                costText.text = $"Cost: {previewCard.cost}";
-                incomeText.text = $"Income: {previewCard.income}";
+                costText.text = $"Cost: ${previewCard.cost}";
+                incomeText.text = $"Income: ${previewCard.income}";
                 lifetimeText.text = $"Turn Limit: {previewCard.turnLimit}";
                 descriptionText.text = previewCard.description;
                 flavorText.text = previewCard.flavorText;

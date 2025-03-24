@@ -19,7 +19,7 @@ MonoBehaviour:
 
 
     Increases turns left of a card by 1.'
-  flavorText: Gains bro, gains
+  flavorText: Gains bro, gains.
   income: 0
   turnLimit: 2
   smallSprite: {fileID: -3139840285463294179, guid: 93dd0b51f0b524fd580e682df478a711, type: 3}

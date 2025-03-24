@@ -1586,6 +1586,58 @@ PrefabInstance:
       propertyPath: data
       value: 
       objectReference: {fileID: 4900000, guid: dbda71fc57c6c4334970038e3bb2c71b, type: 3}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[0].count
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[1].count
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[2].count
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[3].count
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[4].count
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[5].count
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[0].cardSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 1fbbb885f46ac4494a008e9e1ee6acdd, type: 2}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[1].cardSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 306a6e4ed79c94a9fa72e10218f35245, type: 2}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[2].cardSO
+      value: 
+      objectReference: {fileID: 11400000, guid: a961b2591e2834807a201396ba90a196, type: 2}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[3].cardSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 6983b6a94ef514fb6bcbc836eb4634c3, type: 2}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[4].cardSO
+      value: 
+      objectReference: {fileID: 11400000, guid: aa07d3a22b7a84115b3aaca4da4051dc, type: 2}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[5].cardSO
+      value: 
+      objectReference: {fileID: 11400000, guid: f1ad0eb1cf4734454a4e137d81d5be14, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -89196,7 +89248,7 @@ PrefabInstance:
       objectReference: {fileID: 1171762531, guid: 3b263af5e07fa45d2bd54cdfe6aec674, type: 3}
     - target: {fileID: 1717216389504347516, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
       propertyPath: m_SortingOrder
-      value: 1795
+      value: 2429
       objectReference: {fileID: 0}
     - target: {fileID: 5187440745337727775, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
       propertyPath: m_Enabled
@@ -89220,11 +89272,11 @@ PrefabInstance:
       objectReference: {fileID: 7108339969198208228, guid: 2afa6dbc3f3344a708a0a92c82c78b0d, type: 3}
     - target: {fileID: 5881399737167756081, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -28.1
+      value: -16.63
       objectReference: {fileID: 0}
     - target: {fileID: 5881399737167756081, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -16.95
+      value: -23.29
       objectReference: {fileID: 0}
     - target: {fileID: 5881399737167756081, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
       propertyPath: m_LocalPosition.z
@@ -89876,9 +89928,9 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 2
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -91869,6 +91921,82 @@ PrefabInstance:
       propertyPath: data
       value: 
       objectReference: {fileID: 4900000, guid: dbda71fc57c6c4334970038e3bb2c71b, type: 3}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[0].count
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[1].count
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[2].count
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[3].count
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[4].count
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[5].count
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[6].count
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[7].count
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[8].count
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[0].cardSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 98c61d6d4a3bb446c964d2c2dcc6f2f5, type: 2}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[1].cardSO
+      value: 
+      objectReference: {fileID: 11400000, guid: d4021d90f8a8a4e6085d385f7ae4a0d8, type: 2}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[2].cardSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 6f2815b71d964406d88d8c1f0628895d, type: 2}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[3].cardSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 5ce2d4c54122c4202baecb04cc562b4b, type: 2}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[4].cardSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 40d3be202b0714934b94de80e0fcbfa0, type: 2}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[5].cardSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 08d2aebb0c8904d668d65866fb1c96f5, type: 2}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[6].cardSO
+      value: 
+      objectReference: {fileID: 11400000, guid: dbef4cfebf75c468687add7df6594e92, type: 2}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[7].cardSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 39ecef5b3a80b4b1db8f7df5c33c5fed, type: 2}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[8].cardSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 5228b422c111d434498a6b865e6f52af, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -92997,7 +93125,7 @@ PrefabInstance:
       objectReference: {fileID: 1171762531, guid: 3b263af5e07fa45d2bd54cdfe6aec674, type: 3}
     - target: {fileID: 1717216389504347516, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
       propertyPath: m_SortingOrder
-      value: 1414
+      value: 1424
       objectReference: {fileID: 0}
     - target: {fileID: 5187440745337727775, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
       propertyPath: m_Enabled
@@ -93021,11 +93149,11 @@ PrefabInstance:
       objectReference: {fileID: 7108339969198208228, guid: 2afa6dbc3f3344a708a0a92c82c78b0d, type: 3}
     - target: {fileID: 5881399737167756081, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -23.22
+      value: -33.409996
       objectReference: {fileID: 0}
     - target: {fileID: 5881399737167756081, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -13.14
+      value: -13.240001
       objectReference: {fileID: 0}
     - target: {fileID: 5881399737167756081, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
       propertyPath: m_LocalPosition.z
@@ -93063,6 +93191,74 @@ PrefabInstance:
       propertyPath: data
       value: 
       objectReference: {fileID: 4900000, guid: dbda71fc57c6c4334970038e3bb2c71b, type: 3}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[0].count
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[1].count
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[2].count
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[3].count
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[4].count
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[5].count
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[6].count
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[7].count
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[0].cardSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 9219022d3c0df446c89d2b42ee20bca0, type: 2}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[1].cardSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 3c15a2e04b11b453591cf8814ad9942c, type: 2}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[2].cardSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 33e62ecf4450c41a39eca4db647ae351, type: 2}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[3].cardSO
+      value: 
+      objectReference: {fileID: 11400000, guid: dd4863669ca754b7dae202f8558e8768, type: 2}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[4].cardSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 536b6167d90314b0f8331399c3340281, type: 2}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[5].cardSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 5803264e786ea402098ddbdfa04d760e, type: 2}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[6].cardSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 7d9ecc299e8bc49788f5feecac641aff, type: 2}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[7].cardSO
+      value: 
+      objectReference: {fileID: 11400000, guid: a4fdd8fbacd5f4fe9878240320c2e0c7, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -93674,15 +93870,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1717216389504347516, guid: af35d886f9db74d4dafccf491111866b, type: 3}
       propertyPath: m_SortingOrder
-      value: 1469
+      value: 1479
       objectReference: {fileID: 0}
     - target: {fileID: 5881399737167756081, guid: af35d886f9db74d4dafccf491111866b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -23.25
+      value: -33.44
       objectReference: {fileID: 0}
     - target: {fileID: 5881399737167756081, guid: af35d886f9db74d4dafccf491111866b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -12.79
+      value: -12.89
       objectReference: {fileID: 0}
     - target: {fileID: 5881399737167756081, guid: af35d886f9db74d4dafccf491111866b, type: 3}
       propertyPath: m_LocalPosition.z
