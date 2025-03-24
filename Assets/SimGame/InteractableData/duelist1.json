@@ -9,20 +9,7 @@
                 "Text": "Hey! Looks like you're new here.",
                 "EventTriggers": [],
                 "EndingEventTriggers": [],
-                "Options": [
-                    {
-                        "OptionText": "Yes",
-                        "NextPath": "DefaultYes",
-                        "FallbackPath": "",
-                        "Conditions": {}
-                    },
-                    {
-                        "OptionText": "No",
-                        "NextPath": "",
-                        "FallbackPath": "",
-                        "Conditions": {}
-                    }
-                ]
+                "Options": []
             },
             {
                 "IncomingConditions": {},
