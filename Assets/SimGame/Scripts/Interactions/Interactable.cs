@@ -140,6 +140,10 @@ namespace SimCard.SimGame {
                 int pathCount = pathTraversedCount.GetValueOrDefault(traversedPath);
                 pathTraversedCount[traversedPath] = pathCount + 1;
             }
+
+            if (characterAnimator != null && characterAnimator.ShouldReturnToStart) {
+                characterAnimator.ReturnToStart();
+            }
         }
 
         public InteractionNode GetCurrentInteraction(string pathName, int interactionIndex) {

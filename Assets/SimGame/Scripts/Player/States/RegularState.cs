@@ -101,6 +101,10 @@ namespace SimCard.SimGame {
             HandleAnimator(direction);
 
             player.FrontCheck.localPosition = direction;
+
+            Vector2 tempSize = new Vector2(Mathf.Abs(direction.x), Mathf.Abs(direction.y));
+            Vector2 oppositeSize = new Vector2(tempSize.y, tempSize.x) * 0.2f;
+            player.FrontCheckCollider.size = tempSize + oppositeSize;
         }
 
         void HandleAnimator(Vector3 direction) {

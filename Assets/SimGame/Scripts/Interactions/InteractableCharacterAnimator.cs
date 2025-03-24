@@ -11,16 +11,33 @@ namespace SimCard.SimGame {
             "Character_Walk_Side"
         };
 
+        [SerializeField]
+        private int startingIndex = 0;
+
+        [SerializeField]
+        private bool shouldReturnToStart = true;
+        public bool ShouldReturnToStart => shouldReturnToStart;
+
         private Animator animator;
         private SpriteRenderer sr;
 
         private string currState;
+        private bool startingFlipX;
 
         void Awake() {
             animator = GetComponent<Animator>();
             sr = GetComponent<SpriteRenderer>();
 
-            currState = idleAnimationStates[0];
+            currState = idleAnimationStates[startingIndex];
+            startingFlipX = sr.flipX;
+
+            animator.Play(currState);
+        }
+
+        public void ReturnToStart() {
+            sr.flipX = startingFlipX;
+            currState = idleAnimationStates[startingIndex];
+
             animator.Play(currState);
         }
 

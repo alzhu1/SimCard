@@ -7,8 +7,8 @@ using UnityEngine;
 namespace SimCard.SimGame {
     public class Player : MonoBehaviour {
         [SerializeField]
-        private Collider2D frontCheckCollider;
-        public Collider2D FrontCheckCollider => frontCheckCollider;
+        private BoxCollider2D frontCheckCollider;
+        public BoxCollider2D FrontCheckCollider => frontCheckCollider;
         public Transform FrontCheck => frontCheckCollider.transform;
         public Vector3 PlayerDirection => frontCheckCollider.transform.localPosition;
 
