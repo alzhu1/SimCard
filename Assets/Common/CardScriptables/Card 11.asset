@@ -16,7 +16,7 @@ MonoBehaviour:
   cost: 2
   description: Coins! It looks like in total, there's about $5 worth of pennies there,
     you just have to pick them up. The windfall is nice.
-  flavorText: I hope the bank won't mind receiving 500 pennies...
+  flavorText: Would the bank mind receiving 500 pennies?
   income: 0
   turnLimit: 2
   smallSprite: {fileID: -2012044367468872465, guid: 18da27ed4e5654716b517acbee24411f, type: 3}

@@ -16,7 +16,7 @@ MonoBehaviour:
   cost: 6
   description: We're gonna need to lay off a couple more folks; if I could just ask
     you to identify 2 people that need to leave the area...
-  flavorText: It's time to downsize, you know the drill...
+  flavorText: It's time to downsize, you know how it goes.
   income: 0
   turnLimit: 3
   smallSprite: {fileID: 5369659320328863459, guid: 8a6111354807c4b0fb47965a187b16ed, type: 3}

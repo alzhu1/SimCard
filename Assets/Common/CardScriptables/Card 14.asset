@@ -20,7 +20,7 @@ MonoBehaviour:
 
     Income decreases
     by 2 per turn.'
-  flavorText: I liked it here at first, but it just got so boring...
+  flavorText: I liked it here at first, but it's so boring nowadays.
   income: 3
   turnLimit: 3
   smallSprite: {fileID: -7612480941518411972, guid: c68fc314e7e18404e844dcd2e7170e42, type: 3}

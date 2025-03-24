@@ -16,8 +16,7 @@ MonoBehaviour:
   cost: 8
   description: Leading a big company isn't a glamorous job, but strong leadership
     will ensure profits keep coming in. The paycheck isn't bad, too.
-  flavorText: Our earnings this quarter have been phenomenal! I love the smell of
-    money...
+  flavorText: You smell that? That smells like money to me!
   income: 8
   turnLimit: 3
   smallSprite: {fileID: -518550128730484470, guid: be99f063cf57c44adadf1fbd0fb16ecd, type: 3}

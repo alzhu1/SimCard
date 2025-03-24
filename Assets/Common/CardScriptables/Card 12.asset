@@ -16,7 +16,7 @@ MonoBehaviour:
   cost: 3
   description: Someone's getting fired today; doesn't matter the reason, we just
     need it to happen. Don't take it too personally, it's not the end of the world.
-  flavorText: It's usually better to fire people on a Friday...
+  flavorText: I heard it's usually better to fire people on a Friday.
   income: 0
   turnLimit: 2
   smallSprite: {fileID: -6624510589608369694, guid: c6b55e87a45a943ffbb93a12f7ea736e, type: 3}
