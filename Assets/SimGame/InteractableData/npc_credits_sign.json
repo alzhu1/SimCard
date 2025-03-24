@@ -1,0 +1,23 @@
+{
+    "Init": {
+        "PathOptions": []
+    },
+    "Paths": {
+        "Default": [
+            {
+                "IncomingConditions": {},
+                "Text": "Thanks for playing my game!",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": []
+            },
+            {
+                "IncomingConditions": {},
+                "Text": "Hope you enjoy talking to random people and dueling!",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": []
+            }
+        ]
+    }
+}

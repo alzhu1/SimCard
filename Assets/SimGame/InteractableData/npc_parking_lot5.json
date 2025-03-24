@@ -1,0 +1,30 @@
+{
+    "Init": {
+        "PathOptions": []
+    },
+    "Paths": {
+        "Default": [
+            {
+                "IncomingConditions": {},
+                "Text": "When can this construction just finish already?!",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": []
+            },
+            {
+                "IncomingConditions": {},
+                "Text": "I'm sick of looking out my window and seeing a bunch of boxes lying around.",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": []
+            },
+            {
+                "IncomingConditions": {},
+                "Text": "They're so ugly! I hate it...",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": []
+            }
+        ]
+    }
+}

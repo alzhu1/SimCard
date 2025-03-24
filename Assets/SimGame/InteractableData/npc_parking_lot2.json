@@ -1,0 +1,61 @@
+{
+    "Init": {
+        "PathOptions": []
+    },
+    "Paths": {
+        "Default": [
+            {
+                "IncomingConditions": {},
+                "Text": "Hey you, is that your car parked over there?",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": [
+                    {
+                        "OptionText": "Yes",
+                        "NextPath": "DefaultYes",
+                        "FallbackPath": "DefaultNo",
+                        "Conditions": {}
+                    },
+                    {
+                        "OptionText": "No",
+                        "NextPath": "DefaultNo",
+                        "FallbackPath": "DefaultYes",
+                        "Conditions": {}
+                    }
+                ]
+            }
+        ],
+        "DefaultNo": [
+            {
+                "IncomingConditions": {},
+                "Text": "Hm, alright then. I'll need to find the idiot who it belongs to...",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": []
+            },
+            {
+                "IncomingConditions": {},
+                "Text": "See ya around.",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": []
+            }
+        ],
+        "DefaultYes": [
+            {
+                "IncomingConditions": {},
+                "Text": "It is? Then get it out of here!",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": []
+            },
+            {
+                "IncomingConditions": {},
+                "Text": "I don't want to be liable for another stupid car crash...",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": []
+            }
+        ]
+    }
+}

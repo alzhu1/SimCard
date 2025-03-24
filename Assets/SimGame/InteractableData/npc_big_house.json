@@ -1,90 +1,75 @@
 {
     "Init": {
-        "PathOptions": [
-            {
-                "NextPath": "TooManyTalks",
-                "Conditions": {
-                    "PathTraversedCount": "DefaultNo >= 5"
-                }
-            }
-        ]
+        "PathOptions": []
     },
     "Paths": {
         "Default": [
             {
                 "IncomingConditions": {},
-                "Text": "[111111 (Default)] Hello! This is me re-writing the test for interaction parsing, now with paths!",
-                "EventTriggers": [],
-                "EndingEventTriggers": [],
-                "Options": []
-            },
-            {
-                "IncomingConditions": {
-                    "Bool": "False",
-                    "PathTraversedCount": "Default >= 0"
-                },
-                "Text": "(This should not be displayed)",
+                "Text": "I hate that guy who lives on the other end of the street!",
                 "EventTriggers": [],
                 "EndingEventTriggers": [],
                 "Options": []
             },
             {
                 "IncomingConditions": {},
-                "Text": "Presenting you now with a choice",
+                "Text": "They totally copied my housing style!",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": []
+            },
+            {
+                "IncomingConditions": {},
+                "Text": "You think so too, right?",
                 "EventTriggers": [],
                 "EndingEventTriggers": [],
                 "Options": [
                     {
                         "OptionText": "Yes",
                         "NextPath": "DefaultYes",
-                        "FallbackPath": null,
+                        "FallbackPath": "DefaultNo",
                         "Conditions": {}
                     },
                     {
                         "OptionText": "No",
                         "NextPath": "DefaultNo",
-                        "FallbackPath": null,
+                        "FallbackPath": "DefaultYes",
                         "Conditions": {}
                     }
                 ]
             }
         ],
-        "DefaultYes": [
-            {
-                "IncomingConditions": {},
-                "Text": "You pressed yes!",
-                "EventTriggers": [],
-                "EndingEventTriggers": [],
-                "Options": []
-            }
-        ],
         "DefaultNo": [
             {
                 "IncomingConditions": {},
-                "Text": "You pressed no...",
+                "Text": "What?!",
                 "EventTriggers": [],
                 "EndingEventTriggers": [],
                 "Options": []
             },
             {
-                "IncomingConditions": {
-                    "PathTraversedCount": "DefaultYes >= 1"
-                },
-                "Text": "But you pressed yes before...",
+                "IncomingConditions": {},
+                "Text": "Get out of here, you clearly don't know anything!",
                 "EventTriggers": [],
                 "EndingEventTriggers": [],
                 "Options": []
             }
         ],
-        "TooManyTalks": [
+        "DefaultYes": [
             {
                 "IncomingConditions": {},
-                "Text": "I don't want to ask you anymore...",
+                "Text": "Yeah, I thought so!",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": []
+            },
+            {
+                "IncomingConditions": {},
+                "Text": "I'm going to sue them, just you wait!",
                 "EventTriggers": [],
                 "EndingEventTriggers": [],
                 "Options": []
             }
-        ],
-        "Fake Path": []
+        ]
     }
 }

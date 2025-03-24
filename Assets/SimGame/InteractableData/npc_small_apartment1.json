@@ -1,0 +1,82 @@
+{
+    "Init": {
+        "PathOptions": []
+    },
+    "Paths": {
+        "Default": [
+            {
+                "IncomingConditions": {},
+                "Text": "The sand pit next to our apartment is feeling a little out of place.",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": []
+            },
+            {
+                "IncomingConditions": {},
+                "Text": "I'm not sure if I really want it here; what do you think?",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": [
+                    {
+                        "OptionText": "Keep it",
+                        "NextPath": "KeepIt",
+                        "FallbackPath": "RemoveIt",
+                        "Conditions": {}
+                    },
+                    {
+                        "OptionText": "Remove it",
+                        "NextPath": "RemoveIt",
+                        "FallbackPath": "KeepIt",
+                        "Conditions": {}
+                    }
+                ]
+            }
+        ],
+        "RemoveIt": [
+            {
+                "IncomingConditions": {},
+                "Text": "Hm, I see...",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": []
+            },
+            {
+                "IncomingConditions": {},
+                "Text": "Yeah, I'll see if I can discuss this more with the town hall.",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": []
+            },
+            {
+                "IncomingConditions": {},
+                "Text": "Thanks for the input!",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": []
+            }
+        ],
+        "KeepIt": [
+            {
+                "IncomingConditions": {},
+                "Text": "Hm, you think so?",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": []
+            },
+            {
+                "IncomingConditions": {},
+                "Text": "I guess it gets the kids to go play outside.",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": []
+            },
+            {
+                "IncomingConditions": {},
+                "Text": "Thanks for the input!",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": []
+            }
+        ]
+    }
+}

@@ -1,0 +1,68 @@
+{
+    "Init": {
+        "PathOptions": []
+    },
+    "Paths": {
+        "Default": [
+            {
+                "IncomingConditions": {},
+                "Text": "Hi there!",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": []
+            },
+            {
+                "IncomingConditions": {},
+                "Text": "Is this your first time visiting the city?",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": [
+                    {
+                        "OptionText": "Yes",
+                        "NextPath": "DefaultYes",
+                        "FallbackPath": "DefaultNo",
+                        "Conditions": {}
+                    },
+                    {
+                        "OptionText": "No",
+                        "NextPath": "DefaultNo",
+                        "FallbackPath": "DefaultYes",
+                        "Conditions": {}
+                    }
+                ]
+            }
+        ],
+        "DefaultYes": [
+            {
+                "IncomingConditions": {},
+                "Text": "Great! Welcome!",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": []
+            },
+            {
+                "IncomingConditions": {},
+                "Text": "I hope you enjoy your time here!",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": []
+            }
+        ],
+        "DefaultNo": [
+            {
+                "IncomingConditions": {},
+                "Text": "Well, if you're a returning visitor, then welcome back!",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": []
+            },
+            {
+                "IncomingConditions": {},
+                "Text": "Glad to have you here!",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": []
+            }
+        ]
+    }
+}

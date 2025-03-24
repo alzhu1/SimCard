@@ -6,7 +6,7 @@
         "Default": [
             {
                 "IncomingConditions": {},
-                "Text": "Do you want to rest?",
+                "Text": "Wanna fight?",
                 "EventTriggers": [],
                 "EndingEventTriggers": [],
                 "Options": [
@@ -28,9 +28,11 @@
         "DefaultYes": [
             {
                 "IncomingConditions": {},
-                "Text": "Go to sleep now...",
+                "Text": "Let's fight!",
                 "EventTriggers": [],
-                "EndingEventTriggers": [],
+                "EndingEventTriggers": [
+                    "StartCardGame"
+                ],
                 "Options": []
             }
         ]

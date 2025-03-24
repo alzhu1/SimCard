@@ -1,0 +1,67 @@
+{
+    "Init": {
+        "PathOptions": []
+    },
+    "Paths": {
+        "Default": [
+            {
+                "IncomingConditions": {},
+                "Text": "What's 5 + 3?",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": [
+                    {
+                        "OptionText": "8",
+                        "NextPath": "RightAnswer",
+                        "FallbackPath": "WrongAnswer",
+                        "Conditions": {}
+                    },
+                    {
+                        "OptionText": "9",
+                        "NextPath": "WrongAnswer",
+                        "FallbackPath": "RightAnswer",
+                        "Conditions": {}
+                    },
+                    {
+                        "OptionText": "???",
+                        "NextPath": "WrongAnswer",
+                        "FallbackPath": "RightAnswer",
+                        "Conditions": {}
+                    }
+                ]
+            }
+        ],
+        "WrongAnswer": [
+            {
+                "IncomingConditions": {},
+                "Text": "Wrong!",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": []
+            },
+            {
+                "IncomingConditions": {},
+                "Text": "Try again!",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": []
+            }
+        ],
+        "RightAnswer": [
+            {
+                "IncomingConditions": {},
+                "Text": "Correct!",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": []
+            },
+            {
+                "IncomingConditions": {},
+                "Text": "I just felt like asking.",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": []
+            }
+        ]
+    }
+}
