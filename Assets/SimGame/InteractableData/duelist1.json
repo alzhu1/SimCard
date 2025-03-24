@@ -1,0 +1,76 @@
+{
+    "Init": {
+        "PathOptions": []
+    },
+    "Paths": {
+        "Default": [
+            {
+                "IncomingConditions": {},
+                "Text": "Hey! Looks like you're new here.",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": [
+                    {
+                        "OptionText": "Yes",
+                        "NextPath": "DefaultYes",
+                        "FallbackPath": "",
+                        "Conditions": {}
+                    },
+                    {
+                        "OptionText": "No",
+                        "NextPath": "",
+                        "FallbackPath": "",
+                        "Conditions": {}
+                    }
+                ]
+            },
+            {
+                "IncomingConditions": {},
+                "Text": "Around these parts, we like to play a little card game.",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": []
+            },
+            {
+                "IncomingConditions": {},
+                "Text": "You interested in playing? I'll duel you!",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": [
+                    {
+                        "OptionText": "Yes",
+                        "NextPath": "DefaultYes",
+                        "FallbackPath": "DefaultNo",
+                        "Conditions": {}
+                    },
+                    {
+                        "OptionText": "No",
+                        "NextPath": "DefaultNo",
+                        "FallbackPath": "DefaultYes",
+                        "Conditions": {}
+                    }
+                ]
+            }
+        ],
+        "DefaultYes": [
+            {
+                "IncomingConditions": {},
+                "Text": "Alright then, let's go!",
+                "EventTriggers": [],
+                "EndingEventTriggers": [
+                    "StartCardGame"
+                ],
+                "Options": []
+            }
+        ],
+        "DefaultNo": [
+            {
+                "IncomingConditions": {},
+                "Text": "Suit yourself. You're missing out!",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": []
+            }
+        ]
+    }
+}

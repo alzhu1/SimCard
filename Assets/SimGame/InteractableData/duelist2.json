@@ -1,0 +1,71 @@
+{
+    "Init": {
+        "PathOptions": []
+    },
+    "Paths": {
+        "Default": [
+            {
+                "IncomingConditions": {},
+                "Text": "I've been feeling way too restless today...",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": [
+                    {
+                        "OptionText": "(ask what's up)",
+                        "NextPath": "MoreInfo",
+                        "FallbackPath": "",
+                        "Conditions": {}
+                    },
+                    {
+                        "OptionText": "(leave him alone)",
+                        "NextPath": "",
+                        "FallbackPath": "",
+                        "Conditions": {}
+                    }
+                ]
+            }
+        ],
+        "NoDuel": [
+            {
+                "IncomingConditions": {},
+                "Text": "Come back here! I need to left off some steam!",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": []
+            }
+        ],
+        "MoreInfo": [
+            {
+                "IncomingConditions": {},
+                "Text": "Hey you! Duel me! Now!!!",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": [
+                    {
+                        "OptionText": "Yes",
+                        "NextPath": "Duel",
+                        "FallbackPath": "NoDuel",
+                        "Conditions": {}
+                    },
+                    {
+                        "OptionText": "No",
+                        "NextPath": "NoDuel",
+                        "FallbackPath": "Duel",
+                        "Conditions": {}
+                    }
+                ]
+            }
+        ],
+        "Duel": [
+            {
+                "IncomingConditions": {},
+                "Text": "My blood's boiling! Let's do this!",
+                "EventTriggers": [],
+                "EndingEventTriggers": [
+                    "StartCardGame"
+                ],
+                "Options": []
+            }
+        ]
+    }
+}

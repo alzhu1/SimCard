@@ -1,0 +1,56 @@
+{
+    "Init": {
+        "PathOptions": []
+    },
+    "Paths": {
+        "Default": [
+            {
+                "IncomingConditions": {},
+                "Text": "Have you noticed how me and the other duelists look the same?",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": []
+            },
+            {
+                "IncomingConditions": {},
+                "Text": "It's just a coincidence, but it's true. We like to duel! So how about it?",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": [
+                    {
+                        "OptionText": "Yes",
+                        "NextPath": "DefaultYes",
+                        "FallbackPath": "DefaultNo",
+                        "Conditions": {}
+                    },
+                    {
+                        "OptionText": "No",
+                        "NextPath": "DefaultNo",
+                        "FallbackPath": "DefaultYes",
+                        "Conditions": {}
+                    }
+                ]
+            }
+        ],
+        "DefaultYes": [
+            {
+                "IncomingConditions": {},
+                "Text": "Alright, whenever you're ready!",
+                "EventTriggers": [],
+                "EndingEventTriggers": [
+                    "StartCardGame"
+                ],
+                "Options": []
+            }
+        ],
+        "DefaultNo": [
+            {
+                "IncomingConditions": {},
+                "Text": "Alright, well I'll be waiting! The other duelists will be too!",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": []
+            }
+        ]
+    }
+}
