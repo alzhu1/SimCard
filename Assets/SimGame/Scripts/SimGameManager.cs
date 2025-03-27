@@ -25,6 +25,7 @@ namespace SimCard.SimGame {
         private int boundsLayer;
 
         private bool loadingSubScene;
+        private bool isSceneChanging;
 
         private Player player;
         private InteractUI interactUI;
@@ -228,6 +229,9 @@ namespace SimCard.SimGame {
 
         // Scene loading helpers
         IEnumerator LoadSubScene(int sceneIndex, Action initAction) {
+            yield return new WaitUntil(() => !isSceneChanging);
+            isSceneChanging = true;
+
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneIndex, LoadSceneMode.Additive);
 
             // Hide the interact UI when loading
@@ -258,9 +262,14 @@ namespace SimCard.SimGame {
             canvasUI.SetActive(false);
             // simGameCamera.gameObject.SetActive(false);
             simGameCamera.enabled = false;
+
+            isSceneChanging = false;
         }
 
         IEnumerator UnloadSubScene(int sceneIndex) {
+            yield return new WaitUntil(() => !isSceneChanging);
+            isSceneChanging = true;
+
             canvasUI.SetActive(true);
             // simGameCamera.gameObject.SetActive(true);
             simGameCamera.enabled = true;
@@ -280,6 +289,8 @@ namespace SimCard.SimGame {
             asyncLoad.allowSceneActivation = true;
 
             yield return fadeUI.FadeOut();
+
+            isSceneChanging = false;
         }
     }
 }
