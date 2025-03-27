@@ -30,6 +30,8 @@ namespace SimCard.SimGame {
         private InteractUI interactUI;
         private FadeUI fadeUI;
 
+        private AudioSystem simGameAudioSystem;
+
         void Awake() {
             if (instance == null) {
                 instance = this;
@@ -48,6 +50,8 @@ namespace SimCard.SimGame {
             player = GetComponentInChildren<Player>();
             interactUI = canvasUI.GetComponentInChildren<InteractUI>();
             fadeUI = canvasUI.GetComponentInChildren<FadeUI>();
+
+            simGameAudioSystem = GetComponentInChildren<AudioSystem>();
         }
 
         void Start() {
@@ -56,6 +60,8 @@ namespace SimCard.SimGame {
             EventBus.OnCardGameEnd.Event += HandleCardGameEndEvent;
             EventBus.OnDeckBuilderEnd.Event += HandleDeckBuilderEndEvent;
             EventBus.OnSubSceneLoaded.Event += HandleSubSceneLoadedEvent;
+
+            StartCoroutine(StartBGM());
         }
 
         void OnDestroy() {
@@ -64,6 +70,15 @@ namespace SimCard.SimGame {
             EventBus.OnCardGameEnd.Event -= HandleCardGameEndEvent;
             EventBus.OnDeckBuilderEnd.Event -= HandleDeckBuilderEndEvent;
             EventBus.OnSubSceneLoaded.Event -= HandleSubSceneLoadedEvent;
+        }
+
+        IEnumerator StartBGM() {
+            Sound s = simGameAudioSystem.Play("BGM_Intro");
+            // MINOR: This doesn't perfectly lead into next song, figure out alternative
+            while (s.source.isPlaying || s.source.time != 0) {
+                yield return null;
+            }
+            simGameAudioSystem.Play("BGM");
         }
 
         void HandleInteractionEvent(EventArgs<string, Interactable, int> args) {
@@ -241,12 +256,14 @@ namespace SimCard.SimGame {
 
             yield return fadeUI.FadeOut();
             canvasUI.SetActive(false);
-            simGameCamera.gameObject.SetActive(false);
+            // simGameCamera.gameObject.SetActive(false);
+            simGameCamera.enabled = false;
         }
 
         IEnumerator UnloadSubScene(int sceneIndex) {
             canvasUI.SetActive(true);
-            simGameCamera.gameObject.SetActive(true);
+            // simGameCamera.gameObject.SetActive(true);
+            simGameCamera.enabled = true;
 
             yield return fadeUI.FadeIn();
 

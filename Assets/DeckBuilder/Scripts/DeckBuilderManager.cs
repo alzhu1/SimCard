@@ -36,6 +36,7 @@ namespace SimCard.DeckBuilder {
 
         private SimGameManager simGameManager;
         private DeckBuilderUI deckBuilderUI;
+        private AudioSystem deckBuilderAudioSystem;
 
         private bool running;
         private int sortOptionCount;
@@ -66,15 +67,16 @@ namespace SimCard.DeckBuilder {
             }
 
             deckBuilderUI = GetComponentInChildren<DeckBuilderUI>();
+            deckBuilderAudioSystem = GetComponentInChildren<AudioSystem>();
 
             CardToCount = new();
         }
 
         void Start() {
             Debug.Log("Arrived in DeckBuilder");
+
             if (simGameManager != null) {
                 simGameManager.EventBus.OnDeckBuilderInit.Event += InitDeckBuilder;
-                return;
             } else {
                 // Also initialize editable deck/cards if null (means scene started by self)
                 StartDeckBuilder(testDeck, testAvailableCards);

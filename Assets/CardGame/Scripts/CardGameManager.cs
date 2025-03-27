@@ -47,6 +47,8 @@ namespace SimCard.CardGame {
         // Mediated UI
         private CoinUI coinUI;
 
+        private AudioSystem cardGameAudioSystem;
+
         void Awake() {
             if (instance == null) {
                 instance = this;
@@ -70,6 +72,8 @@ namespace SimCard.CardGame {
 
             coinUI = GetComponentInChildren<CoinUI>();
 
+            cardGameAudioSystem = GetComponentInChildren<AudioSystem>();
+
             // Make sure the values in prize pool add up to 100
             Assert.AreApproximatelyEqual(100, cardPrizePools.Select(x => x.factor).Sum());
         }
@@ -79,10 +83,9 @@ namespace SimCard.CardGame {
 
             if (simGameManager != null) {
                 simGameManager.EventBus.OnCardGameInit.Event += InitCardGame;
-                return;
+            } else {
+                StartCoroutine(StartCardGame(null));
             }
-
-            StartCoroutine(StartCardGame(null));
         }
 
         void OnDestroy() {
