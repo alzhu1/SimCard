@@ -25879,7 +25879,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4e50e463eda94e629bb0e0389ebcd00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds: []
+  sounds:
+  - name: BGM_Intro
+    clip: {fileID: 8300000, guid: b9bfe4f357bc44fec8fabe6bbf448c7d, type: 3}
+    volume: 0.5
+    loop: 0
+    pitch: 1
+    source: {fileID: 0}
+  - name: BGM
+    clip: {fileID: 8300000, guid: c8aaf2f792fdb4d18af2011bf5dc4c83, type: 3}
+    volume: 0.5
+    loop: 1
+    pitch: 1
+    source: {fileID: 0}
 --- !u!1001 &630451476
 PrefabInstance:
   m_ObjectHideFlags: 0

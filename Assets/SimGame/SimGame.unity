@@ -92539,14 +92539,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
-  - name: BGM_Intro
-    clip: {fileID: 8300000, guid: b9bfe4f357bc44fec8fabe6bbf448c7d, type: 3}
-    volume: 0.5
-    loop: 0
-    pitch: 1
-    source: {fileID: 0}
   - name: BGM
-    clip: {fileID: 8300000, guid: c8aaf2f792fdb4d18af2011bf5dc4c83, type: 3}
+    clip: {fileID: 8300000, guid: cd45baa2852e140638c67b109ffeba2d, type: 3}
     volume: 0.5
     loop: 1
     pitch: 1
@@ -101157,8 +101151,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7850c4bfc0459446589f69fe20023e83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioListener: {fileID: 97755230}
-  eventSystem: {fileID: 1377732581}
   environment: {fileID: 1826797411}
   canvasUI: {fileID: 1438081981}
   vCam: {fileID: 1122737097}

@@ -97,12 +97,22 @@ namespace SimCard.CardGame {
         }
 
         IEnumerator StartCardGame(EventArgs<List<CardMetadata>, List<CardMetadata>> args) {
-            // yield return new WaitForSeconds(1f);
+            StartCoroutine(StartBGM());
+
             yield return StartCoroutine(DetermineTurnOrder());
             EventBus.OnGameStart.Raise(args);
 
             yield return new WaitForSeconds(2f);
             StartTurn();
+        }
+
+        IEnumerator StartBGM() {
+            Sound s = cardGameAudioSystem.Play("BGM_Intro");
+            // MINOR: This doesn't perfectly lead into next song, figure out alternative
+            while (s.source.isPlaying || s.source.time != 0) {
+                yield return null;
+            }
+            cardGameAudioSystem.Play("BGM");
         }
 
         IEnumerator DetermineTurnOrder() {
@@ -181,6 +191,8 @@ namespace SimCard.CardGame {
                 List<CardMetadata> pack = playerWon ? GenerateBoosterPack() : null;
 
                 simGameManager.EventBus.OnCardGameEnd.Raise(new(goldWon, pack));
+
+                StartCoroutine(cardGameAudioSystem.FadeOut("BGM", 1f));
             } else {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }

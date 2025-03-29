@@ -62,7 +62,7 @@ namespace SimCard.SimGame {
             EventBus.OnDeckBuilderEnd.Event += HandleDeckBuilderEndEvent;
             EventBus.OnSubSceneLoaded.Event += HandleSubSceneLoadedEvent;
 
-            StartCoroutine(StartBGM());
+            simGameAudioSystem.Play("BGM");
         }
 
         void OnDestroy() {
@@ -71,15 +71,6 @@ namespace SimCard.SimGame {
             EventBus.OnCardGameEnd.Event -= HandleCardGameEndEvent;
             EventBus.OnDeckBuilderEnd.Event -= HandleDeckBuilderEndEvent;
             EventBus.OnSubSceneLoaded.Event -= HandleSubSceneLoadedEvent;
-        }
-
-        IEnumerator StartBGM() {
-            Sound s = simGameAudioSystem.Play("BGM_Intro");
-            // MINOR: This doesn't perfectly lead into next song, figure out alternative
-            while (s.source.isPlaying || s.source.time != 0) {
-                yield return null;
-            }
-            simGameAudioSystem.Play("BGM");
         }
 
         void HandleInteractionEvent(EventArgs<string, Interactable, int> args) {
@@ -212,11 +203,11 @@ namespace SimCard.SimGame {
         }
 
         IEnumerator StartCardGame(Interactable interactable) {
-            yield return StartCoroutine(LoadSubScene(1, () => EventBus.OnCardGameInit.Raise(new(player.Deck, interactable.Deck))));
+            yield return StartCoroutine(LoadSubScene(1, () => EventBus.OnCardGameInit.Raise(new(player.Deck, interactable.Deck)), true));
         }
 
         IEnumerator EndCardGame() {
-            yield return StartCoroutine(UnloadSubScene(1));
+            yield return StartCoroutine(UnloadSubScene(1, true));
         }
 
         IEnumerator StartDeckBuilder() {
@@ -228,7 +219,7 @@ namespace SimCard.SimGame {
         }
 
         // Scene loading helpers
-        IEnumerator LoadSubScene(int sceneIndex, Action initAction) {
+        IEnumerator LoadSubScene(int sceneIndex, Action initAction, bool fadeBGM = false) {
             yield return new WaitUntil(() => !isSceneChanging);
             isSceneChanging = true;
 
@@ -240,6 +231,10 @@ namespace SimCard.SimGame {
             asyncLoad.allowSceneActivation = false;
             // Disable player movement beforehand, keep sprite (will disable later)
             EventBus.OnPlayerPause.Raise(new(false));
+            if (fadeBGM) {
+                StartCoroutine(simGameAudioSystem.FadeOut("BGM", 1f));
+            }
+
             yield return fadeUI.FadeIn();
 
             loadingSubScene = true;
@@ -266,7 +261,7 @@ namespace SimCard.SimGame {
             isSceneChanging = false;
         }
 
-        IEnumerator UnloadSubScene(int sceneIndex) {
+        IEnumerator UnloadSubScene(int sceneIndex, bool fadeBGM = false) {
             yield return new WaitUntil(() => !isSceneChanging);
             isSceneChanging = true;
 
@@ -287,6 +282,10 @@ namespace SimCard.SimGame {
             EventBus.OnPlayerUnpause.Raise(new());
             environment.SetActive(true);
             asyncLoad.allowSceneActivation = true;
+
+            if (fadeBGM) {
+                StartCoroutine(simGameAudioSystem.FadeIn("BGM", 1f));
+            }
 
             yield return fadeUI.FadeOut();
 
