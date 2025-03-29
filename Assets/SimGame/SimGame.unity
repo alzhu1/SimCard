@@ -94488,6 +94488,18 @@ PrefabInstance:
       propertyPath: data
       value: 
       objectReference: {fileID: 4900000, guid: 9b8494bcc560a452e9d9f2c2ba7842d7, type: 3}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[0].count
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[0].cardSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 1fbbb885f46ac4494a008e9e1ee6acdd, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -99644,12 +99656,22 @@ MonoBehaviour:
   moveSpeed: 250
   deck:
   - cardSO: {fileID: 11400000, guid: 1fbbb885f46ac4494a008e9e1ee6acdd, type: 2}
-    count: 20
+    count: 10
   - cardSO: {fileID: 11400000, guid: 306a6e4ed79c94a9fa72e10218f35245, type: 2}
+    count: 10
+  - cardSO: {fileID: 11400000, guid: a961b2591e2834807a201396ba90a196, type: 2}
+    count: 5
+  - cardSO: {fileID: 11400000, guid: 6983b6a94ef514fb6bcbc836eb4634c3, type: 2}
+    count: 5
+  - cardSO: {fileID: 11400000, guid: 98c61d6d4a3bb446c964d2c2dcc6f2f5, type: 2}
+    count: 3
+  - cardSO: {fileID: 11400000, guid: d4021d90f8a8a4e6085d385f7ae4a0d8, type: 2}
+    count: 3
+  - cardSO: {fileID: 11400000, guid: aa07d3a22b7a84115b3aaca4da4051dc, type: 2}
     count: 2
-  availableCards:
-  - cardSO: {fileID: 11400000, guid: 1fbbb885f46ac4494a008e9e1ee6acdd, type: 2}
-    count: 40
+  - cardSO: {fileID: 11400000, guid: f1ad0eb1cf4734454a4e137d81d5be14, type: 2}
+    count: 2
+  availableCards: []
   currency: 0
 --- !u!61 &1741206561
 BoxCollider2D:

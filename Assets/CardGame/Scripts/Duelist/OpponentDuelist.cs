@@ -13,6 +13,8 @@ namespace SimCard.CardGame {
         private OpponentAI opponentAI;
         public OpponentAI AI => opponentAI;
 
+        public override bool IsPlayer => false;
+
         protected override DuelistState StartState => new DrawState<OpponentThinkState>();
 
         protected override void InitForGame(EventArgs<List<CardMetadata>, List<CardMetadata>> args) {

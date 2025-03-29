@@ -105,6 +105,8 @@ namespace SimCard.CardGame {
         }
 
         // These need to be overridden
+        public abstract bool IsPlayer { get; }
+
         protected abstract DuelistState StartState { get; }
         protected abstract void InitForGame(EventArgs<List<CardMetadata>, List<CardMetadata>> args);
         protected abstract void SendCurrencyUpdateEvent(int beforeCurrency, int afterCurrency);

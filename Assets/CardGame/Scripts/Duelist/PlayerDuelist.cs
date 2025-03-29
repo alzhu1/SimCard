@@ -16,6 +16,8 @@ namespace SimCard.CardGame {
         [SerializeField]
         private Vector3 cursorOffset;
 
+        public override bool IsPlayer => true;
+
         protected override DuelistState StartState => new DrawState<PlayerBaseState>();
 
         protected override void InitForGame(EventArgs<List<CardMetadata>, List<CardMetadata>> args) {

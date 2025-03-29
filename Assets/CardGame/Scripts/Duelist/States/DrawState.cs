@@ -21,21 +21,21 @@ namespace SimCard.CardGame {
             foreach (Card card in duelist.Field.Cards) {
                 card.SetHighlight();
 
-                // We can increment card active turns at upkeep
+                // Apply active effects
+                card.ApplyActiveEffects();
+
+                // Check for currency
+                int preCurrency = duelist.Currency;
+                Debug.Log($"Currency ({preCurrency}) + income ({card.Income}) = {duelist.Currency}");
+                duelist.AdjustCurrency(card.Income);
+
+                // We can update card active turns at upkeep
                 card.DecrementActiveTurns();
 
                 // Check for turn limit reached
                 if (card.ReachedTurnLimit()) {
                     cardsToDiscard.Add(card);
                     Debug.Log($"Adding {card} to discard list");
-                } else {
-                    // Apply active effects
-                    card.ApplyActiveEffects();
-
-                    // Check for currency
-                    int preCurrency = duelist.Currency;
-                    Debug.Log($"Currency ({preCurrency}) + income ({card.Income}) = {duelist.Currency}");
-                    duelist.AdjustCurrency(card.Income);
                 }
 
                 yield return new WaitForSeconds(0.5f);

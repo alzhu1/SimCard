@@ -46,6 +46,7 @@ namespace SimCard.CardGame {
 
         // Mediated UI
         private CoinUI coinUI;
+        private ResultsUI resultsUI;
 
         private AudioSystem cardGameAudioSystem;
 
@@ -71,6 +72,7 @@ namespace SimCard.CardGame {
             currTurn = 0;
 
             coinUI = GetComponentInChildren<CoinUI>();
+            resultsUI = GetComponentInChildren<ResultsUI>();
 
             cardGameAudioSystem = GetComponentInChildren<AudioSystem>();
 
@@ -156,7 +158,7 @@ namespace SimCard.CardGame {
 
         void HandleGameEnd(EventArgs<Duelist, Duelist> args) {
             (Duelist winner, Duelist loser) = args;
-            StartCoroutine(EndCardGame(winner == playerDuelist));
+            StartCoroutine(EndCardGame(winner.IsPlayer));
         }
 
         List<CardMetadata> GenerateBoosterPack() {
@@ -180,18 +182,16 @@ namespace SimCard.CardGame {
         }
 
         IEnumerator EndCardGame(bool playerWon) {
-            // TODO: Fix this, don't want to use return
-            while (!Input.GetKeyDown(KeyCode.Return)) {
-                Debug.Log("KeyDown return please");
-                yield return null;
-            }
+            List<CardMetadata> pack = playerWon ? GenerateBoosterPack() : null;
+            int goldWon = playerWon ? 50 : 0;
+            resultsUI.DisplayResults(playerWon, pack, goldWon);
+
+            yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
+
+            resultsUI.HideResults();
 
             if (simGameManager != null) {
-                int goldWon = playerWon ? 50 : 0;
-                List<CardMetadata> pack = playerWon ? GenerateBoosterPack() : null;
-
                 simGameManager.EventBus.OnCardGameEnd.Raise(new(goldWon, pack));
-
                 StartCoroutine(cardGameAudioSystem.FadeOut("BGM", 1f));
             } else {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
