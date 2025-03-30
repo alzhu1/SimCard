@@ -55,6 +55,8 @@ namespace SimCard.CardGame {
         protected override IEnumerator Handle() {
             while (nextState == null) {
                 if (Input.GetKeyDown(KeyCode.Escape)) {
+                    playerDuelist.CardGameManager.PlayBackActionSound();
+
                     // Revert to base state, keeping the original card
                     nextState = new PlayerBaseState(selectedItem);
                     break;
@@ -71,6 +73,7 @@ namespace SimCard.CardGame {
                 if (Input.GetKeyDown(KeyCode.Space)) {
                     switch (allowedActions[actionIndex]) {
                         case PlayerCardAction.Preview:
+                            playerDuelist.CardGameManager.PlayCursorSelectSound();
                             nextState = new PlayerCardPreviewState(selectedItem);
                             break;
 

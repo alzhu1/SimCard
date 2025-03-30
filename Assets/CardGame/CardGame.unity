@@ -26019,6 +26019,48 @@ MonoBehaviour:
     loop: 1
     pitch: 1
     source: {fileID: 0}
+  - name: CoinBounce
+    clip: {fileID: 8300000, guid: fa662a9d08ebf46909a4f1410b6eb707, type: 3}
+    volume: 0.5
+    loop: 0
+    pitch: 1
+    source: {fileID: 0}
+  - name: CursorMove
+    clip: {fileID: 8300000, guid: 151b45d5d351d4838b44862e66f37ddc, type: 3}
+    volume: 0.3
+    loop: 0
+    pitch: 2
+    source: {fileID: 0}
+  - name: CursorSelect
+    clip: {fileID: 8300000, guid: 8766ef89fd4f94dee9d3962c9398d474, type: 3}
+    volume: 0.3
+    loop: 0
+    pitch: 2
+    source: {fileID: 0}
+  - name: BackAction
+    clip: {fileID: 8300000, guid: dd446cf7ff39c43afb53afe7448b88c3, type: 3}
+    volume: 0.3
+    loop: 0
+    pitch: 2
+    source: {fileID: 0}
+  - name: CardSummon
+    clip: {fileID: 8300000, guid: 35183d700e03a410788f0a0baca736c9, type: 3}
+    volume: 0.3
+    loop: 0
+    pitch: 2
+    source: {fileID: 0}
+  - name: CardFire
+    clip: {fileID: 8300000, guid: ea54194079bf9489e8a5d8f86619d1a7, type: 3}
+    volume: 0.3
+    loop: 0
+    pitch: 2
+    source: {fileID: 0}
+  - name: CardProcess
+    clip: {fileID: 8300000, guid: 766d60a14697344a3b75cda4570b27e1, type: 3}
+    volume: 0.3
+    loop: 0
+    pitch: 1
+    source: {fileID: 0}
 --- !u!1001 &630451476
 PrefabInstance:
   m_ObjectHideFlags: 0

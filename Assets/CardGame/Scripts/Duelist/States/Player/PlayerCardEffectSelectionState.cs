@@ -35,6 +35,8 @@ namespace SimCard.CardGame {
         protected override IEnumerator Handle() {
             while (nonSelfEffectIndex < playedCard.NonSelfEffects.Count) {
                 if (Input.GetKeyDown(KeyCode.Space)) {
+                    playerDuelist.CardGameManager.PlayCursorSelectSound();
+
                     Effect effect = playedCard.NonSelfEffects[nonSelfEffectIndex];
                     playerDuelist.ApplyCardEffect(effect, playedCard, cardEffectSelectionGraph.CurrItem);
 

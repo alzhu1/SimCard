@@ -94,6 +94,8 @@ namespace SimCard.CardGame {
         }
 
         public void EndTurn() {
+            CardGameManager.PlayBackActionSound();
+
             duelistState = null;
             CardGameManager.EndTurn();
         }
@@ -114,6 +116,8 @@ namespace SimCard.CardGame {
         // TODO: Thinking that for these card operations, they should be co-routines so that other states can wait on them
 
         public void DrawCard() {
+            CardGameManager.PlayCardProcessSound();
+
             if (Deck.TransferTo(Hand, Deck.NextCard, true)) {
                 Deck.TryHideDeck();
             }
@@ -122,6 +126,8 @@ namespace SimCard.CardGame {
         }
 
         public void PlaySelectedCard(Card card) {
+            CardGameManager.PlayCardSummonSound();
+
             TurnActions--;
             AdjustCurrency(-card.Cost);
 
@@ -144,6 +150,8 @@ namespace SimCard.CardGame {
         }
 
         public void Discard(Card card) {
+            CardGameManager.PlayCardFireSound();
+
             CardHolder currentCardHolder = card.GetCurrentHolder();
             currentCardHolder.TransferTo(Graveyard, card, true);
             card.ClearActiveTurns();

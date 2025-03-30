@@ -38,19 +38,19 @@ namespace SimCard.SimGame {
         IEnumerator HandleInputs() {
             while (nextState == null) {
                 if (Input.GetKeyDown(KeyCode.Space)) {
-                    interactionParser.HandleAdvance(true);
+                    interactionParser.HandleAdvance(true, player.SimGameManager.PlayAdvanceSound);
                 }
 
                 if (Input.GetKeyDown(KeyCode.Escape)) {
-                    interactionParser.HandleAdvance(false);
+                    interactionParser.HandleAdvance(false, player.SimGameManager.PlayAdvanceSound);
                 }
 
                 if (Input.GetKeyDown(KeyCode.UpArrow)) {
-                    interactionParser.UpdateOptionIndex(-1);
+                    interactionParser.UpdateOptionIndex(-1, player.SimGameManager.PlayOptionMoveSound);
                 }
 
                 if (Input.GetKeyDown(KeyCode.DownArrow)) {
-                    interactionParser.UpdateOptionIndex(1);
+                    interactionParser.UpdateOptionIndex(1, player.SimGameManager.PlayOptionMoveSound);
                 }
 
                 yield return null;

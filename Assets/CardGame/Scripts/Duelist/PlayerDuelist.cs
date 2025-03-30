@@ -52,6 +52,8 @@ namespace SimCard.CardGame {
             Vector3 dest = selectable.transform.position + cursorOffset;
             float t = 0;
 
+            CardGameManager.PlayCursorMoveSound();
+
             if (!instant) {
                 while (t < cursorMoveTime) {
                     cursor.transform.position = Vector3.Lerp(start, dest, t / cursorMoveTime);

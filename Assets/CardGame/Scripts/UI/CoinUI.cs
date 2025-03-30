@@ -44,19 +44,38 @@ public class CoinUI : MonoBehaviour {
         }
     }
 
-    public IEnumerator FlipCoin(float value) {
+    public IEnumerator FlipCoin(float value, System.Action PlaySFX) {
         // animator.enabled = false;
         float baseHeight = coinImage.rectTransform.anchoredPosition.y;
 
+        PlaySFX();
+
         // First value of t that returns 1 from EaseOutBounce
         float t = -bounceTime / 2.75f;
+        float startEasing = EaseOutBounce(t / bounceTime);
+        float[] easings = new float[] { startEasing, startEasing, startEasing };
+
         while (t < bounceTime) {
+            // Move easings over by 1
+            easings[0] = easings[1];
+            easings[1] = easings[2];
+
+            // float easing = EaseOutBounce(t / bounceTime);
+            float heightDiff = (1 - easings[1]) * coinBounceHeight;
+
             coinImage.rectTransform.anchoredPosition = new Vector2(
                 coinImage.rectTransform.anchoredPosition.x,
-                baseHeight + ((1 - EaseOutBounce(t / bounceTime)) * coinBounceHeight)
+                baseHeight + heightDiff
             );
             yield return null;
             t += Time.deltaTime;
+
+            // Recalculate the easing to see the next value
+            easings[2] = EaseOutBounce(t / bounceTime);
+
+            if (easings[0] < easings[1] && easings[2] < easings[1]) {
+                PlaySFX();
+            }
 
             // Pick a target sprite during flipping so that once it lands, it should be close to target
             // Not super accurate but works

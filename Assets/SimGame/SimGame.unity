@@ -92545,6 +92545,24 @@ MonoBehaviour:
     loop: 1
     pitch: 1
     source: {fileID: 0}
+  - name: OptionMove
+    clip: {fileID: 8300000, guid: 151b45d5d351d4838b44862e66f37ddc, type: 3}
+    volume: 0.3
+    loop: 0
+    pitch: 2
+    source: {fileID: 0}
+  - name: Advance
+    clip: {fileID: 8300000, guid: 8766ef89fd4f94dee9d3962c9398d474, type: 3}
+    volume: 0.3
+    loop: 0
+    pitch: 2
+    source: {fileID: 0}
+  - name: BackAction
+    clip: {fileID: 8300000, guid: dd446cf7ff39c43afb53afe7448b88c3, type: 3}
+    volume: 0.3
+    loop: 0
+    pitch: 2
+    source: {fileID: 0}
 --- !u!4 &956127360 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5881399737167756081, guid: f43f3785ab09047009fbab71718f5185, type: 3}

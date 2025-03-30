@@ -291,5 +291,10 @@ namespace SimCard.SimGame {
 
             isSceneChanging = false;
         }
+
+        // Sounds
+        public void PlayOptionMoveSound() => simGameAudioSystem.Play("OptionMove");
+        public void PlayAdvanceSound() => simGameAudioSystem.Play("Advance");
+        public void PlayBackActionSound() => simGameAudioSystem.Play("BackAction");
     }
 }

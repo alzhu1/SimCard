@@ -24,6 +24,7 @@ namespace SimCard.SimGame {
         protected override IEnumerator Handle() {
             while (nextState == null) {
                 if (Input.GetKeyDown(KeyCode.Escape)) {
+                    player.SimGameManager.PlayBackActionSound();
                     nextState = new RegularState();
                     break;
                 }
@@ -34,11 +35,13 @@ namespace SimCard.SimGame {
 
                     switch (option) {
                         case Menu.MenuOption.Deck: {
+                            player.SimGameManager.PlayAdvanceSound();
                             player.SimGameManager.EventBus.OnInteractionEvent.Raise(new("StartDeckBuild", null, 0));
                             break;
                         }
 
                         case Menu.MenuOption.Exit: {
+                            player.SimGameManager.PlayBackActionSound();
                             nextState = new RegularState();
                             break;
                         }
@@ -51,10 +54,12 @@ namespace SimCard.SimGame {
                 }
 
                 if (Input.GetKeyDown(KeyCode.UpArrow)) {
+                    player.SimGameManager.PlayOptionMoveSound();
                     menu.UpdateOptionIndex(-1);
                 }
 
                 if (Input.GetKeyDown(KeyCode.DownArrow)) {
+                    player.SimGameManager.PlayOptionMoveSound();
                     menu.UpdateOptionIndex(1);
                 }
 

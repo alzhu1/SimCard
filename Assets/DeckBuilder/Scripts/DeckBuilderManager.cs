@@ -128,13 +128,10 @@ namespace SimCard.DeckBuilder {
 
             /* Actions */
 
-            // Revert
-            if (Input.GetKeyDown(KeyCode.Escape)) {
-                SelectedCard = null;
-            }
-
             // Selection
             if (Input.GetKeyDown(KeyCode.Space)) {
+                PlayCursorSelectSound();
+
                 if (Index == -1) {
                     SortOptions currSortOption = (SortOptions)SubIndex;
                     Debug.Log($"Curr sort option: {currSortOption}, SubIndex: {SubIndex}");
@@ -158,31 +155,38 @@ namespace SimCard.DeckBuilder {
                 }
             }
 
-            // Set deck (only if no selected card)
-            if (SelectedCard == null && Input.GetKeyDown(KeyCode.Escape)) {
-                Debug.Log("Sending event back to sim game bus now");
+            if (Input.GetKeyDown(KeyCode.Escape)) {
+                PlayBackActionSound();
 
-                // Final deck is every card item that has a non-zero first int count
-                List<CardMetadata> finalDeck = CardToCount
-                    .Where(x => x.Value.Item1 > 0)
-                    .Select(x => new CardMetadata(x.Key, x.Value.Item1))
-                    .ToList();
-
-                // Final available cards should be the remained (2nd int - 1st int)
-                List<CardMetadata> finalAvailableCards = CardToCount
-                    .Where(x => x.Value.Item2 > x.Value.Item1)
-                    .Select(x => new CardMetadata(x.Key, x.Value.Item2 - x.Value.Item1))
-                    .ToList();
-
-                if (simGameManager != null) {
-                    simGameManager.EventBus.OnDeckBuilderEnd.Raise(
-                        new(finalDeck, finalAvailableCards)
-                    );
-                    running = false;
+                // Revert
+                if (SelectedCard != null) {
+                    SelectedCard = null;
                 } else {
-                    // Continue running (test mode)
-                    testDeck = finalDeck;
-                    testAvailableCards = finalAvailableCards;
+                    // Set deck (only if no selected card)
+                    Debug.Log("Sending event back to sim game bus now");
+
+                    // Final deck is every card item that has a non-zero first int count
+                    List<CardMetadata> finalDeck = CardToCount
+                        .Where(x => x.Value.Item1 > 0)
+                        .Select(x => new CardMetadata(x.Key, x.Value.Item1))
+                        .ToList();
+
+                    // Final available cards should be the remained (2nd int - 1st int)
+                    List<CardMetadata> finalAvailableCards = CardToCount
+                        .Where(x => x.Value.Item2 > x.Value.Item1)
+                        .Select(x => new CardMetadata(x.Key, x.Value.Item2 - x.Value.Item1))
+                        .ToList();
+
+                    if (simGameManager != null) {
+                        simGameManager.EventBus.OnDeckBuilderEnd.Raise(
+                            new(finalDeck, finalAvailableCards)
+                        );
+                        running = false;
+                    } else {
+                        // Continue running (test mode)
+                        testDeck = finalDeck;
+                        testAvailableCards = finalAvailableCards;
+                    }
                 }
             }
 
@@ -210,6 +214,10 @@ namespace SimCard.DeckBuilder {
                     horizontalDelta = modifier;
                 }
 
+                if (verticalDelta != 0 || horizontalDelta != 0) {
+                    PlayCursorMoveSound();
+                }
+
                 if (Index == -1) {
                     SubIndex = (SubIndex + horizontalDelta + sortOptionCount) % sortOptionCount;
                 } else {
@@ -219,5 +227,10 @@ namespace SimCard.DeckBuilder {
                 }
             }
         }
+
+        // Sounds
+        void PlayCursorMoveSound() => deckBuilderAudioSystem.Play("CursorMove");
+        void PlayCursorSelectSound() => deckBuilderAudioSystem.Play("CursorSelect");
+        void PlayBackActionSound() => deckBuilderAudioSystem.Play("BackAction");
     }
 }

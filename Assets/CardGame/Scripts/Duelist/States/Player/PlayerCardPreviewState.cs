@@ -24,6 +24,7 @@ namespace SimCard.CardGame {
         protected override IEnumerator Handle() {
             while (nextState == null) {
                 if (Input.GetKeyDown(KeyCode.Escape)) {
+                    playerDuelist.CardGameManager.PlayBackActionSound();
                     bool previewDone = previewHandler.HandleEscape();
                     nextState = previewDone ? new PlayerCardSelectedState(previewedItem) : null;
                 }
@@ -35,6 +36,7 @@ namespace SimCard.CardGame {
                 }
 
                 if (Input.GetKeyDown(KeyCode.Space)) {
+                    playerDuelist.CardGameManager.PlayCursorSelectSound();
                     previewHandler.HandleSelection();
                 }
 

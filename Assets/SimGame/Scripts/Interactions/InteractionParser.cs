@@ -58,11 +58,13 @@ namespace SimCard.SimGame {
             return new WaitForSeconds(interactable.TypeTime);
         }
 
-        public void HandleAdvance(bool active) {
+        public void HandleAdvance(bool active, System.Action PlaySFX) {
             if (active && MaxVisibleCharacters < InteractionTextLength) {
                 UpdateMaxVisibleCharacters(InteractionTextLength);
                 return;
             }
+
+            PlaySFX();
 
             if (!active) {
                 // Only support inactive ("close" button) input for shop buy
@@ -117,11 +119,12 @@ namespace SimCard.SimGame {
             MaxVisibleCharacters = 0;
         }
 
-        public void UpdateOptionIndex(int diff) {
+        public void UpdateOptionIndex(int diff, System.Action PlaySFX) {
             if (MaxVisibleCharacters < InteractionTextLength) {
                 return;
             }
 
+            PlaySFX();
             int optionCount = CurrInteractionNode.Options.Count;
             OptionIndex = (optionCount + OptionIndex + diff) % optionCount;
         }

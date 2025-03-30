@@ -57,6 +57,7 @@ namespace SimCard.CardGame {
 
                 if (Input.GetKeyDown(KeyCode.Space)) {
                     // Move to a new state
+                    playerDuelist.CardGameManager.PlayCursorSelectSound();
                     nextState = new PlayerCardSelectedState(cardGraph.CurrItem);
                     break;
                 }

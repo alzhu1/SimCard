@@ -19,6 +19,8 @@ namespace SimCard.CardGame {
             List<Card> cardsToDiscard = new();
 
             foreach (Card card in duelist.Field.Cards) {
+                duelist.CardGameManager.PlayCardProcessSound();
+
                 card.SetHighlight();
 
                 // Apply active effects

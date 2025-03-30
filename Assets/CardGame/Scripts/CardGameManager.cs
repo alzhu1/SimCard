@@ -124,7 +124,7 @@ namespace SimCard.CardGame {
             }
 
             float coinFlipValue = Random.Range(0f, 1f);
-            yield return coinUI.FlipCoin(coinFlipValue);
+            yield return coinUI.FlipCoin(coinFlipValue, PlayCoinBounceSound);
 
             Debug.Log($"Coin flip occurred, value: {coinFlipValue}");
 
@@ -202,5 +202,14 @@ namespace SimCard.CardGame {
             StartCoroutine(StartCardGame(args));
             // StartCoroutine(EndCardGame(true));
         }
+
+        // Sounds
+        void PlayCoinBounceSound() => cardGameAudioSystem.Play("CoinBounce");
+        public void PlayCursorMoveSound() => cardGameAudioSystem.Play("CursorMove");
+        public void PlayCursorSelectSound() => cardGameAudioSystem.Play("CursorSelect");
+        public void PlayBackActionSound() => cardGameAudioSystem.Play("BackAction");
+        public void PlayCardSummonSound() => cardGameAudioSystem.Play("CardSummon");
+        public void PlayCardFireSound() => cardGameAudioSystem.Play("CardFire");
+        public void PlayCardProcessSound() => cardGameAudioSystem.Play("CardProcess");
     }
 }
