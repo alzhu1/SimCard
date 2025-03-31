@@ -48,6 +48,13 @@ namespace SimCard.Common {
             return s;
         }
 
+        public void Preload(string name) {
+            Debug.Log($"Loading audio data for {name}");
+
+            Sound s = GetSound(name);
+            s?.clip.LoadAudioData();
+        }
+
         public Sound Play(string name) {
             Debug.Log($"About to play {name}");
 

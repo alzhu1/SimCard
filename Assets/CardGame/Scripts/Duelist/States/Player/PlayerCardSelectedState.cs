@@ -97,7 +97,7 @@ namespace SimCard.CardGame {
                         }
 
                         case PlayerCardAction.Surrender: {
-                            playerDuelist.CardGameManager.EventBus.OnGameEnd.Raise(new(playerDuelist.Enemy, playerDuelist));
+                            playerDuelist.CardGameManager.EventBus.OnGameEnd.Raise(new(playerDuelist.Enemy, playerDuelist, "You surrendered."));
                             nextState = new EndState();
                             break;
                         }

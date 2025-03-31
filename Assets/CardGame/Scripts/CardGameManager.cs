@@ -109,9 +109,13 @@ namespace SimCard.CardGame {
         }
 
         IEnumerator StartBGM() {
-            Sound s = cardGameAudioSystem.Play("BGM_Intro");
-            // MINOR: This doesn't perfectly lead into next song, figure out alternative
-            while (s.source.isPlaying || s.source.time != 0) {
+            Sound intro = cardGameAudioSystem.Play("BGM_Intro");
+            yield return null;
+
+            // Preload the main song to remove delay on first play
+            cardGameAudioSystem.Preload("BGM");
+
+            while (intro.source.isPlaying || intro.source.time != 0) {
                 yield return null;
             }
             cardGameAudioSystem.Play("BGM");
@@ -156,9 +160,9 @@ namespace SimCard.CardGame {
             StartTurn();
         }
 
-        void HandleGameEnd(EventArgs<Duelist, Duelist> args) {
-            (Duelist winner, Duelist loser) = args;
-            StartCoroutine(EndCardGame(winner.IsPlayer));
+        void HandleGameEnd(EventArgs<Duelist, Duelist, string> args) {
+            (Duelist winner, Duelist loser, string reason) = args;
+            StartCoroutine(EndCardGame(winner.IsPlayer, reason));
         }
 
         List<CardMetadata> GenerateBoosterPack() {
@@ -181,10 +185,12 @@ namespace SimCard.CardGame {
             return pack;
         }
 
-        IEnumerator EndCardGame(bool playerWon) {
+        IEnumerator EndCardGame(bool playerWon, string reason) {
             List<CardMetadata> pack = playerWon ? GenerateBoosterPack() : null;
             int goldWon = playerWon ? 50 : 0;
-            resultsUI.DisplayResults(playerWon, pack, goldWon);
+            resultsUI.DisplayResults(playerWon, pack, goldWon, reason);
+
+            yield return null;
 
             yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
 

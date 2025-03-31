@@ -14,6 +14,7 @@ namespace SimCard.CardGame {
 
     public class ResultsUI : MonoBehaviour {
         [SerializeField] private TextMeshProUGUI resultsTitleText;
+        [SerializeField] private TextMeshProUGUI resultsReasonText;
         [SerializeField] private TextMeshProUGUI resultsText;
 
         [SerializeField] private GameObject packCardsContainer;
@@ -25,8 +26,9 @@ namespace SimCard.CardGame {
             resultsGroup = GetComponent<CanvasGroup>();
         }
 
-        public void DisplayResults(bool playerWon, List<CardMetadata> pack, int goldWon) {
+        public void DisplayResults(bool playerWon, List<CardMetadata> pack, int goldWon, string reason) {
             resultsTitleText.text = playerWon ? "You won!" : "You lost...";
+            resultsReasonText.text = reason;
             resultsText.text = playerWon ? $"You won ${goldWon} and the following cards..." : "Better luck next time!";
             packCardsContainer.SetActive(playerWon);
 

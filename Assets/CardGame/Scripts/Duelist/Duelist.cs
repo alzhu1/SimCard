@@ -30,12 +30,12 @@ namespace SimCard.CardGame {
             // Handle win/loss
             if (Currency < 0) {
                 // Lose
-                CardGameManager.EventBus.OnGameEnd.Raise(new(Enemy, this));
+                CardGameManager.EventBus.OnGameEnd.Raise(new(Enemy, this, "The opponent reached the $$$ goal first."));
             }
 
             if (Currency >= CardGameManager.WinCurrency) {
                 // Win
-                CardGameManager.EventBus.OnGameEnd.Raise(new(this, Enemy));
+                CardGameManager.EventBus.OnGameEnd.Raise(new(this, Enemy, "You reached the $$$ goal first!"));
             }
 
             // Send corresponding event to update UI
@@ -100,7 +100,7 @@ namespace SimCard.CardGame {
             CardGameManager.EndTurn();
         }
 
-        void StopDuelist(EventArgs<Duelist, Duelist> _) {
+        void StopDuelist(EventArgs<Duelist, Duelist, string> _) {
             Debug.Log("Stop the duelist");
             duelistState?.Stop();
             duelistState = null;
@@ -118,8 +118,9 @@ namespace SimCard.CardGame {
         public void DrawCard() {
             CardGameManager.PlayCardProcessSound();
 
-            if (Deck.TransferTo(Hand, Deck.NextCard, true)) {
-                Deck.TryHideDeck();
+            if (!Deck.TransferTo(Hand, Deck.NextCard, true)) {
+                // Lose
+                CardGameManager.EventBus.OnGameEnd.Raise(new(Enemy, this, "You ran out of cards to draw."));
             }
 
             OrganizeArea();

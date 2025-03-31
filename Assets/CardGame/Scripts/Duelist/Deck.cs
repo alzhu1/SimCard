@@ -26,12 +26,6 @@ namespace SimCard.CardGame {
             }
         }
 
-        public void TryHideDeck() {
-            if (cards.Count == 0) {
-                deckSr.enabled = false;
-            }
-        }
-
         public void ClearDeck() {
             foreach (Card card in cards) {
                 Destroy(card.gameObject);
