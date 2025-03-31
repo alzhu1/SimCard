@@ -92807,6 +92807,50 @@ PrefabInstance:
       propertyPath: data
       value: 
       objectReference: {fileID: 4900000, guid: a200f31a275dd4b7a9e170282ce24021, type: 3}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[0].count
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[1].count
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[2].count
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[3].count
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[4].count
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[0].cardSO
+      value: 
+      objectReference: {fileID: 11400000, guid: a961b2591e2834807a201396ba90a196, type: 2}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[1].cardSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 6983b6a94ef514fb6bcbc836eb4634c3, type: 2}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[2].cardSO
+      value: 
+      objectReference: {fileID: 11400000, guid: aa07d3a22b7a84115b3aaca4da4051dc, type: 2}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[3].cardSO
+      value: 
+      objectReference: {fileID: 11400000, guid: f1ad0eb1cf4734454a4e137d81d5be14, type: 2}
+    - target: {fileID: 7076093542261023969, guid: ecc856115cea74f1fb78066527e86ede, type: 3}
+      propertyPath: deck.Array.data[4].cardSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 536b6167d90314b0f8331399c3340281, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
