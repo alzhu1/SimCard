@@ -95,9 +95,8 @@ namespace SimCard.SimGame {
                 previewCardImage.sprite = previewCard.fullSprite;
 
                 // Update inventory text
-                int cardCount = player.Deck.Find(cardMetadata => cardMetadata.cardSO.Equals(previewCard))?.count ?? 0;
                 currencyText.text = $"Money: ${player.Currency}";
-                inventoryText.text = $"Card Count: {cardCount}";
+                inventoryText.text = $"Card Count: {player.GetCardCount(previewCard)}";
             }
         }
 

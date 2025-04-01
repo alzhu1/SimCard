@@ -107,5 +107,11 @@ namespace SimCard.SimGame {
                 availableCards = cardMap.Select(x => new CardMetadata(x.Key, x.Value)).ToList();
             }
         }
+
+        public int GetCardCount(CardSO card) {
+            int deckCardCount = Deck.Find(cardMetadata => cardMetadata.cardSO.Equals(card))?.count ?? 0;
+            int availableCardCount = AvailableCards.Find(cardMetadata => cardMetadata.cardSO.Equals(card))?.count ?? 0;
+            return deckCardCount + availableCardCount;
+        }
     }
 }
