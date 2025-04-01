@@ -40,6 +40,8 @@ namespace SimCard.CardGame {
         [SerializeField] private int startingIncome = 50;
         [SerializeField] private int laterStartingIncome = 75;
 
+        [SerializeField] private bool showInitialTutorial;
+
         [SerializeField]
         private List<CardPrizePool> cardPrizePools;
 
@@ -53,8 +55,11 @@ namespace SimCard.CardGame {
         // Mediated UI
         private CoinUI coinUI;
         private ResultsUI resultsUI;
+        private TutorialUI tutorialUI;
 
         private AudioSystem cardGameAudioSystem;
+
+        private bool gameRunning;
 
         void Awake() {
             if (instance == null) {
@@ -79,6 +84,7 @@ namespace SimCard.CardGame {
 
             coinUI = GetComponentInChildren<CoinUI>();
             resultsUI = GetComponentInChildren<ResultsUI>();
+            tutorialUI = GetComponentInChildren<TutorialUI>();
 
             cardGameAudioSystem = GetComponentInChildren<AudioSystem>();
 
@@ -104,11 +110,36 @@ namespace SimCard.CardGame {
             }
         }
 
-        IEnumerator StartCardGame(EventArgs<List<CardMetadata>, List<CardMetadata>> args) {
+        void Update() {
+            if (!gameRunning) {
+                return;
+            }
+
+            if (Input.GetKey(KeyCode.Tab)) {
+                tutorialUI.ShowDuringPlay();
+            } else {
+                tutorialUI.Hide();
+            }
+        }
+
+        IEnumerator StartCardGame(EventArgs<List<CardMetadata>, List<CardMetadata>, bool> args) {
             StartCoroutine(StartBGM());
 
+            Debug.Log($"Show initial tutorial: {showInitialTutorial}");
+
+            if (args?.arg3 ?? showInitialTutorial) {
+                tutorialUI.ShowOnLoad();
+                yield return null;
+                yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
+                yield return null;
+                Debug.Log("Key pressed, hide tutorial");
+                tutorialUI.Hide();
+            }
+
             yield return StartCoroutine(DetermineTurnOrder());
-            EventBus.OnGameStart.Raise(args);
+            EventBus.OnGameStart.Raise(args == null ? null : new(args.arg1, args.arg2));
+
+            gameRunning = true;
 
             yield return new WaitForSeconds(2f);
             StartTurn();
@@ -183,6 +214,9 @@ namespace SimCard.CardGame {
                 PlayLoseSound();
             }
 
+            gameRunning = false;
+            tutorialUI.Hide();
+
             StartCoroutine(EndCardGame(winner.IsPlayer, endReason));
         }
 
@@ -225,7 +259,7 @@ namespace SimCard.CardGame {
             }
         }
 
-        void InitCardGame(EventArgs<List<CardMetadata>, List<CardMetadata>> args) {
+        void InitCardGame(EventArgs<List<CardMetadata>, List<CardMetadata>, bool> args) {
             StartCoroutine(StartCardGame(args));
             // StartCoroutine(EndCardGame(true));
         }

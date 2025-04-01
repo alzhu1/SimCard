@@ -24,7 +24,7 @@ namespace SimCard.SimGame {
 
         // Cross scene event
         public GameEvent<EventArgs> OnSubSceneLoaded = new();
-        public SubSceneInitGameEvent<EventArgs<List<CardMetadata>, List<CardMetadata>>> OnCardGameInit;
+        public SubSceneInitGameEvent<EventArgs<List<CardMetadata>, List<CardMetadata>, bool>> OnCardGameInit;
         public SubSceneInitGameEvent<EventArgs<List<CardMetadata>, List<CardMetadata>>> OnDeckBuilderInit;
 
         public GameEvent<EventArgs<int, List<CardMetadata>>> OnCardGameEnd = new();

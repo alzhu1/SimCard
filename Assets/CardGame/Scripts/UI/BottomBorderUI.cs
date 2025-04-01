@@ -25,7 +25,8 @@ namespace SimCard.CardGame {
         }
 
         void Start() {
-            cardGameManager.EventBus.OnTurnStart.Event += HandleTurnStart;
+            cardGameManager.EventBus.OnGameStart.Event += HandleClear;
+            cardGameManager.EventBus.OnTurnStart.Event += HandleClear;
             cardGameManager.EventBus.OnPlayerBaseHover.Event += HandleCardHover;
             cardGameManager.EventBus.OnPlayerCardEffectHover.Event += HandleCardEffectHover;
             cardGameManager.EventBus.OnPlayerCardActionHover.Event += HandleActionHover;
@@ -34,7 +35,8 @@ namespace SimCard.CardGame {
         }
 
         void OnDestroy() {
-            cardGameManager.EventBus.OnTurnStart.Event -= HandleTurnStart;
+            cardGameManager.EventBus.OnGameStart.Event -= HandleClear;
+            cardGameManager.EventBus.OnTurnStart.Event -= HandleClear;
             cardGameManager.EventBus.OnPlayerBaseHover.Event -= HandleCardHover;
             cardGameManager.EventBus.OnPlayerCardEffectHover.Event -= HandleCardEffectHover;
             cardGameManager.EventBus.OnPlayerCardActionHover.Event -= HandleActionHover;
@@ -43,7 +45,7 @@ namespace SimCard.CardGame {
 
         }
 
-        void HandleTurnStart(System.EventArgs args) {
+        void HandleClear(System.EventArgs args) {
             cardPropertiesCanvasGroup.alpha = 0;
             bottomBorderText.text = "";
         }

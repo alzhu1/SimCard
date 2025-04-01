@@ -101171,6 +101171,7 @@ MonoBehaviour:
   environment: {fileID: 1826797411}
   canvasUI: {fileID: 1438081981}
   vCam: {fileID: 1122737097}
+  showCardGameTutorial: 1
 --- !u!4 &2008175793
 Transform:
   m_ObjectHideFlags: 0

@@ -18,6 +18,7 @@ namespace SimCard.SimGame {
         [SerializeField] private GameObject environment;
         [SerializeField] private GameObject canvasUI;
         [SerializeField] private CinemachineVirtualCamera vCam;
+        [SerializeField] private bool showCardGameTutorial;
 
         private Camera simGameCamera;
         private CinemachineFramingTransposer transposer;
@@ -205,7 +206,10 @@ namespace SimCard.SimGame {
         }
 
         IEnumerator StartCardGame(Interactable interactable) {
-            yield return StartCoroutine(LoadSubScene(1, () => EventBus.OnCardGameInit.Raise(new(player.Deck, interactable.Deck)), true));
+            yield return StartCoroutine(LoadSubScene(1, () => {
+                EventBus.OnCardGameInit.Raise(new(player.Deck, interactable.Deck, showCardGameTutorial));
+                showCardGameTutorial = false;
+            }, true));
         }
 
         IEnumerator EndCardGame() {
