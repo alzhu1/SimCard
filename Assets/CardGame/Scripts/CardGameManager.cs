@@ -9,6 +9,12 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 namespace SimCard.CardGame {
+    public enum CardGameEndReason {
+        CurrencyGoalReached,
+        LastCardDrawn,
+        Surrender
+    }
+
     public class CardGameManager : MonoBehaviour {
         // Singleton is private to avoid multiple instantiations (if it somehow happened)
         private static CardGameManager instance = null;
@@ -160,9 +166,18 @@ namespace SimCard.CardGame {
             StartTurn();
         }
 
-        void HandleGameEnd(EventArgs<Duelist, Duelist, string> args) {
-            (Duelist winner, Duelist loser, string reason) = args;
-            StartCoroutine(EndCardGame(winner.IsPlayer, reason));
+        void HandleGameEnd(EventArgs<Duelist, Duelist, CardGameEndReason> args) {
+            (Duelist winner, Duelist loser, CardGameEndReason reason) = args;
+
+            string endReason = reason switch {
+                CardGameEndReason.CurrencyGoalReached when winner.IsPlayer => "You reached the $$$ goal first!",
+                CardGameEndReason.CurrencyGoalReached when !winner.IsPlayer => "The opponent reached the $$$ goal first.",
+                CardGameEndReason.LastCardDrawn => "You ran out of cards to draw.",
+                CardGameEndReason.Surrender => "You surrendered.",
+                _ => "The game is over."
+            };
+
+            StartCoroutine(EndCardGame(winner.IsPlayer, endReason));
         }
 
         List<CardMetadata> GenerateBoosterPack() {
