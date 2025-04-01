@@ -38,6 +38,7 @@ namespace SimCard.SimGame {
 
             while (nextState == null) {
                 if (interactable != null && Input.GetKeyDown(KeyCode.Space)) {
+                    player.SimGameManager.PlayAdvanceSound();
                     nextState = new InteractState(interactable);
                     break;
                 }

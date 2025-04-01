@@ -34,6 +34,11 @@ namespace SimCard.SimGame {
             animator.Play(currState);
         }
 
+        void OnEnable() {
+            // Keep on with current state
+            animator.Play(currState);
+        }
+
         public void ReturnToStart() {
             sr.flipX = startingFlipX;
             currState = idleAnimationStates[startingIndex];
