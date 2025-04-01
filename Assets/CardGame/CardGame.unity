@@ -26061,6 +26061,18 @@ MonoBehaviour:
     loop: 0
     pitch: 1
     source: {fileID: 0}
+  - name: Win
+    clip: {fileID: 8300000, guid: 5703b887efe4d49388593d420ea06ae9, type: 3}
+    volume: 0.5
+    loop: 0
+    pitch: 1
+    source: {fileID: 0}
+  - name: Lose
+    clip: {fileID: 8300000, guid: 2e3073cb59ee6446292cc61645cdb50c, type: 3}
+    volume: 0.5
+    loop: 0
+    pitch: 1
+    source: {fileID: 0}
 --- !u!1001 &630451476
 PrefabInstance:
   m_ObjectHideFlags: 0

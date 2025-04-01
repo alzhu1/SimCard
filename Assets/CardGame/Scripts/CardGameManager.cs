@@ -177,6 +177,12 @@ namespace SimCard.CardGame {
                 _ => "The game is over."
             };
 
+            if (winner.IsPlayer) {
+                PlayWinSound();
+            } else {
+                PlayLoseSound();
+            }
+
             StartCoroutine(EndCardGame(winner.IsPlayer, endReason));
         }
 
@@ -232,5 +238,7 @@ namespace SimCard.CardGame {
         public void PlayCardSummonSound() => cardGameAudioSystem.Play("CardSummon");
         public void PlayCardFireSound() => cardGameAudioSystem.Play("CardFire");
         public void PlayCardProcessSound() => cardGameAudioSystem.Play("CardProcess");
+        void PlayWinSound() => cardGameAudioSystem.Play("Win");
+        void PlayLoseSound() => cardGameAudioSystem.Play("Lose");
     }
 }
