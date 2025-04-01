@@ -8,6 +8,7 @@ namespace SimCard.Common {
         protected bool Completed => completed;
 
         protected MonoBehaviour actor;
+        protected List<Coroutine> subroutines;
 
         protected State nextState;
 
@@ -15,10 +16,11 @@ namespace SimCard.Common {
         protected abstract IEnumerator Handle();
         protected abstract void Exit();
 
-        private IEnumerator handle;
+        private Coroutine coroutine;
 
         protected void InitActor(MonoBehaviour actor) {
             this.actor = actor;
+            subroutines = new List<Coroutine>();
         }
 
         public void Begin() {
@@ -27,8 +29,7 @@ namespace SimCard.Common {
             // I feel like it should be fine
 
             // Alternative is to make the coroutine public, and call StartCoroutine in controller
-            handle = HandleWithLifecycle();
-            actor.StartCoroutine(handle);
+            coroutine = actor.StartCoroutine(HandleWithLifecycle());
         }
 
         IEnumerator HandleWithLifecycle() {
@@ -43,16 +44,28 @@ namespace SimCard.Common {
 
         public void Stop() {
             Debug.Log($"Requesting handle stop for {this}");
-            if (handle != null) {
-                actor.StopCoroutine(handle);
+
+            foreach (Coroutine subroutine in subroutines) {
+                actor.StopCoroutine(subroutine);
+            }
+
+            if (coroutine != null) {
+                actor.StopCoroutine(coroutine);
                 Exit();
             }
         }
 
         public void Restart() {
             Stop();
-            handle = HandleWithLifecycle();
-            actor.StartCoroutine(handle);
+            actor.StartCoroutine(HandleWithLifecycle());
+        }
+
+        // Wrapper around StartCoroutine that uses the actor to start the coroutine
+        // This should add on to the subroutine list
+        public Coroutine StartSubroutine(IEnumerator handle) {
+            Coroutine subroutine = actor.StartCoroutine(handle);
+            subroutines.Add(subroutine);
+            return subroutine;
         }
     }
 }

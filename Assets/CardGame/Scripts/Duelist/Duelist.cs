@@ -22,6 +22,8 @@ namespace SimCard.CardGame {
         public Field Field { get; private set; }
         public Graveyard Graveyard { get; private set; }
 
+        // For debugging
+        [field:SerializeField]
         public int Currency { get; private set; }
         public void AdjustCurrency(int delta) {
             int beforeCurrency = Currency;

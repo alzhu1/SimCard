@@ -21,7 +21,7 @@ namespace SimCard.SimGame {
 
         protected override IEnumerator Handle() {
             yield return player.SimGameManager.StartInteractionCoroutine(interactionParser);
-            actor.StartCoroutine(HandleInputs());
+            StartSubroutine(HandleInputs());
 
             while (nextState == null) {
                 yield return interactionParser.Tick();

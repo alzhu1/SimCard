@@ -50,7 +50,7 @@ namespace SimCard.CardGame {
         protected override IEnumerator Handle() {
             while (nextState == null) {
                 if (Input.GetKeyDown(KeyCode.Escape)) {
-                    yield return FixHandSize();
+                    yield return StartSubroutine(FixHandSize());
                     nextState = new EndState();
                     break;
                 }

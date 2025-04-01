@@ -9,7 +9,7 @@ namespace SimCard.CardGame {
         protected override void Exit() { }
 
         protected override IEnumerator Handle() {
-            yield return duelist.StartCoroutine(Upkeep());
+            yield return StartSubroutine(Upkeep());
 
             duelist.DrawCard();
             nextState = new T();
