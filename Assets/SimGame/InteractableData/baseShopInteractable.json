@@ -28,7 +28,7 @@
         "$ShopBuyPost": [
             {
                 "IncomingConditions": {},
-                "Text": "Thanks for your purchase!",
+                "Text": "Thanks for your purchase! (ESC to exit)",
                 "EventTriggers": [
                     "Buy"
                 ],
@@ -39,7 +39,7 @@
         "$ShopBuy": [
             {
                 "IncomingConditions": {},
-                "Text": "What are you buying?",
+                "Text": "What are you buying? (ESC to exit)",
                 "EventTriggers": [],
                 "EndingEventTriggers": [],
                 "Options": []

@@ -64,11 +64,11 @@ namespace SimCard.SimGame {
                 return;
             }
 
-            PlaySFX();
-
             if (!active) {
                 // Only support inactive ("close" button) input for shop buy
                 if (pathName.StartsWith("$ShopBuy")) {
+                    PlaySFX();
+
                     pathName = "Default";
                     interactionIndex = 0;
                     MaxVisibleCharacters = 0;
@@ -77,6 +77,8 @@ namespace SimCard.SimGame {
                 }
                 return;
             }
+
+            PlaySFX();
 
             // HandleAdvance means we picked an option
             List<InteractionNode.InteractionOption> options = CurrInteractionNode.Options;

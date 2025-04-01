@@ -94,11 +94,13 @@ namespace SimCard.SimGame {
 
                     CardMetadata cardMetadataToBuy = interactable.Deck[index];
                     CardSO cardToBuy = cardMetadataToBuy.cardSO;
-                    CardMetadata playerCardMetadata = player.Deck.Find(cardMetadata => cardMetadata.cardSO.Equals(cardToBuy));
+
+                    // Put it in the player's available cards, not deck
+                    CardMetadata playerCardMetadata = player.AvailableCards.Find(cardMetadata => cardMetadata.cardSO.Equals(cardToBuy));
                     if (playerCardMetadata != null) {
                         playerCardMetadata.count++;
                     } else {
-                        player.Deck.Add(new CardMetadata(cardToBuy, 1));
+                        player.AvailableCards.Add(new CardMetadata(cardToBuy, 1));
                     }
 
                     player.ConsumeCurrency(cardMetadataToBuy.count);
