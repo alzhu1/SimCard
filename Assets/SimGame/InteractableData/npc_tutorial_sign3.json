@@ -6,14 +6,14 @@
         "Default": [
             {
                 "IncomingConditions": {},
-                "Text": "NOTE: To be honest, there's not a ton of \"game\" here.",
+                "Text": "NOTE: It's a small city, but go ahead and look around and talk to people.",
                 "EventTriggers": [],
                 "EndingEventTriggers": [],
                 "Options": []
             },
             {
                 "IncomingConditions": {},
-                "Text": "But go ahead and look around, talk to people, and try the card game!",
+                "Text": "Try the card game too!",
                 "EventTriggers": [],
                 "EndingEventTriggers": [],
                 "Options": []
