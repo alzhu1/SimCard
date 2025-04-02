@@ -17,6 +17,20 @@
                 "EventTriggers": [],
                 "EndingEventTriggers": [],
                 "Options": []
+            },
+            {
+                "IncomingConditions": {},
+                "Text": "Here's a secret: one of the houses to the very north is unlocked. See what's inside!",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": []
+            },
+            {
+                "IncomingConditions": {},
+                "Text": "(Don't expect too much)",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": []
             }
         ]
     }
