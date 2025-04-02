@@ -14,11 +14,15 @@ namespace SimCard.SimGame {
         private SpriteRenderer buildingSr;
         private int spriteIndex;
 
+        private SimGameManager simGameManager;
+
         private Coroutine doorAnimatorCoroutine;
 
         void Awake() {
             buildingSr = GetComponentInParent<SpriteRenderer>();
             spriteIndex = 0;
+
+            simGameManager = GetComponentInParent<SimGameManager>();
 
             openDoorParentCollider.enabled = doorEnabled;
             closedDoorParentCollider.enabled = !doorEnabled;
@@ -46,6 +50,12 @@ namespace SimCard.SimGame {
         }
 
         IEnumerator ChangeDoorState(bool toOpen) {
+            if (toOpen) {
+                simGameManager.PlayDoorOpenSound();
+            } else {
+                simGameManager.PlayDoorCloseSound();
+            }
+
             int delta = toOpen ? 1 : -1;
 
             while (spriteIndex >= 0 && spriteIndex < buildingSprites.Length) {

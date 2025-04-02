@@ -26011,67 +26011,67 @@ MonoBehaviour:
   sounds:
   - name: BGM_Intro
     clip: {fileID: 8300000, guid: b9bfe4f357bc44fec8fabe6bbf448c7d, type: 3}
-    volume: 0.5
+    volume: 0.15
     loop: 0
     pitch: 1
     source: {fileID: 0}
   - name: BGM
     clip: {fileID: 8300000, guid: c8aaf2f792fdb4d18af2011bf5dc4c83, type: 3}
-    volume: 0.5
+    volume: 0.15
     loop: 1
     pitch: 1
     source: {fileID: 0}
   - name: CoinBounce
     clip: {fileID: 8300000, guid: fa662a9d08ebf46909a4f1410b6eb707, type: 3}
-    volume: 0.5
+    volume: 0.2
     loop: 0
     pitch: 1
     source: {fileID: 0}
   - name: CursorMove
     clip: {fileID: 8300000, guid: 151b45d5d351d4838b44862e66f37ddc, type: 3}
-    volume: 0.3
+    volume: 0.15
     loop: 0
     pitch: 2
     source: {fileID: 0}
   - name: CursorSelect
     clip: {fileID: 8300000, guid: 8766ef89fd4f94dee9d3962c9398d474, type: 3}
-    volume: 0.3
+    volume: 0.15
     loop: 0
     pitch: 2
     source: {fileID: 0}
   - name: BackAction
     clip: {fileID: 8300000, guid: dd446cf7ff39c43afb53afe7448b88c3, type: 3}
-    volume: 0.3
+    volume: 0.15
     loop: 0
     pitch: 2
     source: {fileID: 0}
   - name: CardSummon
     clip: {fileID: 8300000, guid: 35183d700e03a410788f0a0baca736c9, type: 3}
-    volume: 0.3
+    volume: 0.15
     loop: 0
     pitch: 2
     source: {fileID: 0}
   - name: CardFire
     clip: {fileID: 8300000, guid: ea54194079bf9489e8a5d8f86619d1a7, type: 3}
-    volume: 0.3
+    volume: 0.15
     loop: 0
     pitch: 2
     source: {fileID: 0}
   - name: CardProcess
     clip: {fileID: 8300000, guid: 766d60a14697344a3b75cda4570b27e1, type: 3}
-    volume: 0.3
+    volume: 0.15
     loop: 0
     pitch: 1
     source: {fileID: 0}
   - name: Win
     clip: {fileID: 8300000, guid: 5703b887efe4d49388593d420ea06ae9, type: 3}
-    volume: 0.5
+    volume: 0.15
     loop: 0
     pitch: 1
     source: {fileID: 0}
   - name: Lose
     clip: {fileID: 8300000, guid: 2e3073cb59ee6446292cc61645cdb50c, type: 3}
-    volume: 0.5
+    volume: 0.15
     loop: 0
     pitch: 1
     source: {fileID: 0}

@@ -1,0 +1,30 @@
+{
+    "Init": {
+        "PathOptions": []
+    },
+    "Paths": {
+        "Default": [
+            {
+                "IncomingConditions": {},
+                "Text": "Welcome to my house!",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": []
+            },
+            {
+                "IncomingConditions": {},
+                "Text": "It's not furnished right now, I'm just about to move in.",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": []
+            },
+            {
+                "IncomingConditions": {},
+                "Text": "Do you like the carpet? I'm thinking about changing it.",
+                "EventTriggers": [],
+                "EndingEventTriggers": [],
+                "Options": []
+            }
+        ]
+    }
+}

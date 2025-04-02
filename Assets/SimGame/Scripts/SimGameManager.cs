@@ -114,6 +114,7 @@ namespace SimCard.SimGame {
         }
 
         void HandleTeleport(EventArgs<Vector3> args) {
+            PlayTeleportSound();
             StartCoroutine(Teleport(args.argument));
         }
 
@@ -302,5 +303,8 @@ namespace SimCard.SimGame {
         public void PlayOptionMoveSound() => simGameAudioSystem.Play("OptionMove");
         public void PlayAdvanceSound() => simGameAudioSystem.Play("Advance");
         public void PlayBackActionSound() => simGameAudioSystem.Play("BackAction");
+        public void PlayDoorOpenSound() => simGameAudioSystem.Play("DoorOpen");
+        public void PlayDoorCloseSound() => simGameAudioSystem.Play("DoorClose");
+        void PlayTeleportSound() => simGameAudioSystem.Play("Teleport");
     }
 }
