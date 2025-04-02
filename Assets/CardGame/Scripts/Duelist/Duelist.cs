@@ -25,7 +25,8 @@ namespace SimCard.CardGame {
         // For debugging
         [field:SerializeField]
         public int Currency { get; private set; }
-        public void AdjustCurrency(int delta) {
+        public bool AdjustCurrency(int delta) {
+            bool gameEnded = false;
             int beforeCurrency = Currency;
             Currency += delta;
 
@@ -33,15 +34,18 @@ namespace SimCard.CardGame {
             if (Currency < 0) {
                 // Lose
                 CardGameManager.EventBus.OnGameEnd.Raise(new(Enemy, this, CardGameEndReason.CurrencyGoalReached));
+                gameEnded = true;
             }
 
             if (Currency >= CardGameManager.WinCurrency) {
                 // Win
                 CardGameManager.EventBus.OnGameEnd.Raise(new(this, Enemy, CardGameEndReason.CurrencyGoalReached));
+                gameEnded = true;
             }
 
             // Send corresponding event to update UI
             SendCurrencyUpdateEvent(beforeCurrency, Currency);
+            return gameEnded;
         }
 
         public int TurnActions { get; private set; }

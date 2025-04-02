@@ -29,7 +29,11 @@ namespace SimCard.CardGame {
                 // Check for currency
                 int preCurrency = duelist.Currency;
                 Debug.Log($"Currency ({preCurrency}) + income ({card.Income}) = {duelist.Currency}");
-                duelist.AdjustCurrency(card.Income);
+                bool gameEnded = duelist.AdjustCurrency(card.Income);
+
+                if (gameEnded) {
+                    yield break;
+                }
 
                 // We can update card active turns at upkeep
                 card.DecrementActiveTurns();
