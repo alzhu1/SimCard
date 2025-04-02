@@ -28477,12 +28477,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'WASD/Arrow Keys - move cursor
+  m_text: 'Arrow Keys - move cursor
 
     SPACE - action
 
-    ESC - go back/end
-    turn'
+    ESC - go back/end turn'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f470f5d49075e4081928f1edd49ad14e, type: 2}
   m_sharedMaterial: {fileID: 7904280420128565551, guid: f470f5d49075e4081928f1edd49ad14e, type: 2}
